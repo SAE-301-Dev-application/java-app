@@ -1,0 +1,6 @@
+# Dossier bin avec les .class
+bin/
+
+# Fichiers de configuration spécifiques à Eclipse
+.metadata
+.classpath
