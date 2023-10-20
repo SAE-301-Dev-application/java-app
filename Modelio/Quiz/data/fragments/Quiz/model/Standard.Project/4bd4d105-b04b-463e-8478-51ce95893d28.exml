@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Quiz" version="4">
+  <OBJECT>
+    <ID name="Quiz" mc="Standard.Project" uid="4bd4d105-b04b-463e-8478-51ce95893d28"/>
+    <ATTRIBUTES>
+      <ATT name="ProjectContext"></ATT>
+      <ATT name="ProjectDescr"></ATT>
+      <ATT name="Name"><![CDATA[Quiz]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Model">
+        <COMPID name="quiz" mc="Standard.Package" uid="d600e99b-1d16-44f6-924a-42dea8e19198"/>
+      </COMP>
+      <COMP relation="DiagramRoot">
+        <COMPID name="Quiz" mc="Infrastructure.DiagramSet" uid="0571c5f0-5ea2-43b3-afe1-bd9cbb78d437"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="quiz" version="4">
+  <OBJECT>
+    <ID name="quiz" mc="Standard.Package" uid="d600e99b-1d16-44f6-924a-42dea8e19198"/>
+    <PID name="Quiz" mc="Standard.Project" uid="4bd4d105-b04b-463e-8478-51ce95893d28"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[quiz]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
+        <COMPID name="Categorie" mc="Standard.Class" uid="7c216add-6c9b-4e3d-a73c-efc9cca971ba"/>
+        <COMPID name="GestionCategorie" mc="Standard.Class" uid="c077ff57-7a26-446b-afac-94f05f363110"/>
+        <COMPID name="GestionQuestions" mc="Standard.Class" uid="cef55573-6e17-4b04-a86b-e6430efbc3c5"/>
+        <COMPID name="LectureCSV" mc="Standard.Class" uid="9d1130de-12b7-47a1-9160-c6579aeb23db"/>
+        <COMPID name="Sauvegarde" mc="Standard.Class" uid="785500a9-9b73-4d53-8799-f364c59efb85"/>
+        <COMPID name="Transfert" mc="Standard.Class" uid="9acafc15-32ab-4e72-8af0-d49217f4fb2b"/>
+        <COMPID name="Reception" mc="Standard.Class" uid="f7b8a48a-9825-4087-94a6-bfc5f2ccc02a"/>
+        <COMPID name="ParametresPartie" mc="Standard.Class" uid="add3c9b4-0b82-4006-8f19-4ce10dde56b7"/>
+        <COMPID name="PartieEnCours" mc="Standard.Class" uid="5e59827e-5727-4a8e-963e-50ee6167bc6b"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe quiz" mc="Standard.ClassDiagram" uid="5ecc7e98-a2e2-4d76-b8e6-052586bd28de"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
