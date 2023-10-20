@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-10-02" view-index="0" gantt-divider-location="443" resource-divider-location="334" version="2.8.11" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-10-03" view-index="0" gantt-divider-location="443" resource-divider-location="334" version="2.8.11" locale="fr">
     <description/>
     <view zooming-state="default:1" id="gantt-chart">
         <field id="tpd3" name="Nom" width="288" order="0"/>
@@ -50,16 +50,17 @@
                 <task id="143" name="Configuration repo GitHub" color="#ffcc99" meeting="false" start="2023-10-06" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             </task>
             <task id="162" name="Diagramme des cas d'utilisation UML" color="#66ccff" meeting="false" start="2023-10-04" duration="15" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true" cost-manual-value="5.0" cost-calculated="false"/>
-            <task id="126" name="User Stories" color="#ccffcc" meeting="false" start="2023-10-04" duration="14" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="126" name="User Stories" color="#ccffcc" meeting="false" start="2023-10-04" duration="17" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="173" name="Réunion daily" color="#ff3399" meeting="false" start="2023-10-09" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
-            <task id="132" name="Tests d'acceptation" color="#00cc66" meeting="false" start="2023-10-09" duration="9" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
-            <task id="152" name="Plan de management projet" color="#ff9933" meeting="false" start="2023-10-10" duration="2" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="132" name="Tests d'acceptation" color="#00cc66" meeting="false" start="2023-10-09" duration="12" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="152" name="Plan de management projet" color="#ff9933" meeting="false" start="2023-10-09" duration="11" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="195" name="Valorisation des US" color="#ff99ff" meeting="false" start="2023-10-12" duration="7" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="169" name="Réunion avec la MOA" color="#ff3300" meeting="false" start="2023-10-12" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
-            <task id="147" name="Diagramme de Gantt" color="#cccccc" meeting="false" start="2023-10-12" duration="9" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
-            <task id="184" name="Maquettage Figma" color="#9900ff" meeting="false" start="2023-10-12" duration="9" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="147" name="Diagramme de Gantt" color="#cccccc" meeting="false" start="2023-10-12" duration="10" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="184" name="Maquettage Figma" color="#9900ff" meeting="false" start="2023-10-12" duration="10" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="177" name="Réunion daily 2" color="#ff3399" meeting="false" start="2023-10-13" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="202" name="Réunion daily 3" color="#ff3399" meeting="false" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="204" name="Réunion daily 4" color="#ff3399" meeting="false" start="2023-10-20" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="200" name="Rendu sprint 0" color="#ff0000" meeting="false" start="2023-10-20" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="87" name="Fin sprint 0" color="#ffffff" meeting="false" start="2023-10-22" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
         </task>
