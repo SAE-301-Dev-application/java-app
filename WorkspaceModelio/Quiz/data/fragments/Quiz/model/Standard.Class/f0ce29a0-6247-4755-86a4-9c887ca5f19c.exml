@@ -195,7 +195,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="reponseJuste" mc="Standard.Attribute" uid="bf828967-6c1c-41cf-8955-f2123a3ef819"/>
+          <ID name="reponsesJustes" mc="Standard.Attribute" uid="bf828967-6c1c-41cf-8955-f2123a3ef819"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -209,7 +209,7 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[reponseJuste]]></ATT>
+            <ATT name="Name"><![CDATA[reponsesJustes]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>

@@ -17,7 +17,7 @@
     <DEPENDENCIES>
       <COMP relation="OwnedOperation">
         <OBJECT>
-          <ID name="ordreQuestionsAleatoire" mc="Standard.Operation" uid="94494bf7-5e97-41a2-a1e3-2104a550d2a2"/>
+          <ID name="ordreQuestionsAleatoires" mc="Standard.Operation" uid="94494bf7-5e97-41a2-a1e3-2104a550d2a2"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -25,7 +25,7 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[ordreQuestionsAleatoire]]></ATT>
+            <ATT name="Name"><![CDATA[ordreQuestionsAleatoires]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -49,7 +49,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="ordreReponseAleatoire" mc="Standard.Operation" uid="c82e23b7-5807-4806-a429-b4cbc45002a4"/>
+          <ID name="ordreReponsesAleatoires" mc="Standard.Operation" uid="c82e23b7-5807-4806-a429-b4cbc45002a4"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -57,7 +57,7 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[ordreReponseAleatoire]]></ATT>
+            <ATT name="Name"><![CDATA[ordreReponsesAleatoires]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES></DEPENDENCIES>
@@ -65,7 +65,7 @@
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
-          <ID name="questionsEnOrdre" mc="Standard.Attribute" uid="69aff9b0-70df-4eb3-9897-d37d64e2304c"/>
+          <ID name="toutesLesQuestions" mc="Standard.Attribute" uid="69aff9b0-70df-4eb3-9897-d37d64e2304c"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -74,12 +74,12 @@
             <ATT name="IsDerived">false</ATT>
             <ATT name="IsOrdered">false</ATT>
             <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[20]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[questionsEnOrdre]]></ATT>
+            <ATT name="Name"><![CDATA[toutesLesQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -89,7 +89,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="questionsAleatoire" mc="Standard.Attribute" uid="8eb49ea4-bd50-462a-b4ea-7cf015470a61"/>
+          <ID name="questionsAleatoires" mc="Standard.Attribute" uid="8eb49ea4-bd50-462a-b4ea-7cf015470a61"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -103,13 +103,53 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[questionsAleatoire]]></ATT>
+            <ATT name="Name"><![CDATA[questionsAleatoires]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Type">
               <ID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
             </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="indiceQuestionCourante" mc="Standard.Attribute" uid="14bc80c1-1d1d-4196-a265-4be6369c8f1f"/>
+          <ATTRIBUTES>
+            <ATT name="TypeConstraint"></ATT>
+            <ATT name="Value"></ATT>
+            <ATT name="TargetIsClass">false</ATT>
+            <ATT name="Changeable">AccesNone</ATT>
+            <ATT name="IsDerived">false</ATT>
+            <ATT name="IsOrdered">false</ATT>
+            <ATT name="IsUnique">false</ATT>
+            <ATT name="MultiplicityMin"></ATT>
+            <ATT name="MultiplicityMax"></ATT>
+            <ATT name="Visibility">Private</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[indiceQuestionCourante]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Type">
+              <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
+            </LINK>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="44386e42-e67f-4423-b1b4-628917c4cbda"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[<Saisir le texte de la note ici>]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
@@ -173,6 +213,28 @@
             <COMP relation="Association">
               <COMPID name="" mc="Standard.Association" uid="a85388d2-e84b-400b-a206-e9cd0fa05d7f"/>
             </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="0aa998cb-2e62-4c40-85d9-d1b4e4cc0051"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- toutesLesQuestions : liste des questions de/des catégorie(s) sélectionnée(s) lors de la création de la partie.
+
+- questionsAleatoires : liste des questions choisies aléatoirement ajoutées dans l'ordre d'affichage au cours de la partie, contient 1, 2, 3, 4, 5, 10 ou 20 questions.
+
+- ordreQuestionsAleatoires() : choisis un nombre n (paramétré précédemment) de questions dans toutesLesQuestions et les ajoute de manière aléatoire. @return une liste de questions dans un ordre aléatoire.
+
+- ordreReponsesAleatoires() : pour chaque question de questionsAleatoires, ]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
