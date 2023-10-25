@@ -6,3 +6,6 @@ bin/
 .classpath
 build.fxbuild
 .settings
+
+# MacOS
+.DS_Store
