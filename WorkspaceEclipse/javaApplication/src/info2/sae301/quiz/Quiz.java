@@ -29,6 +29,9 @@ public class Quiz extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("vues/MenuPrincipal.fxml"));
 			
+			Scene scene = new Scene(root, 800, 600);
+			
+			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
