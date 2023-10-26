@@ -1,1 +1,24 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.pane {
+	-fx-background-color: #121430;
+}
+
+.boutonArrondi {
+	-fx-border-width: 1px;
+	
+	-fx-pref-width: 45px;
+	-fx-pref-height: 45px;
+	
+	-fx-background-color: #2E3469;
+	
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+}
+
+.arrondi {
+	-fx-border-radius: 999px;
+	
+	-fx-background-radius: 999px;
+}
