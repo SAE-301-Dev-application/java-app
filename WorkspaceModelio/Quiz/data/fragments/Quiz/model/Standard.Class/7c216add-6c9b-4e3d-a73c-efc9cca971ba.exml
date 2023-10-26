@@ -56,6 +56,23 @@
             <LINK relation="Extension">
               <FOREIGNID name="create" mc="Infrastructure.Stereotype" uid="00700680-0000-0204-0000-000000000000"/>
             </LINK>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="3eb43e1c-c3b0-4a6d-8801-d9593b12cf49"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Constructeur de la classe catégorie
+@param intitule intitulé de la catégorie]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -91,6 +108,23 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="846a8899-055d-4b2c-992e-0618e829ae91"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[getter de l'intitulé
+@return intitule]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -134,6 +168,23 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="761f4f71-d399-4d87-a044-ed3d176eb0af"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Ajoute une question à la catégorie
+@param aAjouter question à ajouter]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -169,6 +220,23 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <FOREIGNID name="boolean" mc="Standard.DataType" uid="00000004-0000-0005-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="a911ad00-bd2d-4f42-a9c3-7258a05084c1"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Vérifie si la catégorie possède des questions
+@return true si vide, false sinon ]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -212,6 +280,22 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="c238083a-9934-47b2-948e-bc734288bab7"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[@return le nombre de questions de la catégorie]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -247,6 +331,23 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <ID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="c596d75d-329c-4105-ae56-bbf8586be05e"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Getter de l'attribut listeQuestions
+@return listeQuestions]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -290,6 +391,23 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="ac6a6e9e-bd9e-407e-8daf-bb7bee40f4d4"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Setter de l'intitulé
+@param nouvel intitulé]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -329,6 +447,23 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="ed62c9b5-ea95-410e-bfba-3785ff9b9067"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Enlève une question de la catégorie
+@aSupprimer objet Question aEnlever]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
@@ -355,6 +490,23 @@
             <LINK relation="Type">
               <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
             </LINK>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="55afd748-7a0a-4524-b745-e64f53543e5c"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Intitulé de la catégorie
+]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -386,6 +538,20 @@
                   <ATT name="Content"><![CDATA[<Saisir le texte de la note ici>]]></ATT>
                   <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
                   <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="Note" mc="Infrastructure.Note" uid="78013938-ac6a-4c5b-97d0-aaedfd375175"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[liste de questions contenues dans la catégorie]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"><![CDATA[Note]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
@@ -461,6 +627,9 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

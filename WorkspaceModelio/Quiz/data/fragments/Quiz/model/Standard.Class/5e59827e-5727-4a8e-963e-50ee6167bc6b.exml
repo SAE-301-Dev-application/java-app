@@ -209,6 +209,9 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
       <COMP relation="Descriptor">
         <OBJECT>
           <ID name="Note" mc="Infrastructure.Note" uid="0aa998cb-2e62-4c40-85d9-d1b4e4cc0051"/>
