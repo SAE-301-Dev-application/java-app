@@ -22,3 +22,10 @@
 	
 	-fx-background-radius: 999px;
 }
+
+.titre {
+	-fx-text-fill: white;
+	-fx-font-size: 48px;
+	-fx-font-weight: bold;
+	-fx-alignment: center;
+}

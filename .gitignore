@@ -9,3 +9,6 @@ build.fxbuild
 
 # MacOS
 .DS_Store
+
+# Modelio
+projectInfo.html
