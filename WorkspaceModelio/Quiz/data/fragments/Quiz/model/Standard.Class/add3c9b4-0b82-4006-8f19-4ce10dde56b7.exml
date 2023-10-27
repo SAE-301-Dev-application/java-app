@@ -53,23 +53,6 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="61155b47-5408-4b51-9f07-ad3f3059f5a2"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Ajoute la catégorie sélectionnée par l'utilisateur à la liste des catégories
-@param aAjouter catégorie à ajouter]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -105,24 +88,6 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="d7bf1d1d-dc14-4505-844b-b90667ce2f72"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[setter de l'attribut difficulté
-@param difficulte nouvelle difficulté 
-]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -166,24 +131,6 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="57956f23-b5a4-410d-a85a-421762da886b"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[setter du nombre de questions
-@param nbQuestion nouveau nombre de questions
-]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -219,23 +166,6 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <ID name="Categorie" mc="Standard.Class" uid="7c216add-6c9b-4e3d-a73c-efc9cca971ba"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="af8fa9aa-c3dd-40f6-a5b7-531179927b0e"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[supprime la catégorie passée en paramètre de la liste des catégories
-@param aEnlever catégorie à enlever]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -279,23 +209,6 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="0f1ca104-7fe9-4b6e-aa33-b044aac06358"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Vérifie que les catégories choisies par l'utilisateur contiennent assez de questions en fonction de la difficulté ainsi que le nombre de questions
-@return true si assez de questions, false sinon]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -335,29 +248,12 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="89957fb7-dfcd-4d07-a3c3-eccc2c60bbdb"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Compte le nombre de questions totales disponibles dans les catégories choisies par l'utilisateur
-@return le nombre de questions totales]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
-          <ID name="categories" mc="Standard.Attribute" uid="0acd448c-7e96-4c7b-8e37-5d59a03c80a2"/>
+          <ID name="categoriesSelectionnees" mc="Standard.Attribute" uid="0acd448c-7e96-4c7b-8e37-5d59a03c80a2"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -366,12 +262,12 @@
             <ATT name="IsDerived">false</ATT>
             <ATT name="IsOrdered">false</ATT>
             <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+            <ATT name="MultiplicityMin"></ATT>
             <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[categories]]></ATT>
+            <ATT name="Name"><![CDATA[categoriesSelectionnees]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -398,25 +294,11 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="b4a48dc8-34de-4b57-98e0-14dbcf431ca1"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Liste de catégories choisies par l'utilisateur]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
             </COMP>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="difficulte" mc="Standard.Attribute" uid="60511609-cb37-4adb-9be2-b8c11818ab8d"/>
+          <ID name="difficulteQuestions" mc="Standard.Attribute" uid="60511609-cb37-4adb-9be2-b8c11818ab8d"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -430,7 +312,7 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[difficulte]]></ATT>
+            <ATT name="Name"><![CDATA[difficulteQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -448,20 +330,6 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
 - 3 : forte]]></ATT>
                   <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
                   <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="ef7f5414-e028-4748-976c-b1b2e5209280"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Difficulté choisie par l'utilisateur]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
@@ -513,21 +381,6 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
-              <OBJECT>
-                <ID name="Note" mc="Infrastructure.Note" uid="63af7f93-12a2-437b-8c2e-47b46ce5ec3d"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Nombre de questions que contiendra le questionnaire (peut être choisi par l'utilisateur)
-]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"><![CDATA[Note]]></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
             </COMP>
           </DEPENDENCIES>
         </OBJECT>
@@ -542,8 +395,8 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
             <ATT name="IsDerived">false</ATT>
             <ATT name="IsOrdered">false</ATT>
             <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"></ATT>
-            <ATT name="MultiplicityMax"></ATT>
+            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
@@ -564,8 +417,8 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
                   <ATT name="IsDerived">false</ATT>
                   <ATT name="IsOrdered">false</ATT>
                   <ATT name="IsUnique">false</ATT>
-                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
-                  <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
+                  <ATT name="MultiplicityMin"></ATT>
+                  <ATT name="MultiplicityMax"></ATT>
                   <ATT name="Visibility">Private</ATT>
                   <ATT name="IsClass">false</ATT>
                   <ATT name="IsAbstract">false</ATT>

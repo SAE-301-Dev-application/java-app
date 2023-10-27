@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="LectureCSV" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="GestionCSV" version="4">
   <OBJECT>
-    <ID name="LectureCSV" mc="Standard.Class" uid="9d1130de-12b7-47a1-9160-c6579aeb23db"/>
+    <ID name="GestionCSV" mc="Standard.Class" uid="9d1130de-12b7-47a1-9160-c6579aeb23db"/>
     <PID name="quiz" mc="Standard.Package" uid="d600e99b-1d16-44f6-924a-42dea8e19198"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
@@ -11,7 +11,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[LectureCSV]]></ATT>
+      <ATT name="Name"><![CDATA[GestionCSV]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>

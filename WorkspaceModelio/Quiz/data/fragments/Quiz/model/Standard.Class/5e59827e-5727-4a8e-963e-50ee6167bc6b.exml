@@ -61,6 +61,30 @@
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
+            <COMP relation="IO">
+              <OBJECT>
+                <ID name="question" mc="Standard.Parameter" uid="0a4e430f-d1e8-4dca-aa7f-43d3826195e5"/>
+                <ATTRIBUTES>
+                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="TypeConstraint"></ATT>
+                  <ATT name="DefaultValue"></ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="IsException">false</ATT>
+                  <ATT name="IsStream">false</ATT>
+                  <ATT name="Effect">ReadEffect</ATT>
+                  <ATT name="Name"><![CDATA[question]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Type">
+                    <ID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
             <COMP relation="Descriptor">
               <OBJECT>
                 <ID name="" mc="Infrastructure.Note" uid="ad86d91c-a190-4c40-a966-9bf223e58543"/>
@@ -156,8 +180,8 @@
             <ATT name="IsDerived">false</ATT>
             <ATT name="IsOrdered">false</ATT>
             <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
-            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
@@ -178,8 +202,8 @@
                   <ATT name="IsDerived">false</ATT>
                   <ATT name="IsOrdered">false</ATT>
                   <ATT name="IsUnique">false</ATT>
-                  <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
-                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMin"></ATT>
+                  <ATT name="MultiplicityMax"></ATT>
                   <ATT name="Visibility">Private</ATT>
                   <ATT name="IsClass">false</ATT>
                   <ATT name="IsAbstract">false</ATT>
@@ -206,6 +230,22 @@
             <COMP relation="Association">
               <COMPID name="" mc="Standard.Association" uid="a85388d2-e84b-400b-a206-e9cd0fa05d7f"/>
             </COMP>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="625534cf-37e1-4f5a-963e-b110446aa0bb"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[<Saisir le texte de la note ici>]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
@@ -216,13 +256,13 @@
         <OBJECT>
           <ID name="Note" mc="Infrastructure.Note" uid="0aa998cb-2e62-4c40-85d9-d1b4e4cc0051"/>
           <ATTRIBUTES>
-            <ATT name="Content"><![CDATA[- toutesLesQuestions : liste des questions de/des catégorie(s) sélectionnée(s) lors de la création de la partie.
+            <ATT name="Content"><![CDATA[- toutesLesQuestions : liste des questions de la/des catégorie(s) sélectionnée(s) lors de la création de la partie.
 
-- questionsAleatoires : liste des questions choisies aléatoirement ajoutées dans l'ordre d'affichage au cours de la partie, contient 1, 2, 3, 4, 5, 10 ou 20 questions.
+- indiceQuestionCourante : indice de la question entrain d'être affichée parmis toutesLesQuestions.
 
 - ordreQuestionsAleatoires() : choisis un nombre n (paramétré précédemment) de questions dans toutesLesQuestions et les ajoute de manière aléatoire. @return une liste de questions dans un ordre aléatoire.
 
-- ordreReponsesAleatoires() : pour chaque question de questionsAleatoires, ]]></ATT>
+- ordreReponsesAleatoires(Question) : @return un ordre aléatoire des réponses de la question en paramètre.]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
             <ATT name="Name"><![CDATA[Note]]></ATT>
             <ATT name="status">1970354901745664</ATT>
