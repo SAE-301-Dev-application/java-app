@@ -23,12 +23,37 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[supprimer]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
+          <DEPENDENCIES>
+            <COMP relation="IO">
+              <OBJECT>
+                <ID name="aSupprimer" mc="Standard.Parameter" uid="0e5d4ee2-9d9a-4ff5-aff6-2147b6d60962"/>
+                <ATTRIBUTES>
+                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
+                  <ATT name="TypeConstraint"></ATT>
+                  <ATT name="DefaultValue"></ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="IsException">false</ATT>
+                  <ATT name="IsStream">false</ATT>
+                  <ATT name="Effect">ReadEffect</ATT>
+                  <ATT name="Name"><![CDATA[aSupprimer]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Type">
+                    <ID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="ajouter" mc="Standard.Operation" uid="a4ef71af-9940-48b7-a5f4-6d82834e5098"/>
@@ -37,7 +62,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[ajouter]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -70,31 +95,13 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="GestionQuestions" mc="Standard.Operation" uid="d7b0312a-ac37-441c-8142-9f83ad460133"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[GestionQuestions]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Extension">
-              <FOREIGNID name="create" mc="Infrastructure.Stereotype" uid="00700680-0000-0204-0000-000000000000"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
           <ID name="getListeQuestions" mc="Standard.Operation" uid="454e44e1-ab34-4b14-8dcf-0bd99dd003e7"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[getListeQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -145,7 +152,7 @@
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
-          <ID name="listeQuestions" mc="Standard.Attribute" uid="46718c86-23d3-48f1-ba9d-d41b0095a37f"/>
+          <ID name="listeToutesQuestions" mc="Standard.Attribute" uid="46718c86-23d3-48f1-ba9d-d41b0095a37f"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -157,9 +164,9 @@
             <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[listeQuestions]]></ATT>
+            <ATT name="Name"><![CDATA[listeToutesQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>

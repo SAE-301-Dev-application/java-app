@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="GestionCategorie" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="GestionCategories" version="4">
   <OBJECT>
-    <ID name="GestionCategorie" mc="Standard.Class" uid="c077ff57-7a26-446b-afac-94f05f363110"/>
+    <ID name="GestionCategories" mc="Standard.Class" uid="c077ff57-7a26-446b-afac-94f05f363110"/>
     <PID name="quiz" mc="Standard.Package" uid="d600e99b-1d16-44f6-924a-42dea8e19198"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
@@ -11,7 +11,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[GestionCategorie]]></ATT>
+      <ATT name="Name"><![CDATA[GestionCategories]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
@@ -23,12 +23,37 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[supprimer]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
+          <DEPENDENCIES>
+            <COMP relation="IO">
+              <OBJECT>
+                <ID name="aSupprimer" mc="Standard.Parameter" uid="abf33ffb-26f2-4a2d-9c45-5c0bd63d8ecb"/>
+                <ATTRIBUTES>
+                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
+                  <ATT name="TypeConstraint"></ATT>
+                  <ATT name="DefaultValue"></ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="IsException">false</ATT>
+                  <ATT name="IsStream">false</ATT>
+                  <ATT name="Effect">ReadEffect</ATT>
+                  <ATT name="Name"><![CDATA[aSupprimer]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Type">
+                    <ID name="Categorie" mc="Standard.Class" uid="7c216add-6c9b-4e3d-a73c-efc9cca971ba"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="ajouter" mc="Standard.Operation" uid="53f5bb74-527f-43e9-9e1d-fcd2c3f3b45e"/>
@@ -70,31 +95,13 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="GestionCategorie" mc="Standard.Operation" uid="a793509a-1972-4f77-8f4e-75fe7758f685"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[GestionCategorie]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Extension">
-              <FOREIGNID name="create" mc="Infrastructure.Stereotype" uid="00700680-0000-0204-0000-000000000000"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
           <ID name="getListeCategories" mc="Standard.Operation" uid="d86b7fd4-1600-415f-b3d6-4b6bfeae6e11"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[getListeCategories]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -129,7 +136,7 @@
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
-          <ID name="listeCategories" mc="Standard.Attribute" uid="9dd6a4a2-cc85-4db6-9800-29ee2b1611b9"/>
+          <ID name="listeToutesCategories" mc="Standard.Attribute" uid="9dd6a4a2-cc85-4db6-9800-29ee2b1611b9"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -141,9 +148,9 @@
             <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[listeCategories]]></ATT>
+            <ATT name="Name"><![CDATA[listeToutesCategories]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>

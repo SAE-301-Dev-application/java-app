@@ -372,7 +372,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="questions" mc="Standard.Attribute" uid="a695b7f1-7263-4a7a-9754-036361f4533b"/>
+          <ID name="listeQuestions" mc="Standard.Attribute" uid="a695b7f1-7263-4a7a-9754-036361f4533b"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -386,7 +386,7 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[questions]]></ATT>
+            <ATT name="Name"><![CDATA[listeQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
