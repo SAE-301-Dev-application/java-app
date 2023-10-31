@@ -62,5 +62,4 @@ public class Categorie {
     	}
     	return listeQuestions.isEmpty();
     }
-
 }
