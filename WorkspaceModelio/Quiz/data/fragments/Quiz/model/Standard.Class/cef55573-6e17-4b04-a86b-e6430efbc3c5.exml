@@ -95,7 +95,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="getListeQuestions" mc="Standard.Operation" uid="454e44e1-ab34-4b14-8dcf-0bd99dd003e7"/>
+          <ID name="getListeToutesQuestions" mc="Standard.Operation" uid="454e44e1-ab34-4b14-8dcf-0bd99dd003e7"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -103,7 +103,7 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[getListeQuestions]]></ATT>
+            <ATT name="Name"><![CDATA[getListeToutesQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -242,6 +242,26 @@
       <LINK relation="Extension">
         <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
       </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="b8be0f07-3b02-459e-af89-54852bdb7dff"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- listeToutesQuestions : toutes les questions qui ont été créées sur le jeu de Quiz.
+
++ supprimer(Question[]) : Supprime les questions en paramètre de listeToutesQuestions.
++ ajouter(Question) : Ajoute la question en paramètre à listeToutesQuestions.
++ getListeToutesQuestions() : Renvoie la liste des questions créées.]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

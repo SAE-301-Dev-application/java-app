@@ -189,6 +189,28 @@
         <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
         <FOREIGNID name="type" mc="Infrastructure.Stereotype" uid="00700680-0000-01ba-0000-000000000000"/>
       </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="a34483f8-6318-4f0a-8b46-014d27cba3ad"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- boutonJouer : TODO
+- boutonCategories : TODO
+- boutonQuestions : TODO
+- boutonImporter : TODO
+- boutonExporter : TODO
+
++ clicBoutonJouer() : Affichage de la fenêtre correspondante au paramétrage de la partie.]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

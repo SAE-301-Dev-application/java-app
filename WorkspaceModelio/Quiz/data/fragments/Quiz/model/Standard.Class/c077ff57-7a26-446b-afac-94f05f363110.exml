@@ -56,21 +56,21 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="ajouter" mc="Standard.Operation" uid="53f5bb74-527f-43e9-9e1d-fcd2c3f3b45e"/>
+          <ID name="creer" mc="Standard.Operation" uid="53f5bb74-527f-43e9-9e1d-fcd2c3f3b45e"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
+            <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[ajouter]]></ATT>
+            <ATT name="Name"><![CDATA[creer]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="aAjouter" mc="Standard.Parameter" uid="4a182668-6905-48c9-9e23-36308bb596bb"/>
+                <ID name="intitule" mc="Standard.Parameter" uid="4a182668-6905-48c9-9e23-36308bb596bb"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -82,12 +82,12 @@
                   <ATT name="IsException">false</ATT>
                   <ATT name="IsStream">false</ATT>
                   <ATT name="Effect">ReadEffect</ATT>
-                  <ATT name="Name"><![CDATA[aAjouter]]></ATT>
+                  <ATT name="Name"><![CDATA[intitule]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
-                    <ID name="Categorie" mc="Standard.Class" uid="7c216add-6c9b-4e3d-a73c-efc9cca971ba"/>
+                    <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -95,7 +95,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="getListeCategories" mc="Standard.Operation" uid="d86b7fd4-1600-415f-b3d6-4b6bfeae6e11"/>
+          <ID name="getListeToutesCategories" mc="Standard.Operation" uid="d86b7fd4-1600-415f-b3d6-4b6bfeae6e11"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -103,7 +103,7 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[getListeCategories]]></ATT>
+            <ATT name="Name"><![CDATA[getListeToutesCategories]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -226,6 +226,27 @@
       <LINK relation="Extension">
         <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
       </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="dd1d153e-85e8-420e-8ca3-68cefb3e7330"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- listeToutesCategories : toutes les catégories (la 1ère est "Général") qui ont été créées sur le jeu de Quiz.
+
++ supprimer(Categorie[]) : Supprime les catégories en paramètre de listeToutesCategories.
++ creer(string) : Crée une catégorie dont l'intitulé est en paramètre et l'ajoute à listeToutesCategories.
++ getListeToutesCategories() : Renvoie la liste des catégories créées.
+]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

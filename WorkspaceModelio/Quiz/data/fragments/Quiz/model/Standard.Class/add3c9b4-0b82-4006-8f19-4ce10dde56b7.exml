@@ -109,7 +109,7 @@
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="nbQuestion" mc="Standard.Parameter" uid="ae551658-a11f-431a-b216-8f9bc93f64aa"/>
+                <ID name="nbQuestions" mc="Standard.Parameter" uid="ae551658-a11f-431a-b216-8f9bc93f64aa"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -121,7 +121,7 @@
                   <ATT name="IsException">false</ATT>
                   <ATT name="IsStream">false</ATT>
                   <ATT name="Effect">ReadEffect</ATT>
-                  <ATT name="Name"><![CDATA[nbQuestion]]></ATT>
+                  <ATT name="Name"><![CDATA[nbQuestions]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
@@ -451,6 +451,31 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
       <LINK relation="Extension">
         <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
       </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="aebf8a63-abea-4844-acdb-afb340368040"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- categoriesSelectionnees : les catégories desquelles poser des questions.
+- difficulteQuestions : la difficulté des questions à poser : 0 (indifférent), 1 (facile), 2 (moyen), 3 (difficile). 
+- nombreQuestions : le nombre de questions à poser dans la partie.
+
++ ajouterCategories(Categorie[]) : Ajoute les catégories en paramètre à categoriesSelectionnees.
++ setDifficulte(integer) : Remplace la difficulté des questions à poser par la difficulté en paramètre.
++ setNombreQuestions(integer) : Remplace le nombre de questions à poser par le nombre en paramètre.
++ retirerCategorie(Categorie) : Retire la catégorie en paramètre de categoriesSelectionnees.
++ aAssezQuestions() : Renvoie true si le nombre de questions dans les categoriesSelectionnees dont la difficulté est égale à difficulteQuestions est supérieur ou égal à nombreQuestions.
++ nbQuestionsCategoriesSelectionnees() : Renvoie le nombre de questions ayant pour catégorie une des categoriesSelectionnees.]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

@@ -478,6 +478,33 @@
       <LINK relation="Extension">
         <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
       </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="Note" mc="Infrastructure.Note" uid="b3595f1f-f09f-4828-9567-701aa90af8cd"/>
+          <ATTRIBUTES>
+            <ATT name="Content"><![CDATA[- intitule : l'intitulé de la catégorie.
+- listeQuestions : toutes les questions de la catégorie.
+
++ Categorie(string) : Nouvelle catégorie de questions identifiée par son intitulé.
++ getIntitule() : Renvoie l'intitulé de la catégorie.
++ ajouterQuestion(Question) : Ajoute à listeQuestions la question en paramètre.
++ estVide() : Renvoie true si listeQuestions est vide.
++ nbQuestions() : Renvoie le nombre de questions présentes dans listeQuestions.
++ getListeQuestions() : Renvoie la liste des questions de la catégorie.
++ setIntitule(String) : Remplace l'intitulé de la catégorie par celui en paramètre.
++ supprimerQuestion(Question) : Supprime de listeQuestions la question en paramètre.
++ supprimerToutesQuestions() : Supprime toutes les questions de listeQuestions.]]></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"><![CDATA[Note]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

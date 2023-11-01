@@ -22,31 +22,13 @@
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Private</ATT>
+            <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[melangerToutesQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="c6e3b0af-044a-44d4-8a77-a62ebab27e16"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Renvoie une question du tableau des questions de façon aléatoire puis retire la question du tableau
-(Cette méthode sera appélé en boucle en décrémentant de 1 l'argument à chaque appel)]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-          </DEPENDENCIES>
+          <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="ordreReponsesAleatoires" mc="Standard.Operation" uid="c82e23b7-5807-4806-a429-b4cbc45002a4"/>
@@ -54,7 +36,7 @@
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Private</ATT>
+            <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[ordreReponsesAleatoires]]></ATT>
@@ -81,22 +63,6 @@
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <ID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="ad86d91c-a190-4c40-a966-9bf223e58543"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[Renvoie une ArrayList contenant les réponses d'une question dans un ordre aléatoire]]></ATT>
-                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -274,13 +240,12 @@
         <OBJECT>
           <ID name="Note" mc="Infrastructure.Note" uid="0aa998cb-2e62-4c40-85d9-d1b4e4cc0051"/>
           <ATTRIBUTES>
-            <ATT name="Content"><![CDATA[- toutesLesQuestions : liste des questions de la/des catégorie(s) sélectionnée(s) lors de la création de la partie.
-
+            <ATT name="Content"><![CDATA[- toutesLesQuestions : toutes les questions sélectionnées lors de la création de la partie.
 - indiceQuestionCourante : indice de la question entrain d'être affichée parmis toutesLesQuestions.
 
-- ordreQuestionsAleatoires() : choisis un nombre n (paramétré précédemment) de questions dans toutesLesQuestions et les ajoute de manière aléatoire. @return une liste de questions dans un ordre aléatoire.
-
-- ordreReponsesAleatoires(Question) : @return un ordre aléatoire des réponses de la question en paramètre.]]></ATT>
++ melangerToutesQuestions() : Place chaque question de toutesLesQuestions à un indice aléatoire de la liste pour les mélanger.
++ ordreReponsesAleatoires(Question) : Renvoie une ArrayList contenant les réponses de la question en paramètre dans un ordre aléatoire.
++ PartieEnCours() : Création d'une partie de Quiz par défaut.]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
             <ATT name="Name"><![CDATA[Note]]></ATT>
             <ATT name="status">1970354901745664</ATT>
