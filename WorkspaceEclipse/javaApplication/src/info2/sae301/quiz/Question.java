@@ -40,6 +40,8 @@ public class Question {
 		this.reponseJuste = reponseJuste;
 		if (reponsesFausses.length > 4) {
 			throw new IllegalArgumentException("Le nombre max de réponses fausses est 4");
+		} else if (reponsesFausses.length < 1) {
+			throw new IllegalArgumentException("Le nombre min de réponses fausses est 1");
 		} else {
 			this.reponsesFausses = reponsesFausses;
 		}
