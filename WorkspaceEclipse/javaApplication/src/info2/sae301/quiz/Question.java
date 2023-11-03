@@ -1,22 +1,33 @@
+/**
+ * Question.java									31 oct. 2023 
+ * IUT de Rodez, no copyright ni "copyleft"
+ */
+
 package info2.sae301.quiz;
 
+
+/**
+ * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
+ * directement lié à une catégorie
+ * @author FABRE Florian
+ */
 public class Question {
 	
-	/** l'intitulé de la question */
+	/** l'intitulé de la question (max 300 caractères) */
     private String intitule;
     
-    /** la réponse juste */
+    /** la réponse juste (200 caractères)*/
     private String reponseJuste;
     
-    /** les réponses fausses */
+    /** les réponses fausses (200 car / repFausse) */
     private String[] reponsesFausses = new String[4];
     
-    /** la difficulté de la question (1 : facile, 2 : moyen, 3 : difficile */
+    /** la difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
     private int difficulte;
     
     /** 
      * le feedback à afficher lors de la correction 
-     * de la réponse à cette question
+     * de la réponse à cette question (500 caractères) 
      */
     private String feedback;
     
@@ -43,7 +54,11 @@ public class Question {
 		} else {
 			this.reponsesFausses = reponsesFausses;
 		}
-		this.difficulte = difficulte;
+		if (difficulte < 1 || difficulte > 3) {
+			throw new IllegalArgumentException("La difficulté doit être soit 1 , 2 ou 3");
+		} else {
+			this.difficulte = difficulte;
+		}
 		this.categorie = categorie;
 		this.feedback = null;
 	}
@@ -66,8 +81,16 @@ public class Question {
 		super();
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
-		this.reponsesFausses = reponsesFausses;
-		this.difficulte = difficulte;
+		if (reponsesFausses.length > 4) {
+			throw new IllegalArgumentException("Le nombre max de réponses fausses est 4");
+		} else {
+			this.reponsesFausses = reponsesFausses;
+		}
+		if (difficulte < 1 || difficulte > 3) {
+			throw new IllegalArgumentException("La difficulté doit être soit 1 , 2 ou 3");
+		} else {
+			this.difficulte = difficulte;
+		}
 		this.feedback = feedback;
 		this.categorie = categorie;
 	}
@@ -111,31 +134,53 @@ public class Question {
 
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
-		this.intitule = intitule;
+		if (intitule.length() < 300) {
+			this.intitule = intitule;
+		}
 	}
 
 
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
-		this.reponseJuste = reponseJuste;
+		if (reponseJuste.length() < 200) {
+			this.reponseJuste = reponseJuste;			
+		}
 	}
 
 
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
-		this.reponsesFausses = reponsesFausses;
+		boolean estPossible = true;
+		
+		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
+			estPossible = false;
+		} else {
+			for (String reponse : reponsesFausses) {
+				if (reponse.length() > 200) {
+					estPossible = false;
+				}
+			}
+		}
+		
+		if (estPossible) {
+			this.reponsesFausses = reponsesFausses;
+		}
 	}
 
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
-		this.difficulte = difficulte;
+		if ( 0 < difficulte && difficulte < 4) {
+			this.difficulte = difficulte;
+		}
 	}
 
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		this.feedback = feedback;
+		if (feedback.length() < 500) {
+			this.feedback = feedback;			
+		}
 	}
 
 

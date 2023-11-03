@@ -1,10 +1,16 @@
+/**
+ * Categorie.java									31 oct. 2023 
+ * IUT de Rodez, no copyright ni "copyleft"
+ */
+
 package info2.sae301.quiz;
 
 import java.util.ArrayList; 
 
 /**
- * TODO comment types
- * @author flori
+ * Objet Catégorie composé d'un intitulé et d'une liste contenant les 
+ * références des questions liées à la catégorie
+ * @author FABRE Florian
  */
 public class Categorie {
     
@@ -12,18 +18,29 @@ public class Categorie {
     private String intitule;
     
     /** contient toutes les questions de la catégorie */
-    private ArrayList<Question> listeQuestions = new ArrayList<Question> (); 
+    private ArrayList<Question> listeQuestions;; 
     
     
 
     /**
-     *  Nouvelle catégorie de questions identifiée par son intitulé
+     * Nouvelle catégorie de questions identifiée par son intitulé
 	 * @param intitule
 	 * @param questions
 	 */
 	public Categorie(String intitule, ArrayList<Question> questions) {
 		this.intitule = intitule;
 		this.listeQuestions = questions;
+	}
+
+
+	/**
+	 * Nouvelle catégorie de questions identifiée par son intitulé 
+	 * sans liste de questions prédéfinie
+	 * @param intitule
+	 */
+	public Categorie(String intitule) {
+		this.intitule = intitule;
+		this.listeQuestions = new ArrayList<Question>();
 	}
 
 
