@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Categorie {
     
-	/** l'intitulé de la catégorie */
+	/** l'intitulé de la catégorie (max 20 char)*/
     private String intitule;
     
     /** contient toutes les questions de la catégorie */
@@ -28,7 +28,11 @@ public class Categorie {
 	 * @param questions
 	 */
 	public Categorie(String intitule, ArrayList<Question> questions) {
-		this.intitule = intitule;
+		if (intitule.length() > 20) {
+			throw new IllegalArgumentException("La taille max de l'intitulé est 20 caractères");
+		} else {
+			this.intitule = intitule;
+		}
 		this.listeQuestions = questions;
 	}
 
@@ -39,7 +43,11 @@ public class Categorie {
 	 * @param intitule
 	 */
 	public Categorie(String intitule) {
-		this.intitule = intitule;
+		if (intitule.length() > 20) {
+			throw new IllegalArgumentException("La taille max de l'intitulé est 20 caractères");
+		} else {
+			this.intitule = intitule;
+		}
 		this.listeQuestions = new ArrayList<Question>();
 	}
 
@@ -56,8 +64,12 @@ public class Categorie {
      * @return true si la question est ajoutée, false sinon
      */
     public boolean ajouterQuestion(Question aAjouter) {
-    	return listeQuestions.add(aAjouter);
-    	
+    	if (this.listeQuestions.contains(aAjouter)) {
+    		return false;
+    	} else if (aAjouter.getCategorie().getIntitule().equals(this.intitule)) {
+    		return listeQuestions.add(aAjouter);
+    	} 
+    	return false;
     }
 
 
@@ -85,7 +97,9 @@ public class Categorie {
 
     /** @param intitule l'intitule à changer */
 	public void setIntitule(String intitule) {
-		this.intitule = intitule;
+		if (intitule.length() < 20) {
+			this.intitule = intitule;			
+		}
 	}
 
 

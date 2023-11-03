@@ -1,5 +1,5 @@
 /**
- * TestQuestion.java									31 oct. 2023
+ * TestQuestion.java									3 nov. 2023
  * IUT de Rodez, no copyright ni "copyleft"
  */
 package info2.sae301.quiz.tests;
@@ -144,7 +144,7 @@ class TestQuestion {
 	String genererStringTailleX(int taille) {
 		String str = "";
 		for (int i = 0; i < taille; i++) {
-			str += " ";
+			str += "x";
 		}
 		return str;
 	}
