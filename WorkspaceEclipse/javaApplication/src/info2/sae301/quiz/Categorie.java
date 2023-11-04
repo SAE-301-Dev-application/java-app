@@ -21,6 +21,16 @@ public class Categorie {
 	 * @param intitule
 	 * @param questions
 	 */
+	public Categorie(String intitule) {
+		this.intitule = intitule;
+	}
+    
+    
+    /**
+     *  Nouvelle catégorie de questions identifiée par son intitulé
+	 * @param intitule
+	 * @param questions
+	 */
 	public Categorie(String intitule, ArrayList<Question> questions) {
 		this.intitule = intitule;
 		this.listeQuestions = questions;
