@@ -1,3 +1,8 @@
+/*
+ * GestionCategories.java 									3 nov. 2023
+ * IUT DE RODEZ, pas de copyright ni de "copyleft"
+ */
+
 package info2.sae301.quiz.gestion;
 
 import info2.sae301.quiz.Categorie;
@@ -5,8 +10,8 @@ import info2.sae301.quiz.Categorie;
 import java.util.ArrayList;
 
 /**
- * TODO comment types
- * @author Simon
+ * Classe permettant la gestion des catégories
+ * @author GUIRAUD Simon
  */
 public class GestionCategories {
 
