@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 public class Categorie {
     
+	/** Message si erreur sur les tailles de champ*/
+	final String ERR_TAILLE_ARG = "La taille max %s est de %d caractères";
+	
 	/** l'intitulé de la catégorie (max 20 char)*/
     private String intitule;
     
@@ -29,7 +32,8 @@ public class Categorie {
 	 */
 	public Categorie(String intitule, ArrayList<Question> questions) {
 		if (intitule.length() > 20) {
-			throw new IllegalArgumentException("La taille max de l'intitulé est 20 caractères");
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
+					,"d'un intitulé de catégorie",20));
 		} else {
 			this.intitule = intitule;
 		}
@@ -44,7 +48,8 @@ public class Categorie {
 	 */
 	public Categorie(String intitule) {
 		if (intitule.length() > 20) {
-			throw new IllegalArgumentException("La taille max de l'intitulé est 20 caractères");
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
+					,"d'un intitulé de catégorie",20));
 		} else {
 			this.intitule = intitule;
 		}
