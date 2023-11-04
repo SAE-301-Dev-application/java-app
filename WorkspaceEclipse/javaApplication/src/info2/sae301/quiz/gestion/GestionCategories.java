@@ -21,7 +21,7 @@ public class GestionCategories {
 	 * @param aSupprimer liste des catégories à supprimer
 	 */
 	public static void supprimer(Categorie[] aSupprimer) {
-		for (int i = 0; i < aSupprimer.length;i++) {
+		for (int i = 0; i < aSupprimer.length; i++) {
 			if (listeToutesCategories.contains(aSupprimer[i])) {
 				listeToutesCategories.remove(listeToutesCategories.indexOf(aSupprimer[i]));
 			}
