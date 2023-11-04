@@ -29,3 +29,35 @@
 	-fx-font-weight: bold;
 	-fx-alignment: center;
 }
+
+.user-solid {
+	-fx-shape: "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z";
+	-fx-fill: white;
+	-fx-pref-width: 20px;
+	-fx-pref-height: 20px;
+}
+
+.bouton {
+	-fx-pref-width: 310px;
+	-fx-pref-height: 60px;
+	-fx-font-weight: 900;
+	-fx-background-color: #272C58;
+	-fx-text-fill: white;
+	-fx-background-radius: 20px;
+	-fx-font-size: 24px;
+}
+.bouton-important {
+	-fx-background-color: #2D346F;
+}
+.petit-bouton {
+	-fx-pref-width: 145px;
+	-fx-pref-height: 40px;
+}
+
+VBox {
+	-fx-alignment: center;
+	
+	-fx-border-color: red;    /* TODO: temporaire, retirer si vbox prête. */
+	-fx-border-width: 2px;
+	-fx-border-style: solid;
+}

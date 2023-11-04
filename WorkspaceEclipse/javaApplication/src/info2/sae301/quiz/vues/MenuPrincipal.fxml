@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
          <styleClass>
@@ -12,5 +16,36 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
+      <Button layoutX="77.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="arrondi" />
+         </styleClass>
+      </Button>
+      <SVGPath content="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" layoutX="-124.0" layoutY="-213.0" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <Label layoutX="133.0" layoutY="36.0" styleClass="pseudo" text="Florian" />
+      <Label layoutX="331.0" layoutY="103.0" styleClass="titre" text="jeu de" />
+      <Label layoutX="324.0" layoutY="146.0" text="QUIZ">
+         <styleClass>
+            <String fx:value="titre" />
+            <String fx:value="titre-gras" />
+         </styleClass></Label>
+      <VBox layoutX="226.0" layoutY="233.0" prefHeight="323.0" prefWidth="354.0" styleClass="conteneur-boutons">
+         <children>
+            <Button mnemonicParsing="false" text="JOUER">
+               <styleClass>
+                  <String fx:value="bouton" />
+                  <String fx:value="bouton-important" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" styleClass="bouton" text="CATÉGORIES" />
+            <Button mnemonicParsing="false" styleClass="bouton" text="QUESTIONS" />
+            <Button mnemonicParsing="false" styleClass="bouton" text="QUESTIONS" />
+         </children>
+      </VBox>
    </children>
+   <stylesheets>
+      <URL value="@application.css" />
+      <URL value="@menu-principal.css" />
+   </stylesheets>
 </Pane>
