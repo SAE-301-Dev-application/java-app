@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * Classe permettant la gestion des catégories
  * @author GUIRAUD Simon
+ * 
  */
 public class GestionCategories {
 

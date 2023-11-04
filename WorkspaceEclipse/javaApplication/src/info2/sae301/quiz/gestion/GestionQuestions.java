@@ -12,6 +12,7 @@ import info2.sae301.quiz.Question;
 /**
  * Classe permettant la gestion des questions
  * @author GUIRAUD Simon
+ * 
  */
 public class GestionQuestions {
 	

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests unitaires de la classe GestionCategories
- * 
  * @author Simon Guiraud
  */
 class TestGestionCategories {
