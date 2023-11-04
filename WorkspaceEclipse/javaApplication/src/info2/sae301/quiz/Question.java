@@ -189,7 +189,7 @@ public class Question {
 
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() < 300) {
+		if (intitule.length() <= 300) {
 			this.intitule = intitule;
 		}
 	}
@@ -197,7 +197,7 @@ public class Question {
 
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
-		if (reponseJuste.length() < 200) {
+		if (reponseJuste.length() <= 200) {
 			this.reponseJuste = reponseJuste;			
 		}
 	}
@@ -233,7 +233,7 @@ public class Question {
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		if (feedback.length() < 500) {
+		if (feedback.length() <= 500) {
 			this.feedback = feedback;			
 		}
 	}
