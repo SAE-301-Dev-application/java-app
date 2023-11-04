@@ -1,3 +1,8 @@
+/*
+ * GestionQuestions.java 									3 nov. 2023
+ * IUT DE RODEZ, pas de copyright ni de "copyleft"
+ */
+
 package info2.sae301.quiz.gestion;
 
 import java.util.ArrayList;
@@ -5,14 +10,12 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Question;
 
 /**
- * TODO comment types
- * @author Simon
+ * Classe permettant la gestion des questions
+ * @author GUIRAUD Simon
  */
 public class GestionQuestions {
 	
-	/**
-	 * Liste des questions existantes
-	 */
+	/** Liste des questions existantes */
 	private static ArrayList<Question> listeToutesQuestions = new ArrayList<>();
 	
 	/**

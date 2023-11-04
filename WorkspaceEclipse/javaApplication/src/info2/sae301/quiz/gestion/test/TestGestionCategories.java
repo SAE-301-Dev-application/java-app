@@ -21,6 +21,7 @@ class TestGestionCategories {
 	
 	private ArrayList<Categorie> listeCategoriesTest = new ArrayList<>();
 	
+	@BeforeEach
 	void init() {
 		listeCategories[0] = new Categorie("Java");
 		listeCategories[1] = new Categorie("Orthographe");

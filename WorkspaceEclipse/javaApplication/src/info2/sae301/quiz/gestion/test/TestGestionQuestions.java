@@ -23,7 +23,6 @@ class TestGestionQuestions {
 	
 	Categorie Tests = new Categorie("Tests");
 	
-	
 	@BeforeEach
 	void init() {
 		listeQuestions[0] = new Question("Intitulé de question 1", "Ceci est la réponse juste", 

@@ -1,3 +1,8 @@
+/*
+ * GestionCategories.java 									3 nov. 2023
+ * IUT DE RODEZ, pas de copyright ni de "copyleft"
+ */
+
 package info2.sae301.quiz.gestion;
 
 import info2.sae301.quiz.Categorie;
@@ -5,8 +10,8 @@ import info2.sae301.quiz.Categorie;
 import java.util.ArrayList;
 
 /**
- * TODO comment types
- * @author Simon
+ * Classe permettant la gestion des catégories
+ * @author GUIRAUD Simon
  */
 public class GestionCategories {
 
@@ -21,7 +26,7 @@ public class GestionCategories {
 	 * @param aSupprimer liste des catégories à supprimer
 	 */
 	public static void supprimer(Categorie[] aSupprimer) {
-		for (int i = 0; i < aSupprimer.length; i++) {
+		for (int i = 0; i < aSupprimer.length;i++) {
 			if (listeToutesCategories.contains(aSupprimer[i])) {
 				listeToutesCategories.remove(listeToutesCategories.indexOf(aSupprimer[i]));
 			}
