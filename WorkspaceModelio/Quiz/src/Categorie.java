@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
@@ -10,7 +11,7 @@ public class Categorie {
     private Question[] questions;
 
     @objid ("d4218d8b-fd60-4acc-8cc3-2aa7a0f9fee6")
-    public Question question;
+    public List<Question> question = new ArrayList<Question> ();
 
     @objid ("ead11d13-473c-4f28-9b7c-a0e82dd040bb")
     public Categorie(final String intitule) {
@@ -50,6 +51,10 @@ public class Categorie {
 
     @objid ("5075b886-fc91-40a3-92be-db7b624cbe1b")
     public void supprimerQuestion(final Question aSupprimer) {
+    }
+
+    @objid ("6cdf565b-b7b6-4d3c-9e6a-39d7ed2dbee8")
+    public void supprimerToutesQuestions() {
     }
 
 }

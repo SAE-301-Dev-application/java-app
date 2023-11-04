@@ -5,10 +5,10 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 @objid ("add3c9b4-0b82-4006-8f19-4ce10dde56b7")
 public class ParametresPartie {
     @objid ("0acd448c-7e96-4c7b-8e37-5d59a03c80a2")
-    private Categorie[] categories;
+    private Categorie[] categoriesSelectionnees;
 
     @objid ("60511609-cb37-4adb-9be2-b8c11818ab8d")
-    private int difficulte;
+    private int difficulteQuestions;
 
     @objid ("af927e36-4e40-4615-861d-5a1f32fb3017")
     private int nombreQuestions;

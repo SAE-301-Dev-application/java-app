@@ -5,7 +5,7 @@
 
 package info2.sae301.quiz;
 
-import java.io.IOException;
+import java.io.IOException; 
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,7 +19,7 @@ import javafx.fxml.FXMLLoader;
  * 
  * @author Loïc Faugières
  * @author Simon Guiraud
- * @author Florien Fabre
+ * @author Florian Fabre
  * @author Samuel Lacam
  * @author Jonathan Guild
  */
