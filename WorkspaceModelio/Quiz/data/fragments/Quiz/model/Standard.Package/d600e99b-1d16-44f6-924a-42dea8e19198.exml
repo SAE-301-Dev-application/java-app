@@ -16,7 +16,7 @@
       <COMP relation="OwnedElement">
         <COMPID name="Question" mc="Standard.Class" uid="f0ce29a0-6247-4755-86a4-9c887ca5f19c"/>
         <COMPID name="Categorie" mc="Standard.Class" uid="7c216add-6c9b-4e3d-a73c-efc9cca971ba"/>
-        <COMPID name="GestionCategorie" mc="Standard.Class" uid="c077ff57-7a26-446b-afac-94f05f363110"/>
+        <COMPID name="GestionCategories" mc="Standard.Class" uid="c077ff57-7a26-446b-afac-94f05f363110"/>
         <COMPID name="GestionQuestions" mc="Standard.Class" uid="cef55573-6e17-4b04-a86b-e6430efbc3c5"/>
         <COMPID name="GestionCSV" mc="Standard.Class" uid="9d1130de-12b7-47a1-9160-c6579aeb23db"/>
         <COMPID name="Sauvegarde" mc="Standard.Class" uid="785500a9-9b73-4d53-8799-f364c59efb85"/>
@@ -29,6 +29,7 @@
         <COMPID name="Quiz" mc="Standard.Class" uid="720eda50-80b7-44a4-9845-15ca034f7315"/>
         <COMPID name="ModelePartieEnCours" mc="Standard.Class" uid="647b8068-b666-47c6-b139-06937db7b31a"/>
         <COMPID name="ControleurJeu" mc="Standard.Class" uid="19f07ae2-7c44-4167-acc8-68163348182e"/>
+        <COMPID name="ControleurGestionCategories" mc="Standard.Class" uid="b161d5c6-8f9a-43c5-b1c7-72f6e5695bd2"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="Diagramme de classe quiz" mc="Standard.ClassDiagram" uid="5ecc7e98-a2e2-4d76-b8e6-052586bd28de"/>
