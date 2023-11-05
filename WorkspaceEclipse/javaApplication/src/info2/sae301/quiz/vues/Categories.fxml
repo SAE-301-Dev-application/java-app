@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CategoriesControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.CategoriesControleur">
    <children>
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
          <styleClass>
@@ -17,7 +17,7 @@
       <Label graphicTextGap="8.0" layoutX="249.0" layoutY="30.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
-            <VBox layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0" styleClass="paddingVboxRectangle">
+            <VBox fx:id="vBox" layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0" styleClass="paddingVboxRectangle">
                <children>
                   <Button mnemonicParsing="false" text="Button" />
                </children>
@@ -40,14 +40,14 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonRetour" prefWidth="225.0" styleClass="bouton" text="RETOUR" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" styleClass="bouton" text="CRÉER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonCreer" styleClass="bouton" text="CRÉER" />
       <Button layoutX="592.0" layoutY="112.0" mnemonicParsing="false" text="SUPPRIMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />
          </styleClass>
       </Button>
-      <Button layoutX="407.0" layoutY="112.0" mnemonicParsing="false" text="RENOMMER">
+      <Button layoutX="407.0" layoutY="112.0" mnemonicParsing="false" onAction="#boutonRenommer" text="RENOMMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />

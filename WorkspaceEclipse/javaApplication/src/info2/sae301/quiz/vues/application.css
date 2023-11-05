@@ -116,3 +116,8 @@ ChoiceBox {
 	-fx-pref-width: 99px;
 	-fx-pref-height: 24px;
 }
+
+.intituleCategorieQuestion{
+	-fx-text-fill: white;
+	-fx-font-size: 16px;
+}
