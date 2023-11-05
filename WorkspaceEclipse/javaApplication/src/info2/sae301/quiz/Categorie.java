@@ -23,18 +23,7 @@ public class Categorie {
     /** contient toutes les questions de la catégorie */
     private ArrayList<Question> listeQuestions;; 
     
-    
-
-    /**
-     * Nouvelle catégorie de questions identifiée par son intitulé
-	 * @param intitule
-	 * @param questions
-	 */
-	public Categorie(String intitule) {
-		this.intitule = intitule;
-	}
-    
-    
+   
     /**
      *  Nouvelle catégorie de questions identifiée par son intitulé
 	 * @param intitule
