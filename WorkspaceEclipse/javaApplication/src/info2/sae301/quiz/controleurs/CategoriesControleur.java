@@ -10,7 +10,7 @@ public class CategoriesControleur {
 	}
 	@FXML
 	private void boutonRenommer() {
-		ControleurNavigation.changerVue("CreationCategorie.fxml");
+		ControleurNavigation.changerVue("ModidicationCategories.fxml");
 	}
 	@FXML
 	private void boutonSupprimer() {
@@ -31,6 +31,7 @@ public class CategoriesControleur {
 	
 	@FXML
 	private void boutonCreer() {
+		ControleurNavigation.changerVue("CreationCategorie.fxml");
 	}
 	
 	

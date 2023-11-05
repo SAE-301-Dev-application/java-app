@@ -94,4 +94,6 @@ TextField {
 
 .rectangle-bleu-clair {
 	-fx-background-color: #2E3469;
+	-fx-pref-width: 45px;
+	-fx-pref-height: 45px;
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
          <styleClass>
@@ -17,6 +17,8 @@
          </styleClass>
       </Button>
       <Label graphicTextGap="8.0" layoutX="149.0" layoutY="55.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
-      <Pane layoutX="211.0" layoutY="157.0" prefHeight="200.0" prefWidth="200.0" styleClass="rectangle-bleu-clair" stylesheets="@application.css" />
+      <Pane layoutX="51.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="381.0" prefWidth="696.0" styleClass="rectangle-bleu-clair" stylesheets="@application.css" />
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" prefWidth="225.0" styleClass="bouton" text="RETOUR" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" styleClass="bouton" text="CRÉER" />
    </children>
 </Pane>
