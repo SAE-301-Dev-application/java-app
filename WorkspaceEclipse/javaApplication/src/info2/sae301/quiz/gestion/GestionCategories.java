@@ -47,6 +47,8 @@ public class GestionCategories {
 		if (categorieExiste(intitule) == -1) {
 			Categorie categorieCreee = new Categorie(intitule);
 			listeToutesCategories.add(categorieCreee);
+		} else {
+			throw new IllegalArgumentException("Cette catégorie existe déjà");
 		}
 	}
 	
