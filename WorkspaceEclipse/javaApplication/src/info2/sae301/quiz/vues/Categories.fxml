@@ -16,9 +16,29 @@
             <String fx:value="arrondi" />
          </styleClass>
       </Button>
-      <Label graphicTextGap="8.0" layoutX="149.0" layoutY="55.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
-      <Pane layoutX="51.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="381.0" prefWidth="696.0" styleClass="rectangle-bleu-clair" stylesheets="@application.css" />
+      <Label graphicTextGap="8.0" layoutX="249.0" layoutY="30.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
+      <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
+         <children>
+            <VBox prefHeight="359.0" prefWidth="733.0" styleClass="paddingVboxRectangle">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </VBox>
+         </children>
+      </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" prefWidth="225.0" styleClass="bouton" text="RETOUR" />
       <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" styleClass="bouton" text="CRÉER" />
+      <Button layoutX="592.0" layoutY="112.0" mnemonicParsing="false" text="SUPRIMMER">
+         <styleClass>
+            <String fx:value="bouton" />
+            <String fx:value="petit-bouton" />
+         </styleClass>
+      </Button>
+      <Button layoutX="407.0" layoutY="112.0" mnemonicParsing="false" text="RENOMMER">
+         <styleClass>
+            <String fx:value="bouton" />
+            <String fx:value="petit-bouton" />
+         </styleClass>
+      </Button>
    </children>
 </Pane>

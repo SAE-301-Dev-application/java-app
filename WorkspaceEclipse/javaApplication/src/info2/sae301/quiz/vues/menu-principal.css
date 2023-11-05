@@ -18,3 +18,7 @@
 .conteneur-boutons {
 	-fx-spacing: 10px;  /* FIXME: faire fonctionner le spacing, qui ne se met que sur SceneBuilder */
 }
+
+.conteneurHbox {
+	-fx-alignment: top-center;
+}

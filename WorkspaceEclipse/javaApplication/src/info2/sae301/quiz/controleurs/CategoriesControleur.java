@@ -27,6 +27,7 @@ public class CategoriesControleur {
 	
 	@FXML
 	private void boutonRetour() {
+		ControleurNavigation.changerVue("MenuPrincipal.fxml");
 	}
 	
 	@FXML
