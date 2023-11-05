@@ -30,6 +30,16 @@ public class Categorie {
 	 * @param intitule
 	 * @param questions
 	 */
+	public Categorie(String intitule) {
+		this.intitule = intitule;
+	}
+    
+    
+    /**
+     *  Nouvelle catégorie de questions identifiée par son intitulé
+	 * @param intitule
+	 * @param questions
+	 */
 	public Categorie(String intitule, ArrayList<Question> questions) {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
