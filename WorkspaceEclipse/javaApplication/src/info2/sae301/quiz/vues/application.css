@@ -71,11 +71,10 @@ VBox {
 }
 
 TextField {
-	-fx-pref-width: 45px;
 	-fx-pref-height: 45px;
 	
 	-fx-background-color: #2E3469;
-	
+	-fx-background-radius: 20px;
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
 	-fx-font-size: 20px;
@@ -83,6 +82,7 @@ TextField {
 	-fx-prompt-text-fill: white;
 	-fx-prompt-font-weight:normal;
 }
+
 
 .boutonAnnuler {
 	-fx-background-color: rgba(153, 38, 0, 0.5);
@@ -96,4 +96,11 @@ TextField {
 	-fx-background-color: #2E3469;
 	-fx-pref-width: 45px;
 	-fx-pref-height: 45px;
+	-fx-background-radius: 30px;
+}
+
+ChoiceBox {
+	-fx-background-color: #272c59;
+	-fx-background-radius: 20px;
+	-fx-text-fill: white;
 }

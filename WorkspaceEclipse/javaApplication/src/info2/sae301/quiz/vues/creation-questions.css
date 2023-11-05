@@ -1,0 +1,48 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+.titre {
+	-fx-text-fill: white;
+	-fx-font-size: 52px;
+	-fx-font-weight: bold;
+}
+
+.label-champ {
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 13px;
+	-fx-padding: 0 10 0 0;
+}
+
+.textfield{
+	-fx-background-color:#272c59;
+	-fx-font-size: 13px;
+	-fx-pref-height: 30px;
+}
+
+.text-area {
+	-fx-background-color:#272c59;
+	-fx-font-size: 13px;
+	-fx-pref-height: 100px;
+	-fx-padding: 0 10px;
+}
+
+
+.space {
+	-fx-spacing: 5px;
+}
+
+.vbox {
+	-fx-alignment: left;
+	-fx-padding: 10 10 5 5;
+}
+
+.bouton-ajouter {
+	-fx-pref-width: 150px;
+	-fx-pref-height:30px;
+	-fx-font-weight: 900;
+	-fx-background-color: #272C58;
+	-fx-text-fill: white;
+	-fx-background-radius: 20px;
+	-fx-font-size: 12px;
+}
