@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
@@ -9,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#boutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
@@ -24,17 +29,17 @@
          </stylesheets></Label>
       <VBox layoutX="63.0" layoutY="176.0" prefHeight="323.0" prefWidth="673.0" styleClass="conteneur-boutons">
          <children>
-            <TextField prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@creation-categorie.css" />
+            <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@creation-categorie.css" />
          </children>
       </VBox>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" stylesheets="@creation-categorie.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@creation-categorie.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" stylesheets="@creation-categorie.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@creation-categorie.css" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
