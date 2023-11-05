@@ -7,13 +7,11 @@ package info2.sae301.quiz.gestion.tests;
 
 import info2.sae301.quiz.Categorie;
 import info2.sae301.quiz.Question;
-import info2.sae301.quiz.gestion.GestionCategories;
 import info2.sae301.quiz.gestion.GestionQuestions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -141,33 +139,17 @@ class TestGestionQuestions {
 	public void testSupprimer() {
 		ArrayList<Question> questionsTest = listeQuestionsTest;
 		
-		System.out.println("Liste méthode : ");
-		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			GestionQuestions.ajouter(listeQuestionsTest.get(i));
-			System.out.println(listeQuestionsTest.get(i).getIntitule());
+		// Ajout à GestionQuestions des questions de questionsTest.
+		for (int i = 0; i < questionsTest.size(); i++) {
+			GestionQuestions.ajouter(questionsTest.get(i));
 		}
-		System.out.println("\n\nListe test : ");
-		
-		for (Question q : questionsTest) {
-			System.out.println(q.getIntitule());
-		}
-		
-		System.out.println("\n\n");
 		
 		// Tests de suppression de 1 question en 1 question
 		for (int i = 0; i < listeQuestionsTest.size() / 2; i++) {
-			System.out.println("\nETAPE N°" + i);
-			Question[] questionsASupprimer = new Question[1];
-			questionsASupprimer[0] = listeQuestionsTest.get(i);
-			System.out.println("Question à supprimer = " + questionsASupprimer[0].getIntitule());
-			System.out.println(GestionQuestions.getListeToutesQuestions().get(0).getIntitule());
-			System.out.println(questionsTest.get(0).getIntitule());
+			Question[] questionsASupprimer = {questionsTest.get(0)};
 			
 			GestionQuestions.supprimer(questionsASupprimer);
 			questionsTest.remove(0);
-			
-			System.out.println(GestionQuestions.getListeToutesQuestions().size());
-			System.out.println(questionsTest.size());
 			
 			assertTrue(listesMemesQuestions(questionsTest,
 		  	                                GestionQuestions
@@ -175,17 +157,17 @@ class TestGestionQuestions {
 		}
 		
 		// Test de suppression de plusieurs questions
-//		int deuxiemeMoitie = questions.length / 2;
-//		Categorie[] categoriesASupprimer = new Categorie[deuxiemeMoitie];
-//		for (int i = deuxiemeMoitie, j = 0; i < questions.length; i++, j++) {
-//			categoriesASupprimer[j] = new Categorie(questions[i]);
-//			listeQuestionsTest.remove(1);
-//		}
-//		GestionQuestions.supprimer(categoriesASupprimer); 
-//		
-//		assertTrue(listesMemesQuestions(listeQuestionsTest,
-//				 						 GestionQuestions
-//				 						 .getListeToutesQuestions()));
+		Question[] questionsASupprimer = new Question[listeQuestionsTest.size() / 2];
+		
+		for (int i = 0; i < questionsASupprimer.length; i++) {
+			questionsASupprimer[i] = questionsTest.get(0);
+			questionsTest.remove(0);
+		}
+		GestionQuestions.supprimer(questionsASupprimer); 
+		
+		assertTrue(listesMemesQuestions(questionsTest,
+				 						GestionQuestions
+				 						.getListeToutesQuestions()));
 	}
 	
 	/**
