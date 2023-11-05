@@ -36,7 +36,9 @@
 	-fx-pref-width: 20px;
 	-fx-pref-height: 20px;
 }
-
+.rectangle-bleu-clair {
+	-fx-background-color: #2E3469;
+}
 .bouton {
 	-fx-pref-width: 310px;
 	-fx-pref-height: 60px;
