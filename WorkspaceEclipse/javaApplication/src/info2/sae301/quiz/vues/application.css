@@ -111,3 +111,8 @@ ChoiceBox {
 	-fx-padding: 20px;
 	
 }
+
+.boutonSuivantPrecedent {
+	-fx-pref-width: 99px;
+	-fx-pref-height: 24px;
+}
