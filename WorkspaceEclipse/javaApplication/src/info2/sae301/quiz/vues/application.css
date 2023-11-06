@@ -121,3 +121,14 @@ ChoiceBox {
 	-fx-text-fill: white;
 	-fx-font-size: 16px;
 }
+
+.labelCliquable {
+	-fx-background-color: #272C58;
+	-fx-background-radius: 20px;
+	-fx-font-size: 16px;
+	-fx-padding: 10px;
+	-fx-text-fill: white;
+}
+.labelCliquable:hover {
+	-fx-opacity: .6;
+}
