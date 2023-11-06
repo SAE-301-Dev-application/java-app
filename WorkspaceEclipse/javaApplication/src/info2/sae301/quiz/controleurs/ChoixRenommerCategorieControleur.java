@@ -2,14 +2,22 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-import info2.sae301.quiz.Categorie;
-import info2.sae301.quiz.gestion.GestionCategories;
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.Categorie;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class ControleurSelectionCategorieARenommer {
+public class ChoixRenommerCategorieControleur {
+	
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
 	private VBox vBoxCategories;
@@ -23,7 +31,7 @@ public class ControleurSelectionCategorieARenommer {
 	/** Indice de la première catégorie affichée sur la "page" courante. */
 	private int indiceCategorie = 0; 
 	
-	private ArrayList<Categorie> toutesLesCategories = GestionCategories.getListeToutesCategories();
+	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
 	private Label categorieCourante;
 	
@@ -34,37 +42,37 @@ public class ControleurSelectionCategorieARenommer {
 				       .toExternalForm());
 		
 		if (toutesLesCategories.size() < 5) {
-			GestionCategories.creer("2ème catégorie");
-			GestionCategories.creer("3ème catégorie");
-			GestionCategories.creer("4ème catégorie");
-			GestionCategories.creer("5ème catégorie");
-			GestionCategories.creer("6ème catégorie");
-			GestionCategories.creer("7ème catégorie");
-			GestionCategories.creer("8ème catégorie");
-			GestionCategories.creer("9ème catégorie");
-			GestionCategories.creer("10ème catégorie");
-			GestionCategories.creer("11ème catégorie");
-			GestionCategories.creer("12ème catégorie");
-			GestionCategories.creer("13ème catégorie");
-			GestionCategories.creer("14ème catégorie");
-			GestionCategories.creer("15ème catégorie");
-			GestionCategories.creer("16ème catégorie");
-			GestionCategories.creer("17ème catégorie");
-			GestionCategories.creer("18ème catégorie");
-			GestionCategories.creer("19ème catégorie");
-			GestionCategories.creer("20ème catégorie");
-			GestionCategories.creer("21ème catégorie");
-			GestionCategories.creer("22ème catégorie");
-			GestionCategories.creer("23ème catégorie");
-			GestionCategories.creer("24ème catégorie");
-			GestionCategories.creer("25ème catégorie");
-			GestionCategories.creer("26ème catégorie");
-			GestionCategories.creer("27ème catégorie");
-			GestionCategories.creer("28ème catégorie");
-			GestionCategories.creer("29ème catégorie");
-			GestionCategories.creer("30ème catégorie");
+			jeu.creerCategorie("2ème catégorie");
+			jeu.creerCategorie("3ème catégorie");
+			jeu.creerCategorie("4ème catégorie");
+			jeu.creerCategorie("5ème catégorie");
+			jeu.creerCategorie("6ème catégorie");
+			jeu.creerCategorie("7ème catégorie");
+			jeu.creerCategorie("8ème catégorie");
+			jeu.creerCategorie("9ème catégorie");
+			jeu.creerCategorie("10ème catégorie");
+			jeu.creerCategorie("11ème catégorie");
+			jeu.creerCategorie("12ème catégorie");
+			jeu.creerCategorie("13ème catégorie");
+			jeu.creerCategorie("14ème catégorie");
+			jeu.creerCategorie("15ème catégorie");
+			jeu.creerCategorie("16ème catégorie");
+			jeu.creerCategorie("17ème catégorie");
+			jeu.creerCategorie("18ème catégorie");
+			jeu.creerCategorie("19ème catégorie");
+			jeu.creerCategorie("20ème catégorie");
+			jeu.creerCategorie("21ème catégorie");
+			jeu.creerCategorie("22ème catégorie");
+			jeu.creerCategorie("23ème catégorie");
+			jeu.creerCategorie("24ème catégorie");
+			jeu.creerCategorie("25ème catégorie");
+			jeu.creerCategorie("26ème catégorie");
+			jeu.creerCategorie("27ème catégorie");
+			jeu.creerCategorie("28ème catégorie");
+			jeu.creerCategorie("29ème catégorie");
+			jeu.creerCategorie("30ème catégorie");
 			
-			toutesLesCategories = GestionCategories.getListeToutesCategories();
+			toutesLesCategories = jeu.getToutesLesCategories();
 		}
 		
 		if (indiceCategorie < 5) {

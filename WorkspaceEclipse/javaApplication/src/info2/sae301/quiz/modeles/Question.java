@@ -3,8 +3,7 @@
  * IUT de Rodez, no copyright ni "copyleft"
  */
 
-package info2.sae301.quiz;
-
+package info2.sae301.quiz.modeles;
 
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté

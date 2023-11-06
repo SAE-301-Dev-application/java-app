@@ -1,11 +1,20 @@
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-public class ModificationQuestionControleur {
+public class ModificationQuestionsControleur {
 
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu = Quiz.jeu;
+	
 	@FXML
 	private TextField intituleQuestion;
 	

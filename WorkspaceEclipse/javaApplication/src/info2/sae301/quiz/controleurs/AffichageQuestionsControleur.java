@@ -7,12 +7,10 @@ import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class EditerQuestionControleur {
+public class AffichageQuestionsControleur {
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -25,21 +23,27 @@ public class EditerQuestionControleur {
 	
 	@FXML
 	private void initialize() {
-		ArrayList<Question> toutesLesQuestions = jeu.getToutesLesQuestions();
-		
-		Label questionCourante;
-		
-		for (Question question : toutesLesQuestions) {
-			questionCourante = new Label(question.getIntitule());
-			questionCourante.getStyleClass().add("labelCliquable");
-			
-			vBox.getChildren().add(questionCourante);
-		}
+//		ArrayList<Question> toutesLesQuestions = jeu.getToutesLesQuestions();
+//		Label questionCourante;
+//		
+//		for (Question question : toutesLesQuestions) {
+//			questionCourante = new Label(question.getIntitule());
+//			questionCourante.getStyleClass().add("intituleCategorieQuestion");
+//			vBox.getChildren().add(questionCourante);
+//		}
 	}
 
 	@FXML
 	private void boutonAide() {
 //		ControleurNavigation.changerVue("GestionDesQuestions.fxml");  // TODO: implémenter la fenêtre d'aide
+	}
+	@FXML
+	private void boutonEditer() {
+		ControleurNavigation.changerVue("EditerQuestions.fxml");
+	}
+	@FXML
+	private void boutonSupprimer() {
+		ControleurNavigation.changerVue("SuppressionQuestions.fxml");
 	}
 	
 	@FXML
@@ -52,12 +56,12 @@ public class EditerQuestionControleur {
 	
 	@FXML
 	private void boutonRetour() {
-		ControleurNavigation.changerVue("AffichageQuestions.fxml");
+		ControleurNavigation.changerVue("MenuPrincipal.fxml");
 	}
 	
 	@FXML
-	private void editerQuestion() {
-		// TODO: implémenter form
+	private void boutonCreer() {
+		ControleurNavigation.changerVue("CreationQuestions.fxml"); 
 	}
 	
 	
