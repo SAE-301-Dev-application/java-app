@@ -79,6 +79,7 @@ public class CreationQuestionControleur {
 		
 		for (TextField reponseFausse: this.reponsesFausses) {
 			reponsesFausses.add(reponseFausse.getText());
+			System.out.println(reponseFausse.getText());
 		}
 		
 		intitule = this.intitule.getText();
