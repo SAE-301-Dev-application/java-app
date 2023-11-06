@@ -20,14 +20,14 @@ public class CreationCategoriesControleur {
 	
 	@FXML
 	private void boutonAnnuler() {
-		ControleurNavigation.changerVue("Categories.fxml");
+		ControleurNavigation.changerVue("AffichageCategories.fxml");
 	}
 	
 	@FXML
 	private void boutonEnregistrer() {
 		try {
 			GestionCategories.creer(nouveauNomCategorie.getText());
-			ControleurNavigation.changerVue("Categories.fxml");
+			ControleurNavigation.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			ControleurAlerte.autreAlerte(e.getMessage(),
 										 TITRE_ALERTE, AlertType.ERROR);

@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class CategoriesControleur {
+public class ControleurSelectionCategorieARenommer {
 	
 	@FXML
 	private VBox vBoxCategories;
@@ -79,8 +79,17 @@ public class CategoriesControleur {
 			 indiceCategorieCourante++) {
 			categorieCourante = new Label(toutesLesCategories.get(indiceCategorieCourante).getIntitule());
 			categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+			
+			if (!toutesLesCategories.get(indiceCategorieCourante)
+					                .getIntitule().equals("Général")) {
+				//categorieCourante.getStyleClass().add("");
+				// TODO : créer style boutons catégories
+			}
+			
 			vBoxCategories.getChildren().add(categorieCourante);	
 		}
+		System.out.println("Indice question après init : " + indiceCategorie);
+		
 	}
 	
 	@FXML
@@ -147,24 +156,8 @@ public class CategoriesControleur {
 	}
 	
 	@FXML
-	private void boutonRenommer() {
-		ControleurNavigation.changerVue("SelectionCategorieARenommer.fxml");
+	private void actionBoutonAnnuler() {
+		ControleurNavigation.changerVue("AffichageCategories.fxml");
 	}
-	
-	@FXML
-	private void boutonSupprimer() {
-		ControleurNavigation.changerVue("SuppressionCategories.fxml");
-	}
-	
-	@FXML
-	private void actionBoutonRetour() {
-		ControleurNavigation.changerVue("MenuPrincipal.fxml");
-	}
-	
-	@FXML
-	private void actionBoutonCreer() {
-		ControleurNavigation.changerVue("CreationCategories.fxml");
-	}
-	
 	
 }

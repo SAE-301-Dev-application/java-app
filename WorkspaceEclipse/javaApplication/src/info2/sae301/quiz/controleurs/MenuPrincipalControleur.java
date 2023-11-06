@@ -21,7 +21,7 @@ public class MenuPrincipalControleur {
 	
 	@FXML
 	private void boutonCategories() {
-		ControleurNavigation.changerVue("Categories.fxml");
+		ControleurNavigation.changerVue("AffichageCategories.fxml");
 	}
 	
 	@FXML
