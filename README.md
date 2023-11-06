@@ -1,36 +1,31 @@
 <div align="center">
 
-# DÈveloppement Java
+# D√©veloppement Java
 
----
 </div>
 
-Le but de ce projet est de permettre ‡ des utilisateurs, principalement en informatique, de tester leurs connaissances sur des quiz. 
-L'utilisateur peut:
-Cette application de quiz est rÈalisÈe en Java avec une interface graphique avec JavaFX et une mise en page en CSS.
+Le but de ce projet est de permettre √† des utilisateurs, principalement en informatique, de tester leurs connaissances sur des quiz. 
+Cette application de quiz est r√©alis√©e en Java avec une interface graphique avec JavaFX et une mise en page en CSS.
 
 ## Features
 
----
 - Passer des quiz
-- CrÈer / modifier ses questions et ses catÈgories
+- Cr√©er / modifier ses questions et ses cat√©gories
 - Obtenir de l'aide
-- Importer des donnÈes depuis un fichier csv
-- Importer des donnÈes depuis un ordinateur distant
+- Importer des donn√©es depuis un fichier csv
+- Importer des donn√©es depuis un ordinateur distant
 - Avoir un pseudo
-## Installation
 
----
-
-
-## Sources
-
----
+## Contributeurs (Nom pr√©nom / mail / page GitHub)
+- FABRE Florian / florian.fabre@iut-rodez.fr / [Florian](https://github.com/Odonata971)
+- FAUGI√àRES Lo√Øc / loic.faugieres@iut-rodez.fr / [Lo√Øc](https://github.com/xGk93)
+- GUIL Jonathan / jonathan.guil@iut-rodez.fr / [Jonathan](https://github.com/belicfr)
+- GUIRAUD Simon / simon.guiraud@iut-rodez.fr / [Simon](https://github.com/SyberSim)
+- LACAM Samuel / samuel.lacam@iut-rodez.fr / [Samuel](https://github.com/SamuelLacam)
 
 
 ## Liens
 
----
 - Github : https://github.com/SAE-301-Dev-application/java-app
 - Google drive : https://drive.google.com/drive/u/1/folders/0AAgUBn2XFZXuUk9PVA
 
