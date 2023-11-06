@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.SupprimerQuestionsControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.SuppressionQuestionsControleur">
    <children>
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
          <styleClass>
@@ -37,6 +37,11 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonRetour" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" text="SUPPRIMER">
+         <styleClass>
+            <String fx:value="bouton" />
+            <String fx:value="boutonAnnuler" />
+         </styleClass></Button>
       <ChoiceBox layoutX="83.0" layoutY="111.0" prefHeight="26.0" prefWidth="238.0" styleClass="petit-bouton" />
    </children>
 </Pane>

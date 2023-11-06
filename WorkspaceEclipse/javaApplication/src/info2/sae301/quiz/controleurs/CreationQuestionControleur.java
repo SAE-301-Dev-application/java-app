@@ -3,10 +3,11 @@ package info2.sae301.quiz.controleurs;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import info2.sae301.quiz.Categorie;
-import info2.sae301.quiz.Question;
-import info2.sae301.quiz.gestion.GestionCategories;
-import info2.sae301.quiz.gestion.GestionQuestions;
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -20,6 +21,12 @@ public class CreationQuestionControleur {
 
 	private static final String MESSAGE_ERREUR_TROP_DE_CARACTERE =
 			"Vous ne pouvez pas mettre plus de 20 caractères";
+	
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
 	private TextField intitule;
@@ -69,12 +76,12 @@ public class CreationQuestionControleur {
 		
 		nomCategorie = this.nomCategorie.getValue().toString();
 		
-		indiceCategorie = GestionCategories.categorieExiste(nomCategorie);
+		indiceCategorie = jeu.categorieExiste(nomCategorie);
 		
 		if (indiceCategorie == -1) {
 			// TODO: implémenter dialogbox avec erreur.
 		}
-		categorie = GestionCategories.getListeToutesCategories().get(indiceCategorie);
+		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
 		
 		for (TextField reponseFausse: this.reponsesFausses) {
@@ -94,7 +101,7 @@ public class CreationQuestionControleur {
 					       reponsesFausses.toArray(new String[reponsesFausses.size()]),
 					       difficulte, categorie);
 			
-			GestionQuestions.ajouter(nouvelleQuestion);
+			jeu.ajouterQuestion(nouvelleQuestion);
 		} catch (Exception e) {
 			ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);

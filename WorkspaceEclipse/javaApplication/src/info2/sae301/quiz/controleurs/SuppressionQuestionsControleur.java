@@ -2,23 +2,30 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-import info2.sae301.quiz.Question;
-import info2.sae301.quiz.gestion.GestionCategories;
-import info2.sae301.quiz.gestion.GestionQuestions;
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.Question;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class SupprimerQuestionsControleur {
+public class SuppressionQuestionsControleur {
+	
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
 	private VBox vBox;
 	
 	@FXML
 	private void initialize() {
-		ArrayList<Question> toutesLesQuestions = GestionQuestions.getListeToutesQuestions();
+		ArrayList<Question> toutesLesQuestions = jeu.getToutesLesQuestions();
 		
 		HBox ligneQuestion;
 		CheckBox caseQuestion;

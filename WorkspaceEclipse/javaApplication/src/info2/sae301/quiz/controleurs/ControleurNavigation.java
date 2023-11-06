@@ -57,7 +57,7 @@ public class ControleurNavigation {
 	 */
 	public static void changerVue(String routeVueFXML) {
 		if (sceneCourante == null) {
-			System.out.println("ERREUR : aucune scène courante !");
+			System.out.println("Erreur : aucune scène courante !");
 			return;  // TEMP
 		}
 
@@ -76,11 +76,7 @@ public class ControleurNavigation {
 		}
 	}
 	
-	/**
-	 * Retourne la scène courante.
-	 * 
-	 * @return La scène courante
-	 */
+	/** @return La scène courante. */
 	public static Scene getScene() {
 		return sceneCourante;
 	}

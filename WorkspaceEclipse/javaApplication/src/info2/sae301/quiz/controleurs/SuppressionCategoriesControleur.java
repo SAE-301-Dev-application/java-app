@@ -2,9 +2,10 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-import info2.sae301.quiz.Categorie;
-import info2.sae301.quiz.gestion.GestionCategories;
-import info2.sae301.quiz.gestion.GestionQuestions;
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.Categorie;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,6 +14,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class SuppressionCategoriesControleur {
+	
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
 	private VBox vBoxCategories;
@@ -26,7 +33,7 @@ public class SuppressionCategoriesControleur {
 	/** Indice de la première catégorie affichée sur la "page" courante. */
 	private int indiceCategorie = 0; 
 	
-	private ArrayList<Categorie> toutesLesCategories = GestionCategories.getListeToutesCategories();
+	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
 	private Label categorieCourante;
 	

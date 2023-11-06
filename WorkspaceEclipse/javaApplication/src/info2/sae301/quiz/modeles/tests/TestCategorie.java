@@ -2,18 +2,18 @@
  * TestCategorie.java									3 nov. 2023
  * IUT de Rodez, no copyright ni "copyleft"
  */
-package info2.sae301.quiz.tests;
+package info2.sae301.quiz.modeles.tests;
 
 import static org.junit.jupiter.api.Assertions.*;  
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import info2.sae301.quiz.Categorie;
-import info2.sae301.quiz.Question;
 
 /**
  * Classe de test de Categorie.java
@@ -48,7 +48,7 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
 	 */
 	@Test
 	void testCategorieAvecListe() {
@@ -59,7 +59,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#Categorie(java.lang.String)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String)}.
 	 */
 	@Test
 	void testCategorieIntituleSeul() {
@@ -83,7 +83,7 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#getIntitule()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#getIntitule()}.
 	 */
 	@Test
 	void testGetIntitule() {
@@ -92,7 +92,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#ajouterQuestion(info2.sae301.quiz.Question)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#ajouterQuestion(info2.sae301.quiz.modeles.Question)}.
 	 */
 	@Test
 	void testAjouterQuestion() {
@@ -107,7 +107,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#estVide()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#estVide()}.
 	 */
 	@Test
 	void testEstVide() {
@@ -117,7 +117,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#nbQuestions()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#nbQuestions()}.
 	 */
 	@Test
 	void testNbQuestions() {
@@ -126,7 +126,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#getListeQuestions()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#getListeQuestions()}.
 	 */
 	@Test
 	void testGetListeQuestions() {
@@ -135,7 +135,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#setIntitule(java.lang.String)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#setIntitule(java.lang.String)}.
 	 */
 	@Test
 	void testSetIntitule() {
@@ -153,7 +153,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#supprimerQuestion(info2.sae301.quiz.Question)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#supprimerQuestion(info2.sae301.quiz.modeles.Question)}.
 	 */
 	@Test
 	void testSupprimerQuestion() {
@@ -165,7 +165,7 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Categorie#supprimerToutesQuestions()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#supprimerToutesQuestions()}.
 	 */
 	@Test
 	void testSupprimerToutesQuestions() {

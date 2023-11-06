@@ -3,7 +3,7 @@
  * IUT de Rodez, no copyright ni "copyleft"
  */
 
-package info2.sae301.quiz;
+package info2.sae301.quiz.modeles;
 
 import java.util.ArrayList; 
 

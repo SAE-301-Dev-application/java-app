@@ -2,7 +2,7 @@
  * TestQuestion.java									3 nov. 2023
  * IUT de Rodez, no copyright ni "copyleft"
  */
-package info2.sae301.quiz.tests;
+package info2.sae301.quiz.modeles.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,8 +11,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import info2.sae301.quiz.Categorie;
-import info2.sae301.quiz.Question;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
 
 /**
  * Classe de test de Question.java
@@ -42,7 +42,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, info2.sae301.quiz.Categorie)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, info2.sae301.quiz.modeles.Categorie)}.
 	 */
 	@Test
 	void testQuestionSansFeedBack() {
@@ -52,7 +52,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, java.lang.String, info2.sae301.quiz.Categorie)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, java.lang.String, info2.sae301.quiz.modeles.Categorie)}.
 	 */
 	@Test
 	void testQuestionAvecFeedback() {
@@ -63,7 +63,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getIntitule()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getIntitule()}.
 	 */
 	@Test
 	void testGetIntitule() {
@@ -75,7 +75,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getReponseJuste()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getReponseJuste()}.
 	 */
 	@Test
 	void testGetReponseJuste() {
@@ -87,7 +87,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getReponsesFausses()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getReponsesFausses()}.
 	 */
 	@Test
 	void testGetReponsesFausses() {
@@ -103,7 +103,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getDifficulte()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getDifficulte()}.
 	 */
 	@Test
 	void testGetDifficulte() {
@@ -115,7 +115,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getFeedback()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getFeedback()}.
 	 */
 	@Test
 	void testGetFeedback() {
@@ -126,7 +126,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#getCategorie()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#getCategorie()}.
 	 */
 	@Test
 	void testGetCategorie() {
@@ -151,7 +151,7 @@ class TestQuestion {
 	
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setIntitule(java.lang.String)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setIntitule(java.lang.String)}.
 	 */
 	@Test
 	void testSetIntitule() {
@@ -170,7 +170,7 @@ class TestQuestion {
 
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setReponseJuste(java.lang.String)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setReponseJuste(java.lang.String)}.
 	 */
 	@Test
 	void testSetReponseJuste() {
@@ -185,7 +185,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setReponsesFausses(java.lang.String[])}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setReponsesFausses(java.lang.String[])}.
 	 */
 	@Test
 	void testSetReponsesFausses() {
@@ -208,7 +208,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setDifficulte(int)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setDifficulte(int)}.
 	 */
 	@Test
 	void testSetDifficulte() {
@@ -227,7 +227,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setFeedback(java.lang.String)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setFeedback(java.lang.String)}.
 	 */
 	@Test
 	void testSetFeedback() {
@@ -244,7 +244,7 @@ class TestQuestion {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.Question#setCategorie(info2.sae301.quiz.Categorie)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#setCategorie(info2.sae301.quiz.modeles.Categorie)}.
 	 */
 	@Test
 	void testSetCategorie() {
