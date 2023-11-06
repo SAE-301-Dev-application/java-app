@@ -33,5 +33,19 @@ public class ModificationQuestionControleur {
 	@FXML
 	private TextField reponseFausse4;
 	
+	@FXML
+	private void boutonAnnuler() {
+		ControleurNavigation.changerVue("EditerQuestion.fxml");
+	}
+	
+	@FXML
+	private void boutonEnregistrer() {
+		
+	}
+	
+	@FXML
+	private void boutonAide() {
+		
+	}
 	
 }
