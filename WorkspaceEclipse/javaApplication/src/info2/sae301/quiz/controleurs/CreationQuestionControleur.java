@@ -1,7 +1,9 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import info2.sae301.quiz.Categorie;
 import info2.sae301.quiz.Question;
 import info2.sae301.quiz.gestion.GestionCategories;
 import info2.sae301.quiz.gestion.GestionQuestions;
@@ -44,12 +46,16 @@ public class CreationQuestionControleur {
 	
 	@FXML
 	private void boutonAnnuler() {
-		ControleurNavigation.changerVue("Questions.fxml");
+		ControleurNavigation.changerVue("AffichageQuestions.fxml");
 	}
 	
 	@FXML
 	private void boutonEnregistrer() {
-		ArrayList<String> reponsesFausses;
+		
+		ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+				 					 TITRE_ALERTE, AlertType.ERROR);
+		
+		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
 		String intitule,
 			   nomCategorie,
@@ -57,13 +63,19 @@ public class CreationQuestionControleur {
 			   reponseJuste;
 		
 		int difficulte,
-			indiceCategorie;
+		    indiceCategorie;
+		
+		Categorie categorie;
 		
 		nomCategorie = this.nomCategorie.getValue().toString();
 		
-		if (GestionCategories.categorieExiste(nomCategorie) == -1) {
+		indiceCategorie = GestionCategories.categorieExiste(nomCategorie);
+		
+		if (indiceCategorie == -1) {
 			// TODO: implémenter dialogbox avec erreur.
 		}
+		categorie = GestionCategories.getListeToutesCategories().get(indiceCategorie);
+		
 		
 		for (TextField reponseFausse: this.reponsesFausses) {
 			reponsesFausses.add(reponseFausse.getText());
@@ -76,8 +88,12 @@ public class CreationQuestionControleur {
 		difficulte = Integer.parseInt(this.difficulte.getValue().toString());
 		
 		try {
-			Question nouvelleQuestion = new Question(intitule, reponseJuste, reponseFausse, difficulte, );
-			GestionQuestions.ajouter(null);
+			Question nouvelleQuestion
+			= new Question(intitule, reponseJuste,
+					       reponsesFausses.toArray(new String[reponsesFausses.size()]),
+					       difficulte, categorie);
+			
+			GestionQuestions.ajouter(nouvelleQuestion);
 		} catch (Exception e) {
 			ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);

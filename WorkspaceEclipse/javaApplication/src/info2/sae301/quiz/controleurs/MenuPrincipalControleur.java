@@ -26,7 +26,7 @@ public class MenuPrincipalControleur {
 	
 	@FXML
 	private void boutonQuestions() {
-		ControleurNavigation.changerVue("Questions.fxml");
+		ControleurNavigation.changerVue("AffichageQuestions.fxml");
 	}
 
 

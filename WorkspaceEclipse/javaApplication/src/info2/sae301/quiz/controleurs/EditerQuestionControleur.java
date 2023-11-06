@@ -45,7 +45,7 @@ public class EditerQuestionControleur {
 	
 	@FXML
 	private void boutonRetour() {
-		ControleurNavigation.changerVue("Questions.fxml");
+		ControleurNavigation.changerVue("AffichageQuestions.fxml");
 	}
 	
 	@FXML
