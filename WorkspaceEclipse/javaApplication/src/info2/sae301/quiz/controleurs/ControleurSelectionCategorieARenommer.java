@@ -82,8 +82,7 @@ public class ControleurSelectionCategorieARenommer {
 			
 			if (!toutesLesCategories.get(indiceCategorieCourante)
 					                .getIntitule().equals("Général")) {
-				//categorieCourante.getStyleClass().add("");
-				// TODO : créer style boutons catégories
+				categorieCourante.getStyleClass().add("labelCliquable");
 			}
 			
 			vBoxCategories.getChildren().add(categorieCourante);	

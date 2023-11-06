@@ -142,17 +142,17 @@ public class CategoriesControleur {
 	}
 	
 	@FXML
-	private void boutonAide() {
+	private void actionBoutonAide() {
 //		ControleurNavigation.changerVue("GestionDesCategories.fxml");
 	}
 	
 	@FXML
-	private void boutonRenommer() {
+	private void actionBoutonRenommer() {
 		ControleurNavigation.changerVue("SelectionCategorieARenommer.fxml");
 	}
 	
 	@FXML
-	private void boutonSupprimer() {
+	private void actionBoutonSupprimer() {
 		ControleurNavigation.changerVue("SuppressionCategories.fxml");
 	}
 	

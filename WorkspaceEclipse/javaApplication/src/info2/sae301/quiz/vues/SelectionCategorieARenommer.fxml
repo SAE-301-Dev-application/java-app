@@ -17,7 +17,11 @@
       <Label graphicTextGap="8.0" layoutX="249.0" layoutY="30.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
-            <VBox fx:id="vBoxCategories" layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0" styleClass="paddingVboxRectangle" />
+            <VBox fx:id="vBoxCategories" layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0">
+               <styleClass>
+                  <String fx:value="paddingVboxRectangle" />
+                  <String fx:value="vbox-liste" />
+               </styleClass></VBox>
             <Pane layoutX="14.0" layoutY="285.0" />
             <Button fx:id="boutonPrecedent" layoutX="31.0" layoutY="315.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" prefHeight="143.0" prefWidth="264.0" text="PRÉCÉDENT">
                <styleClass>
