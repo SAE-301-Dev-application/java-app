@@ -33,7 +33,7 @@ public class ControleurSelectionCategorieARenommer {
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
-		if (toutesLesCategories.size() < 10) {
+		if (toutesLesCategories.size() < 5) {
 			GestionCategories.creer("2ème catégorie");
 			GestionCategories.creer("3ème catégorie");
 			GestionCategories.creer("4ème catégorie");
@@ -67,15 +67,15 @@ public class ControleurSelectionCategorieARenommer {
 			toutesLesCategories = GestionCategories.getListeToutesCategories();
 		}
 		
-		if (indiceCategorie < 10) {
+		if (indiceCategorie < 5) {
 			boutonPrecedent.setVisible(false);
 		}
 
-		boutonSuivant.setVisible(toutesLesCategories.size() <= 10 ? false : true);
+		boutonSuivant.setVisible(toutesLesCategories.size() <= 5 ? false : true);
 		
 		for (int indiceCategorieCourante = 0;
 			 indiceCategorieCourante < toutesLesCategories.size()
-			 && indiceCategorieCourante < 10;
+			 && indiceCategorieCourante < 5;
 			 indiceCategorieCourante++) {
 			categorieCourante = new Label(toutesLesCategories.get(indiceCategorieCourante).getIntitule());
 			categorieCourante.getStyleClass().add("intituleCategorieQuestion");
@@ -85,60 +85,79 @@ public class ControleurSelectionCategorieARenommer {
 				categorieCourante.getStyleClass().add("labelCliquable");
 			}
 			
-			vBoxCategories.getChildren().add(categorieCourante);	
+			vBoxCategories.getChildren().add(categorieCourante);
+			
+			final int indice = indiceCategorieCourante;
+			categorieCourante.setOnMouseClicked(event -> {
+			    actionRenommerCategorie(indice);
+			});
 		}
 		System.out.println("Indice question après init : " + indiceCategorie);
 		
 	}
 	
+	private void actionRenommerCategorie(int indice) {
+		ControleurNavigation.changerVue("CreationCategories.fxml");
+	}
+	
 	@FXML
 	private void actionBoutonPrecedent() {
-		// On recule de 10 catégories.
-		indiceCategorie -= 10;
+		// On recule de 5 catégories.
+		indiceCategorie -= 5;
 		
 		System.out.println("indiceCategorie : " + indiceCategorie);
 		
-	    // Calcul de l'indice de début pour les 10 questions précédentes
-	    int indiceDebut = indiceCategorie; // Soustrayez 11 pour obtenir les 10 questions précédentes
-	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
+	    // Calcul de l'indice de début pour les 5 questions précédentes
+	    int indiceDebut = indiceCategorie;
+	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
 
 	    // Effacer le contenu actuel du VBox
 	    vBoxCategories.getChildren().clear();
 
-	    // Afficher les 10 questions précédentes
+	    // Afficher les 5 questions précédentes
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+	        
+	        if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
+	        	categorieCourante.getStyleClass().add("labelCliquable");
+	        }
+	        
 	        vBoxCategories.getChildren().add(categorieCourante);
 	    }
 	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
-	    boutonPrecedent.setVisible(indiceCategorie < 10 ? false : true);
+	    boutonPrecedent.setVisible(indiceCategorie < 5 ? false : true);
 	    
-	    // Afficher le bouton "Suivant" si il y a plus de 10 questions
-	    if (toutesLesCategories.size() > 10) {
+	    // Afficher le bouton "Suivant" si il y a plus de 5 questions
+	    if (toutesLesCategories.size() > 5) {
 	        boutonSuivant.setVisible(true);
 	    }
 	}
 	
 	@FXML
 	private void actionBoutonSuivant() {
-		// On passe les 10 catégories précédentes.
-		indiceCategorie += 10;
+		// On passe les 5 catégories précédentes.
+		indiceCategorie += 5;
 		
 		System.out.println("indiceCategorie : " + indiceCategorie);
 		
-	    // Calcul de l'indice de départ pour les 10 prochaines questions
+	    // Calcul de l'indice de départ pour les 5 prochaines questions
 	    int indiceDebut = indiceCategorie;
-	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
+	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
 
 	    // Effacer le contenu actuel du VBox
 	    vBoxCategories.getChildren().clear();
 
-	    // Afficher les 10 prochaines questions
+	    // Afficher les 5 prochaines questions
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+	        
+	        if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
+	        	categorieCourante.getStyleClass().add("labelCliquable");
+	        }
+	        
 	        vBoxCategories.getChildren().add(categorieCourante);
 	    }
 	    

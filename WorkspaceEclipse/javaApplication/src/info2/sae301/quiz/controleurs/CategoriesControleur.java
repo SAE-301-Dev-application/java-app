@@ -91,7 +91,7 @@ public class CategoriesControleur {
 		System.out.println("indiceCategorie : " + indiceCategorie);
 		
 	    // Calcul de l'indice de début pour les 10 questions précédentes
-	    int indiceDebut = indiceCategorie; // Soustrayez 11 pour obtenir les 10 questions précédentes
+	    int indiceDebut = indiceCategorie;
 	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
 
 	    // Effacer le contenu actuel du VBox
