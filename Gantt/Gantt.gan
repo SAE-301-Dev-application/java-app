@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-11-03" view-index="0" gantt-divider-location="440" resource-divider-location="334" version="3.2.3247" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-10-21" view-index="0" gantt-divider-location="542" resource-divider-location="334" version="2.8.11" locale="fr">
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="248" order="0"/>
-        <field id="tpd4" name="Date de début" width="95" order="1"/>
-        <field id="tpd5" name="Date de fin" width="96" order="2"/>
-        <option id="filter.completedTasks" value="false"/>
-        <option id="color.recent">
-            <![CDATA[#ffff66 #9999ff #66ccff #ffccff #ffcccc #cc66ff #9966ff #ff66cc #ccccff #ff99ff]]>
-        </option>
+        <field id="tpd3" name="Nom" width="351" order="0"/>
+        <field id="tpd4" name="Date de début" width="107" order="1"/>
+        <field id="tpd5" name="Date de fin" width="80" order="2"/>
+        <option id="color.recent"><![CDATA[#ffff66 #9999ff #66ccff #ffccff #ffcccc #cc66ff #9966ff #ff66cc #ccccff #ff99ff]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nom" width="227" order="0"/>
@@ -23,12 +20,8 @@
             <overriden-day-types/>
             <days/>
         </day-types>
-        <date year="2023" month="10" date="3" type="WORKING_DAY" color="#ccffcc">
-            <![CDATA[Début projet]]>
-        </date>
-        <date year="2023" month="12" date="7" type="WORKING_DAY" color="#ffcccc">
-            <![CDATA[Soutenance orale]]>
-        </date>
+        <date year="2023" month="10" date="3" type="WORKING_DAY" color="#ccffcc"><![CDATA[Début projet]]></date>
+        <date year="2023" month="12" date="7" type="WORKING_DAY" color="#ffcccc"><![CDATA[Soutenance orale]]></date>
     </calendars>
     <tasks empty-milestones="true">
         <taskproperties>
@@ -76,7 +69,7 @@
             </task>
             <task id="75" name="Fin sprint 1" color="#ffffff" meeting="false" start="2023-11-05" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="52" name="Sprint 2" color="#666666" meeting="false" start="2023-11-06" duration="14" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true">
+        <task id="52" name="Sprint 2" color="#666666" meeting="false" start="2023-11-06" duration="14" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="false">
             <task id="90" name="Début sprint 2" color="#ffffff" meeting="false" start="2023-11-06" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="297" name="Interface édition pseudonyme" color="#ffccff" meeting="false" start="2023-11-10" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="93" name="Fin sprint 2" color="#ffffff" meeting="false" start="2023-11-19" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
