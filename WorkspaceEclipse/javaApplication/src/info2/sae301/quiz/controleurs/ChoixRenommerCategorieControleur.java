@@ -37,7 +37,7 @@ public class ChoixRenommerCategorieControleur {
 	
 	@FXML
 	private void initialize() {
-		ControleurNavigation.getScene().getStylesheets()
+		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
@@ -85,35 +85,41 @@ public class ChoixRenommerCategorieControleur {
 			 indiceCategorieCourante < toutesLesCategories.size()
 			 && indiceCategorieCourante < 5;
 			 indiceCategorieCourante++) {
-			categorieCourante = new Label(toutesLesCategories.get(indiceCategorieCourante).getIntitule());
+			String intituleCategorie = toutesLesCategories.get(indiceCategorieCourante).getIntitule();
+			
+			categorieCourante = new Label(intituleCategorie);
 			categorieCourante.getStyleClass().add("intituleCategorieQuestion");
 			
-			if (!toutesLesCategories.get(indiceCategorieCourante)
-					                .getIntitule().equals("Général")) {
+			if (!intituleCategorie.equals("Général")) {
 				categorieCourante.getStyleClass().add("labelCliquable");
 			}
 			
 			vBoxCategories.getChildren().add(categorieCourante);
 			
-			final int indice = indiceCategorieCourante;
-			categorieCourante.setOnMouseClicked(event -> {
-			    actionRenommerCategorie(indice);
-			});
+			if (!intituleCategorie.equals("Général")) {
+				final String intitule = intituleCategorie;
+				categorieCourante.setOnMouseClicked(event -> {
+				    actionRenommerCategorie(intitule);
+				});
+			}
 		}
-		System.out.println("Indice question après init : " + indiceCategorie);
-		
 	}
 	
-	private void actionRenommerCategorie(int indice) {
-		ControleurNavigation.changerVue("CreationCategories.fxml");
+	/**
+	 * Changement de vue et modification de l'attribut de la catégorie sélectionnée
+	 * dans la classe de sauvegarde des paramètres, catégories et questions.
+	 * 
+	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
+	 */
+	private void actionRenommerCategorie(String intitule) {
+		this.jeu.setIntituleCategorieSelectionnee(intitule);
+		NavigationControleur.changerVue("RenommerCategories.fxml");
 	}
 	
 	@FXML
 	private void actionBoutonPrecedent() {
 		// On recule de 5 catégories.
 		indiceCategorie -= 5;
-		
-		System.out.println("indiceCategorie : " + indiceCategorie);
 		
 	    // Calcul de l'indice de début pour les 5 questions précédentes
 	    int indiceDebut = indiceCategorie;
@@ -124,14 +130,23 @@ public class ChoixRenommerCategorieControleur {
 
 	    // Afficher les 5 questions précédentes
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
+			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
+			
+	        categorieCourante = new Label(intituleCategorie);
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
 	        
-	        if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
+	        if (!intituleCategorie.equals("Général")) {
 	        	categorieCourante.getStyleClass().add("labelCliquable");
 	        }
 	        
-	        vBoxCategories.getChildren().add(categorieCourante);
+			vBoxCategories.getChildren().add(categorieCourante);
+			
+			if (!intituleCategorie.equals("Général")) {
+				final String intitule = intituleCategorie;
+				categorieCourante.setOnMouseClicked(event -> {
+				    actionRenommerCategorie(intitule);
+				});
+			}
 	    }
 	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
@@ -148,8 +163,6 @@ public class ChoixRenommerCategorieControleur {
 		// On passe les 5 catégories précédentes.
 		indiceCategorie += 5;
 		
-		System.out.println("indiceCategorie : " + indiceCategorie);
-		
 	    // Calcul de l'indice de départ pour les 5 prochaines questions
 	    int indiceDebut = indiceCategorie;
 	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
@@ -159,14 +172,23 @@ public class ChoixRenommerCategorieControleur {
 
 	    // Afficher les 5 prochaines questions
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
+			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
+			
+	        categorieCourante = new Label(intituleCategorie);
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
 	        
-	        if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
+	        if (!intituleCategorie.equals("Général")) {
 	        	categorieCourante.getStyleClass().add("labelCliquable");
 	        }
 	        
 	        vBoxCategories.getChildren().add(categorieCourante);
+	        
+			if (!intituleCategorie.equals("Général")) {
+				final String intitule = intituleCategorie;
+				categorieCourante.setOnMouseClicked(event -> {
+				    actionRenommerCategorie(intitule);
+				});
+			}
 	    }
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions
@@ -183,7 +205,7 @@ public class ChoixRenommerCategorieControleur {
 	
 	@FXML
 	private void actionBoutonAnnuler() {
-		ControleurNavigation.changerVue("AffichageCategories.fxml");
+		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
 }

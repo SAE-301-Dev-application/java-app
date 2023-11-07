@@ -44,7 +44,7 @@ public class ModificationQuestionsControleur {
 	
 	@FXML
 	private void boutonAnnuler() {
-		ControleurNavigation.changerVue("EditerQuestion.fxml");
+		NavigationControleur.changerVue("EditerQuestion.fxml");
 	}
 	
 	@FXML

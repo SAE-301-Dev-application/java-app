@@ -61,7 +61,7 @@ public class SuppressionQuestionsControleur {
 	
 	@FXML
 	private void boutonRetour() {
-		ControleurNavigation.changerVue("AffichageQuestions.fxml");
+		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
 	@FXML

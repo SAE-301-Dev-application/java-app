@@ -39,11 +39,11 @@ public class AffichageQuestionsControleur {
 	}
 	@FXML
 	private void boutonEditer() {
-		ControleurNavigation.changerVue("EditerQuestions.fxml");
+		NavigationControleur.changerVue("EditerQuestions.fxml");
 	}
 	@FXML
 	private void boutonSupprimer() {
-		ControleurNavigation.changerVue("SuppressionQuestions.fxml");
+		NavigationControleur.changerVue("SuppressionQuestions.fxml");
 	}
 	
 	@FXML
@@ -56,12 +56,12 @@ public class AffichageQuestionsControleur {
 	
 	@FXML
 	private void boutonRetour() {
-		ControleurNavigation.changerVue("MenuPrincipal.fxml");
+		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
 	@FXML
 	private void boutonCreer() {
-		ControleurNavigation.changerVue("CreationQuestions.fxml"); 
+		NavigationControleur.changerVue("CreationQuestions.fxml"); 
 	}
 	
 	

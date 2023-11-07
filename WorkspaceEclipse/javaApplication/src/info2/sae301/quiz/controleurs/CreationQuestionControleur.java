@@ -53,13 +53,13 @@ public class CreationQuestionControleur {
 	
 	@FXML
 	private void boutonAnnuler() {
-		ControleurNavigation.changerVue("AffichageQuestions.fxml");
+		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
 	@FXML
 	private void boutonEnregistrer() {
 		
-		ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+		AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 				 					 TITRE_ALERTE, AlertType.ERROR);
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
@@ -103,7 +103,7 @@ public class CreationQuestionControleur {
 			
 			jeu.ajouterQuestion(nouvelleQuestion);
 		} catch (Exception e) {
-			ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}

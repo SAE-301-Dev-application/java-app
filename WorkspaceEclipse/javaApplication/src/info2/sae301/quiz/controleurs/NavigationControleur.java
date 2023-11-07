@@ -16,7 +16,7 @@ import javafx.scene.Parent;
  * 
  * @author jonathan
  */
-public class ControleurNavigation {
+public class NavigationControleur {
 	
 	/**
 	 * Chemin vers le dossier racine des vues à partir du 
@@ -62,11 +62,11 @@ public class ControleurNavigation {
 		}
 
 		try {
-			System.out.println(ControleurNavigation.class.getResource(
+			System.out.println(NavigationControleur.class.getResource(
 							RACINE_VUES + routeVueFXML));
 			Parent racine;
 			racine = FXMLLoader.load(
-					ControleurNavigation.class.getResource(
+					NavigationControleur.class.getResource(
 							RACINE_VUES + routeVueFXML));
 			
 			sceneCourante.setRoot(racine);

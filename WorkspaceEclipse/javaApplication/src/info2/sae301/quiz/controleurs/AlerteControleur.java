@@ -6,7 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-public class ControleurAlerte {
+public class AlerteControleur {
 
 	public static boolean alerteConfirmation(String messageAlerte, String titreFenetre) {
 		Alert boiteDialogue;

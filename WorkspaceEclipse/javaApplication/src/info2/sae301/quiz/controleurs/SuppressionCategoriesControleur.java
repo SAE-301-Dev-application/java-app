@@ -154,7 +154,7 @@ public class SuppressionCategoriesControleur {
 	
 	@FXML
 	private void actionBoutonAnnuler() {
-		ControleurNavigation.changerVue("AffichageCategories.fxml");
+		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
 	@FXML

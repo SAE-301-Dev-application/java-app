@@ -25,6 +25,9 @@ public class Jeu {
 	/** Toutes les questions qui ont été créées sur le jeu. */
 	private ArrayList<Question> toutesLesQuestions;
 	
+	/** Intitulé de la catégorie à renommer qui a été sélectionnée. */
+	private String intituleCategorieSelectionnee;
+
 	/**
 	 * Construction d'une session de jeu initialisant ses questions
 	 * et catégories à vide.
@@ -34,6 +37,8 @@ public class Jeu {
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 		
 		this.toutesLesQuestions = new ArrayList<>();
+		
+		this.intituleCategorieSelectionnee = null;
 	}
 	
 	/** @return La liste des catégories créées. */
@@ -44,6 +49,37 @@ public class Jeu {
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
 		return toutesLesQuestions;
+	}
+	
+	/** @return L'intitulé de la catégorie sélectionnée. */
+	public String getIntituleCategorieSelectionnee() {
+		return intituleCategorieSelectionnee;
+	}
+	
+	/** @param nom L'intitulé de la catégorie sélectionnée. */
+	public void setIntituleCategorieSelectionnee(String intitule) {
+		this.intituleCategorieSelectionnee = intitule;
+	}
+	
+	/**
+	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
+	 * 
+	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
+	 */
+	public void renommerCategorieSelectionnee(String nouveauIntitule) {
+		final String CATEGORIE_INEXISTANTE
+		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
+		  + "être renommée.";
+		
+		int indiceCategorie = categorieExiste(this.intituleCategorieSelectionnee);
+		
+		if (indiceCategorie > 0) {
+			this.toutesLesCategories.get(indiceCategorie).setIntitule(nouveauIntitule);
+			// Désélection de la catégorie pour le changement de vue
+			this.intituleCategorieSelectionnee = null;
+		} else {
+			throw new IllegalArgumentException(CATEGORIE_INEXISTANTE);
+		}
 	}
 	
 	/**

@@ -37,7 +37,7 @@ public class AffichageCategoriesControleur {
 	
 	@FXML
 	private void initialize() {
-		ControleurNavigation.getScene().getStylesheets()
+		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
@@ -152,22 +152,22 @@ public class AffichageCategoriesControleur {
 	
 	@FXML
 	private void actionBoutonRenommer() {
-		ControleurNavigation.changerVue("ChoixRenommerCategories.fxml");
+		NavigationControleur.changerVue("ChoixRenommerCategories.fxml");
 	}
 	
 	@FXML
 	private void actionBoutonSupprimer() {
-		ControleurNavigation.changerVue("SuppressionCategories.fxml");
+		NavigationControleur.changerVue("SuppressionCategories.fxml");
 	}
 	
 	@FXML
 	private void actionBoutonRetour() {
-		ControleurNavigation.changerVue("MenuPrincipal.fxml");
+		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
 	@FXML
 	private void actionBoutonCreer() {
-		ControleurNavigation.changerVue("CreationCategories.fxml");
+		NavigationControleur.changerVue("CreationCategories.fxml");
 	}
 	
 }

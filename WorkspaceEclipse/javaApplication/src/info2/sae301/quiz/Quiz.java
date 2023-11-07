@@ -7,7 +7,7 @@ package info2.sae301.quiz;
 
 import java.io.IOException;
 
-import info2.sae301.quiz.controleurs.ControleurNavigation;
+import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -39,7 +39,7 @@ public class Quiz extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("vues/MenuPrincipal.fxml"));
 			
 			Scene scene = new Scene(root, 800, 600);
-			ControleurNavigation.setSceneCourante(scene);
+			NavigationControleur.setSceneCourante(scene);
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();

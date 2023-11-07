@@ -29,12 +29,12 @@ public class MenuPrincipalControleur {
 	
 	@FXML
 	private void boutonCategories() {
-		ControleurNavigation.changerVue("AffichageCategories.fxml");
+		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
 	@FXML
 	private void boutonQuestions() {
-		ControleurNavigation.changerVue("AffichageQuestions.fxml");
+		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 
 

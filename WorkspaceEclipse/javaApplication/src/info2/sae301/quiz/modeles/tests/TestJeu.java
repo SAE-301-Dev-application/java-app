@@ -14,6 +14,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -157,6 +158,36 @@ class TestJeu {
 					     jeu.getToutesLesQuestions()
 					                      .get(i).getIntitule());
 		}
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#getIntituleCategorieSelectionnee()}.
+	 */
+	@Test
+	public void testGetCategorieSelectionnee() {
+		fail("test à faire");
+		// TODO à faire
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#setIntituleCategorieSelectionnee()}.
+	 */
+	@Test
+	public void testSetCategorieSelectionnee() {
+		fail("test à faire");
+		// TODO à faire
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#renommerCategorieSelectionnee(String)}.
+	 */
+	@Test
+	public void testRenommerCategorieSelectionnee() {
+		fail("test à faire");
+		// TODO à faire
 	}
 	
 	/**

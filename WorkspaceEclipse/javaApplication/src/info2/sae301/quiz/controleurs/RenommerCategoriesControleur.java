@@ -8,9 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
-public class CreationCategoriesControleur {
+public class RenommerCategoriesControleur {
 	
-	private static final String TITRE_ALERTE = "Erreur de création";
+	private static final String TITRE_ALERTE = "Erreur de renommage";
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -19,22 +19,27 @@ public class CreationCategoriesControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextField nouveauNomCategorie;
+	private TextField entreeNomCategorie;
 	
 	@FXML
-	private void boutonAide() {
+	private void initialize() {
+		entreeNomCategorie.setText(jeu.getIntituleCategorieSelectionnee());
+	}
+	
+	@FXML
+	private void actionBoutonAide() {
 //		ControleurNavigation.changerVue("GestionDesCategories.fxml");
 	}
 	
 	@FXML
-	private void boutonAnnuler() {
+	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
 	@FXML
-	private void boutonEnregistrer() {
+	private void actionBoutonRenommer() {
 		try {
-			jeu.creerCategorie(nouveauNomCategorie.getText());
+			jeu.renommerCategorieSelectionnee(entreeNomCategorie.getText());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),
