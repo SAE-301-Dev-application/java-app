@@ -1,3 +1,8 @@
+/*
+ * ChoixRenommerCategorieControleur.java							 7 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
@@ -11,6 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Contrôleur FXML de la vue ChoixRenommerCategories qui affiche la liste des
+ * catégories sous forme de boutons.
+ */
 public class ChoixRenommerCategorieControleur {
 	
 	/**
@@ -35,74 +44,58 @@ public class ChoixRenommerCategorieControleur {
 	
 	private Label categorieCourante;
 	
+	/**
+	 * Initialisation de la vue avec le style css correspondant et l'affichage
+	 * des catégories et du bouton suivant.
+	 */
 	@FXML
 	private void initialize() {
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
-		if (toutesLesCategories.size() < 5) {
-			jeu.creerCategorie("2ème catégorie");
-			jeu.creerCategorie("3ème catégorie");
-			jeu.creerCategorie("4ème catégorie");
-			jeu.creerCategorie("5ème catégorie");
-			jeu.creerCategorie("6ème catégorie");
-			jeu.creerCategorie("7ème catégorie");
-			jeu.creerCategorie("8ème catégorie");
-			jeu.creerCategorie("9ème catégorie");
-			jeu.creerCategorie("10ème catégorie");
-			jeu.creerCategorie("11ème catégorie");
-			jeu.creerCategorie("12ème catégorie");
-			jeu.creerCategorie("13ème catégorie");
-			jeu.creerCategorie("14ème catégorie");
-			jeu.creerCategorie("15ème catégorie");
-			jeu.creerCategorie("16ème catégorie");
-			jeu.creerCategorie("17ème catégorie");
-			jeu.creerCategorie("18ème catégorie");
-			jeu.creerCategorie("19ème catégorie");
-			jeu.creerCategorie("20ème catégorie");
-			jeu.creerCategorie("21ème catégorie");
-			jeu.creerCategorie("22ème catégorie");
-			jeu.creerCategorie("23ème catégorie");
-			jeu.creerCategorie("24ème catégorie");
-			jeu.creerCategorie("25ème catégorie");
-			jeu.creerCategorie("26ème catégorie");
-			jeu.creerCategorie("27ème catégorie");
-			jeu.creerCategorie("28ème catégorie");
-			jeu.creerCategorie("29ème catégorie");
-			jeu.creerCategorie("30ème catégorie");
-			
-			toutesLesCategories = jeu.getToutesLesCategories();
-		}
+		afficherCategories();
+	}
+	
+	/**
+	 * Affiche 5 catégories au maximum et gère l'affichage des boutons
+	 * précédent et suivant en fonction du nombre de catégories précédentes
+	 * et suivantes.
+	 */
+	private void afficherCategories() {
+	    // Calcul des indices pour l'affichage des catégories
+	    int indiceDebut = indiceCategorie;
+	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
+	    
+	    // Effacer le contenu actuel du VBox
+	    vBoxCategories.getChildren().clear();
 		
-		if (indiceCategorie < 5) {
-			boutonPrecedent.setVisible(false);
-		}
-
-		boutonSuivant.setVisible(toutesLesCategories.size() <= 5 ? false : true);
-		
-		for (int indiceCategorieCourante = 0;
-			 indiceCategorieCourante < toutesLesCategories.size()
-			 && indiceCategorieCourante < 5;
-			 indiceCategorieCourante++) {
-			String intituleCategorie = toutesLesCategories.get(indiceCategorieCourante).getIntitule();
-			
-			categorieCourante = new Label(intituleCategorie);
-			categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-			
-			if (!intituleCategorie.equals("Général")) {
-				categorieCourante.getStyleClass().add("labelCliquable");
-			}
-			
-			vBoxCategories.getChildren().add(categorieCourante);
-			
-			if (!intituleCategorie.equals("Général")) {
-				final String intitule = intituleCategorie;
+	    // Afficher les (indiceFin - indiceDebut) catégories
+	    for (int i = indiceDebut; i < indiceFin; i++) {
+	    	String intituleCategorie = toutesLesCategories.get(i).getIntitule();
+	    	
+	        categorieCourante = new Label(intituleCategorie);
+	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+	        categorieCourante.getStyleClass()
+	        .add("label" + (intituleCategorie.equals("Général") ? "Non" : "")
+	        		     + "Cliquable");
+	        vBoxCategories.getChildren().add(categorieCourante);
+	        
+	        if (!intituleCategorie.equals("Général")) {
+		        final String intitule = intituleCategorie;
 				categorieCourante.setOnMouseClicked(event -> {
 				    actionRenommerCategorie(intitule);
-				});
-			}
-		}
+				});	
+	        }
+	    }
+	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
+	    boutonPrecedent.setVisible(indiceCategorie < 5 ? false : true);
+	    
+	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
+	    boutonSuivant.setVisible(toutesLesCategories.size() > 5
+	    		                 && indiceFin < toutesLesCategories.size()
+	    		                 ? true
+	    		                 : false);
 	}
 	
 	/**
@@ -116,93 +109,39 @@ public class ChoixRenommerCategorieControleur {
 		NavigationControleur.changerVue("RenommerCategories.fxml");
 	}
 	
+	/**
+	 * Retrait de 5 catégories à l'indice de la première catégorie à afficher
+	 * et affichage des 5 catégories précédentes. 
+	 */
 	@FXML
 	private void actionBoutonPrecedent() {
-		// On recule de 5 catégories.
+		// On recule de 5 catégories
 		indiceCategorie -= 5;
-		
-	    // Calcul de l'indice de début pour les 5 questions précédentes
-	    int indiceDebut = indiceCategorie;
-	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
-
-	    // Effacer le contenu actuel du VBox
-	    vBoxCategories.getChildren().clear();
-
-	    // Afficher les 5 questions précédentes
-	    for (int i = indiceDebut; i < indiceFin; i++) {
-			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
-			
-	        categorieCourante = new Label(intituleCategorie);
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        
-	        if (!intituleCategorie.equals("Général")) {
-	        	categorieCourante.getStyleClass().add("labelCliquable");
-	        }
-	        
-			vBoxCategories.getChildren().add(categorieCourante);
-			
-			if (!intituleCategorie.equals("Général")) {
-				final String intitule = intituleCategorie;
-				categorieCourante.setOnMouseClicked(event -> {
-				    actionRenommerCategorie(intitule);
-				});
-			}
-	    }
-	    
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
-	    boutonPrecedent.setVisible(indiceCategorie < 5 ? false : true);
-	    
-	    // Afficher le bouton "Suivant" si il y a plus de 5 questions
-	    if (toutesLesCategories.size() > 5) {
-	        boutonSuivant.setVisible(true);
-	    }
+		afficherCategories();
 	}
 	
+	/**
+	 * Ajout de 5 catégories à l'indice de la première catégorie à afficher
+	 * et affichage des 5 catégories suivantes. 
+	 */
 	@FXML
 	private void actionBoutonSuivant() {
-		// On passe les 5 catégories précédentes.
+		// On avance de 5 catégories
 		indiceCategorie += 5;
-		
-	    // Calcul de l'indice de départ pour les 5 prochaines questions
-	    int indiceDebut = indiceCategorie;
-	    int indiceFin = Math.min(indiceDebut + 5, toutesLesCategories.size());
-
-	    // Effacer le contenu actuel du VBox
-	    vBoxCategories.getChildren().clear();
-
-	    // Afficher les 5 prochaines questions
-	    for (int i = indiceDebut; i < indiceFin; i++) {
-			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
-			
-	        categorieCourante = new Label(intituleCategorie);
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        
-	        if (!intituleCategorie.equals("Général")) {
-	        	categorieCourante.getStyleClass().add("labelCliquable");
-	        }
-	        
-	        vBoxCategories.getChildren().add(categorieCourante);
-	        
-			if (!intituleCategorie.equals("Général")) {
-				final String intitule = intituleCategorie;
-				categorieCourante.setOnMouseClicked(event -> {
-				    actionRenommerCategorie(intitule);
-				});
-			}
-	    }
-	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions
-	    if (indiceFin >= toutesLesCategories.size()) {
-	        boutonSuivant.setVisible(false);
-	    }
-	    boutonPrecedent.setVisible(true);
+	    afficherCategories();
 	}
 	
+	/**
+	 * TODO : coder action bouton aide
+	 */
 	@FXML
-	private void boutonAide() {
+	private void actionBoutonAide() {
 //		ControleurNavigation.changerVue("GestionDesCategories.fxml");
 	}
 	
+	/**
+	 * Redirection vers la vue AffichageCategories.
+	 */
 	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");

@@ -267,7 +267,7 @@ class TestJeu {
 	@Test
 	public void testSupprimerCategorie() {
 		// Test de suppression de la catégorie "Général"
-		jeu.supprimerCategorie(listeInitiale.toArray(new Categorie[0]));
+		jeu.supprimer(listeInitiale.toArray(new Categorie[0]));
 		assertTrue(listesMemesCategories(listeInitiale,
 				                         jeu.getToutesLesCategories()));
 		
@@ -281,7 +281,7 @@ class TestJeu {
 			Categorie[] categoriesASupprimer = new Categorie[1];
 			categoriesASupprimer[0] = new Categorie(nomsCategories[i]);
 			
-			jeu.supprimerCategorie(categoriesASupprimer);
+			jeu.supprimer(categoriesASupprimer);
 			listeCategoriesTest.remove(1);
 			
 			assertTrue(listesMemesCategories(listeCategoriesTest,
@@ -295,7 +295,7 @@ class TestJeu {
 			categoriesASupprimer[j] = new Categorie(nomsCategories[i]);
 			listeCategoriesTest.remove(1);
 		}
-		jeu.supprimerCategorie(categoriesASupprimer); 
+		jeu.supprimer(categoriesASupprimer); 
 		
 		assertTrue(listesMemesCategories(listeCategoriesTest,
 				 						 jeu.getToutesLesCategories()));
@@ -318,7 +318,7 @@ class TestJeu {
 		for (int i = 0; i < listeQuestionsTest.size() / 2; i++) {
 			Question[] questionsASupprimer = {questionsTest.get(0)};
 			
-			jeu.supprimerQuestion(questionsASupprimer);
+			jeu.supprimer(questionsASupprimer);
 			questionsTest.remove(0);
 			
 			assertTrue(listesMemesQuestions(questionsTest,
@@ -332,7 +332,7 @@ class TestJeu {
 			questionsASupprimer[i] = questionsTest.get(0);
 			questionsTest.remove(0);
 		}
-		jeu.supprimerQuestion(questionsASupprimer); 
+		jeu.supprimer(questionsASupprimer); 
 		
 		assertTrue(listesMemesQuestions(questionsTest,
 				 						jeu.getToutesLesQuestions()));

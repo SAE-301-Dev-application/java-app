@@ -71,6 +71,13 @@ public class Jeu {
 		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
 		  + "être renommée.";
 		
+		final String TAILLE_INVALIDE
+		= "La taille d'un intitulé de catégorie doit être comprise entre 1 et 20.";
+		
+		if (nouveauIntitule.length() < 1 || nouveauIntitule.length() > 20) {
+			throw new IllegalArgumentException(TAILLE_INVALIDE);
+		}
+		
 		int indiceCategorie = categorieExiste(this.intituleCategorieSelectionnee);
 		
 		if (indiceCategorie > 0) {
@@ -125,7 +132,7 @@ public class Jeu {
 	 * liste en paramètre.
 	 * @param aSupprimer Liste des catégories à supprimer.
 	 */
-	public void supprimerCategorie(Categorie[] aSupprimer) {
+	public void supprimer(Categorie[] aSupprimer) {
 		for (Categorie categorieCourante : aSupprimer) {
 			int indiceCategorie = categorieExiste(categorieCourante.getIntitule());
 			if (indiceCategorie != -1
@@ -140,7 +147,7 @@ public class Jeu {
 	 * liste en paramètre.
 	 * @param aSupprimer Liste des questions à supprimer.
 	 */
-	public void supprimerQuestion(Question[] aSupprimer) {
+	public void supprimer(Question[] aSupprimer) {
 		for (Question questionCourante : aSupprimer) {
 			int indiceQuestion = questionExiste(questionCourante.getIntitule());
 			if (indiceQuestion != -1) {

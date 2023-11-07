@@ -43,116 +43,86 @@ public class SuppressionCategoriesControleur {
 	
 	@FXML
 	private void initialize() {
+		NavigationControleur.getScene().getStylesheets()
+		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
+				       .toExternalForm());
 		
-		if (indiceCategorie < 10) {
-			boutonPrecedent.setVisible(false);
-		}
-
-		boutonSuivant.setVisible(toutesLesCategories.size() <= 10 ? false : true);
-		
-		for (int indiceCategorieCourante = 0;
-			 indiceCategorieCourante < toutesLesCategories.size()
-			 && indiceCategorieCourante < 10;
-			 indiceCategorieCourante++) {
-			
-			ligneCategorie = new HBox();
-			caseCategorie = new CheckBox();
-			
-			categorieCourante = new Label(toutesLesCategories.get(indiceCategorieCourante).getIntitule());
-			categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-			
-			if (!toutesLesCategories.get(indiceCategorieCourante)
-					                .getIntitule().equals("Général")) {
-				ligneCategorie.getChildren().add(caseCategorie);
-			}
-			ligneCategorie.getChildren().add(categorieCourante);
-			
-			vBoxCategories.getChildren().add(ligneCategorie);
-		}
+		afficherCategories();
 	}
 
-	@FXML
-	private void actionBoutonPrecedent() {
-		// On recule de 10 catégories.
-		indiceCategorie -= 10;
-		
-		System.out.println("indiceCategorie : " + indiceCategorie);
-		
-	    // Calcul de l'indice de début pour les 10 questions précédentes
+	/**
+	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
+	 * précédent et suivant en fonction du nombre de catégories précédentes
+	 * et suivantes.
+	 */
+	private void afficherCategories() {
+	    // Calcul des indices pour l'affichage des catégories
 	    int indiceDebut = indiceCategorie;
 	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
-
+	    
 	    // Effacer le contenu actuel du VBox
 	    vBoxCategories.getChildren().clear();
-
-	    // Afficher les 10 questions précédentes
+		
+	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        
 			ligneCategorie = new HBox();
 			caseCategorie = new CheckBox();
-	        
-			if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
+			
+			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
+	        categorieCourante = new Label(intituleCategorie);
+	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+	        if (!intituleCategorie.equals("Général")) {
 				ligneCategorie.getChildren().add(caseCategorie);
 			}
 			ligneCategorie.getChildren().add(categorieCourante);
 			
 			vBoxCategories.getChildren().add(ligneCategorie);
 	    }
-	    
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
 	    boutonPrecedent.setVisible(indiceCategorie < 10 ? false : true);
 	    
-	    // Afficher le bouton "Suivant" si il y a plus de 10 questions
-	    if (toutesLesCategories.size() > 10) {
-	        boutonSuivant.setVisible(true);
-	    }
+	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
+	    boutonSuivant.setVisible(toutesLesCategories.size() > 10
+	    		                 && indiceFin < toutesLesCategories.size()
+	    		                 ? true
+	    		                 : false);
 	}
 	
+	/**
+	 * Retrait de 10 catégories à l'indice de la première catégorie à afficher
+	 * et affichage des 10 catégories précédentes. 
+	 */
+	@FXML
+	private void actionBoutonPrecedent() {
+		// On recule de 10 catégories
+		indiceCategorie -= 10;
+	    afficherCategories();
+	}
+	
+	/**
+	 * Ajout de 10 catégories à l'indice de la première catégorie à afficher
+	 * et affichage des 10 catégories suivantes. 
+	 */
 	@FXML
 	private void actionBoutonSuivant() {
-		// On passe les 10 catégories précédentes.
+		// On avance de 10 catégories
 		indiceCategorie += 10;
-		
-		System.out.println("indiceCategorie : " + indiceCategorie);
-		
-	    // Calcul de l'indice de départ pour les 10 prochaines questions
-	    int indiceDebut = indiceCategorie;
-	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
-
-	    // Effacer le contenu actuel du VBox
-	    vBoxCategories.getChildren().clear();
-
-	    // Afficher les 10 prochaines questions
-	    for (int i = indiceDebut; i < indiceFin; i++) {
-	        categorieCourante = new Label(toutesLesCategories.get(i).getIntitule());
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        
-			ligneCategorie = new HBox();
-			caseCategorie = new CheckBox();
-	        
-			if (!toutesLesCategories.get(i).getIntitule().equals("Général")) {
-				ligneCategorie.getChildren().add(caseCategorie);
-			}
-			ligneCategorie.getChildren().add(categorieCourante);
-			
-			vBoxCategories.getChildren().add(ligneCategorie);
-	    }
-	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions
-	    if (indiceFin >= toutesLesCategories.size()) {
-	        boutonSuivant.setVisible(false);
-	    }
-	    boutonPrecedent.setVisible(true);
+	    afficherCategories();
 	}
 	
+	/**
+	 * TODO : coder action bouton aide
+	 */
 	@FXML
 	private void actionBoutonAide() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");  // TODO: implémenter la fenêtre d'aide
+//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
 	}
 	
 	@FXML
+	
+    /**
+	 * Redirection vers la vue AffichageCategories.
+     */
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}

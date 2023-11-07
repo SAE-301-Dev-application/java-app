@@ -64,6 +64,12 @@
 	-fx-font-size: 13px;
 }
 
+.menu-selection {
+    -fx-pref-width: 245px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 13px;
+}
+
 VBox {
 	-fx-border-color: transparent;    /* TODO: temporaire, retirer si vbox prête. */
 	-fx-border-width: 2px;
@@ -84,7 +90,7 @@ TextField {
 	-fx-font-size: 20px;
 	
 	-fx-prompt-text-fill: white;
-	-fx-prompt-font-weight:normal;
+	-fx-prompt-font-weight: normal;
 }
 
 TextArea {
@@ -133,7 +139,7 @@ ChoiceBox {
 
 .intituleCategorieQuestion{
 	-fx-text-fill: white;
-	-fx-font-size: 16px;
+	-fx-font-size: 17px;
 }
 
 .labelCliquable {
@@ -146,6 +152,15 @@ ChoiceBox {
 }
 .labelCliquable:hover {
 	-fx-opacity: .6;
+}
+
+.labelNonCliquable {
+    -fx-background-color: rgba(153, 38, 0, 0.3);
+    -fx-background-radius: 20px;
+    -fx-font-size: 16px;
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+    -fx-pref-width: 600px;
 }
 
 .vbox-liste {

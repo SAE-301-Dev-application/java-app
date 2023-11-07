@@ -12,6 +12,7 @@ import info2.sae301.quiz.modeles.Jeu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
@@ -22,7 +23,7 @@ import javafx.fxml.FXMLLoader;
  * @author Simon Guiraud
  * @author Florian Fabre
  * @author Samuel Lacam
- * @author Jonathan Guild
+ * @author Jonathan Guil
  */
 public class Quiz extends Application {
 	
@@ -33,6 +34,11 @@ public class Quiz extends Application {
 	 * */
 	public static Jeu jeu;
 	
+	/**
+	 * Chargement des vues et affichage du menu principal.
+	 * 
+	 * @param primaryStage Stage principal créé par JavaFX.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -41,13 +47,23 @@ public class Quiz extends Application {
 			Scene scene = new Scene(root, 800, 600);
 			NavigationControleur.setSceneCourante(scene);
 			
+			primaryStage.setTitle("Jeu de Quiz");
+			// primaryStage.getIcons().add(new Image("info2/sae301/quiz/vues/JeuDeQuiz.png"));
+			
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 	
+	/**
+	 * Lancement du jeu de quiz et création d'une instance de Jeu permettant
+	 * le stockage de paramètres.
+	 * 
+	 * @param args Paramètre inutilisé.
+	 */
 	public static void main(String[] args) {
 		jeu = new Jeu();
 		launch(args);
