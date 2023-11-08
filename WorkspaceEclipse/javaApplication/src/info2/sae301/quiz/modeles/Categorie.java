@@ -25,7 +25,7 @@ public class Categorie {
     private String intitule;
     
     /** contient toutes les questions de la catégorie */
-    private ArrayList<Question> listeQuestions;; 
+    private ArrayList<Question> listeQuestions;
     
 
     /**

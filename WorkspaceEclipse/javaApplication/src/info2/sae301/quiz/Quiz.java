@@ -5,14 +5,12 @@
 
 package info2.sae301.quiz;
 
-import java.io.IOException;
-
 import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
+// import javafx.scene.image.Image;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
@@ -54,7 +52,7 @@ public class Quiz extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Erreur Quiz#start(Stage) : " + e.getMessage());
 		}
 	}
 	

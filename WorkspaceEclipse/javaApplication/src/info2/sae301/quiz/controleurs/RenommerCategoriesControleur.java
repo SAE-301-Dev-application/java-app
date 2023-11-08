@@ -1,11 +1,6 @@
 package info2.sae301.quiz.controleurs;
 
-import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.controleurs.ChoixRenommerCategorieControleur;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 

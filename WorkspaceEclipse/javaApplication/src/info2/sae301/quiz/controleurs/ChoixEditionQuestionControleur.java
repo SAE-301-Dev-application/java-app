@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.Categorie;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,7 +70,10 @@ public class ChoixEditionQuestionControleur {
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la question.
 	 */
-	public static void renommerQuestionSelectionnee(String nouveauIntitule) {
+	public static void renommerQuestionSelectionnee(String nouveauIntitule,
+													String intituleCategorie,
+													String reponseJuste,
+													String[] reponsesFausses) {
 		final String QUESTION_INEXISTANTE
 		= "La question sélectionnée est inexistante en mémoire ou ne peut pas "
 		  + "être renommée.";
@@ -87,9 +89,10 @@ public class ChoixEditionQuestionControleur {
 		}
 		
 		// Si une question ayant le même intitulé existe.
-//		if (jeu.questionExiste(nouveauIntitule) >= 0) {
-//			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
-//		}
+		if (jeu.getIndiceQuestion(nouveauIntitule, intituleCategorie,
+				                  reponseJuste, reponsesFausses) >= 0) {
+			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
+		}
 		
 		int indiceQuestion = 0;//jeu.questionExiste(intituleQuestionSelectionnee);
 		

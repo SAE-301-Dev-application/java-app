@@ -1,7 +1,6 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
@@ -9,11 +8,9 @@ import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 public class CreationQuestionControleur {
 	
@@ -83,7 +80,7 @@ public class CreationQuestionControleur {
 		
 		nomCategorie = this.nomCategorie.getValue().toString();
 		
-		indiceCategorie = jeu.categorieExiste(nomCategorie);
+		indiceCategorie = jeu.getIndiceCategorie(nomCategorie);
 		
 		if (indiceCategorie == -1) {
 			// TODO: implémenter dialogbox avec erreur.
