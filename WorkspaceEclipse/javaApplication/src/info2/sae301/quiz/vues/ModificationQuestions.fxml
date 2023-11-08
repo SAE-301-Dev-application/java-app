@@ -40,9 +40,9 @@
          </styleClass>
       </Button>
       <SVGPath content="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" layoutX="275.0" layoutY="290.0" scaleX="0.07" scaleY="0.07" styleClass="save-solid" />
-      <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair" stylesheets="@application.css">
+      <Pane layoutX="34.0" layoutY="137.0" styleClass="rectangle-bleu-clair" stylesheets="@application.css">
          <children>
-            <HBox layoutX="6.0" prefHeight="359.0" prefWidth="733.0">
+            <HBox prefHeight="359.0" prefWidth="733.0">
                <children>
                   <VBox prefHeight="359.0" prefWidth="367.0" stylesheets="@creation-questions.css">
                      <children>

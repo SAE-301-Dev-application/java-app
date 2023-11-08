@@ -22,7 +22,6 @@
                   <String fx:value="paddingVboxRectangle" />
                   <String fx:value="vbox-liste" />
                </styleClass></VBox>
-            <Pane layoutX="14.0" layoutY="285.0" />
             <Button fx:id="boutonPrecedent" layoutX="31.0" layoutY="315.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" prefHeight="143.0" prefWidth="264.0" text="PRÉCÉDENT">
                <styleClass>
                   <String fx:value="bouton" />
