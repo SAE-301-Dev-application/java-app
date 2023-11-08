@@ -69,6 +69,14 @@
     -fx-pref-height: 40px;
     -fx-font-size: 13px;
 }
+.menu-selection .label {
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+}
+.menu-selection .menu-item {
+	-fx-background-color: #272C58;
+}
 
 VBox {
 	-fx-border-color: transparent;    /* TODO: temporaire, retirer si vbox prête. */
