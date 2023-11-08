@@ -89,6 +89,32 @@ public class Jeu {
 			throw new IllegalArgumentException("Cette catégorie existe déjà");
 		}
 	}
+		
+	/**
+	 * 
+	 * @param intitule
+	 * @param reponseJuste
+	 * @param reponsesFausses
+	 * @param difficulte
+	 * @param feedback
+	 * @param categorie
+	 */
+	public void creerQuestion(String intitule, String reponseJuste,
+			String[] reponsesFausses, int difficulte, String feedback,
+			Categorie categorie) {
+		
+		if (questionExiste(intitule, categorie.getIntitule(),
+			reponseJuste, reponsesFausses) == -1) {
+			
+			if (feedback.isBlank()) {
+				new Question(intitule, reponseJuste, reponsesFausses,
+					     difficulte, categorie);
+			} else {
+				new Question(intitule, reponseJuste, reponsesFausses,
+						difficulte, feedback, categorie);
+			}
+		}
+	}
 	
 	/**
 	 * Ajoute une nouvelle question dans la liste des questions 
@@ -96,7 +122,10 @@ public class Jeu {
 	 * @param aAjouter La question à ajouter.
 	 */
 	public void ajouterQuestion(Question aAjouter) {
-		if (questionExiste(aAjouter.getIntitule()) == -1) {
+		if (questionExiste(aAjouter.getIntitule(),
+				aAjouter.getCategorie().getIntitule(),
+				aAjouter.getReponseJuste(),
+				aAjouter.getReponsesFausses()) == -1) {
 			toutesLesQuestions.add(aAjouter);
 		}
 	}
@@ -123,7 +152,10 @@ public class Jeu {
 	 */
 	public void supprimer(Question[] aSupprimer) {
 		for (Question questionCourante : aSupprimer) {
-			int indiceQuestion = questionExiste(questionCourante.getIntitule());
+			int indiceQuestion = questionExiste(questionCourante.getIntitule(),
+												questionCourante.getCategorie().getIntitule(),
+												questionCourante.getReponseJuste(),
+												questionCourante.getReponsesFausses());
 			if (indiceQuestion != -1) {
 				toutesLesQuestions.remove(indiceQuestion);
 			}
@@ -155,7 +187,36 @@ public class Jeu {
 	 * @return L'indice dans la liste des questions de la question ayant pour
 	 *         intitulé celui en paramètre ou -1 si la question n'existe pas.
 	 */
- 	public int questionExiste(String intitule) {
+ 	public int questionExiste(String intituleQuestion, String intituleCategorie,
+ 			String reponseJuste, String[] reponsesFausses) {
+ 		
+ 		int resultat = -1;
+		
+		int indiceCategorieQuestion = toutesLesCategories.indexOf(intituleCategorie);
+		Categorie categorieQuestion = getToutesLesCategories().get(indiceCategorieQuestion);
+		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
+		
+		for (int i = 0;
+				 i < questionsCategorie.size()
+				 && resultat == -1;
+				 i++) {
+		
+			if (questionsCategorie.get(i).getIntitule() == intituleQuestion
+				&& questionsCategorie.get(i).getReponseJuste() == reponseJuste
+				&& memesReponsesFausses(questionsCategorie.get(i).getReponsesFausses(), reponsesFausses)) {
+				
+				
+				resultat = getToutesLesQuestions().indexOf(questionsCategorie.get(i)); 
+				
+			}
+		}
+		
+		return resultat;
+ 	
+		
+//		resultat = i;
+ 		
+		/*
 		int resultat = -1;
 		for (int i = 0;
 			 i < toutesLesQuestions.size()
@@ -165,7 +226,32 @@ public class Jeu {
 				resultat = i;
 			}
 		}
-		return resultat;
+		return resultat;*/
 	}
+ 	/**
+ 	 * TODO : tester avec indexOf() et des ArrayList
+ 	 * Teste si les réponses fausses sont les mêmes dans les deux listes
+ 	 * @param reponsesFausses1 une liste de reponse fausse
+ 	 * @param reponsesFausses2 une liste de reponse fausse
+ 	 * @return true si les liste contiennent les mêmes réponses, false sinon
+ 	 */
+ 	private boolean memesReponsesFausses(String[] reponsesFausses1, String[] reponsesFausses2) {
+ 		boolean resultat = true;
+ 		if (reponsesFausses1.length != reponsesFausses2.length) {
+ 			return false;
+ 		}
+ 		for (int i = 0; i < reponsesFausses1.length && resultat; i++) {
+ 			boolean resultatTemp = false;
+ 			for (int j = 0; j < reponsesFausses2.length && !resultatTemp; j++) {
+ 				if (reponsesFausses1[i].equals(reponsesFausses2[j])) {
+ 					resultatTemp = true;
+ 				}
+ 			}
+ 			if (!resultatTemp) {
+ 				resultat = resultatTemp;
+ 			}
+ 		}
+ 		return resultat;
+ 	}
 
 }
