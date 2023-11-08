@@ -49,9 +49,9 @@
                      <children>
                         <VBox prefHeight="65.0" prefWidth="333.0">
                            <children>
-                              <Label styleClass="label-champ" stylesheets="@creation-questions.css" text="    Intitulé:" />
-                              <TextField fx:id="intituleQuestion" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="301.0" promptText="300 caractères max" styleClass="textfield" stylesheets="@creation-questions.css" />
-                              <TextArea prefHeight="200.0" prefWidth="344.0" promptText="300 caractères max" stylesheets="@creation-questions.css" />
+                              <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Intitulé:" />
+                              <TextArea fx:id="intituleQuestion" prefHeight="200.0" prefWidth="344.0" promptText="300 caractères max" stylesheets="@creation-Modificationquestions.css" />
+                              <TextArea prefHeight="200.0" prefWidth="344.0" />
                            </children>
                         </VBox>
                         <VBox prefHeight="55.0" prefWidth="333.0">
@@ -113,6 +113,6 @@
    </children>
    <stylesheets>
       <URL value="@application.css" />
-      <URL value="@menu-principal.css" />
+      <URL value="@creation-modificationQuestions.css" />
    </stylesheets>
 </Pane>

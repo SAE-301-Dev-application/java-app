@@ -93,20 +93,6 @@ TextField {
 	-fx-prompt-font-weight: normal;
 }
 
-TextArea {
-	-fx-pref-height: 45px;
-	
-	-fx-background-color: #2E3469;
-	-fx-control-inner-background: #2E3469;
-	-fx-background-radius: 20px;
-	-fx-text-fill: white;
-	-fx-font-weight: bold;
-	-fx-font-size: 20px;
-	
-	-fx-prompt-text-fill: white;
-	-fx-prompt-font-weight:normal;
-}
-
 
 .boutonAnnuler {
 	-fx-background-color: rgba(153, 38, 0, 0.5);
