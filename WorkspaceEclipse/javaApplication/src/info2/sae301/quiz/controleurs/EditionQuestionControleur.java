@@ -15,7 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class EditerQuestionControleur {
+public class EditionQuestionControleur {
 	
 	private static final String TITRE_ALERTE = "Erreur de création";
 

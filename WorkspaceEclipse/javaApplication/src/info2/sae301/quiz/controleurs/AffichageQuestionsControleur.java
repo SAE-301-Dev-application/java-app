@@ -146,7 +146,7 @@ public class AffichageQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonEditer() {
-		NavigationControleur.changerVue("ChoixEditerQuestion.fxml");
+		NavigationControleur.changerVue("ChoixEditionQuestion.fxml");
 	}
 	
 	/**

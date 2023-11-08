@@ -20,19 +20,18 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="270.0" layoutY="43.0" styleClass="titre" text="CREATION QUESTION">
+      <Label layoutX="195.0" layoutY="36.0" styleClass="titre-long" text="CRÉATION QUESTION">
          <stylesheets>
-            <URL value="@creation-categorie.css" />
             <URL value="@application.css" />
          </stylesheets></Label>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@creation-categorie.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@application.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@creation-categorie.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />

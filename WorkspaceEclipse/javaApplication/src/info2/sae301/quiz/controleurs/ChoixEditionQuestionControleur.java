@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
  * Contrôleur FXML de la vue ChoixEditerQuestion qui affiche la liste des
  * questions sous forme de boutons.
  */
-public class ChoixEditerQuestionControleur {
+public class ChoixEditionQuestionControleur {
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -87,11 +87,11 @@ public class ChoixEditerQuestionControleur {
 		}
 		
 		// Si une question ayant le même intitulé existe.
-		if (jeu.questionExiste(nouveauIntitule) >= 0) {
-			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
-		}
+//		if (jeu.questionExiste(nouveauIntitule) >= 0) {
+//			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
+//		}
 		
-		int indiceQuestion = jeu.questionExiste(intituleQuestionSelectionnee);
+		int indiceQuestion = 0;//jeu.questionExiste(intituleQuestionSelectionnee);
 		
 		if (indiceQuestion > 0) {
 			jeu.getToutesLesQuestions().get(indiceQuestion).setIntitule(nouveauIntitule);
@@ -147,7 +147,7 @@ public class ChoixEditerQuestionControleur {
 	 */
 	private void actionEditerQuestion(String intitule) {
 		intituleQuestionSelectionnee = intitule;
-		NavigationControleur.changerVue("EditerQuestions.fxml");
+		NavigationControleur.changerVue("EditionQuestions.fxml");
 	}
 	
 	/**

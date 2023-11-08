@@ -359,13 +359,14 @@ class TestJeu {
 	 */
 	@Test
 	public void testQuestionExiste() {
-		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			assertEquals(-1, jeu.questionExiste(listeQuestionsTest
-								.get(i).getIntitule()));
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
-			assertNotEquals(-1, jeu.questionExiste(listeQuestionsTest
-					 			   .get(i).getIntitule()));
-		}
+		fail("faites les tests");
+//		for (int i = 0; i < listeQuestionsTest.size(); i++) {
+//			assertEquals(-1, jeu.questionExiste(listeQuestionsTest
+//								.get(i).getIntitule()));
+//			jeu.ajouterQuestion(listeQuestionsTest.get(i));
+//			assertNotEquals(-1, jeu.questionExiste(listeQuestionsTest
+//					 			   .get(i).getIntitule()));
+//		}
 	}
 
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.EditerQuestionControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.EditionQuestionControleur">
    <children>
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
@@ -20,11 +20,10 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="270.0" layoutY="43.0" styleClass="titre" text="EDITION QUESTION">
-         <stylesheets>
-            <URL value="@creation-modificationQuestions.css" />
-            <URL value="@application.css" />
-         </stylesheets></Label>
+      <Label graphicTextGap="8.0" layoutX="162.0" layoutY="30.0" prefHeight="70.0" prefWidth="477.0" stylesheets="@application.css" text="EDITION QUESTION">
+         <styleClass>
+            <String fx:value="titre-long" />
+         </styleClass></Label>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" stylesheets="@creation-modificationQuestions.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />

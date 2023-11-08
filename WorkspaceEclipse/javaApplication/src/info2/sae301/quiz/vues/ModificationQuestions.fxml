@@ -20,11 +20,11 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="270.0" layoutY="43.0" styleClass="titre" text="QUESTION">
-         <stylesheets>
-            <URL value="@creation-categorie.css" />
-            <URL value="@application.css" />
-         </stylesheets></Label>
+      <Label layoutX="63.0" layoutY="43.0" prefHeight="75.0" prefWidth="676.0" stylesheets="@application.css" text="MODIFICATION QUESTION">
+         <styleClass>
+            <String fx:value="titre" />
+            <String fx:value="titre-tres-long" />
+         </styleClass></Label>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@creation-categorie.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />

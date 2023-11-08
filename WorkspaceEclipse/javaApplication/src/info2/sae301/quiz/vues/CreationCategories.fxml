@@ -17,28 +17,31 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="259.0" layoutY="43.0" styleClass="titre" text="CREATION CATÉGORIE">
+      <Label layoutX="139.0" layoutY="65.0" text="CRÉATION CATÉGORIE">
          <stylesheets>
-            <URL value="@creation-categorie.css" />
             <URL value="@application.css" />
-         </stylesheets></Label>
+         </stylesheets>
+         <styleClass>
+            <String fx:value="titre" />
+            <String fx:value="titre-long" />
+         </styleClass></Label>
       <VBox layoutX="36.0" layoutY="105.0" prefHeight="394.0" prefWidth="728.0">
          <children>
-            <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@creation-categorie.css" />
+            <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@application.css" />
          </children>
          <styleClass>
             <String fx:value="conteneur-boutons" />
             <String fx:value="centrer" />
          </styleClass>
       </VBox>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@creation-categorie.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@application.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@creation-categorie.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />

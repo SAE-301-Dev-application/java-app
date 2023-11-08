@@ -9,25 +9,28 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.SuppressionQuestionsControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAider" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
          </styleClass>
       </Button>
-      <Label graphicTextGap="8.0" layoutX="249.0" layoutY="30.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="QUESTIONS" />
+      <Label graphicTextGap="8.0" layoutX="117.0" layoutY="30.0" prefHeight="70.0" prefWidth="566.0" stylesheets="@application.css" text="SUPPRESSION QUESTIONS">
+         <styleClass>
+            <String fx:value="titre-long" />
+         </styleClass></Label>
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
-            <VBox fx:id="vBox" layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0" styleClass="paddingVboxRectangle" />
+            <VBox fx:id="vBoxQuestions" layoutX="7.0" layoutY="16.0" prefHeight="288.0" prefWidth="733.0" styleClass="paddingVboxRectangle" />
             <Pane layoutX="14.0" layoutY="285.0" />
-            <Button layoutX="31.0" layoutY="315.0" mnemonicParsing="false" onAction="#boutonPrecedent" prefHeight="143.0" prefWidth="264.0" text="PRECEDENT">
+            <Button fx:id="boutonPrecedent" layoutX="31.0" layoutY="315.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" prefHeight="143.0" prefWidth="264.0" text="PRECEDENT">
                <styleClass>
                   <String fx:value="bouton" />
                   <String fx:value="petit-bouton" />
                   <String fx:value="boutonSuivantPrecedent" />
                </styleClass>
             </Button>
-            <Button layoutX="605.0" layoutY="315.0" mnemonicParsing="false" onAction="#boutonSuivant" prefHeight="143.0" prefWidth="264.0" text="SUIVANT">
+            <Button fx:id="boutonSuivant" layoutX="605.0" layoutY="315.0" mnemonicParsing="false" onAction="#actionBoutonSuivant" prefHeight="143.0" prefWidth="264.0" text="SUIVANT">
                <styleClass>
                   <String fx:value="bouton" />
                   <String fx:value="petit-bouton" />
@@ -36,12 +39,12 @@
             </Button>
          </children>
       </Pane>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonRetour" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" text="SUPPRIMER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="SUPPRIMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass></Button>
-      <ChoiceBox layoutX="83.0" layoutY="111.0" prefHeight="26.0" prefWidth="238.0" styleClass="petit-bouton" />
+      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" prefHeight="26.0" prefWidth="238.0" styleClass="menu-selection" />
    </children>
 </Pane>
