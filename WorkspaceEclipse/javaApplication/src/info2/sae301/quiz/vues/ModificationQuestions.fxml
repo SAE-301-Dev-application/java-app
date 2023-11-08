@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -49,9 +48,8 @@
                      <children>
                         <VBox prefHeight="65.0" prefWidth="333.0">
                            <children>
-                              <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Intitulé:" />
-                              <TextArea fx:id="intituleQuestion" prefHeight="200.0" prefWidth="344.0" promptText="300 caractères max" stylesheets="@creation-Modificationquestions.css" />
-                              <TextArea prefHeight="200.0" prefWidth="344.0" />
+                              <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Intitulé (300 caractères max):" />
+                              <TextArea fx:id="intituleQuestion" prefHeight="200.0" prefWidth="344.0" stylesheets="@creation-Modificationquestions.css" />
                            </children>
                         </VBox>
                         <VBox prefHeight="55.0" prefWidth="333.0">
@@ -68,8 +66,8 @@
                         </VBox>
                         <VBox prefHeight="119.0" prefWidth="333.0">
                            <children>
-                              <Label prefHeight="22.0" prefWidth="86.0" styleClass="label-champ" stylesheets="@creation-questions.css" text="    Feedback:" />
-                              <TextField fx:id="feedback" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="83.0" prefWidth="301.0" promptText="500 caractères max" styleClass="text-area" stylesheets="@creation-questions.css" />
+                              <Label prefHeight="22.0" prefWidth="284.0" styleClass="label-champ" stylesheets="@creation-questions.css" text="    Feedback facultatif (500 caractères max):" />
+                              <TextArea fx:id="feedback" prefHeight="200.0" prefWidth="344.0" />
                            </children>
                         </VBox>
                      </children>
@@ -83,23 +81,31 @@
                         <VBox prefHeight="63.0" prefWidth="330.0">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-questions.css" text="    Réponse juste (200 caractères max):" />
-                              <TextField fx:id="reponseJuste" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="325.0" styleClass="textfield" stylesheets="@creation-questions.css" />
+                              <TextArea fx:id="reponseJuste" prefHeight="200.0" prefWidth="344.0" />
                            </children>
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="330.0" styleClass="space">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-questions.css" text="    Réponse(s) fausse(s) (200 caractères max):" />
-                              <TextField fx:id="reponseFausse1" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="325.0" promptText="Réponse 1" styleClass="textfield" stylesheets="@creation-questions.css" />
+                              <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 1" />
                               <Label styleClass="label-champ" text="   Réponses fausses facultatifs">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="reponseFausse2" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="325.0" promptText="Réponse 2" styleClass="textfield" stylesheets="@creation-questions.css" />
-                              <TextField fx:id="reponseFausse3" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="325.0" promptText="Réponse 3" styleClass="textfield" stylesheets="@creation-questions.css" />
-                              <TextField fx:id="reponseFausse4" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="325.0" promptText="Réponse 4" styleClass="textfield" stylesheets="@creation-questions.css" />
                            </children>
                         </VBox>
+                        <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4" />
                      </children>
                      <styleClass>
                         <String fx:value="conteneur-boutons" />

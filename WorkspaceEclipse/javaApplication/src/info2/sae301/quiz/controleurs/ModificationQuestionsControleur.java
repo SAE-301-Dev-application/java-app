@@ -5,7 +5,7 @@ import info2.sae301.quiz.modeles.Jeu;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 public class ModificationQuestionsControleur {
 
@@ -16,7 +16,7 @@ public class ModificationQuestionsControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextField intituleQuestion;
+	private TextArea intituleQuestion;
 	
 	@FXML
 	private ChoiceBox<String> intituleCategorie;
@@ -25,22 +25,27 @@ public class ModificationQuestionsControleur {
 	private ChoiceBox<String> niveauDiffilculte;
 	
 	@FXML
-	private TextField feedback;
+	private TextArea feedback;
 	
 	@FXML
-	private TextField reponseJuste;
+	private TextArea reponseJuste;
 	
 	@FXML
-	private TextField reponseFausse1;
+	private TextArea reponseFausse1;
 	
 	@FXML
-	private TextField reponseFausse2;
+	private TextArea reponseFausse2;
 	
 	@FXML
-	private TextField reponseFausse3;
+	private TextArea reponseFausse3;
 	
 	@FXML
-	private TextField reponseFausse4;
+	private TextArea reponseFausse4;
+	
+	@FXML
+	private void boutonAide() {
+		
+	}
 	
 	@FXML
 	private void boutonAnnuler() {
@@ -49,12 +54,17 @@ public class ModificationQuestionsControleur {
 	
 	@FXML
 	private void boutonEnregistrer() {
-		
+		verificationDesChamps();
 	}
 	
-	@FXML
-	private void boutonAide() {
-		
+	/**
+	 * Vérifie que les champs obligatoire sont bien initialisé
+	 * et que tous les champs respectent la limite de caractère.
+	 * @return true si tous les champs sont conforme
+	 */
+	private boolean verificationDesChamps() {
+		return false;
 	}
+	
 	
 }

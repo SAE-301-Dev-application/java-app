@@ -29,22 +29,31 @@ public class CreationQuestionControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextField intitule;
+	private TextArea intitule;
 	
 	@FXML
-	private ChoiceBox nomCategorie;
+	private ChoiceBox<String> nomCategorie;
 	
 	@FXML
-	private ChoiceBox difficulte;
+	private ChoiceBox<String> difficulte;
 	
 	@FXML
 	private TextArea feedback;
 	
 	@FXML
-	private TextField reponseJuste;
+	private TextArea reponseJuste;
 	
 	@FXML
-	private TextField[] reponsesFausses;
+	private TextArea reponseFausse1;
+	
+	@FXML
+	private TextArea reponseFausse2;
+	
+	@FXML
+	private TextArea reponseFausse3;
+	
+	@FXML
+	private TextArea reponseFausse4;
 	
 	@FXML
 	private void boutonAide() {
@@ -58,9 +67,7 @@ public class CreationQuestionControleur {
 	
 	@FXML
 	private void boutonEnregistrer() {
-		
-		AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
-				 					 TITRE_ALERTE, AlertType.ERROR);
+		verificationDesChamps();
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
@@ -83,12 +90,11 @@ public class CreationQuestionControleur {
 		}
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
-		
-		for (TextField reponseFausse: this.reponsesFausses) {
-			reponsesFausses.add(reponseFausse.getText());
-			System.out.println(reponseFausse.getText());
-		}
-		
+		reponsesFausses.add(reponseFausse1.getText());
+		reponsesFausses.add(reponseFausse2.getText());
+		reponsesFausses.add(reponseFausse3.getText());
+		reponsesFausses.add(reponseFausse4.getText());
+			
 		intitule = this.intitule.getText();
 		feedback = this.feedback.getText();
 		reponseJuste = this.reponseJuste.getText();
@@ -106,6 +112,15 @@ public class CreationQuestionControleur {
 			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
+	}
+	
+	/**
+	 * Vérifie que les champs obligatoire sont bien initialisé
+	 * et que tous les champs respectent la limite de caractère.
+	 * @return true si tous les champs sont conforme
+	 */
+	private boolean verificationDesChamps() {
+		return false;
 	}
 	
 }
