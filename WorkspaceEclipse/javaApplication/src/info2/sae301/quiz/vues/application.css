@@ -154,7 +154,7 @@ ChoiceBox {
 }
 
 .vbox-categories-questions {
-	-fx-spacing: 1.5px;
+	-fx-spacing: 1px;
 }
 
 .intitule-padding-left {

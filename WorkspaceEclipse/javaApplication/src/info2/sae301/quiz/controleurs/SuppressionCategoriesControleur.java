@@ -14,6 +14,7 @@ import info2.sae301.quiz.modeles.Categorie;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -194,18 +195,28 @@ public class SuppressionCategoriesControleur {
 	
 	@FXML
 	private void actionBoutonSupprimer() {
+		final String TITRE_SELECTION_VIDE = "Aucun catégorie sélectionnée";
+		final String MESSAGE_SELECTION_VIDE = "Veuillez sélectionner une catégorie"
+											+ " à supprimer ou cliquer sur Annuler.";
+		
 		final String TITRE_POPUP_CONFIRM = "Confirmer la suppression";
 		final String DEMANDE_CONFIRMATION = "Etes-vous sûr(e) de vouloir supprimer "
 											+ categoriesSelectionnees.size()
 											+ " catégories ?";
 		
-		boolean confirmerSuppression
-		= AlerteControleur.alerteConfirmation(DEMANDE_CONFIRMATION,
-				                              TITRE_POPUP_CONFIRM);
-		
-		if (confirmerSuppression) {
-			jeu.supprimer(jeu.getCategoriesParIntitules(categoriesSelectionnees));
-			NavigationControleur.changerVue("AffichageCategories.fxml");
+		if (categoriesSelectionnees.size() == 0) {
+			AlerteControleur.autreAlerte(MESSAGE_SELECTION_VIDE,
+										 TITRE_SELECTION_VIDE,
+										 AlertType.ERROR);
+		} else {
+			boolean confirmerSuppression
+			= AlerteControleur.alerteConfirmation(DEMANDE_CONFIRMATION,
+					                              TITRE_POPUP_CONFIRM);
+			
+			if (confirmerSuppression) {
+				jeu.supprimer(jeu.getCategoriesParIntitules(categoriesSelectionnees));
+				NavigationControleur.changerVue("AffichageCategories.fxml");
+			}	
 		}
 	}
 	

@@ -26,7 +26,10 @@ public class ChoixRenommerCategorieControleur {
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
 	 * Cette instance permet la gestion des questions et catégories.
 	 */
-	private Jeu jeu = Quiz.jeu;
+	private static Jeu jeu = Quiz.jeu;
+	
+	/** Intitulé de la catégorie à renommer qui a été sélectionnée. */
+	private static String intituleCategorieSelectionnee;
 	
 	@FXML
 	private VBox vBoxCategories;
@@ -55,6 +58,39 @@ public class ChoixRenommerCategorieControleur {
 				       .toExternalForm());
 		
 		afficherCategories();
+	}
+	
+	/** @return L'intitulé de la catégorie sélectionnée. */
+	public static String getIntituleCategorieSelectionnee() {
+		return intituleCategorieSelectionnee;
+	}
+	
+	/**
+	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
+	 * 
+	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
+	 */
+	public static void renommerCategorieSelectionnee(String nouveauIntitule) {
+		final String CATEGORIE_INEXISTANTE
+		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
+		  + "être renommée.";
+		
+		final String TAILLE_INVALIDE
+		= "La taille d'un intitulé de catégorie doit être comprise entre 1 et 20.";
+		
+		if (nouveauIntitule.length() < 1 || nouveauIntitule.length() > 20) {
+			throw new IllegalArgumentException(TAILLE_INVALIDE);
+		}
+		
+		int indiceCategorie = jeu.categorieExiste(intituleCategorieSelectionnee);
+		
+		if (indiceCategorie > 0) {
+			jeu.getToutesLesCategories().get(indiceCategorie).setIntitule(nouveauIntitule);
+			// Désélection de la catégorie pour le changement de vue
+			intituleCategorieSelectionnee = null;
+		} else {
+			throw new IllegalArgumentException(CATEGORIE_INEXISTANTE);
+		}
 	}
 	
 	/**
@@ -105,7 +141,7 @@ public class ChoixRenommerCategorieControleur {
 	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
 	 */
 	private void actionRenommerCategorie(String intitule) {
-		this.jeu.setIntituleCategorieSelectionnee(intitule);
+		intituleCategorieSelectionnee = intitule;
 		NavigationControleur.changerVue("RenommerCategories.fxml");
 	}
 	
