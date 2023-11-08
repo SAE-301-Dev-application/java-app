@@ -83,6 +83,7 @@ public class SuppressionCategoriesControleur {
 	    int indiceFin = Math.min(indiceDebut + 10, toutesLesCategories.size());
 	    
 	    // Effacer le contenu actuel du VBox
+	    vBoxCategories.getStyleClass().add("vbox-categories-questions");
 	    vBoxCategories.getChildren().clear();
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
@@ -92,6 +93,7 @@ public class SuppressionCategoriesControleur {
 			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
 			
 			checkBoxCategorie = new CheckBox();
+			checkBoxCategorie.getStyleClass().add("checkbox-margin");
 			checkBoxCategorie.setId("" + i);
 			
 			// Si la checkbox n'a pas déjà été ajoutée
@@ -103,15 +105,21 @@ public class SuppressionCategoriesControleur {
 			
 	        categorieCourante = new Label(intituleCategorie);
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
+	        categorieCourante.getStyleClass().add("intitule-padding-left");
+	        
+	        ligneCategorie.getChildren().add(checkBoxCategorie);
+	        
 	        if (!intituleCategorie.equals("Général")) {
-				ligneCategorie.getChildren().add(checkBoxCategorie);
-				final int INDICE = i;
+	        	final int INDICE = i;
+				
 				checkBoxCategorie.setOnMouseClicked(event -> {
 					selectionnerCategorie(INDICE);
 				});
+			} else {
+				checkBoxCategorie.setDisable(true);
 			}
+	        
 			ligneCategorie.getChildren().add(categorieCourante);
-			
 			vBoxCategories.getChildren().add(ligneCategorie);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
@@ -176,11 +184,10 @@ public class SuppressionCategoriesControleur {
 //		ControleurNavigation.changerVue("GestionDesCategories.fxml");
 	}
 	
-	@FXML
-	
     /**
 	 * Redirection vers la vue AffichageCategories.
      */
+	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}

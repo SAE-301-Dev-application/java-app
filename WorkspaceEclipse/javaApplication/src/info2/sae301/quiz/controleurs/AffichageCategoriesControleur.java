@@ -75,6 +75,8 @@ public class AffichageCategoriesControleur {
 	    
 	    // Effacer le contenu actuel du VBox
 	    vBoxCategories.getChildren().clear();
+	    
+	    vBoxCategories.getStyleClass().add("vbox-categories-questions");
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
@@ -83,13 +85,11 @@ public class AffichageCategoriesControleur {
 	        vBoxCategories.getChildren().add(categorieCourante);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
-	    boutonPrecedent.setVisible(indiceCategorie < 10 ? false : true);
+	    boutonPrecedent.setVisible(!(indiceCategorie < 10));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
 	    boutonSuivant.setVisible(toutesLesCategories.size() > 10
-	    		                 && indiceFin < toutesLesCategories.size()
-	    		                 ? true
-	    		                 : false);
+	    		                 && indiceFin < toutesLesCategories.size());
 	}
 	
 	/**
