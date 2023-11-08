@@ -124,13 +124,11 @@ public class SuppressionCategoriesControleur {
 			vBoxCategories.getChildren().add(ligneCategorie);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
-	    boutonPrecedent.setVisible(indiceCategorie < 10 ? false : true);
+	    boutonPrecedent.setVisible(!(indiceCategorie < 10));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
 	    boutonSuivant.setVisible(toutesLesCategories.size() > 10
-	    		                 && indiceFin < toutesLesCategories.size()
-	    		                 ? true
-	    		                 : false);
+	    		                 && indiceFin < toutesLesCategories.size());
 	}
 	
 	/**

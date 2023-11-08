@@ -133,13 +133,11 @@ public class ChoixRenommerCategorieControleur {
 	        }
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
-	    boutonPrecedent.setVisible(indiceCategorie < 5 ? false : true);
+	    boutonPrecedent.setVisible(!(indiceCategorie < 5));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
 	    boutonSuivant.setVisible(toutesLesCategories.size() > 5
-	    		                 && indiceFin < toutesLesCategories.size()
-	    		                 ? true
-	    		                 : false);
+	    		                 && indiceFin < toutesLesCategories.size());
 	}
 	
 	/**

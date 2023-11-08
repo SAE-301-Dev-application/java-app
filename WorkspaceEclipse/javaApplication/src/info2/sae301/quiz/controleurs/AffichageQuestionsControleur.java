@@ -103,13 +103,11 @@ public class AffichageQuestionsControleur {
 	        vBoxQuestions.getChildren().add(questionCourante);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
-	    boutonPrecedent.setVisible(indiceQuestion < 10 ? false : true);
+	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
 	    boutonSuivant.setVisible(toutesLesQuestions.size() > 10
-	    		                 && indiceFin < toutesLesQuestions.size()
-	    		                 ? true
-	    		                 : false);
+	    		                 && indiceFin < toutesLesQuestions.size());
 	}
 	
 	/**
@@ -148,7 +146,7 @@ public class AffichageQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonEditer() {
-		NavigationControleur.changerVue("EditerQuestions.fxml");
+		NavigationControleur.changerVue("ChoixEditerQuestion.fxml");
 	}
 	
 	/**
