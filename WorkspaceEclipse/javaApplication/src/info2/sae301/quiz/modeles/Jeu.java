@@ -62,6 +62,23 @@ public class Jeu {
 	}
 	
 	/**
+	 * @param categories L'ArrayList des intitulés des catégories à retourner.
+	 * @return la liste des catégories dont l'intitulé est dans la liste en paramètre.
+	 */
+	public Categorie[] getCategoriesParIntitules(ArrayList<String> categories) {
+		Categorie[] categoriesARetourner = new Categorie[categories.size()];
+		
+		int indice = 0;
+		// Get puis ajout de chaque catégorie à categoriesARetourner
+		for (String nomCategorie : categories) {
+			categoriesARetourner[indice]
+			= toutesLesCategories.get(categorieExiste(nomCategorie));
+			indice++;
+		}
+		return categoriesARetourner;
+	}
+	
+	/**
 	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.

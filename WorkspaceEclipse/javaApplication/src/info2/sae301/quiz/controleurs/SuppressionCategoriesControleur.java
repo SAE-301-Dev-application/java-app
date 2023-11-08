@@ -1,18 +1,30 @@
+/*
+ * SuppressionCategoriesControleur.java								 7 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
+
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Categorie;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Contrôleur FXML de la vue SuppressionCategories qui affiche la liste des
+ * catégories avec des checkbox pour sélectionner celles à supprimer.
+ */
 public class SuppressionCategoriesControleur {
 	
 	/**
@@ -35,12 +47,22 @@ public class SuppressionCategoriesControleur {
 	
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
+	/** Toutes les catégories dont la checkbox de sélection a été cochée. */
+	private ArrayList<String> categoriesSelectionnees = new ArrayList<String>();
+	
 	private Label categorieCourante;
 	
 	private HBox ligneCategorie;
 	
-	private CheckBox caseCategorie;
+	private CheckBox checkBoxCategorie;
 	
+	/** Les checkbox ajoutées devant les catégories. */
+	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<CheckBox>();
+	
+	/**
+	 * Initialisation de la vue avec le style css correspondant et l'affichage
+	 * des catégories et du bouton suivant.
+	 */
 	@FXML
 	private void initialize() {
 		NavigationControleur.getScene().getStylesheets()
@@ -66,13 +88,27 @@ public class SuppressionCategoriesControleur {
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 			ligneCategorie = new HBox();
-			caseCategorie = new CheckBox();
 			
 			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
+			
+			checkBoxCategorie = new CheckBox();
+			checkBoxCategorie.setId("" + i);
+			
+			// Si la checkbox n'a pas déjà été ajoutée
+			if (i >= toutesLesCheckBox.size()) {
+				toutesLesCheckBox.add(checkBoxCategorie);
+			} else {
+				checkBoxCategorie = toutesLesCheckBox.get(i);
+			}
+			
 	        categorieCourante = new Label(intituleCategorie);
 	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
 	        if (!intituleCategorie.equals("Général")) {
-				ligneCategorie.getChildren().add(caseCategorie);
+				ligneCategorie.getChildren().add(checkBoxCategorie);
+				final int INDICE = i;
+				checkBoxCategorie.setOnMouseClicked(event -> {
+					selectionnerCategorie(INDICE);
+				});
 			}
 			ligneCategorie.getChildren().add(categorieCourante);
 			
@@ -86,6 +122,28 @@ public class SuppressionCategoriesControleur {
 	    		                 && indiceFin < toutesLesCategories.size()
 	    		                 ? true
 	    		                 : false);
+	}
+	
+	/**
+	 * Ajout de la catégorie correspondante à l'indiceen paramètre à la liste
+	 * des catégories sélectionnées.
+	 * 
+	 * @param indice Indice de la catégorie cliquée.
+	 */
+	private void selectionnerCategorie(int indice) {
+		
+		if (toutesLesCheckBox.get(indice).isSelected()) {
+			categoriesSelectionnees.add(jeu.getToutesLesCategories()
+                                   .get(indice).getIntitule());	
+		} else {
+			categoriesSelectionnees.remove(jeu.getToutesLesCategories()
+                                              .get(indice).getIntitule());	
+		}
+		System.out.println("Catégories sélectionnées : ");
+		for (String categorie : categoriesSelectionnees) {
+			System.out.println("- " + categorie);
+		}
+		System.out.println();
 	}
 	
 	/**
@@ -129,8 +187,19 @@ public class SuppressionCategoriesControleur {
 	
 	@FXML
 	private void actionBoutonSupprimer() {
-		// TODO: suppression à implémenter
+		final String TITRE_POPUP_CONFIRM = "Confirmer la suppression";
+		final String DEMANDE_CONFIRMATION = "Etes-vous sûr(e) de vouloir supprimer "
+											+ categoriesSelectionnees.size()
+											+ " catégories ?";
+		
+		boolean confirmerSuppression
+		= AlerteControleur.alerteConfirmation(DEMANDE_CONFIRMATION,
+				                              TITRE_POPUP_CONFIRM);
+		
+		if (confirmerSuppression) {
+			jeu.supprimer(jeu.getCategoriesParIntitules(categoriesSelectionnees));
+			NavigationControleur.changerVue("AffichageCategories.fxml");
+		}
 	}
-	
 	
 }
