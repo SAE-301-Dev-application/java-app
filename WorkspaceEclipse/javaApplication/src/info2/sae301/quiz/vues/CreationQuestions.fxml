@@ -20,7 +20,7 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="270.0" layoutY="43.0" styleClass="titre" text="QUESTION">
+      <Label layoutX="270.0" layoutY="43.0" styleClass="titre" text="CREATION QUESTION">
          <stylesheets>
             <URL value="@creation-categorie.css" />
             <URL value="@application.css" />
