@@ -4,6 +4,7 @@
  */
 package info2.sae301.quiz.serialisation;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import info2.sae301.quiz.modeles.Jeu;
  * Classe de sérialisation pour les objets de type "Jeu" 
  * @author FABRE Florian
  */
-public class Serialisation implements Serializable{
+public class Serialisation implements Serializable {
 
 	/** Numéro de sérialisation : clé de hachage */
 	private static final long serialVersionUID = 7823106592908394070L;
@@ -29,22 +30,30 @@ public class Serialisation implements Serializable{
 	 * de sauvegarde
 	 * @param nomSauvegarde nom de la sauvegarde à créer
 	 */
-	public void serialiser(String nomSauvegarde) {
+	public void serialiser(String nomFichier) {
+
+		//Chemin pour les sauvegardes
+		String cheminDossier = "../sauvegarde";
 
 		try {
 
+			// Crée un fichier avec le chemin du dossier et le nom du fichier
+			File file = new File(cheminDossier, nomFichier);
+
 			// Déclaration et création du fichier qui recevra les objets
-			ObjectOutputStream flux = new ObjectOutputStream(
-					new FileOutputStream(nomSauvegarde));
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
+
+
 
 
 			System.out.print("Ecriture de " + this.toString());
-			flux.writeObject(this);
-			
+			fluxEcriture.writeObject(this);
+
 			// Fermeture du fichier
-			flux.close();
+			fluxEcriture.close();
 		} catch (IOException e) { 
-			System.out.println("Problème d'accès au fichier " + nomSauvegarde);
+			System.out.println("Problème d'accès au fichier " + nomFichier);
 		}
 	}
 
@@ -55,24 +64,28 @@ public class Serialisation implements Serializable{
 	 * @param nomSauvegarde nom de la sauvegarde à restaurer
 	 */
 	public static Jeu deserialisation(String nomSauvegarde) {
-		
+
 		// Variable qui recevra l'objet sauvegardé en mémoire
 		Jeu jeuEnCours = null;
+
+		//Chemin pour les sauvegardes
+		String cheminDossier = "../sauvegarde";
+
 		// déclaration du fichier et lecture dans le fichier
 		try {
+			
+			//Crée un objet de type File avec le chemin du fichier
+	        File file = new File(cheminDossier, nomSauvegarde);
 
-			// Déclaration et ouverture du fichier qui contient les objets
-			ObjectInputStream fluxLecture = new ObjectInputStream(
-					new FileInputStream(nomSauvegarde));
-			
-			
-			jeuEnCours = (Jeu) fluxLecture.readObject();
-			
+	        FileInputStream fileInputStream = new FileInputStream(file);
+	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
+	        
+	        jeuEnCours = (Jeu) fluxLecture.readObject();
+
 			// Fermeture du fichier
 			fluxLecture.close();
 			System.out.println(jeuEnCours);
-		
-			
+
 		} catch (IOException e) { // problème fichier
 			System.out.println("Problème d'accès au fichier " + nomSauvegarde);
 		} catch (ClassNotFoundException e) {
