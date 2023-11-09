@@ -48,7 +48,9 @@ public class Jeu implements Serializable {
 					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
 					    		        "Réponse fausse 3", "Réponse fausse 4"},
 						  2, "Feedback très court",
-                          toutesLesCategories.get(0).getIntitule());
+                          i % 2 == 0
+                          ? toutesLesCategories.get(0).getIntitule()
+                          : "2ème catégorie");
 		}
 	}
 	
@@ -60,6 +62,20 @@ public class Jeu implements Serializable {
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
 		return toutesLesQuestions;
+	}
+	
+	/**
+	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
+	 * 
+	 * @param intituleCategorie L'intitulé de la catégorie de laquelle retourner
+	 *                          les questions.
+	 * @return La liste des questions de la catégorie en paramètre.
+	 */
+	public ArrayList<Question> questionsCategorie(String intituleCategorie) {
+		if (intituleCategorie.equals("Toutes les catégories")) {
+			return toutesLesQuestions;
+		}
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
 	}
 	
 	/**
@@ -80,8 +96,8 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
-	 * @param categorie intitulé de la catégorie à retourner.
-	 * @return la catégorie dont l'intitulé est dans le paramètre.
+	 * @param categorie Intitulé de la catégorie à retourner.
+	 * @return La catégorie dont l'intitulé est dans le paramètre.
 	 */
 	public Categorie getCategorieParIntitule(String intituleCategorie) {
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
@@ -161,6 +177,9 @@ public class Jeu implements Serializable {
 			int indiceCategorie = indiceCategorie(categorieCourante.getIntitule());
 			if (indiceCategorie != -1
 				&& !categorieCourante.getIntitule().equals("Général")) {
+				toutesLesQuestions.removeAll(toutesLesCategories
+						                     .get(indiceCategorie)
+						                     .getListeQuestions());
 				toutesLesCategories.remove(indiceCategorie);
 			}
 		}
