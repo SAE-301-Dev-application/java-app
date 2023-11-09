@@ -194,13 +194,111 @@ public class Jeu implements Serializable {
 		for (Question questionCourante : aSupprimer) {
 			int indiceQuestion
 			= indiceQuestion(questionCourante.getIntitule(),
-					            questionCourante.getCategorie().getIntitule(),
-								questionCourante.getReponseJuste(),
-								questionCourante.getReponsesFausses());
+					         questionCourante.getCategorie().getIntitule(),
+							 questionCourante.getReponseJuste(),
+							 questionCourante.getReponsesFausses());
 			if (indiceQuestion != -1) {
+				questionCourante.getCategorie().supprimerQuestion(questionCourante);
 				toutesLesQuestions.remove(indiceQuestion);
 			}
 		}
+	}
+	
+	/**
+	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
+	 * 
+	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
+	 * @throws IllegalArgumentException si la taille est invalide ou qu'une catégorie
+	 *                                  du nouveau nom existe déjà.
+	 */
+	public void renommerCategorie(String ancienIntitule,
+			                      String nouveauIntitule)
+	                   throws IllegalArgumentException {
+		final String CATEGORIE_INEXISTANTE
+		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
+		  + "être renommée.";
+		
+		final String CATEGORIE_DEJA_EXISTANTE
+		= "L'intitulé entré existe déjà pour une autre catégorie.";
+		
+		final String TAILLE_INVALIDE
+		= "La taille d'un intitulé de catégorie doit être comprise entre 1 et 20.";
+		
+		if (nouveauIntitule.length() < 1 || nouveauIntitule.length() > 20) {
+			throw new IllegalArgumentException(TAILLE_INVALIDE);
+		}
+		
+		// Si une catégorie ayant le même intitulé existe.
+		if (indiceCategorie(nouveauIntitule) >= 0) {
+			throw new IllegalArgumentException(CATEGORIE_DEJA_EXISTANTE);
+		}
+		
+		int indiceCategorie = indiceCategorie(ancienIntitule);
+		
+		if (indiceCategorie > 0) {
+			toutesLesCategories.get(indiceCategorie).setIntitule(nouveauIntitule);
+		} else {
+			throw new IllegalArgumentException(CATEGORIE_INEXISTANTE);
+		}
+	}
+	
+	/**
+	 * Edite la question sélectionnée.
+     *
+	 * @param indiceQuestion L'indice de la question à éditer.
+	 * @param nouveauIntitule Le nouveau intitulé de la question.
+	 * @param reponseJuste La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @param difficulte La difficulté.
+	 * @param feedback Le feedback.
+	 * @param categorie La catégorie contenant la question.
+	 * @throws IllegalArgumentException si la taille est invalide ou qu'une question
+	 *         ayant les mêmes paramètres existe déjà dans la même catégorie.
+	 */
+	public void editerQuestion(int indiceQuestion, String nouveauIntitule,
+			                   String reponseJuste, String[] reponsesFausses,
+			                   int difficulte, String feedback,
+			                   String intituleCategorie)
+	            throws IllegalArgumentException {	
+		
+		final String CATEGORIE_INEXISTANTE
+		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
+		  + "être renommée.";
+		
+		final String QUESTION_DEJA_EXISTANTE
+		= "Une autre question avec le même intitulé, la même catégorie et"
+		  + " les mêmes réponses existe déjà.";
+		
+		int indiceQuestionTrouve
+		= indiceQuestion(nouveauIntitule, intituleCategorie, reponseJuste,
+				         reponsesFausses);
+		
+		// Si une question ayant les mêmes paramètres existe.
+		if (indiceQuestionTrouve >= 0 && indiceQuestionTrouve != indiceQuestion) {
+			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
+		}
+		
+		if (!feedback.isBlank()) {
+			Question.verifierAttributs(nouveauIntitule, reponseJuste,
+					                   reponsesFausses, difficulte, feedback);
+		} else {
+			Question.verifierAttributs(nouveauIntitule, reponseJuste,
+					                   reponsesFausses, difficulte);
+
+		}
+		
+		int indiceCategorie = indiceCategorie(intituleCategorie);
+		if (indiceCategorie < 0) {
+			throw new IllegalArgumentException(CATEGORIE_INEXISTANTE);
+		}
+		
+		Question question = toutesLesQuestions.get(indiceQuestion);
+		question.setIntitule(nouveauIntitule);
+		question.setReponseJuste(reponseJuste);
+		question.setReponsesFausses(reponsesFausses);
+		question.setDifficulte(difficulte);
+		question.setFeedback(feedback);
+		question.setCategorie(toutesLesCategories.get(indiceCategorie));
 	}
 	
 	/**
