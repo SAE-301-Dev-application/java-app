@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.modeles;
 
+import info2.sae301.quiz.Quiz;
+
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
  * directement lié à une catégorie
@@ -15,130 +17,106 @@ public class Question {
 	/** Message si erreur sur les tailles de champ */
 	final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
 	
-	/** Message si erreur sur la taille du tableau de réponse fausses*/
-	final String ERR_TAILLE_TAB_REP_FAUSSES = "Le nombre de réponses fausses doit"
-			+ " être compris entre 1 et 4";
+	/** Message si erreur sur la taille du tableau de réponse fausses */
+	final String NB_REPONSES_FAUSSES_INVALIDE = "Le nombre de réponses fausses rédigées"
+											    + " doit être compris entre 1 et 4.";
 	
-	/** Message si erreur sur la difficulté*/
-	final String ERR_DIFFICULTE = "La difficulté doit être soit 1 , 2 ou 3";
+	/** Message si erreur sur la difficulté */
+	final String DIFFICULTE_INVALIDE = "La difficulté doit être comprise entre 1"
+									   + " et 3 : 1 - Facile, 2 - Moyenne, 3 - "
+									   + "Difficile";
 	
-	/** l'intitulé de la question (max 300 caractères) */
+	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
-    /** la réponse juste (200 caractères)*/
+    /** La réponse juste (max 200 caractères)*/
     private String reponseJuste;
     
-    /** les réponses fausses (200 car / repFausse) */
+    /** Les réponses fausses (max 200 caractères) */
     private String[] reponsesFausses = new String[4];
     
-    /** la difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
+    /** La difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
     private int difficulte;
     
     /** 
-     * le feedback à afficher lors de la correction 
+     * Le feedback à afficher lors de la correction 
      * de la réponse à cette question (500 caractères) 
      */
     private String feedback;
     
-    /** la catégorie dans laquelle est cette question */
+    /** La catégorie dans laquelle est cette question */
     private Categorie categorie;
 
-    
     /**
      * Nouvelle question identifiée par son intitulé ayant une
 	 * réponse juste, des réponses fausses, un niveau de difficulté 
-	 * et une catégorie associée
-	 * @param intitule
-	 * @param reponseJuste
-	 * @param reponsesFausses
-	 * @param difficulte
-	 * @param categorie
+	 * et une catégorie associée.
+	 * 
+	 * @param intitule L'intitulé de la question.
+	 * @param reponseJuste La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @param difficulte La difficulté (1, 2 ou 3).
+	 * @param categorie La catégorie contenant la question.
 	 */
 	public Question(String intitule, String reponseJuste,
 			String[] reponsesFausses, int difficulte, Categorie categorie) {
 		
-		if (intitule.length() < 1 || intitule.length() > 300) {
-			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
-					                           "d'un intitulé de question", 1, 300));
-		}
-		this.intitule = intitule;
-		
-		if (reponseJuste.length() > 200) {
-			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
-												,"d'une réponse",200));
-		} else {
-			this.reponseJuste = reponseJuste;
-		}
-		
-		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			throw new IllegalArgumentException(ERR_TAILLE_TAB_REP_FAUSSES);
-		} else {
-			for (String reponse : reponsesFausses) {
-				if (reponse.length() > 200) {
-					throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
-							,"d'une réponse",200));
-				}
-			}
-			this.reponsesFausses = reponsesFausses;
-		}
-		
-		if (difficulte < 1 || difficulte > 3) {
-			throw new IllegalArgumentException(ERR_DIFFICULTE);
-		} else {
-			this.difficulte = difficulte;
-		}
-		
-		this.categorie = categorie;
-		this.feedback = null;
+		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
 	}
     
     
 	/**
 	 * Nouvelle question identifiée par son intitulé ayant
 	 * une réponse juste, des réponses fausses, un niveau de difficulté,
-     * un feedback et une catégorie associée
-	 * @param intitule
-	 * @param reponseJuste
-	 * @param reponsesFausses
-	 * @param difficulte
-	 * @param feedback
-	 * @param categorie
+     * un feedback et une catégorie associée.
+     * 
+	 * @param intitule L'intitulé de la question.
+	 * @param reponseJuste La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @param difficulte La difficulté (1, 2 ou 3).
+	 * @param feedback Le feedback à afficher pour corriger la réponse.
+	 * @param categorie La catégorie contenant la question.
 	 */
 	public Question(String intitule, String reponseJuste,
 			String[] reponsesFausses, int difficulte, String feedback,
 			Categorie categorie) {
 
+		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
+		assurerTaille(feedback, "d'un feedback", 1, 500);
+		this.feedback = feedback;
+	}
+	
+	/**
+	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * 
+	 * @param intitule L'intitulé de la question.
+	 * @param reponseJuste La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @param difficulte La difficulté (1, 2 ou 3).
+	 * @param categorie La catégorie contenant la question.
+	 */
+	private void verifierEtInitialiser(String intitule, String reponseJuste,
+									   String[] reponsesFausses, int difficulte,
+			                           Categorie categorie) {
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
-		this.intitule = intitule;
-				
-		assurerTaille(reponseJuste, "d'une réponse", 1, 200);
-		this.reponseJuste = reponseJuste;
+		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
 		
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			throw new IllegalArgumentException(ERR_TAILLE_TAB_REP_FAUSSES);
-		} else {
-			for (String reponse : reponsesFausses) {
-				if (reponse.length() > 200) {
-					throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
-							                           "d'une réponse", 200));
-				}
-			}
-			this.reponsesFausses = reponsesFausses;
+			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
 		}
-		
+		for (String reponseFausse : reponsesFausses) {
+			assurerTaille(reponseFausse, "d'une réponse fausse", 1, 200);
+		}
 		if (difficulte < 1 || difficulte > 3) {
-			throw new IllegalArgumentException(ERR_DIFFICULTE);
-		} else {
-			this.difficulte = difficulte;
+			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
 		
-		if (feedback.length() > 500) {
-			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
-					,"d'un feedback",500));
-		} else {
-			this.feedback = feedback;
-		}
+		this.intitule = intitule;
+		this.reponseJuste = reponseJuste;
+		this.reponsesFausses = reponsesFausses;
+		this.difficulte = difficulte;
 		this.categorie = categorie;
+		this.feedback = null;
 	}
 	
 	/**
