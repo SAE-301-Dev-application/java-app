@@ -167,7 +167,10 @@ class TestJeu {
 				                        jeu.getToutesLesQuestions()));
 		
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
+			Question question = listeQuestionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+						      question.getReponsesFausses(), question.getDifficulte(),
+						      question.getFeedback(), question.getCategorie().getIntitule());
 			listeQuestions.add(listeQuestionsTest.get(i));
 
 			assertEquals(listeQuestions.get(i).getIntitule(),
@@ -209,7 +212,10 @@ class TestJeu {
 	@Test
 	public void testSupprimerToutesQuestions() {
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
+			Question question = listeQuestionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+				      question.getReponsesFausses(), question.getDifficulte(),
+				      question.getFeedback(), question.getCategorie().getIntitule());
 		}
 		assertFalse(listesMemesQuestions(listeVide,
 					 				     jeu.getToutesLesQuestions()));
@@ -249,22 +255,6 @@ class TestJeu {
 	@Test
 	public void testCreerQuestion() {
 		fail("todo");
-	}
-	
-	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#ajouterQuestion(Question)}.
-	 */
-	@Test
-	public void testAjouterQuestion() {
-		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
-			assertEquals(jeu.getToutesLesQuestions().get(i).getIntitule(),
-					     listeQuestionsTest.get(i).getIntitule());
-		}
-		jeu.ajouterQuestion(listeQuestionsTest.get(2));
-		assertTrue(listesMemesQuestions(listeQuestionsTest,
-									    jeu.getToutesLesQuestions()));
 	}
 	
 	/**
@@ -322,7 +312,10 @@ class TestJeu {
 		
 		// Ajout à jeu des questions de questionsTest.
 		for (int i = 0; i < questionsTest.size(); i++) {
-			jeu.ajouterQuestion(questionsTest.get(i));
+			Question question = questionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+				      question.getReponsesFausses(), question.getDifficulte(),
+				      question.getFeedback(), question.getCategorie().getIntitule());
 		}
 		
 		// Tests de suppression de 1 question en 1 question

@@ -57,9 +57,11 @@ public class Question {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param categorie La catégorie contenant la question.
+	 * @throws IllegalArgumentException si la question existe déjà.
 	 */
 	public Question(String intitule, String reponseJuste,
-			String[] reponsesFausses, int difficulte, Categorie categorie) {
+			        String[] reponsesFausses, int difficulte, Categorie categorie)
+	                throws IllegalArgumentException {
 		
 		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
 	}

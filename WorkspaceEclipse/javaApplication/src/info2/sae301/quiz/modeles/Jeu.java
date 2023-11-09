@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,7 +15,9 @@ import java.util.Arrays;
  * @author FAUGIERES Loïc
  * @author GUIRAUD Simon
  */
-public class Jeu {
+public class Jeu implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie
@@ -40,13 +43,12 @@ public class Jeu {
 		this.toutesLesQuestions = new ArrayList<>();
 		
 		for (int i = 1; i <= 30; i++) {
-			Question question
-			= new Question("" + i + (i != 1 ? "ème" : "ère") + " question", "Réponse vraie",
-						   new String[] {"Réponse fausse 1", "Réponse fausse 2",
-				            "Réponse fausse 3", "Réponse fausse 4"},
-						   2, "Feedback très court", toutesLesCategories.get(0));
-			
-			ajouterQuestion(question);
+			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
+					      "Réponse vraie",
+					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
+					    		        "Réponse fausse 3", "Réponse fausse 4"},
+						  2, "Feedback très court",
+                          toutesLesCategories.get(0).getIntitule());
 		}
 	}
 	
@@ -150,20 +152,6 @@ public class Jeu {
 	}
 	
 	/**
-	 * Ajoute une nouvelle question dans la liste des questions 
-	 * si celle-ci n'est pas déjà présente.
-	 * @param aAjouter La question à ajouter.
-	 */
-	public void ajouterQuestion(Question aAjouter) {
-		if (indiceQuestion(aAjouter.getIntitule(),
-							  aAjouter.getCategorie().getIntitule(),
-							  aAjouter.getReponseJuste(),
-							  aAjouter.getReponsesFausses()) == -1) {
-			toutesLesQuestions.add(aAjouter);
-		}
-	}
-	
-	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la
 	 * liste en paramètre.
 	 * @param aSupprimer Liste des catégories à supprimer.
@@ -217,7 +205,8 @@ public class Jeu {
 	}
  	
 	/**
-	 * Vérification de l'existence d'une question dans la liste des questions.
+	 * Vérification de l'existence d'une question dans la liste des questions d'une
+	 * catégorie dont l'intitulé est en paramètre.
 	 * 
 	 * @param intituleQuestion L'intitulé de la question à chercher.
 	 * @param intituleCategorie L'intitulé de la catégorie contenant la question.

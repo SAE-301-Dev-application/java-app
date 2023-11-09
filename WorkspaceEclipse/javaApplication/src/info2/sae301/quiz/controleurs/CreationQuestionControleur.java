@@ -85,6 +85,10 @@ public class CreationQuestionControleur {
 	@FXML
 	private void actionBoutonEnregistrer() {
 		
+		final String QUESTION_EXISTANTE
+		= "Une question de la même catégorie avec le même intitulé et les mêmes"
+		  + "réponses existe déjà.";
+		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
 		String intituleQuestionEntre,
@@ -113,6 +117,13 @@ public class CreationQuestionControleur {
 		difficulteEntree = Integer.parseInt("" + this.difficulte.getValue().charAt(0));
 		
 		try {
+			// Impossible de check dans le modèle Question, laisser ici
+			if (jeu.indiceQuestion(intituleQuestionEntre, categorie.getIntitule(),
+					               reponseJusteEntree,
+					               reponsesFausses
+					               .toArray(new String[reponsesFausses.size()])) != -1) {
+				throw new IllegalArgumentException(QUESTION_EXISTANTE);
+			}
 			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
 				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
 				              difficulteEntree, feedbackEntre, categorie.getIntitule());
