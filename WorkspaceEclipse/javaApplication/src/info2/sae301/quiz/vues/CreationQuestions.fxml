@@ -66,7 +66,7 @@
                         <VBox prefHeight="119.0" prefWidth="333.0">
                            <children>
                               <Label prefHeight="22.0" prefWidth="280.0" styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Feedback facultatif (500 caractères max):" />
-                              <TextArea fx:id="feedback" prefHeight="200.0" prefWidth="344.0" />
+                              <TextArea fx:id="feedback" prefHeight="200.0" prefWidth="344.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
                      </children>
@@ -77,33 +77,36 @@
                   </VBox>
                   <VBox prefHeight="359.0" prefWidth="349.0">
                      <children>
-                        <VBox prefHeight="63.0" prefWidth="330.0">
+                        <VBox prefHeight="52.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                            <children>
                               <Label styleClass="label-champ" text="    Réponse juste (200 caractères max):" />
-                              <TextArea fx:id="reponseJuste" prefHeight="200.0" prefWidth="344.0" />
+                              <TextArea fx:id="reponseJuste" prefHeight="200.0" prefWidth="344.0" VBox.vgrow="ALWAYS" />
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </VBox>
-                        <VBox prefHeight="275.0" prefWidth="330.0" styleClass="space">
+                        <VBox prefHeight="257.0" prefWidth="330.0" styleClass="space">
                            <children>
                               <Label styleClass="label-champ" text="    Réponse(s) fausse(s) (200 caractères max):" />
-                              <VBox prefHeight="267.0" prefWidth="326.0" styleClass="space">
+                              <VBox prefHeight="230.0" prefWidth="326.0" styleClass="space">
                                  <children>
-                                    <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 1">
+                                    <TextArea fx:id="reponseFausse1" prefHeight="87.0" prefWidth="322.0" promptText="Réponse fausse 1 (obligatoire)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2">
+                                    <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2 (*optionnelle)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3">
+                                    <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3 (*)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4" />
+                                    <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4 (*)" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                            </children>

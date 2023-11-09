@@ -15,7 +15,10 @@ import java.util.Arrays;
  * @author FAUGIERES Loïc
  * @author GUIRAUD Simon
  */
-public class Jeu implements Serializable{
+
+public class Jeu implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie
@@ -34,7 +37,22 @@ public class Jeu implements Serializable{
 		this.toutesLesCategories
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 		
+		for (int i = 2; i <= 30; i++) {
+			creerCategorie("" + i + "ème catégorie");
+		}
+		
 		this.toutesLesQuestions = new ArrayList<>();
+		
+		for (int i = 1; i <= 30; i++) {
+			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
+					      "Réponse vraie",
+					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
+					    		        "Réponse fausse 3", "Réponse fausse 4"},
+						  2, "Feedback très court",
+                          i % 2 == 0
+                          ? toutesLesCategories.get(0).getIntitule()
+                          : "2ème catégorie");
+		}
 	}
 	
 	/** @return La liste des catégories créées. */
@@ -45,6 +63,20 @@ public class Jeu implements Serializable{
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
 		return toutesLesQuestions;
+	}
+	
+	/**
+	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
+	 * 
+	 * @param intituleCategorie L'intitulé de la catégorie de laquelle retourner
+	 *                          les questions.
+	 * @return La liste des questions de la catégorie en paramètre.
+	 */
+	public ArrayList<Question> questionsCategorie(String intituleCategorie) {
+		if (intituleCategorie.equals("Toutes les catégories")) {
+			return toutesLesQuestions;
+		}
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
 	}
 	
 	/**
@@ -62,6 +94,14 @@ public class Jeu implements Serializable{
 			indice++;
 		}
 		return categoriesARetourner;
+	}
+	
+	/**
+	 * @param categorie Intitulé de la catégorie à retourner.
+	 * @return La catégorie dont l'intitulé est dans le paramètre.
+	 */
+	public Categorie getCategorieParIntitule(String intituleCategorie) {
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
 	}
 	
 	/**
@@ -105,9 +145,11 @@ public class Jeu implements Serializable{
 	 */
 	public void creerQuestion(String intitule, String reponseJuste,
 			                  String[] reponsesFausses, int difficulte,
-			                  String feedback, Categorie categorie) {
+			                  String feedback, String intituleCategorie) {
 		
-		if (indiceQuestion(intitule, categorie.getIntitule(),
+		Categorie categorie = getCategorieParIntitule(intituleCategorie);
+		
+		if (indiceQuestion(intitule, intituleCategorie,
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
@@ -127,20 +169,6 @@ public class Jeu implements Serializable{
 	}
 	
 	/**
-	 * Ajoute une nouvelle question dans la liste des questions 
-	 * si celle-ci n'est pas déjà présente.
-	 * @param aAjouter La question à ajouter.
-	 */
-	public void ajouterQuestion(Question aAjouter) {
-		if (indiceQuestion(aAjouter.getIntitule(),
-							  aAjouter.getCategorie().getIntitule(),
-							  aAjouter.getReponseJuste(),
-							  aAjouter.getReponsesFausses()) == -1) {
-			toutesLesQuestions.add(aAjouter);
-		}
-	}
-	
-	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la
 	 * liste en paramètre.
 	 * @param aSupprimer Liste des catégories à supprimer.
@@ -150,6 +178,9 @@ public class Jeu implements Serializable{
 			int indiceCategorie = indiceCategorie(categorieCourante.getIntitule());
 			if (indiceCategorie != -1
 				&& !categorieCourante.getIntitule().equals("Général")) {
+				toutesLesQuestions.removeAll(toutesLesCategories
+						                     .get(indiceCategorie)
+						                     .getListeQuestions());
 				toutesLesCategories.remove(indiceCategorie);
 			}
 		}
@@ -194,7 +225,8 @@ public class Jeu implements Serializable{
 	}
  	
 	/**
-	 * Vérification de l'existence d'une question dans la liste des questions.
+	 * Vérification de l'existence d'une question dans la liste des questions d'une
+	 * catégorie dont l'intitulé est en paramètre.
 	 * 
 	 * @param intituleQuestion L'intitulé de la question à chercher.
 	 * @param intituleCategorie L'intitulé de la catégorie contenant la question.

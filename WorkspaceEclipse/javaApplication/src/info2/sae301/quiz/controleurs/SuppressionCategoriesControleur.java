@@ -198,7 +198,8 @@ public class SuppressionCategoriesControleur {
 		final String TITRE_POPUP_CONFIRM = "Confirmer la suppression";
 		final String DEMANDE_CONFIRMATION = "Etes-vous sûr(e) de vouloir supprimer "
 											+ categoriesSelectionnees.size()
-											+ " catégories ?";
+											+ " catégorie(s) ?\nLes questions dans ces"
+											+ " catégories seront également supprimées.";
 		
 		if (categoriesSelectionnees.size() == 0) {
 			AlerteControleur.autreAlerte(MESSAGE_SELECTION_VIDE,

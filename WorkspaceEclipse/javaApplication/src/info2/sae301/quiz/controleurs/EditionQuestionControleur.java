@@ -99,12 +99,9 @@ public class EditionQuestionControleur {
 		difficulte = Integer.parseInt(this.difficulte.getValue().toString());
 		
 		try {
-			Question nouvelleQuestion
-			= new Question(intitule, reponseJuste,
-					       reponsesFausses.toArray(new String[reponsesFausses.size()]),
-					       difficulte, categorie);
-			
-			jeu.ajouterQuestion(nouvelleQuestion);
+			jeu.creerQuestion(intitule, reponseJuste,
+				       		  reponsesFausses.toArray(new String[reponsesFausses.size()]),
+				              difficulte, feedback, categorie.getIntitule());
 		} catch (Exception e) {
 			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);
