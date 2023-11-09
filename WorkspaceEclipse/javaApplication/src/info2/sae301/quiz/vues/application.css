@@ -121,7 +121,8 @@ TextField {
 	-fx-background-color: rgba(0, 153, 51, 0.5);
 }
 
-.rectangle-bleu-clair {
+.rectangle-bleu-clair,
+.rectangle-bleu-clair > .viewport {
 	-fx-background-color: #2E3469;
 	-fx-background-radius: 30px;
 }
@@ -178,4 +179,8 @@ ChoiceBox {
 
 .intitule-padding-left {
 	-fx-padding: 0 0 0 10px;
+}
+
+TextArea .content {
+	-fx-background-radius: 0;
 }
