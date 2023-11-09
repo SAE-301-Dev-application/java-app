@@ -8,11 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.serialisation.Serialisation;
 
 import static info2.sae301.quiz.serialisation.Serialisation.*;
 
@@ -53,20 +56,17 @@ class TestSerialisation {
 	
 	@Test
 	void testSerialiser() { 
-		/*TODO ne fonctionne pas, trouver comment faire fonctionner le 
-		 * Files.exists() pour que l'on teste si le fichier de de sauvegarde est bien
-		 * présent après sérialisation
-		 */
-		Path test01 = Paths.get("../sauvegarde", "01.ser");
 		serialiser(jeuSerialiseModifie, "01.ser");
-		
-		assertTrue(Files.exists(test01));
+		String cheminFichier = "../sauvegarde/01.ser";
+		File file = new File(cheminFichier);
+		assertTrue(file.exists());
 	}
 
 	
 	@Test
 	void testDeserialiser() { //TODO a finir
-		fail("Not yet implemented");
+		jeuNonSerialise = Serialisation.deserialiser("../sauvegarde/01.ser");
+//		jeuNonSerialise.getToutesLesCategories().get
 	}
 
 }
