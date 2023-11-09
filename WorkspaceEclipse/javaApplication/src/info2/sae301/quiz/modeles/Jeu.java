@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,7 +15,7 @@ import java.util.Arrays;
  * @author FAUGIERES Loïc
  * @author GUIRAUD Simon
  */
-public class Jeu {
+public class Jeu implements Serializable{
 
 	/**
 	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie
