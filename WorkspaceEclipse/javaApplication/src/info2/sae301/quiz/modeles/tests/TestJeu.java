@@ -400,6 +400,7 @@ class TestJeu {
 	 */
 	@Test
 	public void testMemesReponsesFausses() {
+		//TODO faire la méthode de test
 		fail("todo");
 	}
 	
