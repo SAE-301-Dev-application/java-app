@@ -104,8 +104,11 @@ public class Question {
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
 			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
 		}
-		for (String reponseFausse : reponsesFausses) {
-			assurerTaille(reponseFausse, "d'une réponse fausse", 1, 200);
+		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
+		for (int i = 1; i < reponsesFausses.length; i++) {
+			if (!reponsesFausses[i].isBlank()) {
+				assurerTaille(reponsesFausses[i], "d'une réponse fausse", 1, 200);				
+			}
 		}
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);

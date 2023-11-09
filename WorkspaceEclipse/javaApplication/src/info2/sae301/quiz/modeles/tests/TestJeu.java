@@ -75,7 +75,7 @@ class TestJeu {
 				    		  new String[] {
 				    		      "Réponse fausse 1", "Réponse fausse 2",
 				    		      "Réponse fausse 3"
-				    		  }, 2, "feedback", tests);
+				    		  }, 2, "feedback", tests.getIntitule());
 		}
 	}
 	
@@ -386,7 +386,7 @@ class TestJeu {
 					          question.getReponsesFausses(),
 					          question.getDifficulte(),
 					          question.getFeedback(),
-					          question.getCategorie());
+					          question.getCategorie().getIntitule());
 			assertNotEquals(-1, jeu.indiceQuestion(question.getIntitule(),
 					   						       question.getCategorie().getIntitule(),
 					   						       question.getReponseJuste(),

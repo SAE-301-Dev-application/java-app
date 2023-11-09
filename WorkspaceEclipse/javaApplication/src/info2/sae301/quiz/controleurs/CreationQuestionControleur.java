@@ -14,10 +14,7 @@ import javafx.scene.control.TextArea;
 
 public class CreationQuestionControleur {
 	
-	private static final String TITRE_ALERTE = "Erreur de création";
-
-	private static final String MESSAGE_ERREUR_TROP_DE_CARACTERE =
-			"Vous ne pouvez pas mettre plus de 20 caractères";
+	private static final String TITRE_ALERTE = "Erreur de création de question";
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -61,7 +58,7 @@ public class CreationQuestionControleur {
 		// Catégorie général par défaut
 		intituleCategorie.setValue(jeu.getToutesLesCategories().get(0).getIntitule());
 		
-		String[] difficultes = {"0 - Indifférente", "1 - Facile", "2 - Moyenne",
+		String[] difficultes = {"1 - Facile", "2 - Moyenne",
 				                "3 - Difficile"};
 		
 		// Affichage des difficultés dans le menu déroulant
@@ -118,9 +115,10 @@ public class CreationQuestionControleur {
 		try {
 			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
 				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
-				              difficulteEntree, feedbackEntre, categorie);
+				              difficulteEntree, feedbackEntre, categorie.getIntitule());
+			NavigationControleur.changerVue("AffichageQuestions.fxml");
 		} catch (Exception e) {
-			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+			AlerteControleur.autreAlerte(e.getMessage(),
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}

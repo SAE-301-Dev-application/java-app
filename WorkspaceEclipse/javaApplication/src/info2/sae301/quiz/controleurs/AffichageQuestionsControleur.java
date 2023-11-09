@@ -59,20 +59,6 @@ public class AffichageQuestionsControleur {
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
-		Categorie categorie = jeu.getToutesLesCategories().get(0);
-		
-		if (toutesLesQuestions.size() < 10) {
-			for (int i = 1; i <= 30; i++) {
-				Question question
-				= new Question("" + i + (i != 1 ? "ème" : "ère") + " question", "Réponse vraie",
-							   new String[] {"Réponse fausse 1", "Réponse fausse 2",
-					            "Réponse fausse 3", "Réponse fausse 4"},
-							   2, "Feedback très court", categorie);
-				
-				jeu.ajouterQuestion(question);
-			}
-			toutesLesQuestions = jeu.getToutesLesQuestions();
-		}
 		afficherQuestions();
 		
 		// Affichage des catégories dans le menu déroulant de filtre
