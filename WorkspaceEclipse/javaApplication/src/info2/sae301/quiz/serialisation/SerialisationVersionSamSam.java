@@ -1,12 +1,10 @@
 package info2.sae301.quiz.serialisation;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import info2.sae301.quiz.modeles.Jeu;
 
@@ -14,12 +12,12 @@ import info2.sae301.quiz.modeles.Jeu;
  * Classe de sérialisation pour les objets de type "Jeu" 
  * @author LACAM Samuel
  */
-public class SerialisationVersionSamSam /*pas besoin d'implementer serializable car c jeu qu'on sérialise donc c lui qui immplémente ça*/{
-
-	/** Numéro de sérialisation : clé de hachage */
-	private static final long serialVersionUID = 7823106592908394070L;
+public class SerialisationVersionSamSam /*pas besoin d'implementer serializable car c jeu qu'on sérialise donc c lui qui immplémenter ça*/{
 	
 	private static Jeu jeu;
+	
+	//Chemin pour les sauvegardes
+	private static String cheminDossier = "sauvegarde/";
 	
 	/**
 	 * Sérialise les instances de type Jeu et les enregistre dans un fichier
@@ -27,20 +25,14 @@ public class SerialisationVersionSamSam /*pas besoin d'implementer serializable 
 	 * @param nomSauvegarde nom de la sauvegarde à créer
 	 */
 	public static void serialiser(String nomFichier) {
-
-		//Chemin pour les sauvegardes
-		String cheminDossier = "../sauvegarde";
-		
 		try {
 
-			// Crée un fichier avec le chemin du dossier et le nom du fichier
-			File file = new File(cheminDossier, nomFichier);
-
 			// Déclaration et création du fichier qui recevra les objets
-			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			System.out.println(cheminDossier + nomFichier);
+			FileOutputStream fileOutputStream = new FileOutputStream(cheminDossier + nomFichier);
 			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
 
-			System.out.print("Ecriture de " + jeu.toString());
+			System.out.println("Ecriture de " + jeu.toString());
 			fluxEcriture.writeObject(jeu);
 
 			// Fermeture du fichier
@@ -60,16 +52,9 @@ public class SerialisationVersionSamSam /*pas besoin d'implementer serializable 
 		// Variable qui recevra l'objet sauvegardé en mémoire
 		Jeu jeuEnCours = null;
 
-		//Chemin pour les sauvegardes
-		String cheminDossier = "../sauvegarde";
-
 		// déclaration du fichier et lecture dans le fichier
 		try {
-			
-			//Crée un objet de type File avec le chemin du fichier
-	        File file = new File(cheminDossier, nomFichier);
-
-	        FileInputStream fileInputStream = new FileInputStream(file);
+	        FileInputStream fileInputStream = new FileInputStream(cheminDossier + nomFichier);
 	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
 	        
 	        jeuEnCours = (Jeu) fluxLecture.readObject();
@@ -82,10 +67,26 @@ public class SerialisationVersionSamSam /*pas besoin d'implementer serializable 
 			System.out.println("Problème d'accès au fichier " + nomFichier);
 		} catch (ClassNotFoundException e) {
 
-			// exception levée si l'objet lu n'est pas de type Point
+			// exception levée si l'objet lu n'est pas de type Jeu
 			System.out.println("Problème lors de la lecture du fichier "
 					+ nomFichier);
 		}
 		return jeuEnCours;
+	}
+	
+	public static void main(String[] args) {
+		String fichier = "testSave.bin";
+		
+		// >>>>>>>>Jeu de test<<<<<< //
+		jeu = new Jeu();
+		jeu.creerCategorie("Florian");
+		jeu.creerCategorie("Simon");
+		
+		jeu.creerQuestion("Jonthan, tu est tout palichon ?", "vrai", new String[] {"non", "2eme non"}, 3, "", "Simon");
+		jeu.creerQuestion("Question2", "C'est Vrai", new String[] {"non", "peut être"}, 3, "c'est cette réponse car...", "Simon");
+		// >>>>>>>>Jeu de test<<<<<< //
+		
+		SerialisationVersionSamSam.serialiser(fichier);
+		SerialisationVersionSamSam.deserialiser(fichier);
 	}
 }

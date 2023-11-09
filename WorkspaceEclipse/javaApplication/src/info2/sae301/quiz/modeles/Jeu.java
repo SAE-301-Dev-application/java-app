@@ -18,7 +18,8 @@ import java.util.Arrays;
 
 public class Jeu implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 6013770278342863395L;
 
 	/**
 	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie

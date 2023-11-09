@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
+import java.io.Serializable;
 import java.util.ArrayList; 
 
 /**
@@ -12,13 +13,16 @@ import java.util.ArrayList;
  * références des questions liées à la catégorie
  * @author FABRE Florian
  */
-public class Categorie {
+public class Categorie implements Serializable {
     
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 3793388654168200022L;
+
 	/** Message si erreur sur les tailles de champ*/
-	final String ERR_TAILLE_ARG_MAX =
+	private static final String ERR_TAILLE_ARG_MAX =
 			"La taille max d'un intitulé de catégorie est de 20 caractères";
 	
-	final String ERR_TAILLE_ARG_MIN =
+	private static final String ERR_TAILLE_ARG_MIN =
 			"La taille minimale d'un intitulé de catégorie est de 1 caractère";
 	
 	/** l'intitulé de la catégorie (max 20 char)*/

@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.modeles;
 
+import java.io.Serializable;
+
 import info2.sae301.quiz.Quiz;
 
 /**
@@ -12,17 +14,20 @@ import info2.sae301.quiz.Quiz;
  * directement lié à une catégorie
  * @author FABRE Florian
  */
-public class Question {
+public class Question implements Serializable {
 	
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 1304132270193188547L;
+
 	/** Message si erreur sur les tailles de champ */
-	final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
+	private static final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
 	
 	/** Message si erreur sur la taille du tableau de réponse fausses */
-	final String NB_REPONSES_FAUSSES_INVALIDE = "Le nombre de réponses fausses rédigées"
+	private static final String NB_REPONSES_FAUSSES_INVALIDE = "Le nombre de réponses fausses rédigées"
 											    + " doit être compris entre 1 et 4.";
 	
 	/** Message si erreur sur la difficulté */
-	final String DIFFICULTE_INVALIDE = "La difficulté doit être comprise entre 1"
+	private static final String DIFFICULTE_INVALIDE = "La difficulté doit être comprise entre 1"
 									   + " et 3 : 1 - Facile, 2 - Moyenne, 3 - "
 									   + "Difficile";
 	

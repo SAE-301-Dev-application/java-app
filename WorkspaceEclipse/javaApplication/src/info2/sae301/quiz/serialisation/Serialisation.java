@@ -63,7 +63,7 @@ public class Serialisation implements Serializable {
 	 * ainsi récupérée
 	 * @param nomSauvegarde nom de la sauvegarde à restaurer
 	 */
-	public static Jeu deserialisation(String nomSauvegarde) {
+	public Jeu deserialisation(String nomSauvegarde) {
 
 		// Variable qui recevra l'objet sauvegardé en mémoire
 		Jeu jeuEnCours = null;
