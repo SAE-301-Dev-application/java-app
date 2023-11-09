@@ -5,8 +5,6 @@
 
 package info2.sae301.quiz.modeles;
 
-import info2.sae301.quiz.Quiz;
-
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
  * directement lié à une catégorie
@@ -15,16 +13,17 @@ import info2.sae301.quiz.Quiz;
 public class Question {
 	
 	/** Message si erreur sur les tailles de champ */
-	final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
+	final static String TAILLE_INVALIDE
+	= "La taille %s doit être comprise entre %d et %d.";
 	
 	/** Message si erreur sur la taille du tableau de réponse fausses */
-	final String NB_REPONSES_FAUSSES_INVALIDE = "Le nombre de réponses fausses rédigées"
-											    + " doit être compris entre 1 et 4.";
+	final static String NB_REPONSES_FAUSSES_INVALIDE
+	= "Le nombre de réponses fausses rédigées doit être compris entre 1 et 4.";
 	
 	/** Message si erreur sur la difficulté */
-	final String DIFFICULTE_INVALIDE = "La difficulté doit être comprise entre 1"
-									   + " et 3 : 1 - Facile, 2 - Moyenne, 3 - "
-									   + "Difficile";
+	final static String DIFFICULTE_INVALIDE
+	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
+	  + " 3 - Difficile";
 	
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
@@ -63,7 +62,13 @@ public class Question {
 			        String[] reponsesFausses, int difficulte, Categorie categorie)
 	                throws IllegalArgumentException {
 		
-		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
+		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
+		this.intitule = intitule;
+		this.reponseJuste = reponseJuste;
+		this.reponsesFausses = reponsesFausses;
+		this.difficulte = difficulte;
+		this.categorie = categorie;
+		this.feedback = null;
 	}
     
     
@@ -80,11 +85,16 @@ public class Question {
 	 * @param categorie La catégorie contenant la question.
 	 */
 	public Question(String intitule, String reponseJuste,
-			String[] reponsesFausses, int difficulte, String feedback,
-			Categorie categorie) {
+			        String[] reponsesFausses, int difficulte, String feedback,
+			        Categorie categorie) {
 
-		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
-		assurerTaille(feedback, "d'un feedback", 1, 500);
+		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte,
+				          feedback);
+		this.intitule = intitule;
+		this.reponseJuste = reponseJuste;
+		this.reponsesFausses = reponsesFausses;
+		this.difficulte = difficulte;
+		this.categorie = categorie;
 		this.feedback = feedback;
 	}
 	
@@ -95,11 +105,12 @@ public class Question {
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
-	 * @param categorie La catégorie contenant la question.
+	 * @throws IllegalArgumentException si les attributs ne respectent pas
+	 *                                  les tailles demandées.
 	 */
-	private void verifierEtInitialiser(String intitule, String reponseJuste,
-									   String[] reponsesFausses, int difficulte,
-			                           Categorie categorie) {
+	public static void verifierAttributs(String intitule, String reponseJuste,
+							             String[] reponsesFausses, int difficulte)
+	            throws IllegalArgumentException {
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
 		
@@ -115,13 +126,25 @@ public class Question {
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
-		
-		this.intitule = intitule;
-		this.reponseJuste = reponseJuste;
-		this.reponsesFausses = reponsesFausses;
-		this.difficulte = difficulte;
-		this.categorie = categorie;
-		this.feedback = null;
+	}
+	
+	/**
+	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * 
+	 * @param intitule L'intitulé de la question.
+	 * @param reponseJuste La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @param difficulte La difficulté (1, 2 ou 3).
+	 * @param feedback Le feedback.
+	 * @throws IllegalArgumentException si les attributs ne respectent pas
+	 *                                  les tailles demandées.
+	 */
+	public static void verifierAttributs(String intitule, String reponseJuste,
+							             String[] reponsesFausses, int difficulte,
+			                             String feedback)
+	              throws IllegalArgumentException {
+		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
+		assurerTaille(feedback, "d'un feedback", 1, 500);
 	}
 	
 	/**
@@ -134,9 +157,9 @@ public class Question {
 	 * @param tailleMax Taille maximale de l'élément.
 	 * @throws IllegalArgumentException si la taille n'est pas bonne.
 	 */
-	private void assurerTaille(String element, String titre,
-			                   int tailleMin, int tailleMax)
-	                           throws IllegalArgumentException {
+	private static void assurerTaille(String element, String titre,
+			                          int tailleMin, int tailleMax)
+	                    throws IllegalArgumentException {
 		if (element.length() < tailleMin || element.length() > tailleMax) {
 			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
 											                 titre, tailleMin,

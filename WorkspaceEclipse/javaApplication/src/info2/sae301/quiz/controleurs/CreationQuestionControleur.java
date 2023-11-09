@@ -1,3 +1,8 @@
+/*
+ * CreationQuestionControleur.java							         9 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
@@ -5,13 +10,18 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
+/**
+ * Contrôleur FXML de la vue CreationQuestion qui permet la création d'une
+ * nouvelle question.
+ * 
+ * @author FAUGIERES Loïc
+ */
 public class CreationQuestionControleur {
 	
 	private static final String TITRE_ALERTE = "Erreur de création de question";

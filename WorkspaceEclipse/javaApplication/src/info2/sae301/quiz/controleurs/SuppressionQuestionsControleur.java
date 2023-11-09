@@ -84,7 +84,8 @@ public class SuppressionQuestionsControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	questionCourante = new Label(toutesLesQuestions.get(i).getIntitule());
+	    	questionCourante = new Label(toutesLesQuestions.get(i)
+	    			                     .getIntitule().replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleCategorieQuestion");
 	        vBoxQuestions.getChildren().add(questionCourante);
 	    }

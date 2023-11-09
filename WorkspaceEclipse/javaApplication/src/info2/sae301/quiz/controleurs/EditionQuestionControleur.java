@@ -1,3 +1,8 @@
+/*
+ * EditionQuestionControleur.java							         9 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
@@ -12,12 +17,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
+/**
+ * Contrôleur FXML de la vue EditionQuestion qui permet l'édition d'une question.
+ * 
+ * @author FAUGIERES Loïc
+ */
 public class EditionQuestionControleur {
 	
-	private static final String TITRE_ALERTE = "Erreur de création";
-
-	private static final String MESSAGE_ERREUR_TROP_DE_CARACTERE =
-			"Vous ne pouvez pas mettre plus de 20 caractères";
+	private static final String TITRE_ALERTE = "Erreur d'édition de question";
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -26,10 +33,10 @@ public class EditionQuestionControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextArea intitule;
+	private TextArea intituleQuestion;
 	
 	@FXML
-	private ChoiceBox<String> nomCategorie;
+	private ChoiceBox<String> intituleCategorie;
 	
 	@FXML
 	private ChoiceBox<String> difficulte;
@@ -53,6 +60,50 @@ public class EditionQuestionControleur {
 	private TextArea reponseFausse4;
 	
 	@FXML
+	private void initialize() {
+		// Affichage des catégories dans le menu déroulant de filtre
+		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
+			intituleCategorie.getItems().add(categorieCourante.getIntitule());
+		}
+		
+		Question question
+		= jeu.getToutesLesQuestions()
+		     .get(ChoixEditionQuestionControleur.getIndiceQuestionSelectionnee());
+		
+		// Catégorie général par défaut
+		intituleCategorie.setValue(question.getCategorie().getIntitule());
+		
+		String[] difficultes = {"1 - Facile", "2 - Moyenne",
+				                "3 - Difficile"};
+		
+		// Affichage des difficultés dans le menu déroulant
+		for (String niveau : difficultes) {
+			difficulte.getItems().add(niveau);
+		}
+		difficulte.setValue(difficultes[question.getDifficulte() - 1]);
+		
+		intituleQuestion.setText(question.getIntitule());
+		feedback.setText(question.getFeedback());
+		reponseJuste.setText(question.getReponseJuste());
+		
+		reponseFausse1.setText(question.getReponsesFausses()[0]);
+		
+		afficherReponsesFausses(question,
+				                new TextArea[] {reponseFausse2, reponseFausse3,
+				                		        reponseFausse4});
+	}
+	
+	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
+		for (int i = 0; i < reponsesFausses.length; i++) {
+			String reponse = question.getReponsesFausses().length > 1
+					         && !question.getReponsesFausses()[i + 1].isBlank()
+					         ? question.getReponsesFausses()[i + 1]
+							 : "";
+			reponsesFausses[i].setText(reponse);
+		}
+	}
+	
+	@FXML
 	private void actionBoutonAide() {
 		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
 	}
@@ -62,29 +113,24 @@ public class EditionQuestionControleur {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
+	/**
+	 * TODO : javadoc
+	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
-		verificationDesChamps();
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
-		String intitule,
-			   nomCategorie,
-			   feedback,
-			   reponseJuste;
+		String intituleQuestionEntre,
+			   feedbackEntre,
+			   reponseJusteEntree;
 		
-		int difficulte,
+		int difficulteEntree,
 		    indiceCategorie;
 		
 		Categorie categorie;
 		
-		nomCategorie = this.nomCategorie.getValue().toString();
-		
-		indiceCategorie = jeu.indiceCategorie(nomCategorie);
-		
-		if (indiceCategorie == -1) {
-			// TODO: implémenter dialogbox avec erreur.
-		}
+		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie.getValue().toString());
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
 		reponsesFausses.add(reponseFausse1.getText());
@@ -92,29 +138,24 @@ public class EditionQuestionControleur {
 		reponsesFausses.add(reponseFausse3.getText());
 		reponsesFausses.add(reponseFausse4.getText());
 			
-		intitule = this.intitule.getText();
-		feedback = this.feedback.getText();
-		reponseJuste = this.reponseJuste.getText();
+		intituleQuestionEntre = this.intituleQuestion.getText();
+		feedbackEntre = this.feedback.getText();
 		
-		difficulte = Integer.parseInt(this.difficulte.getValue().toString());
+		reponseJusteEntree = this.reponseJuste.getText();
+		
+		difficulteEntree = Integer.parseInt("" + this.difficulte.getValue().charAt(0));
 		
 		try {
-			jeu.creerQuestion(intitule, reponseJuste,
-				       		  reponsesFausses.toArray(new String[reponsesFausses.size()]),
-				              difficulte, feedback, categorie.getIntitule());
+			jeu.editerQuestion(ChoixEditionQuestionControleur.getIndiceQuestionSelectionnee(),
+					           intituleQuestionEntre, reponseJusteEntree,
+					           reponsesFausses.toArray(new String[reponsesFausses.size()]),
+					           difficulteEntree, feedbackEntre,
+					           categorie.getIntitule());
+			NavigationControleur.changerVue("AffichageQuestions.fxml");
 		} catch (Exception e) {
-			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+			AlerteControleur.autreAlerte(e.getMessage(),
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
-	}
-	
-	/**
-	 * Vérifie que les champs obligatoire sont bien initialisé
-	 * et que tous les champs respectent la limite de caractère.
-	 * @return true si tous les champs sont conforme
-	 */
-	private boolean verificationDesChamps() {
-		return false;
 	}
 	
 }

@@ -102,7 +102,8 @@ public class AffichageQuestionsControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	questionCourante = new Label(questionsAAfficher.get(i).getIntitule());
+	    	questionCourante
+	    	= new Label(questionsAAfficher.get(i).getIntitule().replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleCategorieQuestion");
 	        vBoxQuestions.getChildren().add(questionCourante);
 	    }
@@ -176,7 +177,7 @@ public class AffichageQuestionsControleur {
      */
 	@FXML
 	private void actionBoutonCreer() {
-		NavigationControleur.changerVue("CreationQuestions.fxml");
+		NavigationControleur.changerVue("CreationQuestion.fxml");
 	}
 	
 }

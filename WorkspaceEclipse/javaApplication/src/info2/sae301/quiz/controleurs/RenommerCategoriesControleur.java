@@ -30,7 +30,8 @@ public class RenommerCategoriesControleur {
 	@FXML
 	private void actionBoutonRenommer() {
 		try {
-			ChoixRenommerCategorieControleur.renommerCategorieSelectionnee(entreeNomCategorie.getText());
+			ChoixRenommerCategorieControleur
+			.renommerCategorieSelectionnee(entreeNomCategorie.getText());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),

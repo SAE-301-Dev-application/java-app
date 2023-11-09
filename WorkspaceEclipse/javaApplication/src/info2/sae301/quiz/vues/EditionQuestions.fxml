@@ -54,13 +54,13 @@
                         <VBox prefHeight="55.0" prefWidth="333.0">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Catégorie:" />
-                              <ChoiceBox fx:id="intituleCategorie" prefHeight="30.0" prefWidth="301.0" />
+                              <ChoiceBox fx:id="intituleCategorie" prefHeight="30.0" prefWidth="301.0" styleClass="menu-selection" />
                            </children>
                         </VBox>
                         <VBox prefHeight="74.0" prefWidth="357.0">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Niveau de difficulté:" />
-                              <ChoiceBox fx:id="niveauDiffilculte" prefHeight="30.0" prefWidth="301.0" />
+                              <ChoiceBox fx:id="difficulte" prefHeight="30.0" prefWidth="301.0" styleClass="menu-selection" />
                            </children>
                         </VBox>
                         <VBox prefHeight="119.0" prefWidth="333.0">
@@ -86,7 +86,7 @@
                         <VBox prefHeight="56.0" prefWidth="330.0" styleClass="space">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Réponse(s) fausse(s) (200 caractères max):" />
-                              <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 1" />
+                              <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 1 (obligatoire)" />
                               <Label styleClass="label-champ" text="   Réponses fausses facultatifs">
                                  <VBox.margin>
                                     <Insets top="15.0" />
@@ -94,17 +94,17 @@
                               </Label>
                            </children>
                         </VBox>
-                        <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2">
+                        <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2 (*optionnelle)">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </TextArea>
-                        <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3">
+                        <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3 (*)">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </TextArea>
-                        <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4" />
+                        <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4 (*)" />
                      </children>
                      <styleClass>
                         <String fx:value="conteneur-boutons" />
