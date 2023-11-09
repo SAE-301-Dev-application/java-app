@@ -91,22 +91,22 @@
                               <Label styleClass="label-champ" text="    Réponse(s) fausse(s) (200 caractères max):" />
                               <VBox prefHeight="230.0" prefWidth="326.0" styleClass="space">
                                  <children>
-                                    <TextArea fx:id="reponseFausse1" prefHeight="87.0" prefWidth="322.0" promptText="Réponse fausse 1" VBox.vgrow="ALWAYS">
+                                    <TextArea fx:id="reponseFausse1" prefHeight="87.0" prefWidth="322.0" promptText="Réponse fausse 1 (obligatoire)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2" VBox.vgrow="ALWAYS">
+                                    <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2 (*optionnelle)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3" VBox.vgrow="ALWAYS">
+                                    <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3 (*)" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextArea>
-                                    <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4" VBox.vgrow="ALWAYS" />
+                                    <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4 (*)" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                            </children>

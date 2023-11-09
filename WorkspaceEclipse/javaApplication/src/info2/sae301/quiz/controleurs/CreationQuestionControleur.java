@@ -87,7 +87,7 @@ public class CreationQuestionControleur {
 		
 		final String QUESTION_EXISTANTE
 		= "Une question de la même catégorie avec le même intitulé et les mêmes"
-		  + "réponses existe déjà.";
+		  + " réponses existe déjà.";
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
