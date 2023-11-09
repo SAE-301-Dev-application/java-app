@@ -57,7 +57,7 @@ public class Jeu {
 		// Get puis ajout de chaque catégorie à categoriesARetourner
 		for (String nomCategorie : categories) {
 			categoriesARetourner[indice]
-			= toutesLesCategories.get(getIndiceCategorie(nomCategorie));
+			= toutesLesCategories.get(indiceCategorie(nomCategorie));
 			indice++;
 		}
 		return categoriesARetourner;
@@ -83,7 +83,7 @@ public class Jeu {
 	 * @param intitule L'intitulé de la catégorie à créer.
 	 */
 	public Categorie creerCategorie(String intitule) {
-		if (getIndiceCategorie(intitule) == -1) {
+		if (indiceCategorie(intitule) == -1) {
 			Categorie categorieCreee = new Categorie(intitule);
 			toutesLesCategories.add(categorieCreee);
 			return categorieCreee;
@@ -106,7 +106,7 @@ public class Jeu {
 			                  String[] reponsesFausses, int difficulte,
 			                  String feedback, Categorie categorie) {
 		
-		if (getIndiceQuestion(intitule, categorie.getIntitule(),
+		if (indiceQuestion(intitule, categorie.getIntitule(),
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
@@ -131,7 +131,7 @@ public class Jeu {
 	 * @param aAjouter La question à ajouter.
 	 */
 	public void ajouterQuestion(Question aAjouter) {
-		if (getIndiceQuestion(aAjouter.getIntitule(),
+		if (indiceQuestion(aAjouter.getIntitule(),
 							  aAjouter.getCategorie().getIntitule(),
 							  aAjouter.getReponseJuste(),
 							  aAjouter.getReponsesFausses()) == -1) {
@@ -146,7 +146,7 @@ public class Jeu {
 	 */
 	public void supprimer(Categorie[] aSupprimer) {
 		for (Categorie categorieCourante : aSupprimer) {
-			int indiceCategorie = getIndiceCategorie(categorieCourante.getIntitule());
+			int indiceCategorie = indiceCategorie(categorieCourante.getIntitule());
 			if (indiceCategorie != -1
 				&& !categorieCourante.getIntitule().equals("Général")) {
 				toutesLesCategories.remove(indiceCategorie);
@@ -162,7 +162,7 @@ public class Jeu {
 	public void supprimer(Question[] aSupprimer) {
 		for (Question questionCourante : aSupprimer) {
 			int indiceQuestion
-			= getIndiceQuestion(questionCourante.getIntitule(),
+			= indiceQuestion(questionCourante.getIntitule(),
 					            questionCourante.getCategorie().getIntitule(),
 								questionCourante.getReponseJuste(),
 								questionCourante.getReponsesFausses());
@@ -179,7 +179,7 @@ public class Jeu {
 	 * @return L'indice dans la liste des catégories de la catégorie ayant pour
 	 *         intitulé celui en paramètre ou -1 si la catégorie n'existe pas.
 	 */
- 	public int getIndiceCategorie(String intitule) {
+ 	public int indiceCategorie(String intitule) {
 		int resultat = -1;
 		for (int i = 0;
 			 i < toutesLesCategories.size()
@@ -202,12 +202,12 @@ public class Jeu {
 	 * @return L'indice dans la liste des questions de la question ayant pour
 	 *         intitulé celui en paramètre ou -1 si la question n'existe pas.
 	 */
- 	public int getIndiceQuestion(String intituleQuestion, String intituleCategorie,
- 			                     String reponseJuste, String[] reponsesFausses) {
+ 	public int indiceQuestion(String intituleQuestion, String intituleCategorie,
+ 			                  String reponseJuste, String[] reponsesFausses) {
  		
  		int resultat = -1;
 		
-		int indiceCategorie = getIndiceCategorie(intituleCategorie);
+		int indiceCategorie = indiceCategorie(intituleCategorie);
 		Categorie categorieQuestion = toutesLesCategories.get(indiceCategorie);
 		
 		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();

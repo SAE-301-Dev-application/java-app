@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.CreationQuestionControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#boutonAide" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
@@ -24,14 +24,14 @@
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets></Label>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@application.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" stylesheets="@application.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
@@ -54,13 +54,13 @@
                         <VBox prefHeight="66.0" prefWidth="348.0">
                            <children>
                               <Label styleClass="label-champ" text="    Catégorie:" />
-                              <ChoiceBox fx:id="intituleCategorie" prefHeight="30.0" prefWidth="301.0" />
+                              <ChoiceBox fx:id="intituleCategorie" prefHeight="30.0" prefWidth="301.0" styleClass="menu-selection" />
                            </children>
                         </VBox>
                         <VBox prefHeight="74.0" prefWidth="348.0">
                            <children>
                               <Label styleClass="label-champ" text="    Niveau de difficulté:" />
-                              <ChoiceBox fx:id="niveauDiffilculte" prefHeight="30.0" prefWidth="301.0" />
+                              <ChoiceBox fx:id="difficulte" prefHeight="30.0" prefWidth="301.0" styleClass="menu-selection" />
                            </children>
                         </VBox>
                         <VBox prefHeight="119.0" prefWidth="333.0">

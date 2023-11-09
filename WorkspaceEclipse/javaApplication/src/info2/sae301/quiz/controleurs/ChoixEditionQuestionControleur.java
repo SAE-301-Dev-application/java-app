@@ -89,7 +89,7 @@ public class ChoixEditionQuestionControleur {
 		}
 		
 		// Si une question ayant le même intitulé existe.
-		if (jeu.getIndiceQuestion(nouveauIntitule, intituleCategorie,
+		if (jeu.indiceQuestion(nouveauIntitule, intituleCategorie,
 				                  reponseJuste, reponsesFausses) >= 0) {
 			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
 		}

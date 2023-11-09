@@ -80,7 +80,7 @@ public class EditionQuestionControleur {
 		
 		nomCategorie = this.nomCategorie.getValue().toString();
 		
-		indiceCategorie = jeu.getIndiceCategorie(nomCategorie);
+		indiceCategorie = jeu.indiceCategorie(nomCategorie);
 		
 		if (indiceCategorie == -1) {
 			// TODO: implémenter dialogbox avec erreur.

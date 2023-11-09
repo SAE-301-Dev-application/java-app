@@ -12,8 +12,8 @@ package info2.sae301.quiz.modeles;
  */
 public class Question {
 	
-	/** Message si erreur sur les tailles de champ*/
-	final String ERR_TAILLE_ARG = "La taille max %s est de %d caractères";
+	/** Message si erreur sur les tailles de champ */
+	final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
 	
 	/** Message si erreur sur la taille du tableau de réponse fausses*/
 	final String ERR_TAILLE_TAB_REP_FAUSSES = "Le nombre de réponses fausses doit"
@@ -57,15 +57,14 @@ public class Question {
 	public Question(String intitule, String reponseJuste,
 			String[] reponsesFausses, int difficulte, Categorie categorie) {
 		
-		if (intitule.length() > 300) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
-												,"d'un intitulé de question",300));
-		} else {
-			this.intitule = intitule;			
+		if (intitule.length() < 1 || intitule.length() > 300) {
+			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
+					                           "d'un intitulé de question", 1, 300));
 		}
+		this.intitule = intitule;
 		
 		if (reponseJuste.length() > 200) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
+			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
 												,"d'une réponse",200));
 		} else {
 			this.reponseJuste = reponseJuste;
@@ -76,7 +75,7 @@ public class Question {
 		} else {
 			for (String reponse : reponsesFausses) {
 				if (reponse.length() > 200) {
-					throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
+					throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
 							,"d'une réponse",200));
 				}
 			}
@@ -108,27 +107,20 @@ public class Question {
 	public Question(String intitule, String reponseJuste,
 			String[] reponsesFausses, int difficulte, String feedback,
 			Categorie categorie) {
-		if (intitule.length() > 300) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
-												,"d'un intitulé",300));
-		} else {
-			this.intitule = intitule;			
-		}
-		
-		if (reponseJuste.length() > 200) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
-												,"d'une réponse",200));
-		} else {
-			this.reponseJuste = reponseJuste;
-		}
+
+		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		this.intitule = intitule;
+				
+		assurerTaille(reponseJuste, "d'une réponse", 1, 200);
+		this.reponseJuste = reponseJuste;
 		
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
 			throw new IllegalArgumentException(ERR_TAILLE_TAB_REP_FAUSSES);
 		} else {
 			for (String reponse : reponsesFausses) {
 				if (reponse.length() > 200) {
-					throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
-							,"d'une réponse",200));
+					throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
+							                           "d'une réponse", 200));
 				}
 			}
 			this.reponsesFausses = reponsesFausses;
@@ -141,14 +133,33 @@ public class Question {
 		}
 		
 		if (feedback.length() > 500) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG
+			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE
 					,"d'un feedback",500));
 		} else {
 			this.feedback = feedback;
 		}
 		this.categorie = categorie;
 	}
-
+	
+	/**
+	 * Vérification que la taille d'un élément soit supérieure à tailleMin
+	 * et inférieure à tailleMax.
+	 * 
+	 * @param element Element duquel vérifier la taille.
+	 * @param titre Titre de l'élément vérifié.
+	 * @param tailleMin Taille minimale de l'élément.
+	 * @param tailleMax Taille maximale de l'élément.
+	 * @throws IllegalArgumentException si la taille n'est pas bonne.
+	 */
+	private void assurerTaille(String element, String titre,
+			                   int tailleMin, int tailleMax)
+	                           throws IllegalArgumentException {
+		if (element.length() < tailleMin || element.length() > tailleMax) {
+			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
+											                 titre, tailleMin,
+											                 tailleMax));
+		}
+	}
 
 	/** @return l'intitule de la question */
 	public String getIntitule() {

@@ -86,11 +86,11 @@ public class ChoixRenommerCategorieControleur {
 		}
 		
 		// Si une catégorie ayant le même intitulé existe.
-		if (jeu.getIndiceCategorie(nouveauIntitule) >= 0) {
+		if (jeu.indiceCategorie(nouveauIntitule) >= 0) {
 			throw new IllegalArgumentException(CATEGORIE_DEJA_EXISTANTE);
 		}
 		
-		int indiceCategorie = jeu.getIndiceCategorie(intituleCategorieSelectionnee);
+		int indiceCategorie = jeu.indiceCategorie(intituleCategorieSelectionnee);
 		
 		if (indiceCategorie > 0) {
 			jeu.getToutesLesCategories().get(indiceCategorie).setIntitule(nouveauIntitule);

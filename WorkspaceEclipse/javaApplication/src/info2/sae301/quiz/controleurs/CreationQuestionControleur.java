@@ -26,10 +26,10 @@ public class CreationQuestionControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextArea intitule;
+	private TextArea intituleQuestion;
 	
 	@FXML
-	private ChoiceBox<String> nomCategorie;
+	private ChoiceBox<String> intituleCategorie;
 	
 	@FXML
 	private ChoiceBox<String> difficulte;
@@ -53,38 +53,54 @@ public class CreationQuestionControleur {
 	private TextArea reponseFausse4;
 	
 	@FXML
-	private void boutonAide() {
+	private void initialize() {
+		// Affichage des catégories dans le menu déroulant de filtre
+		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
+			intituleCategorie.getItems().add(categorieCourante.getIntitule());
+		}
+		// Catégorie général par défaut
+		intituleCategorie.setValue(jeu.getToutesLesCategories().get(0).getIntitule());
+		
+		String[] difficultes = {"0 - Indifférente", "1 - Facile", "2 - Moyenne",
+				                "3 - Difficile"};
+		
+		// Affichage des difficultés dans le menu déroulant
+		for (String niveau : difficultes) {
+			difficulte.getItems().add(niveau);
+		}
+		// Niveau 0
+		difficulte.setValue(difficultes[0]);
+	}
+	
+	@FXML
+	private void actionBoutonAide() {
 		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
 	}
 	
 	@FXML
-	private void boutonAnnuler() {
+	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
+	/**
+	 * TODO : javadoc
+	 */
 	@FXML
-	private void boutonEnregistrer() {
-		verificationDesChamps();
+	private void actionBoutonEnregistrer() {
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
-		String intitule,
-			   nomCategorie,
-			   feedback,
-			   reponseJuste;
+		String intituleQuestionEntre,
+			   feedbackEntre,
+			   reponseJusteEntree;
 		
-		int difficulte,
+		int difficulteEntree,
 		    indiceCategorie;
 		
 		Categorie categorie;
 		
-		nomCategorie = this.nomCategorie.getValue().toString();
+		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie.getValue().toString());
 		
-		indiceCategorie = jeu.getIndiceCategorie(nomCategorie);
-		
-		if (indiceCategorie == -1) {
-			// TODO: implémenter dialogbox avec erreur.
-		}
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
 		reponsesFausses.add(reponseFausse1.getText());
@@ -92,32 +108,21 @@ public class CreationQuestionControleur {
 		reponsesFausses.add(reponseFausse3.getText());
 		reponsesFausses.add(reponseFausse4.getText());
 			
-		intitule = this.intitule.getText();
-		feedback = this.feedback.getText();
-		reponseJuste = this.reponseJuste.getText();
+		intituleQuestionEntre = this.intituleQuestion.getText();
+		feedbackEntre = this.feedback.getText();
 		
-		difficulte = Integer.parseInt(this.difficulte.getValue().toString());
+		reponseJusteEntree = this.reponseJuste.getText();
+		
+		difficulteEntree = Integer.parseInt("" + this.difficulte.getValue().charAt(0));
 		
 		try {
-			Question nouvelleQuestion
-			= new Question(intitule, reponseJuste,
-					       reponsesFausses.toArray(new String[reponsesFausses.size()]),
-					       difficulte, categorie);
-			
-			jeu.ajouterQuestion(nouvelleQuestion);
+			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
+				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
+				              difficulteEntree, feedbackEntre, categorie);
 		} catch (Exception e) {
 			AlerteControleur.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
-	}
-	
-	/**
-	 * Vérifie que les champs obligatoire sont bien initialisé
-	 * et que tous les champs respectent la limite de caractère.
-	 * @return true si tous les champs sont conforme
-	 */
-	private boolean verificationDesChamps() {
-		return false;
 	}
 	
 }

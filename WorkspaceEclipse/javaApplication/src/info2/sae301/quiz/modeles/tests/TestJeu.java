@@ -351,46 +351,46 @@ class TestJeu {
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#getIndiceCategorie(String)}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#indiceCategorie(String)}.
 	 */
 	@Test
-	public void testGetIndiceCategorie() {
+	public void testIndiceCategorie() {
 		for (String nom : nomsCategories) {
 			if (!nom.equals("Général")) {
-				assertNotEquals(-1, jeu.getIndiceCategorie(nom));
+				assertNotEquals(-1, jeu.indiceCategorie(nom));
 			}
 		}
 		jeu.supprimerToutesCategories();
 		for (String nom : nomsCategories) {
 			if (!nom.equals("Général")) {
-				assertEquals(-1, jeu.getIndiceCategorie(nom));				
+				assertEquals(-1, jeu.indiceCategorie(nom));				
 			}
 		}
 	}
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#getIndiceQuestion(String)}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#indiceQuestion(String)}.
 	 */
 	@Test
-	public void testGetIndiceQuestion() {
+	public void testIndiceQuestion() {
 		jeu.supprimerToutesQuestions();
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
 			Question question = listeQuestionsTest.get(i);
-			assertEquals(-1, jeu.getIndiceQuestion(question.getIntitule(),
-												   question.getCategorie().getIntitule(),
-												   question.getReponseJuste(),
-												   question.getReponsesFausses()));
+			assertEquals(-1, jeu.indiceQuestion(question.getIntitule(),
+												question.getCategorie().getIntitule(),
+												question.getReponseJuste(),
+												question.getReponsesFausses()));
 			jeu.creerQuestion(question.getIntitule(),
 					          question.getReponseJuste(),
 					          question.getReponsesFausses(),
 					          question.getDifficulte(),
 					          question.getFeedback(),
 					          question.getCategorie());
-			assertNotEquals(-1, jeu.getIndiceQuestion(question.getIntitule(),
-					   						          question.getCategorie().getIntitule(),
-					   						          question.getReponseJuste(),
-					   						          question.getReponsesFausses()));
+			assertNotEquals(-1, jeu.indiceQuestion(question.getIntitule(),
+					   						       question.getCategorie().getIntitule(),
+					   						       question.getReponseJuste(),
+					   						       question.getReponsesFausses()));
 		}
 	}
 
