@@ -64,6 +64,14 @@ public class Jeu {
 	}
 	
 	/**
+	 * @param categorie intitulé de la catégorie à retourner.
+	 * @return la catégorie dont l'intitulé est dans le paramètre.
+	 */
+	public Categorie getCategorieParIntitule(String intituleCategorie) {
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
+	}
+	
+	/**
 	 * Réinitialise/Vide la liste des catégories. Seule la catégorie
 	 * "Général" restera. 
 	 */
@@ -104,9 +112,11 @@ public class Jeu {
 	 */
 	public void creerQuestion(String intitule, String reponseJuste,
 			                  String[] reponsesFausses, int difficulte,
-			                  String feedback, Categorie categorie) {
+			                  String feedback, String intituleCategorie) {
 		
-		if (indiceQuestion(intitule, categorie.getIntitule(),
+		Categorie categorie = getCategorieParIntitule(intituleCategorie);
+		
+		if (indiceQuestion(intitule, intituleCategorie,
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
