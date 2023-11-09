@@ -10,21 +10,21 @@ import info2.sae301.quiz.modeles.Jeu;
 
 /**
  * Classe de sérialisation pour les objets de type "Jeu" 
- * @author LACAM Samuel
+ * @author LACAM Samuel, FABRE Florian
  */
-public class SerialisationVersionSamSam /*pas besoin d'implementer serializable car c jeu qu'on sérialise donc c lui qui immplémenter ça*/{
+public class Serialisation{
 	
-	private static Jeu jeu;
+	
 	
 	//Chemin pour les sauvegardes
-	private static String cheminDossier = "sauvegarde/";
+	private static String cheminDossier = "../sauvegarde/";
 	
 	/**
 	 * Sérialise les instances de type Jeu et les enregistre dans un fichier
 	 * de sauvegarde
 	 * @param nomSauvegarde nom de la sauvegarde à créer
 	 */
-	public static void serialiser(String nomFichier) {
+	public static void serialiser(Jeu aSerialiser, String nomFichier) {
 		try {
 
 			// Déclaration et création du fichier qui recevra les objets
@@ -32,8 +32,8 @@ public class SerialisationVersionSamSam /*pas besoin d'implementer serializable 
 			FileOutputStream fileOutputStream = new FileOutputStream(cheminDossier + nomFichier);
 			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
 
-			System.out.println("Ecriture de " + jeu.toString());
-			fluxEcriture.writeObject(jeu);
+			System.out.println("Ecriture de " + aSerialiser.toString());
+			fluxEcriture.writeObject(aSerialiser);
 
 			// Fermeture du fichier
 			fluxEcriture.close();
@@ -72,21 +72,5 @@ public class SerialisationVersionSamSam /*pas besoin d'implementer serializable 
 					+ nomFichier);
 		}
 		return jeuEnCours;
-	}
-	
-	public static void main(String[] args) {
-		String fichier = "testSave.bin";
-		
-		// >>>>>>>>Jeu de test<<<<<< //
-		jeu = new Jeu();
-		jeu.creerCategorie("Florian");
-		jeu.creerCategorie("Simon");
-		
-		jeu.creerQuestion("Jonthan, tu est tout palichon ?", "vrai", new String[] {"non", "2eme non"}, 3, "", "Simon");
-		jeu.creerQuestion("Question2", "C'est Vrai", new String[] {"non", "peut être"}, 3, "c'est cette réponse car...", "Simon");
-		// >>>>>>>>Jeu de test<<<<<< //
-		
-		SerialisationVersionSamSam.serialiser(fichier);
-		SerialisationVersionSamSam.deserialiser(fichier);
 	}
 }

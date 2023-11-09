@@ -5,9 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.io.Serializable;
-
-import info2.sae301.quiz.Quiz;
+import java.io.Serializable; 
 
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté

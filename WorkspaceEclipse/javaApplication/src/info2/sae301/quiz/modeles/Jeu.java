@@ -5,7 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -81,7 +81,7 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
-	 * @param categories L'ArrayList des intitulés des catégories à retourner.
+	 * @param categories ArrayList des intitulés des catégories à retourner.
 	 * @return la liste des catégories dont l'intitulé est dans la liste en paramètre.
 	 */
 	public Categorie[] getCategoriesParIntitules(ArrayList<String> categories) {
