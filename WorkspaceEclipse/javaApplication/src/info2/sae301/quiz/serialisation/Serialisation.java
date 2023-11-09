@@ -30,7 +30,7 @@ public class Serialisation implements Serializable {
 	 * de sauvegarde
 	 * @param nomSauvegarde nom de la sauvegarde à créer
 	 */
-	public void serialiser(String nomFichier) {
+	public void serialiser(Jeu aSerialiser, String nomFichier) {
 
 		//Chemin pour les sauvegardes
 		String cheminDossier = "../sauvegarde";
@@ -48,7 +48,7 @@ public class Serialisation implements Serializable {
 
 
 			System.out.print("Ecriture de " + this.toString());
-			fluxEcriture.writeObject(this);
+			fluxEcriture.writeObject(aSerialiser);
 
 			// Fermeture du fichier
 			fluxEcriture.close();

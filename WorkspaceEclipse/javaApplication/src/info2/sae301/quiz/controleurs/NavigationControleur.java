@@ -1,6 +1,6 @@
 /**
- * ControleurNavigation.java
- * Aucun droit d'auteur.
+ * ControleurNavigation.java 							3 nov.2023
+ * IUT de Rodez, pas de copyright, ni de copyleft
  */
 package info2.sae301.quiz.controleurs;
 
@@ -14,7 +14,7 @@ import javafx.scene.Parent;
  * Classe permettant la navigation entre les vues de 
  * l'application.
  * 
- * @author jonathan
+ * @author GUIL Jonathan
  */
 public class NavigationControleur {
 	
@@ -36,12 +36,12 @@ public class NavigationControleur {
 	
 	
 	private static String vueCourante;
+	
 	/**
 	 * (Re)définie directement l'objet de la scène
 	 * courante. Cette information est utile lors du 
 	 * changement de scène via la méthode de changement
 	 * de vue.
-	 * 
 	 * @param nouvelleScene
 	 */
 	public static void setSceneCourante(Scene nouvelleScene) {
@@ -49,9 +49,8 @@ public class NavigationControleur {
 	}
 	
 	/**
-	 * Permet le changement de vue vers celle envoyée en 
+	 * Change de vue vers celle envoyée en 
 	 * paramètre.
-	 * 
 	 * @param routeVueFXML Nom du fichier FXML de la vue 
 	 * cible
 	 */
