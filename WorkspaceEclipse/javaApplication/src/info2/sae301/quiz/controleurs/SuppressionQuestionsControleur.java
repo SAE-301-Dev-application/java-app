@@ -189,7 +189,7 @@ public class SuppressionQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonAider() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**

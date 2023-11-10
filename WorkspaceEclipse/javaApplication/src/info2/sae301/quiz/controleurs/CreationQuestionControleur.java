@@ -92,7 +92,7 @@ public class CreationQuestionControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**

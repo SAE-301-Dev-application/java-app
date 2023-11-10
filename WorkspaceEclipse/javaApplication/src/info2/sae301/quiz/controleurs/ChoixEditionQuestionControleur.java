@@ -184,7 +184,7 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
 	/**

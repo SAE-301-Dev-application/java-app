@@ -30,6 +30,18 @@ import javafx.scene.layout.VBox;
  */
 public class AffichageQuestionsControleur {
 	
+	protected static final String AIDE_TITRE = "LES QUESTIONS";
+	
+	protected static final String AIDE_TEXTE
+	= """
+	  Regroupées, ou non, dans une catégorie spécifique, les questions 
+	  composent le quiz auquel jouera l’utilisateur.
+
+	  Elles possèdent un intitulé, jusqu’à cinq réponses dont une obligatoirement vraie, 
+	  d’un niveau de difficulé parmi facile, moyen et difficile, et d’un feedback à 
+	  afficher lors de la conclusion d’une partie.
+	  """;
+	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
 	 * Cette instance permet la gestion des questions et catégories.
@@ -148,7 +160,7 @@ public class AffichageQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonAider() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	/**
