@@ -40,29 +40,35 @@ public class MenuPrincipalControleur {
 	 * Cette instance permet la gestion des questions et catégories.
 	 */
 	private Jeu jeu = Quiz.jeu;
-	
+
 	@FXML
-	private void boutonAide() {
+	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
-	
+
 	@FXML
-	private void boutonUser() {
+	private void actionBoutonUtilisateur() {
 		//ControleurNavigation.changerVue("GestionNomUtilisateur.fxml");
 	}
-	
+
 	@FXML
-	private void boutonJouer() {
-		
+	private void actionBoutonJouer() {
+
 	}
-	
+
+	/**
+	 * Redirection vers la vue AffichageCategories.fxml
+	 */
 	@FXML
-	private void boutonCategories() {
+	private void actionBoutonCategories() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
-	
+
+	/**
+	 * Redirection vers la vue AffichageQuestions.fxml
+	 */
 	@FXML
-	private void boutonQuestions() {
+	private void actionBoutonQuestions() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 
