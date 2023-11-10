@@ -21,6 +21,12 @@ import javafx.scene.layout.VBox;
 /**
  * Contrôleur FXML de la vue AffichageQuestions qui affiche la liste des
  * questions et propose d'en créer, renommer et supprimer.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class AffichageQuestionsControleur {
 	

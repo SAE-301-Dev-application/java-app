@@ -20,7 +20,11 @@ import javafx.scene.control.TextArea;
 /**
  * Contrôleur FXML de la vue EditionQuestion qui permet l'édition d'une question.
  * 
- * @author FAUGIERES Loïc
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class EditionQuestionControleur {
 	
@@ -59,6 +63,10 @@ public class EditionQuestionControleur {
 	@FXML
 	private TextArea reponseFausse4;
 	
+	/**
+	 * Initialisation de la fenêtre d'édition en ajoutant les catégories
+	 * et difficultés dans les choicebox.
+	 */
 	@FXML
 	private void initialize() {
 		// Affichage des catégories dans le menu déroulant de filtre
@@ -94,7 +102,8 @@ public class EditionQuestionControleur {
 	}
 	
 	/**
-	 * TODO javadoc
+	 * Affichage des réponses fausses de la question sélectionnée en fonction
+	 * de leur validité.
 	 * @param question
 	 * @param reponsesFausses
 	 */

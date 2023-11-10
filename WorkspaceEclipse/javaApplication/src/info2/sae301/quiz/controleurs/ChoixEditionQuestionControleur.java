@@ -1,5 +1,5 @@
 /*
- * ChoixEditerQuestionControleur.java							     7 nov. 2023
+ * ChoixEditionQuestionControleur.java							     7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -19,8 +19,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue ChoixEditerQuestion qui affiche la liste des
+ * Contrôleur FXML de la vue ChoixEditionQuestion qui affiche la liste des
  * questions sous forme de boutons.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class ChoixEditionQuestionControleur {
 	

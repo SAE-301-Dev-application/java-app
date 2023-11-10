@@ -20,8 +20,11 @@ import javafx.scene.layout.VBox;
  * Contrôleur FXML de la vue AffichageCategories qui affiche la liste des
  * catégories et propose d'en créer, renommer et supprimer.
  * 
- * @author FAUGIERES Loïc
- * @author GUIL Jonathan
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class AffichageCategoriesControleur {
 	

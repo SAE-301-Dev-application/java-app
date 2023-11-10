@@ -17,11 +17,11 @@ import javafx.fxml.FXMLLoader;
 /**
  * Application JavaFX de quiz pour les étudiants.
  * 
- * @author Loïc Faugières
- * @author Simon Guiraud
  * @author Florian Fabre
- * @author Samuel Lacam
+ * @author Loïc Faugières
  * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class Quiz extends Application {
 	
