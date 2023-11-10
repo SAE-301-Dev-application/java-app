@@ -9,12 +9,12 @@ import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Jeu;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,11 +183,47 @@ class TestJeu {
 	
 	/**
 	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#questionsCategorie(String)}.
+	 */
+	@Test
+	public void testQuestionsCategorie() {
+		ArrayList<Question> questions = jeu.questionsCategorie("Tests");
+		for (int i = 0; i < questions.size(); i++) {
+			assertEquals(listeQuestionsTest.get(i).getIntitule(),
+					     questions.get(i).getIntitule());
+		}
+		assertEquals(jeu.getToutesLesQuestions(),
+				     jeu.questionsCategorie("Toutes les catégories"));
+	}
+
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#getCategorieParIntitule(String)}.
+	 */
+	@Test
+	public void testGetCategorieParIntitule() {
+		Categorie categorie = jeu.getToutesLesCategories().get(0);
+		
+		assertEquals(categorie, jeu.getCategorieParIntitule(categorie.getIntitule()));
+	}
+	
+	/**
+	 * Méthode de test de la méthode
 	 * {@link info2.sae301.quiz.modeles.Jeu#getCategoriesParIntitules(ArrayList)}.
 	 */
 	@Test
 	public void testGetCategoriesParIntitules() {
-		fail("todo");
+		Categorie[] categories
+		= jeu.getToutesLesCategories().toArray(new Categorie[listeCategoriesTest
+		                                                     .size()]);
+		
+		ArrayList<String> intitules = new ArrayList<String>();
+		
+		for (Categorie categorie : jeu.getToutesLesCategories()) {
+			intitules.add(categorie.getIntitule());
+		}
+		
+		assertArrayEquals(categories, jeu.getCategoriesParIntitules(intitules));
 	}
 	
 	/**
@@ -262,6 +298,12 @@ class TestJeu {
 		jeu.creerQuestion("Intitulé de la question", "Réponse Juste",
 			   			  new String[] {"réponse fausse 1", "réponse fausse 2"},
 			   			  1, null, "Tests");
+        assertThrows(IllegalArgumentException.class, () -> {
+	        jeu.creerQuestion("Intitulé de la question", "Réponse Juste",
+	       		              new String[] {"réponse fausse 1",
+	       		              		        "réponse fausse 2"},
+	       		              1, null, "Tests");
+	    });
 	}
 	
 	/**
@@ -350,6 +392,45 @@ class TestJeu {
 		assertTrue(listesMemesQuestions(questionsTest,
 				 						jeu.getToutesLesQuestions()));
 	}
+
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#renommerCategorie(String, String)}.
+	 */
+	@Test
+	public void testRenommerCategorie() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			final String INTITULE = jeu.getToutesLesCategories().get(0).getIntitule();
+			jeu.renommerCategorie(INTITULE, "Autre");	
+		});
+		
+		String intituleInitial = jeu.getToutesLesCategories().get(1).getIntitule();
+		
+		jeu.renommerCategorie(intituleInitial, "AutreIntitule");
+		
+		assertNotEquals(intituleInitial,
+						jeu.getToutesLesCategories().get(1).getIntitule());
+		assertEquals("AutreIntitule", jeu.getToutesLesCategories().get(1).getIntitule());
+		
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#editerQuestion(int, String, String,
+	 *                                                     String[], int, String,
+	 *                                                     String)}.
+	 */
+	@Test
+	public void testEditerQuestion() {
+		Question question = jeu.getToutesLesQuestions().get(0);
+		jeu.editerQuestion(0, "testt", "réponse juste",
+				           question.getReponsesFausses(), 1, "feedbackk",
+				           question.getCategorie().getIntitule());
+		assertEquals("réponse juste", question.getReponseJuste());
+		assertEquals("testt", question.getIntitule());
+		assertEquals(1, question.getDifficulte());
+		assertEquals("feedbackk", question.getFeedback());
+	}
 	
 	/**
 	 * Méthode de test de la méthode
@@ -395,15 +476,15 @@ class TestJeu {
 					   						       question.getReponsesFausses()));
 		}
 	}
-
+	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#memesReponsesFausses(String[], String[])}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#equals(Object)}.
 	 */
 	@Test
-	public void testMemesReponsesFausses() {
-		//TODO faire la méthode de test
-		fail("todo");
+	public void testEquals() {
+		Jeu jeuTest = new Jeu();
+		assertTrue(jeuTest.equals(new Jeu()));
 	}
 	
 }

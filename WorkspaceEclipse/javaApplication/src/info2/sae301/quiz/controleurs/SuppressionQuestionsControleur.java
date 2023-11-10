@@ -6,7 +6,6 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
