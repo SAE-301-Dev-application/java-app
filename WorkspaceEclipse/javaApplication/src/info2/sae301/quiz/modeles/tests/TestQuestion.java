@@ -258,4 +258,37 @@ class TestQuestion {
 		assertEquals(grammaire,questionAF.getCategorie());
 		assertNotEquals(orthographe,questionAF.getCategorie());
 	}
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#equals(Object)}.
+	 */
+	@Test
+	void testEquals() {
+		//instance de 2 Question identiques
+		Question question1 = new Question("Question", "vrai",
+				new String[] {"faux", "peut-être"}, 1, grammaire);
+		Question question2 = new Question("Question", "vrai",
+				new String[] {"faux", "peut-être"}, 1, grammaire);
+		
+		//instance d'une Question avec un intitule different des 2 premières
+		Question question3 = new Question("La Question", "vrai",
+				new String[] {"faux", "peut-être"}, 1, grammaire);
+		
+		//instance d'une Question avec une réponse juste differente des 2 premières
+		Question question4 = new Question("Question", "je ne sais pas",
+				new String[] {"faux", "peut-être"}, 1, grammaire);
+		
+		//instance d'une Question avec une réponse fausse differente des 2 premières
+		Question question5 = new Question("La Question", "vrai",
+				new String[] {"je n'en sais rien", "peut-être"}, 1, grammaire);
+		
+		
+		assertEquals(question1, question2);
+		assertNotEquals(question3, question1);
+		assertNotEquals(question4, question1);
+		assertNotEquals(question5, question1);
+		assertNotEquals(question3, question2);
+		assertNotEquals(question4, question2);
+		assertNotEquals(question5, question2);
+	}
 }
