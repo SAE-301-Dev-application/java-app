@@ -104,8 +104,9 @@ public class EditionQuestionControleur {
 	/**
 	 * Affichage des réponses fausses de la question sélectionnée en fonction
 	 * de leur validité.
-	 * @param question
-	 * @param reponsesFausses
+	 * 
+	 * @param question La question contenant les réponses fausses.
+	 * @param reponsesFausses Les textarea de réponses fausses.
 	 */
 	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
 		for (int i = 0; i < reponsesFausses.length; i++) {
@@ -117,18 +118,25 @@ public class EditionQuestionControleur {
 		}
 	}
 	
+	/**
+	 * TODO aide
+	 */
 	@FXML
 	private void actionBoutonAide() {
 		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
 	}
 	
+	/**
+	 * Redirection vers la vue AffichageQuestions.fxml
+	 */
 	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
 	/**
-	 * TODO : javadoc
+	 * Enregistre les modifications de la questions ou affiche une pop-up
+	 * d'erreur éventuellement.
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
