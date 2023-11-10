@@ -20,6 +20,20 @@ import javafx.fxml.FXML;
  * @author Samuel Lacam
  */
 public class MenuPrincipalControleur {
+	
+	private final String AIDE_TITRE = "COMMENT JOUER ?";
+	
+	private final String AIDE_TEXTE 
+	= """
+      Bienvenue sur le jeu de quiz !
+
+      Créez des questions, répondez à celles existantes et prenez note du résume des résultats.
+
+      Triez les questions par catégories pour personnaliser votre jeu.
+
+      Vous pouvez également importer localement ou depuis un ordinateur, 
+      ou même exporter sur un autre ordinateur des questions et des catégories, au format CSV.
+      """;
 
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -28,33 +42,27 @@ public class MenuPrincipalControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private void actionBoutonAide() {
-		//ControleurNavigation.changerVue("PresentationDuJeu.fxml");
+	private void boutonAide() {
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	@FXML
-	private void actionBoutonUtilisateur() {
+	private void boutonUser() {
 		//ControleurNavigation.changerVue("GestionNomUtilisateur.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonJouer() {
+	private void boutonJouer() {
 		
 	}
 	
-	/**
-	 * Redirection vers la vue AffichageCategories.fxml
-	 */
 	@FXML
-	private void actionBoutonCategories() {
+	private void boutonCategories() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
-	/**
-	 * Redirection vers la vue AffichageQuestions.fxml
-	 */
 	@FXML
-	private void actionBoutonQuestions() {
+	private void boutonQuestions() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 

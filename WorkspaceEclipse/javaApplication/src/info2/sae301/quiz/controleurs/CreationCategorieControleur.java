@@ -40,7 +40,7 @@ public class CreationCategorieControleur {
 	 */
 	@FXML
 	private void boutonAide() {
-//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
 	/**

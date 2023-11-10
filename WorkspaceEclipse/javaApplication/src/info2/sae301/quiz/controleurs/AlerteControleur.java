@@ -56,4 +56,13 @@ public class AlerteControleur {
 		boiteDialogue.setHeaderText(messageAlerte);
 		boiteDialogue.showAndWait();
 	}
+	
+	public static void aide(String titre, String texte) {
+		Alert boiteDialogue;
+		
+		boiteDialogue = new Alert(AlertType.INFORMATION);
+		boiteDialogue.setTitle(titre);
+		boiteDialogue.setHeaderText(texte);
+		boiteDialogue.showAndWait();
+	}
 }

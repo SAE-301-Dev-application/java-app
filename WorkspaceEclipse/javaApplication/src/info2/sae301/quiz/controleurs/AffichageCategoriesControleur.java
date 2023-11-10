@@ -28,6 +28,17 @@ import javafx.scene.layout.VBox;
  */
 public class AffichageCategoriesControleur {
 	
+	protected static final String AIDE_TITRE = "LES CATÉGORIES";
+	
+	protected static final String AIDE_TEXTE
+	= """
+	  Les catégories permettent de regrouper des questions par thématique. 
+
+	  Une catégorie Général est présente par défaut pour les questions n’étant pas liées à une catégorie en particulier.
+
+	  Les catégories permettent, par la suite, une recherche optimisée et une personnalisation des parties de l’utilisateur.
+	  """;
+	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
 	 * Cette instance permet la gestion des questions et catégories.
@@ -119,7 +130,7 @@ public class AffichageCategoriesControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	/**
