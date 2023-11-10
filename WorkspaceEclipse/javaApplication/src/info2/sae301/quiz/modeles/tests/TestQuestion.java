@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.Jeu;
 
 /**
  * Classe de test de Question.java
@@ -24,11 +25,13 @@ class TestQuestion {
 	static Categorie orthographe,grammaire;
 	
 	/** Question sans feedback (SF) et avec feedback (AF)*/
-	static Question questionSF,questionAF;
+	static Question questionSF,questionAF,questionSF2,questionAF2;
 	
+	static Jeu jeu;
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		jeu = new Jeu();
 		orthographe = new Categorie("orthographe");
 		grammaire = new Categorie("grammaire");
 		
@@ -36,6 +39,12 @@ class TestQuestion {
 				"chat",new String[]{"chatt","shat","chât"},2,orthographe);
 		
 		questionAF = new Question("Quel est le choix correct pour completer '...-de-chaussée' ? ",
+				"rez",new String[]{"raie","raient"},1,"rez car vieux mot",orthographe);
+		
+		questionSF2 = new Question("Quelle est la bonne orthographe? ",
+				"chat",new String[]{"chatt","shat","chât"},2,orthographe);
+		
+		questionAF2 = new Question("Quel est le choix correct pour completer '...-de-chaussée' ? ",
 				"rez",new String[]{"raie","raient"},1,"rez car vieux mot",orthographe);
 		
 		orthographe.ajouterQuestion(questionSF);
@@ -46,9 +55,13 @@ class TestQuestion {
 	 */
 	@Test
 	void testQuestionSansFeedBack() {
-		assertTrue(!questionSF.getIntitule().equals(null) && !questionSF.getCategorie().equals(null)
-				&& questionSF.getDifficulte() != 0 && !questionSF.getReponseJuste().equals(null) 
-				&& !questionSF.getReponsesFausses().equals(null));
+		assertEquals(questionSF.getIntitule(), "Quelle est la bonne orthographe? ");
+		assertEquals(questionSF.getReponseJuste(), "chat");
+		
+		//assertTrue(questionSF.memeReponsesFausses(questionSF.getReponsesFausses(), questionSF2.getReponsesFausses()));
+		// À modifier en fonction des modifs dans Question
+		assertEquals(questionSF.getDifficulte(), 2);
+		assertEquals(questionSF.getCategorie().getIntitule(), "orthographe");
 	}
 
 	/**
@@ -56,10 +69,15 @@ class TestQuestion {
 	 */
 	@Test
 	void testQuestionAvecFeedback() {
-		assertTrue(!questionAF.getIntitule().equals(null) && !questionAF.getCategorie().equals(null)
-				&& questionAF.getDifficulte() != 0 && !questionAF.getFeedback().equals(null)
-				&& !questionAF.getReponseJuste().equals(null) 
-				&& !questionAF.getReponsesFausses().equals(null));
+		
+		assertEquals(questionAF.getIntitule(), "Quel est le choix correct pour completer '...-de-chaussée' ? ");
+		assertEquals(questionAF.getReponseJuste(), "rez");
+		
+		//assertTrue(questionSF.memeReponsesFausses(questionSF.getReponsesFausses(), questionSF2.getReponsesFausses()));
+		// À modifier en fonction des modifs dans Question
+		assertEquals(questionAF.getDifficulte(), 1);
+		assertEquals(questionAF.getFeedback(), "rez car vieux mot");
+		assertEquals(questionAF.getCategorie().getIntitule(), "orthographe");
 	}
 
 	/**
@@ -156,7 +174,7 @@ class TestQuestion {
 	@Test
 	void testSetIntitule() {
 		/*Réponse trop longue (301 char et plus)*/
-		String intituleTropLong = genererStringTailleX(358);
+		String intituleTropLong = genererStringTailleX(201);
 		
 		questionAF.setIntitule("Quel est le bon choix ?");
 		assertEquals("Quel est le bon choix ?",questionAF.getIntitule());

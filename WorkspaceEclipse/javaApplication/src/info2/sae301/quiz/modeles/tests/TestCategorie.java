@@ -4,6 +4,7 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;  
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,22 +52,32 @@ class TestCategorie {
 	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
 	 */
 	@Test
-	void testCategorieAvecListe() {
-		assertTrue(!francais.getIntitule().equals(null) 
-				&& !francais.getListeQuestions().equals(null));
-		assertFalse(!grammaire.getIntitule().equals(null)
-				&& grammaire.getListeQuestions().size() != 0);
-	}
-
-	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String)}.
-	 */
-	@Test
-	void testCategorieIntituleSeul() {
-		assertFalse(!francais.getIntitule().equals(null) 
-				&& francais.getListeQuestions().equals(null));
-		assertTrue(!grammaire.getIntitule().equals(null)
-				&& grammaire.getListeQuestions().size() == 0);
+	void testCategorieCree() {
+		assertEquals(francais.getIntitule(), "francais"); 
+		assertNotEquals(francais.getListeQuestions(), null);
+		assertEquals(francais.getListeQuestions().size(), 1);
+		assertEquals(grammaire.getIntitule(), "grammaire");
+		assertNotEquals(grammaire.getListeQuestions(), null);
+		assertEquals(grammaire.getListeQuestions().size(), 0);
+		assertEquals(orthographe.getIntitule(), "orthographe"); 
+		assertNotEquals(orthographe.getListeQuestions(), null);
+		assertEquals(orthographe.getListeQuestions().size(), 1);
+		
+		/* Créations de catégories générant des exceptions */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("La grammaire français"); // 21 caractères
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("La grammaire français", new ArrayList<Question>(
+					Arrays.asList(questionAF)));
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("");
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("", new ArrayList<Question>(
+					Arrays.asList(questionAF)));
+		});
 	}
 
 	/**
@@ -130,8 +141,8 @@ class TestCategorie {
 	 */
 	@Test
 	void testGetListeQuestions() {
-		assertTrue(francais.getListeQuestions().size() == 1);
-		assertTrue(grammaire.getListeQuestions().size() == 0);
+		assertEquals(francais.getListeQuestions().size(), 1);
+		assertEquals(grammaire.getListeQuestions().size(), 0);
 	}
 
 	/**
@@ -141,6 +152,7 @@ class TestCategorie {
 	void testSetIntitule() {
 		/*Réponse trop longue (21 char et plus)*/
 		String intituleTropLong = genererStringTailleX(25);
+		String tropCourt = "";
 		
 		francais.setIntitule("italien");
 		assertEquals("italien",francais.getIntitule());
@@ -149,6 +161,9 @@ class TestCategorie {
 		/* Test d'insertion d'intitulé de taille incorrecte*/
 		grammaire.setIntitule(intituleTropLong);
 		assertNotEquals(intituleTropLong,grammaire.getIntitule());
+		assertEquals("grammaire",grammaire.getIntitule());
+		grammaire.setIntitule(tropCourt);
+		assertNotEquals(tropCourt,grammaire.getIntitule());
 		assertEquals("grammaire",grammaire.getIntitule());
 	}
 
@@ -170,7 +185,10 @@ class TestCategorie {
 	@Test
 	void testSupprimerToutesQuestions() {
 		assertTrue(francais.supprimerToutesQuestions());
+		assertEquals(francais.getListeQuestions().size(), 0);
 		assertTrue(grammaire.supprimerToutesQuestions());
+		assertEquals(grammaire.getListeQuestions().size(), 0);
 		assertTrue(orthographe.supprimerToutesQuestions());
+		assertEquals(orthographe.getListeQuestions().size(), 0);
 	}
 }

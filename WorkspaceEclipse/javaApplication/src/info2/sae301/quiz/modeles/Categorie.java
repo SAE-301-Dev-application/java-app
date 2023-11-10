@@ -37,7 +37,7 @@ public class Categorie {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
 		}
-		if (intitule.length() < 1) {
+		if (intitule.isBlank() || intitule.isEmpty()) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
 		}
 		
@@ -55,7 +55,7 @@ public class Categorie {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
 		}
-		if (intitule.length() < 1) {
+		if (intitule.isBlank() || intitule.isEmpty()) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
 		}
 		
@@ -109,7 +109,7 @@ public class Categorie {
 
     /** @param intitule l'intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() < 20) {
+		if (intitule.length() > 0 && intitule.length() <= 20) {
 			this.intitule = intitule;			
 		}
 	}
