@@ -5,8 +5,6 @@
 
 package info2.sae301.quiz.controleurs;
 
-import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
 import javafx.fxml.FXML;
 
 /**
@@ -34,12 +32,6 @@ public class MenuPrincipalControleur {
       Vous pouvez également importer localement ou depuis un ordinateur, 
       ou même exporter sur un autre ordinateur des questions et des catégories, au format CSV.
       """;
-
-	/**
-	 * Récupération de l'instance du jeu créée dans la classe Quiz.
-	 * Cette instance permet la gestion des questions et catégories.
-	 */
-	private Jeu jeu = Quiz.jeu;
 
 	@FXML
 	private void actionBoutonAide() {
