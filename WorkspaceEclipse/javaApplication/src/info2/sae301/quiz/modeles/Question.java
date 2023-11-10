@@ -13,45 +13,45 @@ import java.io.Serializable;
  * @author FABRE Florian
  */
 public class Question implements Serializable {
-	
+
 	/** Numéro de sérialisation : clé de hachage */
 	private static final long serialVersionUID = 1304132270193188547L;
 
 	/** Message si erreur sur les tailles de champ */
 	private static final String TAILLE_INVALIDE = "La taille %s doit être comprise entre %d et %d.";
-	
+
 	/** Message si erreur sur la taille du tableau de réponse fausses */
 	private static final String NB_REPONSES_FAUSSES_INVALIDE = "Le nombre de réponses fausses rédigées"
-											    + " doit être compris entre 1 et 4.";
-	
+			+ " doit être compris entre 1 et 4.";
+
 	/** Message si erreur sur la difficulté */
 	private static final String DIFFICULTE_INVALIDE = "La difficulté doit être comprise entre 1"
-									   + " et 3 : 1 - Facile, 2 - Moyenne, 3 - "
-									   + "Difficile";
-	
-	/** L'intitulé de la question (max 300 caractères) */
-    private String intitule;
-    
-    /** La réponse juste (max 200 caractères)*/
-    private String reponseJuste;
-    
-    /** Les réponses fausses (max 200 caractères) */
-    private String[] reponsesFausses = new String[4];
-    
-    /** La difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
-    private int difficulte;
-    
-    /** 
-     * Le feedback à afficher lors de la correction 
-     * de la réponse à cette question (500 caractères) 
-     */
-    private String feedback;
-    
-    /** La catégorie dans laquelle est cette question */
-    private Categorie categorie;
+			+ " et 3 : 1 - Facile, 2 - Moyenne, 3 - "
+			+ "Difficile";
 
-    /**
-     * Nouvelle question identifiée par son intitulé ayant une
+	/** L'intitulé de la question (max 300 caractères) */
+	private String intitule;
+
+	/** La réponse juste (max 200 caractères)*/
+	private String reponseJuste;
+
+	/** Les réponses fausses (max 200 caractères) */
+	private String[] reponsesFausses = new String[4];
+
+	/** La difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
+	private int difficulte;
+
+	/** 
+	 * Le feedback à afficher lors de la correction 
+	 * de la réponse à cette question (500 caractères) 
+	 */
+	private String feedback;
+
+	/** La catégorie dans laquelle est cette question */
+	private Categorie categorie;
+
+	/**
+	 * Nouvelle question identifiée par son intitulé ayant une
 	 * réponse juste, des réponses fausses, un niveau de difficulté 
 	 * et une catégorie associée.
 	 * 
@@ -63,18 +63,18 @@ public class Question implements Serializable {
 	 * @throws IllegalArgumentException si la question existe déjà.
 	 */
 	public Question(String intitule, String reponseJuste,
-			        String[] reponsesFausses, int difficulte, Categorie categorie)
-	                throws IllegalArgumentException {
-		
+			String[] reponsesFausses, int difficulte, Categorie categorie)
+					throws IllegalArgumentException {
+
 		verifierEtInitialiser(intitule, reponseJuste, reponsesFausses, difficulte, categorie);
 	}
-    
-    
+
+
 	/**
 	 * Nouvelle question identifiée par son intitulé ayant
 	 * une réponse juste, des réponses fausses, un niveau de difficulté,
-     * un feedback et une catégorie associée.
-     * 
+	 * un feedback et une catégorie associée.
+	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
@@ -90,7 +90,7 @@ public class Question implements Serializable {
 		assurerTaille(feedback, "d'un feedback", 1, 500);
 		this.feedback = feedback;
 	}
-	
+
 	/**
 	 * Vérification puis initialisation des attributs pour les deux constructeurs.
 	 * 
@@ -101,11 +101,11 @@ public class Question implements Serializable {
 	 * @param categorie La catégorie contenant la question.
 	 */
 	private void verifierEtInitialiser(String intitule, String reponseJuste,
-									   String[] reponsesFausses, int difficulte,
-			                           Categorie categorie) {
+			String[] reponsesFausses, int difficulte,
+			Categorie categorie) {
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
-		
+
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
 			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
 		}
@@ -118,7 +118,7 @@ public class Question implements Serializable {
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
-		
+
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
 		this.reponsesFausses = reponsesFausses;
@@ -126,7 +126,7 @@ public class Question implements Serializable {
 		this.categorie = categorie;
 		this.feedback = null;
 	}
-	
+
 	/**
 	 * Vérification que la taille d'un élément soit supérieure à tailleMin
 	 * et inférieure à tailleMax.
@@ -138,12 +138,12 @@ public class Question implements Serializable {
 	 * @throws IllegalArgumentException si la taille n'est pas bonne.
 	 */
 	private void assurerTaille(String element, String titre,
-			                   int tailleMin, int tailleMax)
-	                           throws IllegalArgumentException {
+			int tailleMin, int tailleMax)
+					throws IllegalArgumentException {
 		if (element.length() < tailleMin || element.length() > tailleMax) {
 			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
-											                 titre, tailleMin,
-											                 tailleMax));
+					titre, tailleMin,
+					tailleMax));
 		}
 	}
 
@@ -202,7 +202,7 @@ public class Question implements Serializable {
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
 		boolean estPossible = true;
-		
+
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
 			estPossible = false;
 		} else {
@@ -212,7 +212,7 @@ public class Question implements Serializable {
 				}
 			}
 		}
-		
+
 		if (estPossible) {
 			this.reponsesFausses = reponsesFausses;
 		}
@@ -238,5 +238,63 @@ public class Question implements Serializable {
 	/** @param categorie the categorie à changer */
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
+	}
+
+	/**
+	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
+	 * 
+	 * @param reponsesFausses1 Les réponses fausses à comparer.
+	 * @param reponsesFausses2 Les secondes réponses fausses à comparer.
+	 * @return true si les liste contiennent les mêmes réponses fausses, false sinon.
+	 */
+	public boolean memesReponsesFausses(Question aComparerRepFausses) {
+		boolean resultatFinal = true;
+		if (this.reponsesFausses.length != aComparerRepFausses.reponsesFausses.length) {
+			return false;
+		}
+		for (int i = 0; i < this.reponsesFausses.length && resultatFinal; i++) {
+			boolean reponseEgaleTrouvee = false;
+			for (int j = 0; j < aComparerRepFausses.reponsesFausses.length && !reponseEgaleTrouvee; j++) {
+				reponseEgaleTrouvee
+				= this.reponsesFausses[i].equals(aComparerRepFausses.reponsesFausses[j]);
+			}
+			if (!reponseEgaleTrouvee) {
+				resultatFinal = reponseEgaleTrouvee;
+			}
+		}
+		return resultatFinal;
+	}
+
+	/**
+	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
+	 * leurs critères d'identification:
+	 * - Intitulé question
+	 * - Intitule categorie
+	 * - reponseJuste
+	 * - Liste des réponses fausses
+	 * @param aComparer question que l'on compare
+	 * @return true si equals, false sinon
+	 */
+	public boolean equals(Question aComparer) {
+		return (this.intitule.equals(aComparer.intitule)
+				&& this.reponseJuste.equals(aComparer.reponseJuste)
+				&& this.categorie.getIntitule().equals(aComparer.categorie.getIntitule())
+				&& this.memesReponsesFausses(aComparer)); 
+	}
+	
+	
+	/**
+	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
+	 * tous leurs attributs
+	 * @param aComparer question que l'on compare
+	 * @return true si equals, false sinon
+	 */
+	public boolean equalsComplet(Question aComparer) {
+		return (this.intitule.equals(aComparer.intitule)
+				&& this.reponseJuste.equals(aComparer.reponseJuste)
+				&& this.categorie.getIntitule().equals(aComparer.categorie.getIntitule())
+				&& this.memesReponsesFausses(aComparer)
+				&& this.feedback.equals(aComparer.feedback)
+				&& this.difficulte == aComparer.difficulte); 
 	}
 }

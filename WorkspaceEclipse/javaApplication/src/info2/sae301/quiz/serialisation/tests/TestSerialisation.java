@@ -65,7 +65,7 @@ class TestSerialisation {
 	
 	@Test
 	void testDeserialiser() { //TODO a finir
-		jeuNonSerialise = Serialisation.deserialiser("../sauvegarde/01.ser");
+		assertEquals(jeuSerialiseModifie,Serialisation.deserialiser("../sauvegarde/01.ser"));
 //		jeuNonSerialise.getToutesLesCategories().get
 	}
 

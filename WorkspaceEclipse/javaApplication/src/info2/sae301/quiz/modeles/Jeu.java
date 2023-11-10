@@ -245,46 +245,22 @@ public class Jeu implements Serializable {
 		Categorie categorieQuestion = toutesLesCategories.get(indiceCategorie);
 		
 		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
-		
+	
+		Question aComparer = new Question(intituleQuestion,reponseJuste,reponsesFausses,1,
+				new Categorie(intituleCategorie));
 		for (int i = 0;
 		     i < questionsCategorie.size()
 			 && resultat == -1;
 			 i++) {
 			Question questionCourante = questionsCategorie.get(i);
 			
-			if (questionCourante.getIntitule().equals(intituleQuestion)
-				&& questionCourante.getReponseJuste().equals(reponseJuste)
-				&& memesReponsesFausses(questionCourante.getReponsesFausses(), reponsesFausses)) {
-				
+			if (questionCourante.equals(aComparer)) {
 				resultat = getToutesLesQuestions().indexOf(questionCourante); 
 			}
 		}
 		return resultat;
 	}
  	
- 	/**
- 	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
- 	 * 
- 	 * @param reponsesFausses1 Les réponses fausses à comparer.
- 	 * @param reponsesFausses2 Les secondes réponses fausses à comparer.
- 	 * @return true si les liste contiennent les mêmes réponses fausses, false sinon.
- 	 */
- 	public boolean memesReponsesFausses(String[] reponsesFausses1, String[] reponsesFausses2) {
- 		boolean resultatFinal = true;
- 		if (reponsesFausses1.length != reponsesFausses2.length) {
- 			return false;
- 		}
- 		for (int i = 0; i < reponsesFausses1.length && resultatFinal; i++) {
- 			boolean reponseEgaleTrouvee = false;
- 			for (int j = 0; j < reponsesFausses2.length && !reponseEgaleTrouvee; j++) {
- 				reponseEgaleTrouvee
- 				= reponsesFausses1[i].equals(reponsesFausses2[j]);
- 			}
- 			if (!reponseEgaleTrouvee) {
- 				resultatFinal = reponseEgaleTrouvee;
- 			}
- 		}
- 		return resultatFinal;
- 	}
+ 	
 
 }
