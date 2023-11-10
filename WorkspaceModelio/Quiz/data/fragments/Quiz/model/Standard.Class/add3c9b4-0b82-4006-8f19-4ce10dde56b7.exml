@@ -23,7 +23,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[ajouterCategories]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -101,7 +101,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[setNombreQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -140,7 +140,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[retirerCategorie]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -179,7 +179,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[aAssezQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -218,7 +218,7 @@
             <ATT name="Final">false</ATT>
             <ATT name="Passing">MethodOut</ATT>
             <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[nbQuestionsCategoriesSelectionnees]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -265,7 +265,7 @@
             <ATT name="MultiplicityMin"></ATT>
             <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
             <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[categoriesSelectionnees]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -310,7 +310,7 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
             <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
             <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[difficulteQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
@@ -354,7 +354,7 @@ toutes --> toues les catégories sont utilisées --> pas de tri par catégorie (
             <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
             <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
+            <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[nombreQuestions]]></ATT>
             <ATT name="status">1970354901745664</ATT>
