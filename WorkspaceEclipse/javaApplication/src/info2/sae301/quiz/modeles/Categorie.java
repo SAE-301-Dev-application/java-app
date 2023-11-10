@@ -109,7 +109,7 @@ public class Categorie {
 
     /** @param intitule l'intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() < 20) {
+		if (intitule.length() <= 20) {
 			this.intitule = intitule;			
 		}
 	}
