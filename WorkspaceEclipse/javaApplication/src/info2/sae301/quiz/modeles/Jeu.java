@@ -87,6 +87,13 @@ public class Jeu implements Serializable {
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
 	}
 	
+	/**
+	 * @param categorie Intitulé de la catégorie à retourner.
+	 * @return La catégorie dont l'intitulé est dans le paramètre.
+	 */
+	public Categorie getCategorieParIntitule(String intituleCategorie) {
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
+	}
 	
 	/**
 	 * @param categories ArrayList des intitulés des catégories à retourner.
@@ -103,17 +110,7 @@ public class Jeu implements Serializable {
 			indice++;
 		}
 		return categoriesARetourner;
-	}
-	
-	
-	/**
-	 * @param categorie Intitulé de la catégorie à retourner.
-	 * @return La catégorie dont l'intitulé est dans le paramètre.
-	 */
-	public Categorie getCategorieParIntitule(String intituleCategorie) {
-		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
-	}
-	
+	}	
 	
 	/**
 	 * Réinitialise/Vide la liste des catégories. Seule la catégorie
@@ -124,12 +121,10 @@ public class Jeu implements Serializable {
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 	}
 	
-	
 	/** Réinitialise/Vide la liste des questions. */
 	public void supprimerToutesQuestions() {
 		toutesLesQuestions = new ArrayList<>();
 	}
-	
 	
 	/**
 	 * Crée une nouvelle catégorie et l'ajoute à la liste des catégories.
@@ -146,7 +141,6 @@ public class Jeu implements Serializable {
 		}
 	}
 		
-	
 	/**
 	 * Crée une nouvelle question et l'ajoute à la liste des questions.
 	 * 
@@ -181,7 +175,6 @@ public class Jeu implements Serializable {
 			throw new IllegalArgumentException("Cette question existe déjà.");
 		}
 	}
-	
 	
 	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la

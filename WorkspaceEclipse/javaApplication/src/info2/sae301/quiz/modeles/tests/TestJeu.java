@@ -180,6 +180,21 @@ class TestJeu {
 					     jeu.getToutesLesQuestions().get(i).getIntitule());
 		}
 	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#questionsCategorie(String)}.
+	 */
+	@Test
+	public void testQuestionsCategorie() {
+		ArrayList<Question> questions = jeu.questionsCategorie("Tests");
+		for (int i = 0; i < questions.size(); i++) {
+			assertEquals(listeQuestionsTest.get(i).getIntitule(),
+					     questions.get(i).getIntitule());
+		}
+		assertEquals(jeu.getToutesLesQuestions(),
+				     jeu.questionsCategorie("Toutes les catégories"));
+	}
 
 	/**
 	 * Méthode de test de la méthode
@@ -377,6 +392,45 @@ class TestJeu {
 		assertTrue(listesMemesQuestions(questionsTest,
 				 						jeu.getToutesLesQuestions()));
 	}
+
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#renommerCategorie(String, String)}.
+	 */
+	@Test
+	public void testRenommerCategorie() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			final String INTITULE = jeu.getToutesLesCategories().get(0).getIntitule();
+			jeu.renommerCategorie(INTITULE, "Autre");	
+		});
+		
+		String intituleInitial = jeu.getToutesLesCategories().get(1).getIntitule();
+		
+		jeu.renommerCategorie(intituleInitial, "AutreIntitule");
+		
+		assertNotEquals(intituleInitial,
+						jeu.getToutesLesCategories().get(1).getIntitule());
+		assertEquals("AutreIntitule", jeu.getToutesLesCategories().get(1).getIntitule());
+		
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#editerQuestion(int, String, String,
+	 *                                                     String[], int, String,
+	 *                                                     String)}.
+	 */
+	@Test
+	public void testEditerQuestion() {
+		Question question = jeu.getToutesLesQuestions().get(0);
+		jeu.editerQuestion(0, "testt", "réponse juste",
+				           question.getReponsesFausses(), 1, "feedbackk",
+				           question.getCategorie().getIntitule());
+		assertEquals("réponse juste", question.getReponseJuste());
+		assertEquals("testt", question.getIntitule());
+		assertEquals(1, question.getDifficulte());
+		assertEquals("feedbackk", question.getFeedback());
+	}
 	
 	/**
 	 * Méthode de test de la méthode
@@ -421,6 +475,16 @@ class TestJeu {
 					   						       question.getReponseJuste(),
 					   						       question.getReponsesFausses()));
 		}
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#equals(Object)}.
+	 */
+	@Test
+	public void testEquals() {
+		Jeu jeuTest = new Jeu();
+		assertTrue(jeuTest.equals(new Jeu()));
 	}
 	
 }
