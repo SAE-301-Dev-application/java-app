@@ -42,33 +42,27 @@ public class MenuPrincipalControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private void actionBoutonAide() {
+	private void boutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	@FXML
-	private void actionBoutonUtilisateur() {
+	private void boutonUser() {
 		//ControleurNavigation.changerVue("GestionNomUtilisateur.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonJouer() {
+	private void boutonJouer() {
 		
 	}
 	
-	/**
-	 * Redirection vers la vue AffichageCategories.fxml
-	 */
 	@FXML
-	private void actionBoutonCategories() {
+	private void boutonCategories() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
-	/**
-	 * Redirection vers la vue AffichageQuestions.fxml
-	 */
 	@FXML
-	private void actionBoutonQuestions() {
+	private void boutonQuestions() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 
