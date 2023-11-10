@@ -93,6 +93,11 @@ public class EditionQuestionControleur {
 				                		        reponseFausse4});
 	}
 	
+	/**
+	 * TODO javadoc
+	 * @param question
+	 * @param reponsesFausses
+	 */
 	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
 		for (int i = 0; i < reponsesFausses.length; i++) {
 			String reponse = question.getReponsesFausses().length > 1

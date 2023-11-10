@@ -211,11 +211,12 @@ class TestJeu {
 	 */
 	@Test
 	public void testSupprimerToutesQuestions() {
+		jeu.supprimerToutesQuestions();
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
 			Question question = listeQuestionsTest.get(i);
 			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
-				      question.getReponsesFausses(), question.getDifficulte(),
-				      question.getFeedback(), question.getCategorie().getIntitule());
+				              question.getReponsesFausses(), question.getDifficulte(),
+				              question.getFeedback(), question.getCategorie().getIntitule());
 		}
 		assertFalse(listesMemesQuestions(listeVide,
 					 				     jeu.getToutesLesQuestions()));
@@ -254,7 +255,10 @@ class TestJeu {
 	 */
 	@Test
 	public void testCreerQuestion() {
-		fail("todo");
+		// Question non existante sans erreurs d'argument
+		jeu.creerQuestion("Intitulé de la question", "Réponse Juste",
+			   			  new String[] {"réponse fausse 1", "réponse fausse 2"},
+			   			  1, null, "Tests");
 	}
 	
 	/**
@@ -309,6 +313,8 @@ class TestJeu {
 	@Test
 	public void testSupprimerQuestion() {
 		ArrayList<Question> questionsTest = listeQuestionsTest;
+		
+		jeu.supprimerToutesQuestions();
 		
 		// Ajout à jeu des questions de questionsTest.
 		for (int i = 0; i < questionsTest.size(); i++) {

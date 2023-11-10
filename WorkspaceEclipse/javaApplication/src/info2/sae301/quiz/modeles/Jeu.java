@@ -152,7 +152,7 @@ public class Jeu implements Serializable {
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
-			if (feedback.isBlank()) {
+			if (feedback == null || feedback.isBlank()) {
 				questionCreee = new Question(intitule, reponseJuste,
 						                     reponsesFausses, difficulte, categorie);
 			} else {
@@ -298,7 +298,12 @@ public class Jeu implements Serializable {
 		question.setReponsesFausses(reponsesFausses);
 		question.setDifficulte(difficulte);
 		question.setFeedback(feedback);
+		
+		// Retrait de la liste des questions de l'ancienne catégorie
+		question.getCategorie().supprimerQuestion(question);
 		question.setCategorie(toutesLesCategories.get(indiceCategorie));
+		// Ajout à la liste des questions de la nouvelle catégorie
+		question.getCategorie().ajouterQuestion(question);
 	}
 	
 	/**
