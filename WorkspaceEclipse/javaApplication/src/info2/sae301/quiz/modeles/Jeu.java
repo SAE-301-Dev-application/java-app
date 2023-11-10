@@ -30,6 +30,7 @@ public class Jeu implements Serializable {
 	/** Toutes les questions qui ont été créées sur le jeu. */
 	private ArrayList<Question> toutesLesQuestions;
 
+	
 	/**
 	 * Construction d'une session de jeu initialisant ses questions
 	 * et catégories à vide.
@@ -56,15 +57,18 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/** @return La liste des catégories créées. */
 	public ArrayList<Categorie> getToutesLesCategories() {
 		return toutesLesCategories;
 	}
 	
+	
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
 		return toutesLesQuestions;
 	}
+	
 	
 	/**
 	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
@@ -79,6 +83,7 @@ public class Jeu implements Serializable {
 		}
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
 	}
+	
 	
 	/**
 	 * @param categories ArrayList des intitulés des catégories à retourner.
@@ -97,6 +102,7 @@ public class Jeu implements Serializable {
 		return categoriesARetourner;
 	}
 	
+	
 	/**
 	 * @param categorie Intitulé de la catégorie à retourner.
 	 * @return La catégorie dont l'intitulé est dans le paramètre.
@@ -104,6 +110,7 @@ public class Jeu implements Serializable {
 	public Categorie getCategorieParIntitule(String intituleCategorie) {
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
 	}
+	
 	
 	/**
 	 * Réinitialise/Vide la liste des catégories. Seule la catégorie
@@ -114,10 +121,12 @@ public class Jeu implements Serializable {
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 	}
 	
+	
 	/** Réinitialise/Vide la liste des questions. */
 	public void supprimerToutesQuestions() {
 		toutesLesQuestions = new ArrayList<>();
 	}
+	
 	
 	/**
 	 * Crée une nouvelle catégorie et l'ajoute à la liste des catégories.
@@ -134,6 +143,7 @@ public class Jeu implements Serializable {
 		}
 	}
 		
+	
 	/**
 	 * Crée une nouvelle question et l'ajoute à la liste des questions.
 	 * 
@@ -169,6 +179,7 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la
 	 * liste en paramètre.
@@ -187,6 +198,7 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * Supprime de la liste des questions les questions spécifiées dans la
 	 * liste en paramètre.
@@ -204,6 +216,7 @@ public class Jeu implements Serializable {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Vérification de l'existence d'une catégorie dans la liste des catégories.
@@ -224,6 +237,7 @@ public class Jeu implements Serializable {
 		}
 		return resultat;
 	}
+ 	
  	
 	/**
 	 * Vérification de l'existence d'une question dans la liste des questions d'une
@@ -260,7 +274,4 @@ public class Jeu implements Serializable {
 		}
 		return resultat;
 	}
- 	
- 	
-
 }

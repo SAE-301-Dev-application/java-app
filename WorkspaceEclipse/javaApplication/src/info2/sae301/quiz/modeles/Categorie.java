@@ -139,4 +139,18 @@ public class Categorie implements Serializable {
     	}
     	return listeQuestions.isEmpty();
     }
+
+
+    
+	/**
+	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
+	 * @param aComparer Categorie a comparer
+	 * @return true si els categories sont égales, false sinon
+	 */
+	public boolean equals(Categorie aComparer) {
+		return (this.intitule.equals(aComparer.intitule)
+				&& this.listeQuestions.equals(aComparer.listeQuestions));
+	}
+    
+    
 }
