@@ -4,16 +4,14 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*; 
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
 
 /**

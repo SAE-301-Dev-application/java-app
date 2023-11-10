@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
+import java.io.Serializable;
 import java.util.ArrayList; 
 
 /**
@@ -12,13 +13,16 @@ import java.util.ArrayList;
  * références des questions liées à la catégorie
  * @author FABRE Florian
  */
-public class Categorie {
+public class Categorie implements Serializable {
     
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 3793388654168200022L;
+
 	/** Message si erreur sur les tailles de champ*/
-	final String ERR_TAILLE_ARG_MAX 
+	private static final String ERR_TAILLE_ARG_MAX 
 	= "La taille max d'un intitulé de catégorie est de 20 caractères";
 	
-	final String ERR_TAILLE_ARG_MIN 
+	private static final String ERR_TAILLE_ARG_MIN 
 	= "L'intitulé de la catégorie ne peut pas être vide.";
 	
 	/** l'intitulé de la catégorie (max 20 char)*/
@@ -152,4 +156,15 @@ public class Categorie {
     	}
     	return listeQuestions.isEmpty();
     }
+
+ 
+	/**
+	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
+	 * @param aComparer Categorie a comparer
+	 * @return true si els categories sont égales, false sinon
+	 */
+	public boolean equals(Categorie aComparer) {
+		return (this.intitule.equals(aComparer.intitule)
+				&& this.listeQuestions.equals(aComparer.listeQuestions));
+	} 
 }
