@@ -6,6 +6,7 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
@@ -14,8 +15,11 @@ import info2.sae301.quiz.modeles.Categorie;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -47,7 +51,15 @@ public class SuppressionQuestionsControleur {
 	
 	private ArrayList<Question> toutesLesQuestions = jeu.getToutesLesQuestions();
 	
+	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
+	
+	private HBox ligneQuestion;
+	
+	private CheckBox checkBoxQuestion;
+	
 	private Label questionCourante;
+	
+	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
 	/**
 	 * Initialisation de la vue avec le style css correspondant et l'affichage
@@ -84,16 +96,61 @@ public class SuppressionQuestionsControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	questionCourante = new Label(toutesLesQuestions.get(i).getIntitule());
+	    	ligneQuestion = new HBox();
+	    	
+	    	String intituleQuestion = toutesLesQuestions.get(i).getIntitule();
+	    	
+	    	checkBoxQuestion = new CheckBox();
+	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
+	    	checkBoxQuestion.setId("" + i);
+	    	
+	    	if (i >= toutesLesCheckBox.size()) {
+	    		toutesLesCheckBox.add(checkBoxQuestion);
+	    	} else {
+	    		checkBoxQuestion = toutesLesCheckBox.get(i);
+	    	}
+	    	
+	    	questionCourante = new Label(toutesLesQuestions.get(i)
+	    			                     .getIntitule().replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleCategorieQuestion");
-	        vBoxQuestions.getChildren().add(questionCourante);
+	        questionCourante.getStyleClass().add("intitule-padding-left");
+	        
+	        final int INDICE = i;
+	        
+	        checkBoxQuestion.setOnMouseClicked(event -> {
+	        	selectionnerQuestion(INDICE);
+	        });
+	        
+	        ligneQuestion.getChildren().add(checkBoxQuestion);
+	        ligneQuestion.getChildren().add(questionCourante);
+	        
+	        vBoxQuestions.getChildren().add(ligneQuestion);
 	    }
+	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
 	    boutonSuivant.setVisible(toutesLesQuestions.size() > 10
 	    		                 && indiceFin < toutesLesQuestions.size());
+	}
+	
+	private void selectionnerQuestion(int indice) {
+		final Question QUESTION 
+		= jeu.getToutesLesQuestions().get(indice); 
+		
+		if (toutesLesCheckBox.get(indice).isSelected()) {
+			this.questionsSelectionnees.add(QUESTION);
+		} else {
+			this.questionsSelectionnees.remove(QUESTION);
+		}
+		
+		System.out.println("Questions sélectionnées : ");
+		
+		for (Question question: this.questionsSelectionnees) {
+			System.out.println("- " + question.getIntitule());
+		}
+		System.out.println();
 	}
 	
 	/**
@@ -132,7 +189,36 @@ public class SuppressionQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonSupprimer() {
+		final String TITRE_SELECTION_VIDE = "Aucune question n'est sélectionnée";
+		final String MESSAGE_SELECTION_VIDE = "Veuillez sélectionner une question"
+											+ " à supprimer ou cliquer sur Annuler.";
 		
+		final String TITRE_POPUP_CONFIRM = "Confirmer la suppression";
+		final String DEMANDE_CONFIRMATION = "Êtes-vous sûr(e) de vouloir supprimer "
+											+ this.questionsSelectionnees.size()
+											+ " question(s) ?";
+		
+		boolean confirmerSuppression;
+		
+		if (this.questionsSelectionnees.size() == 0) {
+			AlerteControleur.autreAlerte(MESSAGE_SELECTION_VIDE, 
+										 TITRE_SELECTION_VIDE, 
+										 AlertType.ERROR);
+		} else {
+			confirmerSuppression
+			= AlerteControleur.alerteConfirmation(DEMANDE_CONFIRMATION, 
+												  TITRE_POPUP_CONFIRM);
+			
+			if (confirmerSuppression) {
+				jeu.supprimer(this.questionsSelectionnees.toArray(new Question[this.questionsSelectionnees.size()]));
+				
+				for (Question questionASupprimer: this.questionsSelectionnees) {
+					questionASupprimer.getCategorie().supprimerQuestion(questionASupprimer);
+				}
+				
+				NavigationControleur.changerVue("AffichageQuestions.fxml");
+			}
+		}
 	}
 	
     /**

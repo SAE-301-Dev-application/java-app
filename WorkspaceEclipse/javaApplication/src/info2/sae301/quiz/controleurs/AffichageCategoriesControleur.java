@@ -19,6 +19,9 @@ import javafx.scene.layout.VBox;
 /**
  * Contrôleur FXML de la vue AffichageCategories qui affiche la liste des
  * catégories et propose d'en créer, renommer et supprimer.
+ * 
+ * @author FAUGIERES Loïc
+ * @author GUIL Jonathan
  */
 public class AffichageCategoriesControleur {
 	
@@ -54,12 +57,6 @@ public class AffichageCategoriesControleur {
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
-		if (toutesLesCategories.size() < 10) {
-			for (int i = 2; i <= 30; i++) {
-				jeu.creerCategorie("" + i + "ème catégorie");
-			}
-			toutesLesCategories = jeu.getToutesLesCategories();
-		}
 		afficherCategories();
 	}
 	
@@ -154,7 +151,7 @@ public class AffichageCategoriesControleur {
      */
 	@FXML
 	private void actionBoutonCreer() {
-		NavigationControleur.changerVue("CreationCategories.fxml");
+		NavigationControleur.changerVue("CreationCategorie.fxml");
 	}
 	
 }

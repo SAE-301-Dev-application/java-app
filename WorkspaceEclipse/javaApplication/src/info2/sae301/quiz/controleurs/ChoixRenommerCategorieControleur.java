@@ -69,36 +69,14 @@ public class ChoixRenommerCategorieControleur {
 	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
+	 * @throws IllegalArgumentException si la taille est invalide ou qu'une catégorie
+	 *                                  du nouveau nom existe déjà.
 	 */
-	public static void renommerCategorieSelectionnee(String nouveauIntitule) {
-		final String CATEGORIE_INEXISTANTE
-		= "La catégorie sélectionnée est inexistante en mémoire ou ne peut pas "
-		  + "être renommée.";
-		
-		final String CATEGORIE_DEJA_EXISTANTE
-		= "L'intitulé entré existe déjà pour une autre catégorie.";
-		
-		final String TAILLE_INVALIDE
-		= "La taille d'un intitulé de catégorie doit être comprise entre 1 et 20.";
-		
-		if (nouveauIntitule.length() < 1 || nouveauIntitule.length() > 20) {
-			throw new IllegalArgumentException(TAILLE_INVALIDE);
-		}
-		
-		// Si une catégorie ayant le même intitulé existe.
-		if (jeu.indiceCategorie(nouveauIntitule) >= 0) {
-			throw new IllegalArgumentException(CATEGORIE_DEJA_EXISTANTE);
-		}
-		
-		int indiceCategorie = jeu.indiceCategorie(intituleCategorieSelectionnee);
-		
-		if (indiceCategorie > 0) {
-			jeu.getToutesLesCategories().get(indiceCategorie).setIntitule(nouveauIntitule);
-			// Désélection de la catégorie pour le changement de vue
-			intituleCategorieSelectionnee = null;
-		} else {
-			throw new IllegalArgumentException(CATEGORIE_INEXISTANTE);
-		}
+	public static void renommerCategorieSelectionnee(String nouveauIntitule)
+	                   throws IllegalArgumentException {
+		jeu.renommerCategorie(intituleCategorieSelectionnee, nouveauIntitule);
+		// Désélection de la catégorie pour le changement de vue
+		intituleCategorieSelectionnee = null;
 	}
 	
 	/**

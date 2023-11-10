@@ -1,3 +1,8 @@
+/*
+ * CreationCategoriesControleur.java			    		         9 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
@@ -7,6 +12,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
+/**
+ * Contrôleur FXML de la vue CreationCategories qui permet la création d'une
+ * nouvelle catégorie.
+ * 
+ * @author FAUGIERES Loïc
+ * @author GUIL Jonathan
+ */
 public class CreationCategoriesControleur {
 	
 	private static final String TITRE_ALERTE = "Erreur de création";

@@ -50,6 +50,6 @@
             <String fx:value="petit-bouton" />
          </styleClass>
       </Button>
-      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" prefHeight="26.0" prefWidth="238.0" styleClass="menu-selection" />
+      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" prefHeight="26.0" prefWidth="238.0" onAction="#selectionFiltre" styleClass="menu-selection" />
    </children>
 </Pane>

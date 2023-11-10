@@ -8,11 +8,13 @@ package info2.sae301.quiz.controleurs;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -28,11 +30,14 @@ public class ChoixEditionQuestionControleur {
 	 */
 	private static Jeu jeu = Quiz.jeu;
 	
-	/** Intitulé de la question à renommer qui a été sélectionnée. */
-	private static String intituleQuestionSelectionnee;
+	/** Indice de la question à renommer qui a été sélectionnée. */
+	private static int indiceQuestionSelectionnee;
 	
 	@FXML
 	private VBox vBoxQuestions;
+	
+	@FXML
+	private ChoiceBox<String> menuFiltre;
 	
 	@FXML
 	private Button boutonPrecedent;
@@ -41,9 +46,10 @@ public class ChoixEditionQuestionControleur {
 	private Button boutonSuivant;
 	
 	/** Indice de la première question affichée sur la "page" courante. */
-	private int indiceQuestion = 0; 
+	private int indiceQuestion = 0;
 	
-	private ArrayList<Question> toutesLesQuestions = jeu.getToutesLesQuestions();
+	/** Nom de la première catégorie affichée sur la "page" courante. */
+	private String categorieCourante = "Toutes les catégories";
 	
 	private Label questionCourante;
 	
@@ -57,52 +63,33 @@ public class ChoixEditionQuestionControleur {
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
 		
+		menuFiltre.getItems().add("Toutes les catégories");
+		// Affichage des catégories dans le menu déroulant de filtre
+		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
+			menuFiltre.getItems().add(categorieCourante.getIntitule());
+		}
+		// Toutes les catégories par défaut
+		menuFiltre.setValue("Toutes les catégories");
+		
 		afficherQuestions();
 	}
 	
 	/** @return L'intitulé de la question sélectionnée. */
-	public static String getIntituleQuestionSelectionnee() {
-		return intituleQuestionSelectionnee;
+	public static int getIndiceQuestionSelectionnee() {
+		return indiceQuestionSelectionnee;
 	}
 	
 	/**
-	 * Renomme la question sélectionnée avec l'intitulé en paramètre.
-	 * 
-	 * @param nouveauIntitule Le nouveau intitulé de la question.
+	 * Réaffichage des questions lorsqu'une catégorie est sélectionnée.
 	 */
-	public static void renommerQuestionSelectionnee(String nouveauIntitule,
-													String intituleCategorie,
-													String reponseJuste,
-													String[] reponsesFausses) {
-		final String QUESTION_INEXISTANTE
-		= "La question sélectionnée est inexistante en mémoire ou ne peut pas "
-		  + "être renommée.";
-		
-		final String QUESTION_DEJA_EXISTANTE
-		= "L'intitulé entré existe déjà pour une autre question.";
-		
-		final String TAILLE_INVALIDE
-		= "La taille d'un intitulé de question doit être comprise entre 1 et 300.";
-		
-		if (nouveauIntitule.length() < 1 || nouveauIntitule.length() > 300) {
-			throw new IllegalArgumentException(TAILLE_INVALIDE);
+	@FXML
+	public void selectionFiltre() {
+		System.out.println("Nouvelle catégorie sélectionnée : " + menuFiltre.getValue());
+		if (!categorieCourante.equals(menuFiltre.getValue())) {
+			indiceQuestion = 0;
+			categorieCourante = menuFiltre.getValue();
 		}
-		
-		// Si une question ayant le même intitulé existe.
-		if (jeu.indiceQuestion(nouveauIntitule, intituleCategorie,
-				                  reponseJuste, reponsesFausses) >= 0) {
-			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
-		}
-		
-		int indiceQuestion = 0;//jeu.questionExiste(intituleQuestionSelectionnee);
-		
-		if (indiceQuestion > 0) {
-			jeu.getToutesLesQuestions().get(indiceQuestion).setIntitule(nouveauIntitule);
-			// Désélection de la catégorie pour le changement de vue
-			intituleQuestionSelectionnee = null;
-		} else {
-			throw new IllegalArgumentException(QUESTION_INEXISTANTE);
-		}
+		afficherQuestions();
 	}
 	
 	/**
@@ -111,35 +98,42 @@ public class ChoixEditionQuestionControleur {
 	 * et suivantes.
 	 */
 	private void afficherQuestions() {
+		ArrayList<Question> questionsAAfficher
+		= jeu.questionsCategorie(menuFiltre.getValue());
+		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
-	    int indiceFin = Math.min(indiceDebut + 5, toutesLesQuestions.size());
+	    int indiceFin = Math.min(indiceDebut + 5, questionsAAfficher.size());
 	    
 	    // Effacer le contenu actuel du VBox
 	    vBoxQuestions.getChildren().clear();
 		
 	    // Afficher les (indiceFin - indiceDebut) questions
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	String intituleQuestion = toutesLesQuestions.get(i).getIntitule();
+	    	Question question = questionsAAfficher.get(i);
 	    	
-	        questionCourante = new Label(intituleQuestion);
+	        questionCourante = new Label(question.getIntitule().replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleQuestionQuestion");
 	        questionCourante.getStyleClass().add("labelCliquable");
 	        vBoxQuestions.getChildren().add(questionCourante);
 	        
-	        final String intitule = intituleQuestion;
+	        final String intitule = question.getIntitule();
+	        final String reponseJuste = question.getReponseJuste();
+	        final String[] reponsesFausses = question.getReponsesFausses();
+	        final int difficulte = question.getDifficulte();
+	        final String feedback = question.getFeedback();
+	        final String intituleCategorie = question.getCategorie().getIntitule();
 			questionCourante.setOnMouseClicked(event -> {
-			    actionEditerQuestion(intitule);
+			    actionEditerQuestion(intitule, reponseJuste, reponsesFausses,
+			    		             difficulte, feedback, intituleCategorie);
 			});
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
-	    boutonPrecedent.setVisible(indiceQuestion < 5 ? false : true);
+	    boutonPrecedent.setVisible(!(indiceQuestion < 5));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
-	    boutonSuivant.setVisible(toutesLesQuestions.size() > 5
-	    		                 && indiceFin < toutesLesQuestions.size()
-	    		                 ? true
-	    		                 : false);
+	    boutonSuivant.setVisible(questionsAAfficher.size() > 5
+	    		                 && indiceFin < questionsAAfficher.size());
 	}
 	
 	/**
@@ -148,8 +142,12 @@ public class ChoixEditionQuestionControleur {
 	 * 
 	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
 	 */
-	private void actionEditerQuestion(String intitule) {
-		intituleQuestionSelectionnee = intitule;
+	private void actionEditerQuestion(String intitule, String reponseJuste,
+			                          String[] reponsesFausses, int difficulte,
+			                          String feedback, String categorie) {
+		indiceQuestionSelectionnee = jeu.indiceQuestion(intitule, categorie,
+				                                        reponseJuste, reponsesFausses);
+		
 		NavigationControleur.changerVue("EditionQuestions.fxml");
 	}
 	
