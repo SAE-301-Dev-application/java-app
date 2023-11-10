@@ -16,6 +16,10 @@ import java.util.Arrays;
  * @author GUIRAUD Simon
  */
 
+/**
+ * TODO comment types
+ * @author flori
+ */
 public class Jeu implements Serializable {
 
 	/** Numéro de sérialisation : clé de hachage */
@@ -273,5 +277,18 @@ public class Jeu implements Serializable {
 			}
 		}
 		return resultat;
+	}
+
+
+	
+	/**
+	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
+	 * leurs attributs
+	 * @param aComparer Jeu à comparer
+	 * @return true si les instances de jeu sont les mêmes, false sinon
+	 */
+	public boolean equals(Jeu aComparer) {
+		return (this.toutesLesCategories.equals(aComparer.toutesLesCategories)
+				&& this.toutesLesQuestions.equals(aComparer.toutesLesQuestions));
 	}
 }
