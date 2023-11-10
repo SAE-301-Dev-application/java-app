@@ -278,7 +278,7 @@ public class Jeu implements Serializable {
 			throw new IllegalArgumentException(QUESTION_DEJA_EXISTANTE);
 		}
 		
-		if (!feedback.isBlank()) {
+		if (feedback != null && !feedback.isBlank()) {
 			Question.verifierAttributs(nouveauIntitule, reponseJuste,
 					                   reponsesFausses, difficulte, feedback);
 		} else {

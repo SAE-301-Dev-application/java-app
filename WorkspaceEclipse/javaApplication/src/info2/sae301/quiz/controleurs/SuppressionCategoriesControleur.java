@@ -47,16 +47,16 @@ public class SuppressionCategoriesControleur {
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
 	/** Toutes les catégories dont la checkbox de sélection a été cochée. */
-	private ArrayList<String> categoriesSelectionnees = new ArrayList<String>();
-	
-	private Label categorieCourante;
+	private ArrayList<String> categoriesSelectionnees = new ArrayList<>();
 	
 	private HBox ligneCategorie;
 	
 	private CheckBox checkBoxCategorie;
 	
+	private Label categorieCourante;
+	
 	/** Les checkbox ajoutées devant les catégories. */
-	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<CheckBox>();
+	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
 	/**
 	 * Initialisation de la vue avec le style css correspondant et l'affichage
@@ -136,15 +136,17 @@ public class SuppressionCategoriesControleur {
 	 * @param indice Indice de la catégorie cliquée.
 	 */
 	private void selectionnerCategorie(int indice) {
+		final String INTITULE_CATEGORIE
+		= jeu.getToutesLesCategories().get(indice).getIntitule();
 		
 		if (toutesLesCheckBox.get(indice).isSelected()) {
-			categoriesSelectionnees.add(jeu.getToutesLesCategories()
-                                   .get(indice).getIntitule());	
+			categoriesSelectionnees.add(INTITULE_CATEGORIE);	
 		} else {
-			categoriesSelectionnees.remove(jeu.getToutesLesCategories()
-                                              .get(indice).getIntitule());	
+			categoriesSelectionnees.remove(INTITULE_CATEGORIE);	
 		}
+		
 		System.out.println("Catégories sélectionnées : ");
+		
 		for (String categorie : categoriesSelectionnees) {
 			System.out.println("- " + categorie);
 		}
@@ -191,22 +193,24 @@ public class SuppressionCategoriesControleur {
 	
 	@FXML
 	private void actionBoutonSupprimer() {
-		final String TITRE_SELECTION_VIDE = "Aucun catégorie sélectionnée";
+		final String TITRE_SELECTION_VIDE = "Aucune catégorie n'est sélectionnée";
 		final String MESSAGE_SELECTION_VIDE = "Veuillez sélectionner une catégorie"
 											+ " à supprimer ou cliquer sur Annuler.";
 		
 		final String TITRE_POPUP_CONFIRM = "Confirmer la suppression";
-		final String DEMANDE_CONFIRMATION = "Etes-vous sûr(e) de vouloir supprimer "
+		final String DEMANDE_CONFIRMATION = "Êtes-vous sûr(e) de vouloir supprimer "
 											+ categoriesSelectionnees.size()
 											+ " catégorie(s) ?\nLes questions dans ces"
 											+ " catégories seront également supprimées.";
+		
+		boolean confirmerSuppression;
 		
 		if (categoriesSelectionnees.size() == 0) {
 			AlerteControleur.autreAlerte(MESSAGE_SELECTION_VIDE,
 										 TITRE_SELECTION_VIDE,
 										 AlertType.ERROR);
 		} else {
-			boolean confirmerSuppression
+			confirmerSuppression
 			= AlerteControleur.alerteConfirmation(DEMANDE_CONFIRMATION,
 					                              TITRE_POPUP_CONFIRM);
 			

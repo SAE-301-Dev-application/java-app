@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class Categorie {
     
 	/** Message si erreur sur les tailles de champ*/
-	final String ERR_TAILLE_ARG_MAX =
-			"La taille max d'un intitulé de catégorie est de 20 caractères";
+	final String ERR_TAILLE_ARG_MAX 
+	= "La taille max d'un intitulé de catégorie est de 20 caractères";
 	
-	final String ERR_TAILLE_ARG_MIN =
-			"La taille minimale d'un intitulé de catégorie est de 1 caractère";
+	final String ERR_TAILLE_ARG_MIN 
+	= "L'intitulé de la catégorie ne peut pas être vide.";
 	
 	/** l'intitulé de la catégorie (max 20 char)*/
     private String intitule;
@@ -52,11 +52,12 @@ public class Categorie {
 	 * @param intitule
 	 */
 	public Categorie(String intitule) {
+		if (intitule == null || intitule.isBlank()) {
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
+		}
+		
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
-		}
-		if (intitule.length() < 1) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
 		}
 		
 		this.intitule = intitule;
@@ -109,8 +110,24 @@ public class Categorie {
 
     /** @param intitule l'intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() <= 20) {
-			this.intitule = intitule;			
+		if (intitule == null
+		    || intitule.isBlank()) {
+			
+			throw new IllegalArgumentException(ERR_TAILLE_ARG_MIN);
+			
+		}
+		
+		if (intitule.length() > 20) {
+			throw new IllegalArgumentException(ERR_TAILLE_ARG_MAX);
+		}
+		
+		if (intitule != null 
+			&& intitule.length() > 0
+		    && !intitule.isBlank() 
+		    && intitule.length() <= 20) {
+			
+			this.intitule = intitule;	
+			
 		}
 	}
 

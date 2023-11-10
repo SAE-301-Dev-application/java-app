@@ -134,6 +134,7 @@ public class CreationQuestionControleur {
 					               .toArray(new String[reponsesFausses.size()])) != -1) {
 				throw new IllegalArgumentException(QUESTION_EXISTANTE);
 			}
+			
 			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
 				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
 				              difficulteEntree, feedbackEntre, categorie.getIntitule());

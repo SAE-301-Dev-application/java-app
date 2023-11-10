@@ -25,6 +25,13 @@ public class Question {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
+	final static String REPONSE_FAUSSE_1_VIDE
+	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
+	  + "champ obligatoirement.";
+	
+	final static String VALEUR_VIDE
+	= "Les champs requis doivent être remplis.";
+	
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
@@ -110,13 +117,19 @@ public class Question {
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
-	            throws IllegalArgumentException {
+	throws IllegalArgumentException {
+		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
 		
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
 			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
 		}
+		
+		if (reponsesFausses[0].isBlank()) {
+			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
+		}
+		
 		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
 		for (int i = 1; i < reponsesFausses.length; i++) {
 			if (!reponsesFausses[i].isBlank()) {
@@ -126,6 +139,7 @@ public class Question {
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
+		
 	}
 	
 	/**
@@ -142,9 +156,11 @@ public class Question {
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte,
 			                             String feedback)
-	              throws IllegalArgumentException {
+    throws IllegalArgumentException {
+		
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
 		assurerTaille(feedback, "d'un feedback", 1, 500);
+		
 	}
 	
 	/**
@@ -159,12 +175,18 @@ public class Question {
 	 */
 	private static void assurerTaille(String element, String titre,
 			                          int tailleMin, int tailleMax)
-	                    throws IllegalArgumentException {
+    throws IllegalArgumentException {
+		
+		if (element != null && element.isBlank()) {
+			throw new IllegalArgumentException(VALEUR_VIDE);
+		}
+		
 		if (element.length() < tailleMin || element.length() > tailleMax) {
 			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
 											                 titre, tailleMin,
 											                 tailleMax));
 		}
+		
 	}
 
 	/** @return l'intitule de la question */
