@@ -5,7 +5,9 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.io.Serializable; 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects; 
 
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
@@ -316,6 +318,20 @@ public class Question implements Serializable {
 		}
 		return resultatFinal;
 	}
+	
+	/**
+ 	 * Donne une référence mémoire similaire au objet 
+ 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(reponsesFausses);
+		result = prime * result + Objects.hash(categorie, difficulte, feedback, intitule, reponseJuste);
+		return result;
+	}
+	
 
 	/**
 	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
@@ -327,26 +343,23 @@ public class Question implements Serializable {
 	 * @param aComparer question que l'on compare
 	 * @return true si equals, false sinon
 	 */
-	public boolean equals(Question aComparer) {
-		return (this.intitule.equals(aComparer.intitule)
-				&& this.reponseJuste.equals(aComparer.reponseJuste)
-				&& this.categorie.getIntitule().equals(aComparer.categorie.getIntitule())
-				&& this.memesReponsesFausses(aComparer)); 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		return Objects.equals(categorie.getIntitule(), other.categorie.getIntitule())
+				&& Objects.equals(intitule, other.intitule)
+				&& Objects.equals(reponseJuste, other.reponseJuste)
+				&& Arrays.equals(reponsesFausses, other.reponsesFausses);
 	}
 	
-	
-	/**
-	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
-	 * tous leurs attributs
-	 * @param aComparer question que l'on compare
-	 * @return true si equals, false sinon
-	 */
-	public boolean equalsComplet(Question aComparer) {
-		return (this.intitule.equals(aComparer.intitule)
-				&& this.reponseJuste.equals(aComparer.reponseJuste)
-				&& this.categorie.getIntitule().equals(aComparer.categorie.getIntitule())
-				&& this.memesReponsesFausses(aComparer)
-				&& this.feedback.equals(aComparer.feedback)
-				&& this.difficulte == aComparer.difficulte); 
+	@Override
+	public String toString() {
+		return ""; //BUSH
 	}
 }

@@ -6,7 +6,8 @@
 package info2.sae301.quiz.modeles;
 
 import java.io.Serializable;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.Objects; 
 
 /**
  * Objet Catégorie composé d'un intitulé et d'une liste contenant les 
@@ -162,14 +163,34 @@ public class Categorie implements Serializable {
     	return listeQuestions.isEmpty();
     }
 
- 
+    /**
+ 	 * Donne une référence mémoire similaire au objet 
+ 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(intitule, listeQuestions);
+	}
+
 	/**
 	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
 	 * @param aComparer Categorie a comparer
-	 * @return true si els categories sont égales, false sinon
+	 * @return true si les categories sont égales, false sinon
 	 */
-	public boolean equals(Categorie aComparer) {
-		return (this.intitule.equals(aComparer.intitule)
-				&& this.listeQuestions.equals(aComparer.listeQuestions));
-	} 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Categorie other = (Categorie) obj;
+		return Objects.equals(intitule, other.intitule) && Objects.equals(listeQuestions, other.listeQuestions);
+	}
+	
+	@Override
+	public String toString() {
+		return ""; //BUSH
+	}
 }

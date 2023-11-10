@@ -8,6 +8,7 @@ package info2.sae301.quiz.modeles;
 import java.io.Serializable; 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Gestion des catégories et des questions créées par l'utilisateur.
@@ -380,16 +381,36 @@ public class Jeu implements Serializable {
 		return resultat;
 	}
 
+ 	/**
+ 	 * Donne une référence mémoire similaire au objet 
+ 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(toutesLesCategories, toutesLesQuestions);
+	}
 
-	
 	/**
 	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
 	 * leurs attributs
 	 * @param aComparer Jeu à comparer
 	 * @return true si les instances de jeu sont les mêmes, false sinon
 	 */
-	public boolean equals(Jeu aComparer) {
-		return (this.toutesLesCategories.equals(aComparer.toutesLesCategories)
-				&& this.toutesLesQuestions.equals(aComparer.toutesLesQuestions));
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jeu other = (Jeu) obj;
+		return Objects.equals(toutesLesCategories, other.toutesLesCategories)
+				&& Objects.equals(toutesLesQuestions, other.toutesLesQuestions);
+	}
+	
+	@Override
+	public String toString() {
+		return ""; //BUSH
 	}
 }

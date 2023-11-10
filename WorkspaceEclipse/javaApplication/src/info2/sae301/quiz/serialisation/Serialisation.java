@@ -32,7 +32,7 @@ public class Serialisation{
 			FileOutputStream fileOutputStream = new FileOutputStream(cheminDossier + nomFichier);
 			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
 
-			System.out.println("Ecriture de " + aSerialiser.toString());
+//			System.out.println("Ecriture de " + aSerialiser.toString());
 			fluxEcriture.writeObject(aSerialiser);
 
 			// Fermeture du fichier
@@ -61,7 +61,7 @@ public class Serialisation{
 
 			// Fermeture du fichier
 			fluxLecture.close();
-			System.out.println(jeuEnCours);
+//			System.out.println(jeuEnCours);
 
 		} catch (IOException e) { // problème fichier
 			System.out.println("Problème d'accès au fichier " + nomFichier);
