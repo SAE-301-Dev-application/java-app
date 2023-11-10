@@ -1,5 +1,5 @@
 /**
- * Categorie.java									31 oct. 2023 
+ * Categorie.java								      	            10 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 
@@ -11,7 +11,12 @@ import java.util.ArrayList;
 /**
  * Objet Catégorie composé d'un intitulé et d'une liste contenant les 
  * références des questions liées à la catégorie
- * @author FABRE Florian
+ *
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class Categorie implements Serializable {
     
@@ -33,7 +38,7 @@ public class Categorie implements Serializable {
     
 
     /**
-     *  Nouvelle catégorie de questions identifiée par son intitulé
+     * Nouvelle catégorie de questions identifiée par son intitulé
 	 * @param intitule
 	 * @param questions
 	 */

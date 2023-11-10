@@ -10,7 +10,12 @@ import java.io.Serializable;
 /**
  * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
  * directement lié à une catégorie
- * @author FABRE Florian
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class Question implements Serializable {
 	

@@ -16,7 +16,12 @@ import info2.sae301.quiz.modeles.Question;
 
 /**
  * Classe de test de Question.java
- * @author FABRE Florian
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 class TestQuestion {
 	

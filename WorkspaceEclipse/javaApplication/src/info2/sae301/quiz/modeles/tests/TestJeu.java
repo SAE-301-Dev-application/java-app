@@ -25,8 +25,11 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests unitaires de la classe {@link info2.sae301.quiz.modeles.Jeu}.
  * 
- * @author FAUGIERES Loïc
- * @author GUIRAUD Simon
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 class TestJeu {
 	

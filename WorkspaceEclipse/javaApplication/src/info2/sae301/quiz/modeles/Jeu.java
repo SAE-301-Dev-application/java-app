@@ -1,5 +1,5 @@
 /*
- * Jeu.java             									         6 nov. 2023
+ * Jeu.java             									        10 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -12,13 +12,11 @@ import java.util.Arrays;
 /**
  * Gestion des catégories et des questions créées par l'utilisateur.
  * 
- * @author FAUGIERES Loïc
- * @author GUIRAUD Simon
- */
-
-/**
- * TODO comment types
- * @author flori
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class Jeu implements Serializable {
 
