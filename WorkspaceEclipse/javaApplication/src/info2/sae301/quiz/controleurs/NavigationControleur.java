@@ -1,7 +1,8 @@
-/**
- * ControleurNavigation.java
- * Aucun droit d'auteur.
+/*
+ * NavigationControleur.java 						                10 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
+
 package info2.sae301.quiz.controleurs;
 
 import java.io.IOException;
@@ -11,10 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 /**
- * Classe permettant la navigation entre les vues de 
- * l'application.
+ * Classe permettant la navigation entre les vues de l'application.
  * 
- * @author jonathan
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class NavigationControleur {
 	
@@ -34,14 +38,16 @@ public class NavigationControleur {
 	 */
 	private static Scene sceneCourante;
 	
-	
+	/**
+	 * Le chemin de la vue courante.
+	 */
 	private static String vueCourante;
+	
 	/**
 	 * (Re)définie directement l'objet de la scène
 	 * courante. Cette information est utile lors du 
 	 * changement de scène via la méthode de changement
 	 * de vue.
-	 * 
 	 * @param nouvelleScene
 	 */
 	public static void setSceneCourante(Scene nouvelleScene) {
@@ -49,30 +55,26 @@ public class NavigationControleur {
 	}
 	
 	/**
-	 * Permet le changement de vue vers celle envoyée en 
+	 * Change de vue vers celle envoyée en 
 	 * paramètre.
-	 * 
-	 * @param routeVueFXML Nom du fichier FXML de la vue 
-	 * cible
+	 * @param routeVueFXML Nom du fichier FXML de la vue cible
 	 */
 	public static void changerVue(String routeVueFXML) {
 		if (sceneCourante == null) {
 			System.out.println("Erreur : aucune scène courante !");
-			return;  // TEMP
-		}
-
-		try {
-			System.out.println(NavigationControleur.class.getResource(
-							RACINE_VUES + routeVueFXML));
-			Parent racine;
-			racine = FXMLLoader.load(
-					NavigationControleur.class.getResource(
-							RACINE_VUES + routeVueFXML));
-			
-			sceneCourante.setRoot(racine);
-			vueCourante = routeVueFXML;
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
+		} else {
+			try {
+				System.out.println(NavigationControleur.class.getResource(
+								RACINE_VUES + routeVueFXML));
+				Parent racine;
+				racine = FXMLLoader.load(NavigationControleur.class
+						                 .getResource(RACINE_VUES + routeVueFXML));
+				
+				sceneCourante.setRoot(racine);
+				vueCourante = routeVueFXML;
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 	
@@ -81,6 +83,7 @@ public class NavigationControleur {
 		return sceneCourante;
 	}
 	
+	/** @return La vue courante. */
 	public static String getVueCourante() {
 		return vueCourante;
 	}

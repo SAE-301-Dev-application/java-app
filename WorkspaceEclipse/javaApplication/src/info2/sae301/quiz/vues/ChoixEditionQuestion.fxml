@@ -2,14 +2,14 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ChoixEditionQuestionControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
@@ -43,6 +43,6 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
-      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" prefHeight="26.0" prefWidth="238.0" onAction="#selectionFiltre" styleClass="menu-selection" />
+      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" onAction="#selectionFiltre" prefHeight="26.0" prefWidth="238.0" styleClass="menu-selection" />
    </children>
 </Pane>

@@ -20,7 +20,11 @@ import javafx.scene.control.TextArea;
 /**
  * Contrôleur FXML de la vue EditionQuestion qui permet l'édition d'une question.
  * 
- * @author FAUGIERES Loïc
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class EditionQuestionControleur {
 	
@@ -59,6 +63,10 @@ public class EditionQuestionControleur {
 	@FXML
 	private TextArea reponseFausse4;
 	
+	/**
+	 * Initialisation de la fenêtre d'édition en ajoutant les catégories
+	 * et difficultés dans les choicebox.
+	 */
 	@FXML
 	private void initialize() {
 		// Affichage des catégories dans le menu déroulant de filtre
@@ -94,9 +102,11 @@ public class EditionQuestionControleur {
 	}
 	
 	/**
-	 * TODO javadoc
-	 * @param question
-	 * @param reponsesFausses
+	 * Affichage des réponses fausses de la question sélectionnée en fonction
+	 * de leur validité.
+	 * 
+	 * @param question La question contenant les réponses fausses.
+	 * @param reponsesFausses Les textarea de réponses fausses.
 	 */
 	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
 		for (int i = 0; i < reponsesFausses.length; i++) {
@@ -108,18 +118,25 @@ public class EditionQuestionControleur {
 		}
 	}
 	
+	/**
+	 * TODO aide
+	 */
 	@FXML
 	private void actionBoutonAide() {
-		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
+	/**
+	 * Redirection vers la vue AffichageQuestions.fxml
+	 */
 	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
 	/**
-	 * TODO : javadoc
+	 * Enregistre les modifications de la questions ou affiche une pop-up
+	 * d'erreur éventuellement.
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {

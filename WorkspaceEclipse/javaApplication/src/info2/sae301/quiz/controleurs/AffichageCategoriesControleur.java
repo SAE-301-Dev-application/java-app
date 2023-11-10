@@ -20,10 +20,24 @@ import javafx.scene.layout.VBox;
  * Contrôleur FXML de la vue AffichageCategories qui affiche la liste des
  * catégories et propose d'en créer, renommer et supprimer.
  * 
- * @author FAUGIERES Loïc
- * @author GUIL Jonathan
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class AffichageCategoriesControleur {
+	
+	protected static final String AIDE_TITRE = "LES CATÉGORIES";
+	
+	protected static final String AIDE_TEXTE
+	= """
+	  Les catégories permettent de regrouper des questions par thématique. 
+
+	  Une catégorie Général est présente par défaut pour les questions n’étant pas liées à une catégorie en particulier.
+
+	  Les catégories permettent, par la suite, une recherche optimisée et une personnalisation des parties de l’utilisateur.
+	  """;
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -116,7 +130,7 @@ public class AffichageCategoriesControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	/**

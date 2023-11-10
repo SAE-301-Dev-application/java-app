@@ -1,5 +1,5 @@
 /*
- * CreationCategoriesControleur.java			    		         9 nov. 2023
+ * CreationCategorieControleur.java			        		         9 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -13,13 +13,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 /**
- * Contrôleur FXML de la vue CreationCategories qui permet la création d'une
+ * Contrôleur FXML de la vue CreationCategorie qui permet la création d'une
  * nouvelle catégorie.
  * 
- * @author FAUGIERES Loïc
- * @author GUIL Jonathan
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
-public class CreationCategoriesControleur {
+public class CreationCategorieControleur {
 	
 	private static final String TITRE_ALERTE = "Erreur de création";
 	
@@ -32,16 +35,25 @@ public class CreationCategoriesControleur {
 	@FXML
 	private TextField nouveauNomCategorie;
 	
+	/**
+	 * TODO : coder aide
+	 */
 	@FXML
 	private void boutonAide() {
-//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
+	/**
+	 * Redirection vers la vue AffichageCategories.fxml
+	 */
 	@FXML
 	private void boutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
+	/**
+	 * Enregistrer le nouveau nom de la catégorie.
+	 */
 	@FXML
 	private void boutonEnregistrer() {
 		try {

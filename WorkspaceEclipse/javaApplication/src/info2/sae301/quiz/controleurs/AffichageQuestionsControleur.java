@@ -21,8 +21,26 @@ import javafx.scene.layout.VBox;
 /**
  * Contrôleur FXML de la vue AffichageQuestions qui affiche la liste des
  * questions et propose d'en créer, renommer et supprimer.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class AffichageQuestionsControleur {
+	
+	protected static final String AIDE_TITRE = "LES QUESTIONS";
+	
+	protected static final String AIDE_TEXTE
+	= """
+	  Regroupées, ou non, dans une catégorie spécifique, les questions 
+	  composent le quiz auquel jouera l’utilisateur.
+
+	  Elles possèdent un intitulé, jusqu’à cinq réponses dont une obligatoirement vraie, 
+	  d’un niveau de difficulé parmi facile, moyen et difficile, et d’un feedback à 
+	  afficher lors de la conclusion d’une partie.
+	  """;
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -142,7 +160,7 @@ public class AffichageQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonAider() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	/**

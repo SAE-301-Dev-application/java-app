@@ -18,7 +18,12 @@ import java.util.Arrays;
 
 /**
  * Classe de test de Categorie.java
- * @author FABRE Florian
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 class TestCategorie {
 
@@ -190,5 +195,23 @@ class TestCategorie {
 		assertEquals(grammaire.getListeQuestions().size(), 0);
 		assertTrue(orthographe.supprimerToutesQuestions());
 		assertEquals(orthographe.getListeQuestions().size(), 0);
+	}
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#equals(Object)}.
+	 */
+	@Test
+	void testEquals() {
+		//instance de 2 categorie indentique
+		Categorie categorie1 = new Categorie("Maths");
+		Categorie categorie2 = new Categorie("Maths");
+		questionAjout.setCategorie(categorie1);
+		Question questionAjoutIdentique = new Question("Quelle est la bonne orthographe? ",
+				"chat",new String[]{"chatt","shat","chât"},2,categorie2);
+		categorie1.ajouterQuestion(questionAjout);
+		categorie2.ajouterQuestion(questionAjoutIdentique);
+		
+		assertEquals(categorie1, categorie2);
+		assertNotEquals(orthographe, categorie1);
 	}
 }

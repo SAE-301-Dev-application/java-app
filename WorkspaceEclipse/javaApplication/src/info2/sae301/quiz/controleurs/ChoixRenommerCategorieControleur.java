@@ -19,6 +19,12 @@ import javafx.scene.layout.VBox;
 /**
  * Contrôleur FXML de la vue ChoixRenommerCategories qui affiche la liste des
  * catégories sous forme de boutons.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class ChoixRenommerCategorieControleur {
 	
@@ -156,7 +162,7 @@ public class ChoixRenommerCategorieControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-//		ControleurNavigation.changerVue("GestionDesCategories.fxml");
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
 	/**

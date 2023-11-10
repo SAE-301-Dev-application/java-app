@@ -1,24 +1,34 @@
 /**
- * Categorie.java									31 oct. 2023 
+ * Categorie.java								      	            10 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 
 package info2.sae301.quiz.modeles;
 
-import java.util.ArrayList; 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Objects; 
 
 /**
  * Objet Catégorie composé d'un intitulé et d'une liste contenant les 
  * références des questions liées à la catégorie
- * @author FABRE Florian
+ *
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
-public class Categorie {
+public class Categorie implements Serializable {
     
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 3793388654168200022L;
+
 	/** Message si erreur sur les tailles de champ*/
-	final String ERR_TAILLE_ARG_MAX 
+	private static final String ERR_TAILLE_ARG_MAX 
 	= "La taille max d'un intitulé de catégorie est de 20 caractères";
 	
-	final String ERR_TAILLE_ARG_MIN 
+	private static final String ERR_TAILLE_ARG_MIN 
 	= "L'intitulé de la catégorie ne peut pas être vide.";
 	
 	/** l'intitulé de la catégorie (max 20 char)*/
@@ -29,7 +39,7 @@ public class Categorie {
     
 
     /**
-     *  Nouvelle catégorie de questions identifiée par son intitulé
+     * Nouvelle catégorie de questions identifiée par son intitulé
 	 * @param intitule
 	 * @param questions
 	 */
@@ -151,4 +161,35 @@ public class Categorie {
     	}
     	return listeQuestions.isEmpty();
     }
+
+    /**
+ 	 * Donne une référence mémoire similaire au objet 
+ 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(intitule, listeQuestions);
+	}
+
+	/**
+	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
+	 * @param aComparer Categorie a comparer
+	 * @return true si les categories sont égales, false sinon
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Categorie other = (Categorie) obj;
+		return Objects.equals(intitule, other.intitule) && Objects.equals(listeQuestions, other.listeQuestions);
+	}
+	
+	@Override
+	public String toString() {
+		return ""; //BUSH
+	}
 }

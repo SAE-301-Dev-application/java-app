@@ -109,7 +109,6 @@ TextField {
 	-fx-font-size: 20px;
 	
 	-fx-prompt-text-fill: white;
-	-fx-prompt-font-weight: normal;
 }
 
 

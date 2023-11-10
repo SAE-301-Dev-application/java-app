@@ -1,23 +1,28 @@
 /*
- * Jeu.java             									         6 nov. 2023
+ * Jeu.java             									        10 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
 package info2.sae301.quiz.modeles;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Gestion des catégories et des questions créées par l'utilisateur.
  * 
- * @author FAUGIERES Loïc
- * @author GUIRAUD Simon
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class Jeu implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	/** Numéro de sérialisation : clé de hachage */
+	private static final long serialVersionUID = 6013770278342863395L;
 
 	/**
 	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie
@@ -28,6 +33,7 @@ public class Jeu implements Serializable {
 	/** Toutes les questions qui ont été créées sur le jeu. */
 	private ArrayList<Question> toutesLesQuestions;
 
+	
 	/**
 	 * Construction d'une session de jeu initialisant ses questions
 	 * et catégories à vide.
@@ -54,15 +60,18 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/** @return La liste des catégories créées. */
 	public ArrayList<Categorie> getToutesLesCategories() {
 		return toutesLesCategories;
 	}
 	
+	
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
 		return toutesLesQuestions;
 	}
+	
 	
 	/**
 	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
@@ -79,7 +88,15 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
-	 * @param categories L'ArrayList des intitulés des catégories à retourner.
+	 * @param categorie Intitulé de la catégorie à retourner.
+	 * @return La catégorie dont l'intitulé est dans le paramètre.
+	 */
+	public Categorie getCategorieParIntitule(String intituleCategorie) {
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
+	}
+	
+	/**
+	 * @param categories ArrayList des intitulés des catégories à retourner.
 	 * @return la liste des catégories dont l'intitulé est dans la liste en paramètre.
 	 */
 	public Categorie[] getCategoriesParIntitules(ArrayList<String> categories) {
@@ -93,15 +110,7 @@ public class Jeu implements Serializable {
 			indice++;
 		}
 		return categoriesARetourner;
-	}
-	
-	/**
-	 * @param categorie Intitulé de la catégorie à retourner.
-	 * @return La catégorie dont l'intitulé est dans le paramètre.
-	 */
-	public Categorie getCategorieParIntitule(String intituleCategorie) {
-		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
-	}
+	}	
 	
 	/**
 	 * Réinitialise/Vide la liste des catégories. Seule la catégorie
@@ -185,6 +194,7 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * Supprime de la liste des questions les questions spécifiées dans la
 	 * liste en paramètre.
@@ -203,6 +213,7 @@ public class Jeu implements Serializable {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
@@ -326,6 +337,7 @@ public class Jeu implements Serializable {
 		return resultat;
 	}
  	
+ 	
 	/**
 	 * Vérification de l'existence d'une question dans la liste des questions d'une
 	 * catégorie dont l'intitulé est en paramètre.
@@ -346,46 +358,52 @@ public class Jeu implements Serializable {
 		Categorie categorieQuestion = toutesLesCategories.get(indiceCategorie);
 		
 		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
-		
+	
+		Question aComparer = new Question(intituleQuestion,reponseJuste,reponsesFausses,1,
+				new Categorie(intituleCategorie));
 		for (int i = 0;
 		     i < questionsCategorie.size()
 			 && resultat == -1;
 			 i++) {
 			Question questionCourante = questionsCategorie.get(i);
 			
-			if (questionCourante.getIntitule().equals(intituleQuestion)
-				&& questionCourante.getReponseJuste().equals(reponseJuste)
-				&& memesReponsesFausses(questionCourante.getReponsesFausses(), reponsesFausses)) {
-				
+			if (questionCourante.equals(aComparer)) {
 				resultat = getToutesLesQuestions().indexOf(questionCourante); 
 			}
 		}
 		return resultat;
 	}
- 	
- 	/**
- 	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
- 	 * 
- 	 * @param reponsesFausses1 Les réponses fausses à comparer.
- 	 * @param reponsesFausses2 Les secondes réponses fausses à comparer.
- 	 * @return true si les liste contiennent les mêmes réponses fausses, false sinon.
- 	 */
- 	public boolean memesReponsesFausses(String[] reponsesFausses1, String[] reponsesFausses2) {
- 		boolean resultatFinal = true;
- 		if (reponsesFausses1.length != reponsesFausses2.length) {
- 			return false;
- 		}
- 		for (int i = 0; i < reponsesFausses1.length && resultatFinal; i++) {
- 			boolean reponseEgaleTrouvee = false;
- 			for (int j = 0; j < reponsesFausses2.length && !reponseEgaleTrouvee; j++) {
- 				reponseEgaleTrouvee
- 				= reponsesFausses1[i].equals(reponsesFausses2[j]);
- 			}
- 			if (!reponseEgaleTrouvee) {
- 				resultatFinal = reponseEgaleTrouvee;
- 			}
- 		}
- 		return resultatFinal;
- 	}
 
+ 	/**
+ 	 * Donne une référence mémoire similaire au objet 
+ 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(toutesLesCategories, toutesLesQuestions);
+	}
+
+	/**
+	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
+	 * leurs attributs
+	 * @param aComparer Jeu à comparer
+	 * @return true si les instances de jeu sont les mêmes, false sinon
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jeu other = (Jeu) obj;
+		return Objects.equals(toutesLesCategories, other.toutesLesCategories)
+				&& Objects.equals(toutesLesQuestions, other.toutesLesQuestions);
+	}
+	
+	@Override
+	public String toString() {
+		return ""; //BUSH
+	}
 }

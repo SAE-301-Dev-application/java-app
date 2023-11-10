@@ -6,7 +6,6 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
@@ -25,6 +24,12 @@ import javafx.scene.layout.VBox;
 /**
  * Contrôleur FXML de la vue SuppressionQuestions qui affiche la liste des
  * questions avec des checkbox pour les supprimer.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 public class SuppressionQuestionsControleur {
 	
@@ -98,8 +103,6 @@ public class SuppressionQuestionsControleur {
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	    	ligneQuestion = new HBox();
 	    	
-	    	String intituleQuestion = toutesLesQuestions.get(i).getIntitule();
-	    	
 	    	checkBoxQuestion = new CheckBox();
 	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
 	    	checkBoxQuestion.setId("" + i);
@@ -135,6 +138,11 @@ public class SuppressionQuestionsControleur {
 	    		                 && indiceFin < toutesLesQuestions.size());
 	}
 	
+	/**
+	 * Clic sur la checkbox afin de sélectionner une question.
+	 * 
+	 * @param indice Indice de la question sélectionnée.
+	 */
 	private void selectionnerQuestion(int indice) {
 		final Question QUESTION 
 		= jeu.getToutesLesQuestions().get(indice); 
@@ -180,7 +188,7 @@ public class SuppressionQuestionsControleur {
 	 */
 	@FXML
 	private void actionBoutonAider() {
-//		ControleurNavigation.changerVue("GestionDesQuestions.fxml");
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**
