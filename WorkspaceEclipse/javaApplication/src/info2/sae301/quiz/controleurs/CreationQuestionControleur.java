@@ -90,7 +90,10 @@ public class CreationQuestionControleur {
 	}
 	
 	/**
-	 * TODO : javadoc
+	 * Récupère chacune des informations entrées par l'utilisateur permettant de 
+	 * créer une question et tente de la créer
+	 * Si la question ne peut pas être créée, cette méthode renvoie une erreur
+	 * sous forme d'alert pour l'utilisateur
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
