@@ -294,7 +294,7 @@ public class Question implements Serializable {
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		if (feedback != null && !feedback.isBlank()) {
+		if (feedback != null && !feedback.isEmpty()) {
 			assurerTaille(feedback, "d'un feedback", 1, 500);			
 		}
 		this.feedback = feedback;
