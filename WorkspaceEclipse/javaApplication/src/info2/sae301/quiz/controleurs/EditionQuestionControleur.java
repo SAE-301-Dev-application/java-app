@@ -65,7 +65,7 @@ public class EditionQuestionControleur {
 	
 	/**
 	 * Initialisation de la fenêtre d'édition en ajoutant les catégories
-	 * et difficultés dans les choicebox.
+	 * et difficultés dans les ChoiceBox.
 	 */
 	@FXML
 	private void initialize() {
@@ -74,9 +74,9 @@ public class EditionQuestionControleur {
 			intituleCategorie.getItems().add(categorieCourante.getIntitule());
 		}
 		
-		Question question
-		= jeu.getToutesLesQuestions()
-		     .get(ChoixEditionQuestionControleur.getIndiceQuestionSelectionnee());
+		Question question = jeu.getToutesLesQuestions()
+				.get(ChoixEditionQuestionControleur
+		    	.getIndiceQuestionSelectionnee());
 		
 		// Catégorie général par défaut
 		intituleCategorie.setValue(question.getCategorie().getIntitule());
@@ -106,7 +106,7 @@ public class EditionQuestionControleur {
 	 * de leur validité.
 	 * 
 	 * @param question La question contenant les réponses fausses.
-	 * @param reponsesFausses Les textarea de réponses fausses.
+	 * @param reponsesFausses Les TextArea de réponses fausses.
 	 */
 	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
 		for (int i = 0; i < reponsesFausses.length; i++) {

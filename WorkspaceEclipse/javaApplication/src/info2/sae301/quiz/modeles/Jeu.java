@@ -5,7 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -76,8 +76,8 @@ public class Jeu implements Serializable {
 	/**
 	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
 	 * 
-	 * @param intituleCategorie L'intitulé de la catégorie de laquelle retourner
-	 *                          les questions.
+	 * @param intituleCategorie L'intitulé de la catégorie de 
+	 * laquelle retourner les questions.
 	 * @return La liste des questions de la catégorie en paramètre.
 	 */
 	public ArrayList<Question> questionsCategorie(String intituleCategorie) {
@@ -88,6 +88,8 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
+	 * Récupère une catégorie selon son intitulé
+	 * 
 	 * @param categorie Intitulé de la catégorie à retourner.
 	 * @return La catégorie dont l'intitulé est dans le paramètre.
 	 */
@@ -96,6 +98,8 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
+	 * Récupère une liste de catégories selon leurs intitulés
+	 * 
 	 * @param categories ArrayList des intitulés des catégories à retourner.
 	 * @return la liste des catégories dont l'intitulé est dans la liste en paramètre.
 	 */
@@ -130,6 +134,7 @@ public class Jeu implements Serializable {
 	 * Crée une nouvelle catégorie et l'ajoute à la liste des catégories.
 	 * 
 	 * @param intitule L'intitulé de la catégorie à créer.
+	 * @return la catégorie nouvellement créée
 	 */
 	public Categorie creerCategorie(String intitule) {
 		if (indiceCategorie(intitule) == -1) {
@@ -179,6 +184,7 @@ public class Jeu implements Serializable {
 	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la
 	 * liste en paramètre.
+	 * 
 	 * @param aSupprimer Liste des catégories à supprimer.
 	 */
 	public void supprimer(Categorie[] aSupprimer) {
@@ -198,6 +204,7 @@ public class Jeu implements Serializable {
 	/**
 	 * Supprime de la liste des questions les questions spécifiées dans la
 	 * liste en paramètre.
+	 * 
 	 * @param aSupprimer Liste des questions à supprimer.
 	 */
 	public void supprimer(Question[] aSupprimer) {
@@ -254,8 +261,8 @@ public class Jeu implements Serializable {
 	}
 	
 	/**
-	 * Edite la question sélectionnée.
-     *
+	 * Édite la question sélectionnée.
+	 * 
 	 * @param indiceQuestion L'indice de la question à éditer.
 	 * @param nouveauIntitule Le nouveau intitulé de la question.
 	 * @param reponseJuste La réponse juste.
@@ -375,8 +382,19 @@ public class Jeu implements Serializable {
 	}
 
  	/**
- 	 * Donne une référence mémoire similaire au objet 
- 	 * qui ont des valeurs égaux dans leurs atributs
+ 	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
+ 	 * méthode est appliquée, ici une instance de Jeu.
+ 	 * Permet une comparaison précise et complète la méthode equals() car si les
+ 	 * hashCode générés pour les instances comparées sont les mêmes et que 
+ 	 * la méthode equals renvoie true, alors ces instances sont égales.
+ 	 * 
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
+ 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
+ 	 * pour une maintenance future du code plus aisée et car cela respecte 
+ 	 * les conventions générales de Java.
+ 	 * 
+ 	 * @return un hashCode basé sur les attributs de l'objet Jeu 
+ 	 * toutesLesCatégories et toutesLesQuestions
  	 */
 	@Override
 	public int hashCode() {
@@ -397,13 +415,13 @@ public class Jeu implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Jeu other = (Jeu) obj;
-		return Objects.equals(toutesLesCategories, other.toutesLesCategories)
-				&& Objects.equals(toutesLesQuestions, other.toutesLesQuestions);
+		Jeu aComparer = (Jeu) obj;
+		return Objects.equals(toutesLesCategories, aComparer.toutesLesCategories)
+				&& Objects.equals(toutesLesQuestions, aComparer.toutesLesQuestions);
 	}
 	
 	@Override
 	public String toString() {
-		return ""; //BUSH
+		return ""; //TODO faire le toString
 	}
 }

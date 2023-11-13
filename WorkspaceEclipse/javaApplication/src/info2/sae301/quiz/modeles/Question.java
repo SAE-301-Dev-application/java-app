@@ -21,6 +21,8 @@ import java.util.Objects;
  */
 public class Question implements Serializable {
 	
+	/* Constantes utilisées dans la classe */
+	
 	/** Message si erreur sur les tailles de champ */
 	private static final String TAILLE_INVALIDE
 	= "La taille %s doit être comprise entre %d et %d.";
@@ -34,13 +36,17 @@ public class Question implements Serializable {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
+	/** Message si erreur l'utilisateur n'a pas rentré de réponses fausses */
 	private static final String REPONSE_FAUSSE_1_VIDE
 	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
 	  + "champ obligatoirement.";
 	
+	/** Message si erreur car l'utilisateru n'a pas rempli tous les champs */
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
 	
+	
+	/* Attributs d'une instance de classe de Question */
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
@@ -279,8 +285,8 @@ public class Question implements Serializable {
 	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
 	 */
 	private void reponsesUniques(String[] reponses)
-	throws IllegalArgumentException {
-		
+	throws IllegalArgumentException { //TODO finir la méthode
+	
 	}
 
 	/** @param difficulte the difficulte à changer */
