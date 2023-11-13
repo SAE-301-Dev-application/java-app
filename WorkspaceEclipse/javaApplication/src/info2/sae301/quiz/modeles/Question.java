@@ -328,17 +328,6 @@ public class Question implements Serializable {
 		this.reponsesFausses = reponsesFausses;
 	}
 
-	/**
-	 * Vérifie si les réponses en paramètre sont toutes non égales.
-	 * 
-	 * @param reponses Les réponses à tester.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
-	 */
-	private void reponsesUniques(String[] reponses)
-	throws IllegalArgumentException {
-		
-	}
-
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
 		if (difficulte < 1 || difficulte > 3) {
@@ -347,7 +336,6 @@ public class Question implements Serializable {
 		this.difficulte = difficulte;
 	}
 
-
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
 		if (feedback != null && !feedback.isEmpty()) {
@@ -355,7 +343,6 @@ public class Question implements Serializable {
 		}
 		this.feedback = feedback;
 	}
-
 
 	/** @param categorie the categorie à changer */
 	public void setCategorie(Categorie categorie) {
