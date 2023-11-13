@@ -179,16 +179,29 @@ class TestQuestion {
 	@Test
 	void testSetIntitule() {
 		/*Réponse trop longue (301 char et plus)*/
-		String intituleTropLong = genererStringTailleX(201);
+		String intituleTropLong = genererStringTailleX(301);
 		
 		questionAF.setIntitule("Quel est le bon choix ?");
 		assertEquals("Quel est le bon choix ?",questionAF.getIntitule());
 		assertNotEquals("Quelle est la bonne orthographe? ",questionAF.getIntitule());
 		
-		questionSF.setIntitule(intituleTropLong);
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setIntitule(intituleTropLong);
+		});
+		
 		assertNotEquals(intituleTropLong,questionSF.getIntitule());
-		questionSF.setIntitule("choisissez entre ces choix:");
-		assertEquals("choisissez entre ces choix:",questionSF.getIntitule());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setIntitule("");
+		});
+		
+		assertNotEquals("",questionSF.getIntitule());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setIntitule("  ");
+		});
+		
+		assertNotEquals("  ",questionSF.getIntitule());
 	}
 
 	
@@ -198,13 +211,26 @@ class TestQuestion {
 	@Test
 	void testSetReponseJuste() {
 		/*Réponse trop longue (201 char et plus)*/
-		String repTropLongue = genererStringTailleX(250);
-		questionAF.setReponseJuste(repTropLongue);
+		String repTropLongue = genererStringTailleX(201);
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setReponseJuste(repTropLongue);
+		});
 		assertNotEquals(repTropLongue,questionAF.getReponseJuste());
+		
+		/* Reponse trop courte (moins de 1 caractère) */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setReponseJuste("");
+		});
+		assertNotEquals("",questionAF.getReponseJuste());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setReponseJuste(" ");
+		});
+		assertNotEquals(" ",questionAF.getReponseJuste());
 		
 		questionAF.setReponseJuste("chien");
 		assertEquals("chien",questionAF.getReponseJuste());
-		assertNotEquals("",questionAF.getReponseJuste());
 	}
 
 	/**
@@ -215,18 +241,39 @@ class TestQuestion {
 		/*Réponse trop longue (201 char et plus)*/
 		String repTropLongue = genererStringTailleX(201);
 		String[][] repFaussesSF = {{"chatt","shat","chât"},{"chat","shat","chât","chien","chinchilla"},{}};
-		String[][] repFaussesAF = {{"raie","raient"},{repTropLongue},{}};
+		String[][] repFaussesAF = {{"raie","raient"},{repTropLongue},{"", "   "}};
 		
 		/* Test d'insertion de tableau de taille incorrecte*/
-		questionSF.setReponsesFausses(repFaussesSF[1]);
+		/* Tableau trop long */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setReponsesFausses(repFaussesSF[1]);
+		});
+		
+		assertNotEquals(repFaussesSF[1], questionSF.getReponsesFausses());
+		
 		assertFalse(Arrays.equals(repFaussesSF[1], questionSF.getReponsesFausses()));
 		
-		questionSF.setReponsesFausses(repFaussesSF[2]);
+		/* Tableau trop court */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setReponsesFausses(repFaussesSF[2]);
+		});
+		
+		assertNotEquals(repFaussesSF[1], questionSF.getReponsesFausses());
+		
 		assertFalse(Arrays.equals(repFaussesSF[2], questionSF.getReponsesFausses()));
-		assertTrue(Arrays.equals(repFaussesSF[0], questionSF.getReponsesFausses()));
 		
 		/* Test d'insertion de réponses de taille incorrecte*/
-		questionAF.setReponsesFausses(repFaussesAF[1]);
+		/* Réponse trop longue */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionAF.setReponsesFausses(repFaussesAF[1]);
+		});
+		assertNotEquals(repFaussesSF[1], questionSF.getReponsesFausses());
+		
+		/* Réponse trop courte ou vide */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionAF.setReponsesFausses(repFaussesAF[2]);
+		});
+		assertNotEquals(repFaussesSF[1], questionSF.getReponsesFausses());
 		assertFalse(Arrays.equals(repFaussesAF[1], questionAF.getReponsesFausses()));
 	}
 
@@ -237,16 +284,30 @@ class TestQuestion {
 	void testSetDifficulte() {
 		
 		/*Valeurs invalides*/
-		questionSF.setDifficulte(0);
-		assertFalse(0 == questionSF.getDifficulte());
-		questionSF.setDifficulte(6);
-		assertFalse(6 == questionAF.getDifficulte());
-		questionAF.setDifficulte(Integer.MAX_VALUE);
-		assertFalse(Integer.MAX_VALUE == questionAF.getDifficulte());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setDifficulte(0);
+		});
+		assertNotEquals(0, questionSF.getDifficulte());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setDifficulte(6);
+		});
+		assertNotEquals(6, questionSF.getDifficulte());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionSF.setDifficulte(Integer.MAX_VALUE);
+		});
+		assertNotEquals(Integer.MAX_VALUE, questionSF.getDifficulte());
+		
 		
 		/* Valeur valide*/
+		questionAF.setDifficulte(2);
+		assertEquals(2, questionAF.getDifficulte());
+		questionAF.setDifficulte(1);
+		assertEquals(1, questionAF.getDifficulte());
 		questionAF.setDifficulte(3);
-		assertTrue(questionAF.getDifficulte() == 3);
+		assertEquals(3, questionAF.getDifficulte());
 	}
 
 	/**
@@ -260,10 +321,23 @@ class TestQuestion {
 		questionAF.setFeedback("C'est la bonne réponse un point c'est tout");
 		assertEquals("C'est la bonne réponse un point c'est tout",
 				questionAF.getFeedback());
-		assertNotEquals("c'est pas ca",questionAF.getFeedback());
 		
-		questionSF.setFeedback(feedbackTropLong);
+		questionAF.setFeedback("");
+		assertEquals("",
+				questionAF.getFeedback());
+		
+		questionAF.setFeedback(null);
+		assertEquals(null, questionAF.getFeedback());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionAF.setFeedback(feedbackTropLong);
+		});
 		assertNotEquals(feedbackTropLong ,questionSF.getFeedback());
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			questionAF.setFeedback("   ");
+		});
+		assertNotEquals("   " ,questionSF.getFeedback());
 	}
 
 	/**

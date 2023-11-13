@@ -45,7 +45,7 @@ public class MenuPrincipalControleur {
 
 	@FXML
 	private void actionBoutonJouer() {
-
+		NavigationControleur.changerVue("NouvellePartie.fxml");
 	}
 
 	/**

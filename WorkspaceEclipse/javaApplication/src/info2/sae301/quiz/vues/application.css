@@ -183,3 +183,7 @@ ChoiceBox {
 TextArea .content {
 	-fx-background-radius: 0;
 }
+
+VBox.centrer-verticale {
+	-fx-alignment: left-center;
+}
