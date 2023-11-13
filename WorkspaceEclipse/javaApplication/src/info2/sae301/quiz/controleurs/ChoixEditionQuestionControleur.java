@@ -184,7 +184,8 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
+				              AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**
