@@ -185,11 +185,11 @@ public class Categorie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Categorie other = (Categorie) obj;
-		return Objects.equals(intitule, other.intitule) && Objects.equals(listeQuestions, other.listeQuestions);
+		return Objects.equals(intitule, other.intitule);
 	}
 	
 	@Override
 	public String toString() {
-		return ""; //BUSH
+		return "" + intitule; //
 	}
 }
