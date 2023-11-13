@@ -30,6 +30,17 @@
 	-fx-alignment: center;
 }
 
+.titre-long {
+    -fx-text-fill: white;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.titre-tres-long {
+    -fx-font-size: 15px;
+}
+
 .user-solid {
 	-fx-shape: "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z";
 	-fx-fill: white;
@@ -61,13 +72,31 @@
 .petit-bouton {
 	-fx-pref-width: 145px;
 	-fx-pref-height: 40px;
+	-fx-font-size: 13px;
+}
+
+.menu-selection {
+    -fx-pref-width: 180px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 13px;
+}
+.menu-selection .label {
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+}
+.menu-selection .menu-item {
+	-fx-background-color: #272C58;
 }
 
 VBox {
-	-fx-alignment: center;
 	-fx-border-color: transparent;    /* TODO: temporaire, retirer si vbox prête. */
 	-fx-border-width: 2px;
 	-fx-border-style: solid;
+}
+
+.centrer {
+	-fx-alignment: center;
 }
 
 TextField {
@@ -80,7 +109,6 @@ TextField {
 	-fx-font-size: 20px;
 	
 	-fx-prompt-text-fill: white;
-	-fx-prompt-font-weight:normal;
 }
 
 
@@ -92,7 +120,8 @@ TextField {
 	-fx-background-color: rgba(0, 153, 51, 0.5);
 }
 
-.rectangle-bleu-clair {
+.rectangle-bleu-clair,
+.rectangle-bleu-clair > .viewport {
 	-fx-background-color: #2E3469;
 	-fx-background-radius: 30px;
 }
@@ -101,4 +130,60 @@ ChoiceBox {
 	-fx-background-color: #272c59;
 	-fx-background-radius: 20px;
 	-fx-text-fill: white;
+}
+
+.paddingVboxRectangle {
+	-fx-padding: 20px;
+	
+}
+
+.boutonSuivantPrecedent {
+	-fx-pref-width: 99px;
+	-fx-pref-height: 24px;
+}
+
+.intituleCategorieQuestion{
+	-fx-text-fill: white;
+	-fx-font-size: 17px;
+}
+
+.labelCliquable {
+	-fx-background-color: #272C58;
+	-fx-background-radius: 20px;
+	-fx-font-size: 16px;
+	-fx-padding: 10px;
+	-fx-text-fill: white;
+	-fx-pref-width: 600px;
+}
+.labelCliquable:hover {
+	-fx-opacity: .6;
+}
+
+.labelNonCliquable {
+    -fx-background-color: rgba(153, 38, 0, 0.3);
+    -fx-background-radius: 20px;
+    -fx-font-size: 16px;
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+    -fx-pref-width: 600px;
+}
+
+.vbox-liste {
+    -fx-spacing: 10px;
+}
+
+.vbox-categories-questions {
+	-fx-spacing: 1px;
+}
+
+.intitule-padding-left {
+	-fx-padding: 0 0 0 10px;
+}
+
+TextArea .content {
+	-fx-background-radius: 0;
+}
+
+VBox.centrer-verticale {
+	-fx-alignment: left-center;
 }

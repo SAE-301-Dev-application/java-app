@@ -9,39 +9,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.CreationCategorieControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.RenommerCategoriesControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#boutonAide" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="139.0" layoutY="65.0" text="CRÉATION CATÉGORIE">
+      <Label layoutX="88.0" layoutY="65.0" prefHeight="60.0" prefWidth="624.0" text="RENOMMER CATÉGORIE">
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets>
          <styleClass>
-            <String fx:value="titre" />
             <String fx:value="titre-long" />
          </styleClass></Label>
       <VBox layoutX="36.0" layoutY="105.0" prefHeight="394.0" prefWidth="728.0">
          <children>
-            <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@application.css" />
+            <TextField fx:id="entreeNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@application.css" />
          </children>
          <styleClass>
             <String fx:value="conteneur-boutons" />
             <String fx:value="centrer" />
          </styleClass>
       </VBox>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@application.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" stylesheets="@application.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRenommer" stylesheets="@application.css" text="RENOMMER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />

@@ -15,16 +15,25 @@
 }
 
 .textfield{
+	-fx-control-inner-background: #272c58;
 	-fx-background-color:#272c59;
 	-fx-font-size: 13px;
 	-fx-pref-height: 30px;
 }
 
-.text-area {
-	-fx-background-color:#272c59;
+TextArea {
+	-fx-pref-height: 45px;
+	
+	-fx-background-color: #272c59;
+	-fx-control-inner-background: #272c59;
+	-fx-background-insets: 0;
+	-fx-background-radius: 20px;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
 	-fx-font-size: 13px;
-	-fx-pref-height: 100px;
+	
 	-fx-padding: 0 10px;
+	-fx-prompt-text-fill: white;
 }
 
 
@@ -33,7 +42,6 @@
 }
 
 .vbox {
-	-fx-alignment: left;
 	-fx-padding: 10 10 5 5;
 }
 

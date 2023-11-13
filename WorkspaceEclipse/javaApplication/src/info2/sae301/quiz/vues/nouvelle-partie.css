@@ -1,0 +1,15 @@
+.hbox-nombre-questions {
+	-fx-spacing: 50px;
+}
+
+.label-facile {
+	-fx-text-fill: #8AFF53;
+}
+
+.label-moyen {
+	-fx-text-fill: #FF9B53;
+}
+
+.label-difficile {
+	-fx-text-fill: #FF5353;
+}
