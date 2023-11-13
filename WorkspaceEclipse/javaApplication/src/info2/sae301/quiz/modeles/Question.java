@@ -36,6 +36,9 @@ public class Question implements Serializable {
 	
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
+	
+	private static final String VALEUR_INVALIDE
+	= "Un champ rempli d'espaces est invalide.";
 
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
@@ -178,8 +181,10 @@ public class Question implements Serializable {
 			                          int tailleMin, int tailleMax)
     throws IllegalArgumentException {
 		
-		if (element == null || element.isBlank()) {
+		if (element == null || element.isEmpty()) {
 			throw new IllegalArgumentException(VALEUR_VIDE);
+		} else if (element.isBlank()) {
+			throw new IllegalArgumentException(VALEUR_INVALIDE);
 		}
 		
 		if (element.length() < tailleMin || element.length() > tailleMax) {
@@ -221,7 +226,7 @@ public class Question implements Serializable {
         
         for (int i = 0; i < reponses.length && resultat; i++) {
             for (int j = i + 1; j < reponses.length && resultat; j++) {
-                if (reponses[i].equals(reponses[j])) {
+                if (!reponses[i].isEmpty() && reponses[i].equals(reponses[j])) {
                     resultat = false;
                 }
             }
@@ -250,7 +255,7 @@ public class Question implements Serializable {
 		for (int i = 0; i < reponsesFausses.length; i++) {
 			if (i == 0) {
 				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
-			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
+			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isEmpty()) {
 				assurerTaille(reponsesFausses[i],
 						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
 			}

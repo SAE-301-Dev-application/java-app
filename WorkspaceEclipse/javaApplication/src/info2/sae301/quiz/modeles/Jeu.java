@@ -161,7 +161,7 @@ public class Jeu implements Serializable {
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
-			if (feedback == null || feedback.isBlank()) {
+			if (feedback == null || feedback.isEmpty()) {
 				questionCreee = new Question(intitule, reponseJuste,
 						                     reponsesFausses, difficulte, categorie);
 			} else {
@@ -295,7 +295,6 @@ public class Jeu implements Serializable {
 		} else {
 			Question.verifierAttributs(nouveauIntitule, reponseJuste,
 					                   reponsesFausses, difficulte);
-
 		}
 		
 		int indiceCategorie = indiceCategorie(intituleCategorie);
