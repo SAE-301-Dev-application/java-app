@@ -19,10 +19,12 @@ public class Serialisation{
 	//Chemin pour les sauvegardes
 	private static String cheminDossier = "../sauvegarde/";
 	
+
 	/**
 	 * Sérialise les instances de type Jeu et les enregistre dans un fichier
 	 * de sauvegarde
-	 * @param nomSauvegarde nom de la sauvegarde à créer
+	 * @param aSerialiser instance à sérialiser 
+	 * @param nomFichier nom du fichier dans lequel sera la sauvegarde
 	 */
 	public static void serialiser(Jeu aSerialiser, String nomFichier) {
 		try {
@@ -43,7 +45,7 @@ public class Serialisation{
 	}
 	
 	/**
-	 * Restaure les objets jeux sérialisés et renvoie l'instance de Jeu
+	 * Restaure l'objet Jeu sérialisé et renvoie l'instance de Jeu
 	 * ainsi récupérée
 	 * @param nomFichier nom de la sauvegarde à restaurer
 	 */

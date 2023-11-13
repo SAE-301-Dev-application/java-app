@@ -48,7 +48,7 @@
                         <VBox prefHeight="65.0" prefWidth="333.0">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Intitulé (300 caractères max):" />
-                              <TextArea fx:id="intituleQuestion" prefHeight="200.0" prefWidth="344.0" stylesheets="@creation-Modificationquestions.css" />
+                              <TextArea fx:id="intituleQuestion" prefHeight="200.0" prefWidth="344.0" promptText="L'intitulé de la question (obligatoire)" stylesheets="@creation-Modificationquestions.css" />
                            </children>
                         </VBox>
                         <VBox prefHeight="55.0" prefWidth="333.0">
@@ -66,7 +66,7 @@
                         <VBox prefHeight="119.0" prefWidth="333.0">
                            <children>
                               <Label prefHeight="22.0" prefWidth="280.0" styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Feedback facultatif (500 caractères max):" />
-                              <TextArea fx:id="feedback" prefHeight="200.0" prefWidth="344.0" />
+                              <TextArea fx:id="feedback" prefHeight="200.0" prefWidth="344.0" promptText="Le feedback (optionnel)" />
                            </children>
                         </VBox>
                      </children>
@@ -80,31 +80,31 @@
                         <VBox prefHeight="63.0" prefWidth="330.0">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Réponse juste (200 caractères max):" />
-                              <TextArea fx:id="reponseJuste" prefHeight="200.0" prefWidth="344.0" />
+                              <TextArea fx:id="reponseJuste" prefHeight="200.0" prefWidth="344.0" promptText="La réponse juste (obligatoire)" />
                            </children>
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="330.0" styleClass="space">
                            <children>
                               <Label styleClass="label-champ" stylesheets="@creation-modificationQuestions.css" text="    Réponse(s) fausse(s) (200 caractères max):" />
-                              <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 1 (obligatoire)" />
-                              <Label styleClass="label-champ" text="   Réponses fausses facultatifs">
+                              <TextArea fx:id="reponseFausse1" prefHeight="200.0" prefWidth="344.0" promptText="La première réponse fausse (obligatoire)" />
+                              <Label styleClass="label-champ" text="   Réponses fausses facultatives">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
                               </Label>
                            </children>
                         </VBox>
-                        <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 2 (*optionnelle)">
+                        <TextArea fx:id="reponseFausse2" prefHeight="200.0" prefWidth="344.0" promptText="La seconde réponse fausse (optionnelle)">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </TextArea>
-                        <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 3 (*)">
+                        <TextArea fx:id="reponseFausse3" prefHeight="200.0" prefWidth="344.0" promptText="La troisième réponse fausse (optionnelle)">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </TextArea>
-                        <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="Réponse fausse 4 (*)" />
+                        <TextArea fx:id="reponseFausse4" prefHeight="200.0" prefWidth="344.0" promptText="La quatrième réponse fausse (optionnelle)" />
                      </children>
                      <styleClass>
                         <String fx:value="conteneur-boutons" />

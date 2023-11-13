@@ -21,6 +21,8 @@ import java.util.Objects;
  */
 public class Question implements Serializable {
 	
+	/* Constantes utilisées dans la classe */
+	
 	/** Message si erreur sur les tailles de champ */
 	private static final String TAILLE_INVALIDE
 	= "La taille %s doit être comprise entre %d et %d.";
@@ -34,13 +36,23 @@ public class Question implements Serializable {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
+	/** Message si erreur l'utilisateur n'a pas rentré de réponses fausses */
 	private static final String REPONSE_FAUSSE_1_VIDE
 	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
 	  + "champ obligatoirement.";
 	
+	/** Message si erreur car l'utilisateru n'a pas rempli tous les champs */
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
 	
+	private static final String VALEUR_INVALIDE
+	= "Un champ rempli d'espaces est invalide.";
+
+    private static final String REPONSES_NON_UNIQUES
+    = "Chaque réponse (juste et fausse) doit être unique.";
+	
+	
+	/* Attributs d'une instance de classe de Question */
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
@@ -133,25 +145,15 @@ public class Question implements Serializable {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
-
-		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
-		}
 		
-		if (reponsesFausses[0].isBlank()) {
-			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
-		}
+		// Vérification de la taille des réponses fausses
+		assurerValiditeReponsesFausses(reponsesFausses);
+		// Vérification de l'unicité des réponses
+		assurerReponsesUniques(reponseJuste, reponsesFausses);
 		
-		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
-		for (int i = 1; i < reponsesFausses.length; i++) {
-			if (!reponsesFausses[i].isBlank()) {
-				assurerTaille(reponsesFausses[i], "d'une réponse fausse", 1, 200);				
-			}
-		}
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
-		}
-		
+		}	
 	}
 	
 	/**
@@ -189,16 +191,85 @@ public class Question implements Serializable {
 			                          int tailleMin, int tailleMax)
     throws IllegalArgumentException {
 		
-		if (element != null && element.isBlank()) {
+		if (element == null || element.isEmpty()) {
 			throw new IllegalArgumentException(VALEUR_VIDE);
+		} else if (element.isBlank()) {
+			throw new IllegalArgumentException(VALEUR_INVALIDE);
 		}
 		
 		if (element.length() < tailleMin || element.length() > tailleMax) {
 			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
-					titre, tailleMin,
-					tailleMax));
+															 titre, tailleMin,
+															 tailleMax));
+		}
+	}
+	
+	/**
+	 * Ajoute la réponse juste à un tableau contenant également les réponses fausses
+	 * et vérifie l'unicité des réponses du tableau.
+	 * 
+	 * @param reponses La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 */
+	private static void assurerReponsesUniques(String reponseJuste,
+			                                   String[] reponsesFausses)
+	throws IllegalArgumentException {
+		// Tableau contenant la réponse juste suivie des réponses fausses
+        String[] toutesLesReponses = new String[reponsesFausses.length + 1];
+        toutesLesReponses[0] = reponseJuste;
+        
+        System.arraycopy(reponsesFausses, 0, toutesLesReponses, 1, reponsesFausses.length);
+        
+        assurerReponsesUniques(toutesLesReponses);
+	}
+	
+	/**
+	 * Vérifie si les réponses en paramètre sont toutes non égales.
+	 * 
+	 * @param reponses Les réponses à vérifier.
+	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 */
+	private static void assurerReponsesUniques(String[] reponses)
+	throws IllegalArgumentException {
+        boolean resultat = true;
+        
+        for (int i = 0; i < reponses.length && resultat; i++) {
+            for (int j = i + 1; j < reponses.length && resultat; j++) {
+                if (!reponses[i].isEmpty() && reponses[i].equals(reponses[j])) {
+                    resultat = false;
+                }
+            }
+        }
+        if (!resultat) {
+            throw new IllegalArgumentException(REPONSES_NON_UNIQUES);
+        }
+	}
+
+	/**
+	 * Vérifie que les réponses fausses en paramètre soient valides.
+	 * La première doit être non nulle et avoir une taille < 200.
+	 * Les autres peuvent être nulles.
+	 * 
+	 * @param reponsesFausses Les réponses fausses à assurer.
+	 * @throws IllegalArgumentException si la taille de chaque réponse fausse
+	 *                                  est invalide.
+	 */
+	private static void assurerValiditeReponsesFausses(String[] reponsesFausses)
+	throws IllegalArgumentException {
+		
+		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
+			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
 		}
 		
+		for (int i = 0; i < reponsesFausses.length; i++) {
+			if (i == 0) {
+				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
+			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isEmpty()) {
+				assurerTaille(reponsesFausses[i],
+						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
+			}
+		}
 	}
 
 	/** @return l'intitule de la question */
@@ -239,55 +310,39 @@ public class Question implements Serializable {
 
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() <= 300) {
-			this.intitule = intitule;
-		}
+		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		this.intitule = intitule;
 	}
 
 
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
-		if (reponseJuste.length() <= 200) {
-			this.reponseJuste = reponseJuste;			
-		}
+		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
+		this.reponseJuste = reponseJuste;			
 	}
 
 
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
-		boolean estPossible = true;
-
-		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			estPossible = false;
-		} else {
-			for (String reponse : reponsesFausses) {
-				if (reponse.length() > 200) {
-					estPossible = false;
-				}
-			}
-		}
-
-		if (estPossible) {
-			this.reponsesFausses = reponsesFausses;
-		}
+        assurerValiditeReponsesFausses(reponsesFausses);
+		this.reponsesFausses = reponsesFausses;
 	}
-
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
-		if ( 0 < difficulte && difficulte < 4) {
-			this.difficulte = difficulte;
+		if (difficulte < 1 || difficulte > 3) {
+			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
+		this.difficulte = difficulte;
 	}
-
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		if (feedback.length() <= 500) {
-			this.feedback = feedback;			
+		if (feedback != null && !feedback.isEmpty()) {
+			assurerTaille(feedback, "d'un feedback", 1, 500);			
 		}
+		this.feedback = feedback;
 	}
-
 
 	/** @param categorie the categorie à changer */
 	public void setCategorie(Categorie categorie) {
@@ -320,8 +375,18 @@ public class Question implements Serializable {
 	}
 	
 	/**
- 	 * Donne une référence mémoire similaire au objet 
- 	 * qui ont des valeurs égaux dans leurs atributs
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
+ 	 * méthode est appliquée, ici une instance de Question.
+ 	 * Permet une comparaison précise et complète la méthode equals() car si les
+ 	 * hashCode générés pour les instances comparées sont les mêmes et que 
+ 	 * la méthode equals renvoie true, alors ces instances sont égales.
+ 	 * 
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
+ 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
+ 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * des conventions générales de Java.
+ 	 * 
+ 	 * @return un hashCode basé sur les attributs de l'instance passée
  	 */
 	@Override
 	public int hashCode() {

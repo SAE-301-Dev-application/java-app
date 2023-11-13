@@ -151,10 +151,12 @@ public class ChoixEditionQuestionControleur {
 	private void actionEditerQuestion(String intitule, String reponseJuste,
 			                          String[] reponsesFausses, int difficulte,
 			                          String feedback, String categorie) {
+		
 		indiceQuestionSelectionnee = jeu.indiceQuestion(intitule, categorie,
 				                                        reponseJuste, reponsesFausses);
 		
 		NavigationControleur.changerVue("EditionQuestions.fxml");
+		
 	}
 	
 	/**
@@ -184,7 +186,8 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
+				              AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**
