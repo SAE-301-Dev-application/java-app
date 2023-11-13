@@ -24,14 +24,14 @@ public class Categorie implements Serializable {
 	/** Numéro de sérialisation : clé de hachage */
 	private static final long serialVersionUID = 3793388654168200022L;
 
-	/** Message si erreur sur les tailles de champ*/
+	/** Message si erreur sur les tailles de champ */
 	private static final String ERR_TAILLE_ARG_MAX 
 	= "La taille max d'un intitulé de catégorie est de 20 caractères";
 	
 	private static final String ERR_TAILLE_ARG_MIN 
 	= "L'intitulé de la catégorie ne peut pas être vide.";
 	
-	/** l'intitulé de la catégorie (max 20 char)*/
+	/** l'intitulé de la catégorie (max 20 char) */
     private String intitule;
     
     /** contient toutes les questions de la catégorie */
@@ -40,6 +40,7 @@ public class Categorie implements Serializable {
 
     /**
      * Nouvelle catégorie de questions identifiée par son intitulé
+     * 
 	 * @param intitule
 	 * @param questions
 	 */
@@ -59,6 +60,7 @@ public class Categorie implements Serializable {
 	/**
 	 * Nouvelle catégorie de questions identifiée par son intitulé 
 	 * sans liste de questions prédéfinie
+	 * 
 	 * @param intitule
 	 */
 	public Categorie(String intitule) {
@@ -83,6 +85,7 @@ public class Categorie implements Serializable {
 	
     /**
      * Ajoute à listeQuestions la question en paramètre
+     * 
      * @param aAjouter
      * @return true si la question est ajoutée, false sinon
      */
@@ -143,6 +146,7 @@ public class Categorie implements Serializable {
 
 	/**
 	 * Supprime de listeQuestions la question en paramètre
+	 * 
 	 * @param aSupprimer la question à supprimer de la catégorie
 	 * @return true si enlèvement réussi, false sinon
 	 */
@@ -153,6 +157,7 @@ public class Categorie implements Serializable {
 
     /**
      * Supprime toutes les questions de listeQuestions
+     * 
      * @return true si questions enlevées, false sinon
      */
     public boolean supprimerToutesQuestions() {
@@ -163,8 +168,18 @@ public class Categorie implements Serializable {
     }
 
     /**
- 	 * Donne une référence mémoire similaire au objet 
- 	 * qui ont des valeurs égaux dans leurs atributs
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
+ 	 * méthode est appliquée, ici une instance de Categorie.
+ 	 * Permet une comparaison précise et complète la méthode equals() car si les
+ 	 * hashCode générés pour les instances comparées sont les mêmes et que 
+ 	 * la méthode equals renvoie true, alors ces instances sont égales.
+ 	 * 
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
+ 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
+ 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * des conventions générales de Java.
+ 	 * 
+ 	 * @return un hashCode basé sur les attributs de l'instance passée
  	 */
 	@Override
 	public int hashCode() {
@@ -173,6 +188,7 @@ public class Categorie implements Serializable {
 
 	/**
 	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
+	 * 
 	 * @param aComparer Categorie a comparer
 	 * @return true si les categories sont égales, false sinon
 	 */
@@ -190,6 +206,6 @@ public class Categorie implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "" + intitule; //
+		return "" + intitule;
 	}
 }

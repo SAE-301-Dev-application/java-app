@@ -389,8 +389,8 @@ public class Jeu implements Serializable {
  	 * 
  	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
  	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
- 	 * pour une maintenance future du code plus aisée et car cela respecte 
- 	 * les conventions générales de Java.
+ 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * des conventions générales de Java.
  	 * 
  	 * @return un hashCode basé sur les attributs de l'objet Jeu 
  	 * toutesLesCatégories et toutesLesQuestions

@@ -375,8 +375,18 @@ public class Question implements Serializable {
 	}
 	
 	/**
- 	 * Donne une référence mémoire similaire au objet 
- 	 * qui ont des valeurs égaux dans leurs atributs
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
+ 	 * méthode est appliquée, ici une instance de Question.
+ 	 * Permet une comparaison précise et complète la méthode equals() car si les
+ 	 * hashCode générés pour les instances comparées sont les mêmes et que 
+ 	 * la méthode equals renvoie true, alors ces instances sont égales.
+ 	 * 
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
+ 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
+ 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * des conventions générales de Java.
+ 	 * 
+ 	 * @return un hashCode basé sur les attributs de l'instance passée
  	 */
 	@Override
 	public int hashCode() {

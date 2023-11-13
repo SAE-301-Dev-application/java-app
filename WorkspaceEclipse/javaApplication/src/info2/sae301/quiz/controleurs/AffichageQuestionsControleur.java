@@ -30,15 +30,17 @@ import javafx.scene.layout.VBox;
  */
 public class AffichageQuestionsControleur {
 	
+	/** Titre du pop up d'aide */
 	protected static final String AIDE_TITRE = "LES QUESTIONS";
 	
+	/** Texte du pop up d'aide */
 	protected static final String AIDE_TEXTE
 	= """
 	  Regroupées, ou non, dans une catégorie spécifique, les questions 
 	  composent le quiz auquel jouera l’utilisateur.
 
 	  Elles possèdent un intitulé, jusqu’à cinq réponses dont une obligatoirement vraie, 
-	  d’un niveau de difficulé parmi facile, moyen et difficile, et d’un feedback à 
+	  d’un niveau de difficulté parmi facile, moyen et difficile, et d’un feedback à 
 	  afficher lors de la conclusion d’une partie.
 	  """;
 	
@@ -66,6 +68,7 @@ public class AffichageQuestionsControleur {
 	/** Nom de la première catégorie affichée sur la "page" courante. */
 	private String categorieCourante = "Toutes les catégories";
 	
+	@FXML
 	private Label questionCourante;
 	
 	/**
@@ -156,7 +159,7 @@ public class AffichageQuestionsControleur {
 	}
 	
 	/**
-	 * TODO : coder action bouton aide
+	 * Permet d'afficher une pop up d'aide pour les questions
 	 */
 	@FXML
 	private void actionBoutonAider() {
@@ -197,5 +200,4 @@ public class AffichageQuestionsControleur {
 	private void actionBoutonCreer() {
 		NavigationControleur.changerVue("CreationQuestion.fxml");
 	}
-	
 }

@@ -28,8 +28,10 @@ import javafx.scene.layout.VBox;
  */
 public class AffichageCategoriesControleur {
 	
+	/** Titre du pop up d'aide */
 	protected static final String AIDE_TITRE = "LES CATÉGORIES";
 	
+	/** Texte du pop up d'aide */
 	protected static final String AIDE_TEXTE
 	= """
 	  Les catégories permettent de regrouper des questions par thématique. 
@@ -57,8 +59,10 @@ public class AffichageCategoriesControleur {
 	/** Indice de la première catégorie affichée sur la "page" courante. */
 	private int indiceCategorie = 0; 
 	
+	/** récupère la liste de toutes les catégories de l'instance jeu*/
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
+	@FXML
 	private Label categorieCourante;
 	
 	/**
@@ -126,7 +130,7 @@ public class AffichageCategoriesControleur {
 	}
 	
 	/**
-	 * TODO : coder action bouton aide
+	 * Permet d'afficher une pop up d'aide pour les catégories
 	 */
 	@FXML
 	private void actionBoutonAide() {
@@ -167,5 +171,4 @@ public class AffichageCategoriesControleur {
 	private void actionBoutonCreer() {
 		NavigationControleur.changerVue("CreationCategorie.fxml");
 	}
-	
 }
