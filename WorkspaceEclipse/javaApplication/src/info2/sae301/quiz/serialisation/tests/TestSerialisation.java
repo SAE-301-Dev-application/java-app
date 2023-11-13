@@ -60,13 +60,18 @@ class TestSerialisation {
 		String cheminFichier = "../sauvegarde/01.ser";
 		File file = new File(cheminFichier);
 		assertTrue(file.exists());
+		
+		serialiser(jeuSerialiseNonModifie, "02.ser");
+		String cheminFichier2 = "../sauvegarde/02.ser";
+		File file2 = new File(cheminFichier2);
+		assertTrue(file.exists());
 	}
 
 	
 	@Test
-	void testDeserialiser() { //TODO a finir
-		assertEquals(jeuSerialiseModifie,Serialisation.deserialiser("../sauvegarde/01.ser"));
-//		jeuNonSerialise.getToutesLesCategories().get
+	void testDeserialiser() {
+		assertEquals(jeuSerialiseModifie, Serialisation.deserialiser("../sauvegarde/01.ser"));
+		assertEquals(jeuSerialiseNonModifie, Serialisation.deserialiser("../sauvegarde/02.ser"));
+		
 	}
-
 }
