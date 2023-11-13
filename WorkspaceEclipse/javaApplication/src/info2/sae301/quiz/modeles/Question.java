@@ -34,12 +34,11 @@ public class Question implements Serializable {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
-	private static final String REPONSE_FAUSSE_1_VIDE
-	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
-	  + "champ obligatoirement.";
-	
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
+
+    private static final String REPONSES_NON_UNIQUES
+    = "Chaque réponse (juste et fausse) doit être unique.";
 	
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
@@ -133,25 +132,15 @@ public class Question implements Serializable {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
-
-		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
-		}
 		
-		if (reponsesFausses[0].isBlank()) {
-			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
-		}
+		// Vérification de la taille des réponses fausses
+		assurerValiditeReponsesFausses(reponsesFausses);
+		// Vérification de l'unicité des réponses
+		assurerReponsesUniques(reponseJuste, reponsesFausses);
 		
-		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
-		for (int i = 1; i < reponsesFausses.length; i++) {
-			if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
-				assurerTaille(reponsesFausses[i], "d'une réponse fausse", 1, 200);				
-			}
-		}
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
-		}
-		
+		}	
 	}
 	
 	/**
@@ -198,7 +187,74 @@ public class Question implements Serializable {
 															 titre, tailleMin,
 															 tailleMax));
 		}
+	}
+	
+	/**
+	 * Ajoute la réponse juste à un tableau contenant également les réponses fausses
+	 * et vérifie l'unicité des réponses du tableau.
+	 * 
+	 * @param reponses La réponse juste.
+	 * @param reponsesFausses Les réponses fausses.
+	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 */
+	private static void assurerReponsesUniques(String reponseJuste,
+			                                   String[] reponsesFausses)
+	throws IllegalArgumentException {
+		// Tableau contenant la réponse juste suivie des réponses fausses
+        String[] toutesLesReponses = new String[reponsesFausses.length + 1];
+        toutesLesReponses[0] = reponseJuste;
+        
+        System.arraycopy(reponsesFausses, 0, toutesLesReponses, 1, reponsesFausses.length);
+        
+        assurerReponsesUniques(toutesLesReponses);
+	}
+	
+	/**
+	 * Vérifie si les réponses en paramètre sont toutes non égales.
+	 * 
+	 * @param reponses Les réponses à vérifier.
+	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 */
+	private static void assurerReponsesUniques(String[] reponses)
+	throws IllegalArgumentException {
+        boolean resultat = true;
+        
+        for (int i = 0; i < reponses.length && resultat; i++) {
+            for (int j = i + 1; j < reponses.length && resultat; j++) {
+                if (reponses[i].equals(reponses[j])) {
+                    resultat = false;
+                }
+            }
+        }
+        if (!resultat) {
+            throw new IllegalArgumentException(REPONSES_NON_UNIQUES);
+        }
+	}
+
+	/**
+	 * Vérifie que les réponses fausses en paramètre soient valides.
+	 * La première doit être non nulle et avoir une taille < 200.
+	 * Les autres peuvent être nulles.
+	 * 
+	 * @param reponsesFausses Les réponses fausses à assurer.
+	 * @throws IllegalArgumentException si la taille de chaque réponse fausse
+	 *                                  est invalide.
+	 */
+	private static void assurerValiditeReponsesFausses(String[] reponsesFausses)
+	throws IllegalArgumentException {
 		
+		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
+			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
+		}
+		
+		for (int i = 0; i < reponsesFausses.length; i++) {
+			if (i == 0) {
+				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
+			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
+				assurerTaille(reponsesFausses[i],
+						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
+			}
+		}
 	}
 
 	/** @return l'intitule de la question */
@@ -253,34 +309,8 @@ public class Question implements Serializable {
 
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
-		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
-		}
-		if (reponsesFausses[0].isBlank()) {
-			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
-		}
-		
-		for (int i = 0; i < reponsesFausses.length; i++) {
-			if (i == 0) {
-				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
-			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
-				assurerTaille(reponsesFausses[i],
-						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
-			}
-		}
-		
+        assurerValiditeReponsesFausses(reponsesFausses);
 		this.reponsesFausses = reponsesFausses;
-	}
-
-	/**
-	 * Vérifie si les réponses en paramètre sont toutes non égales.
-	 * 
-	 * @param reponses Les réponses à tester.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
-	 */
-	private void reponsesUniques(String[] reponses)
-	throws IllegalArgumentException {
-		
 	}
 
 	/** @param difficulte the difficulte à changer */
