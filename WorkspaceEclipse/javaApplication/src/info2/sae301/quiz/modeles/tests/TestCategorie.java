@@ -4,6 +4,7 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;  
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,16 +28,17 @@ import java.util.Arrays;
 class TestCategorie {
 
 	/** Categories nommée "orthographe", "grammaire" et "francais"*/
-	static Categorie orthographe,grammaire,francais;
+	static Categorie orthographe,grammaire,francais,conjugaison;
 	
 	/** Question sans feedback (SF) et avec feedback (AF)*/
-	static Question questionSF,questionAF,questionAjout;
+	static Question questionSF,questionAF,questionAjout,questionAjout2,questionAjout3;
 	
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		orthographe = new Categorie("orthographe");
 		grammaire = new Categorie("grammaire");
+		conjugaison = new Categorie ("conjugaison");
 		
 		questionSF = new Question("Quelle est la bonne orthographe? ",
 				"chat",new String[]{"chatt","shat","chât"},2,orthographe);
@@ -44,10 +46,19 @@ class TestCategorie {
 		questionAF = new Question("Quel est le choix correct pour completer '...-de-chaussée' ? ",
 				"rez",new String[]{"raie","raient"},1,"rez car vieux mot",orthographe);
 		
-		questionAjout = new Question("Quelle est la bonne orthographe? ",
+		questionAjout = new Question("Quelle est la bonne orthographe ? ",
 				"chat",new String[]{"chatt","shat","chât"},2,francais);
 		
+		questionAjout2 = new Question("Quelle est la bonne écriture de être pour le pronom 'il' ? ",
+				"est",new String[]{"es","ai","et"},2,conjugaison);
+		
+		questionAjout3 = new Question("Quelle est la bonne écriture de avoir pour le pronom 'je' ? ",
+				"ai",new String[]{"es","est","et"},2,conjugaison);
+		
 		orthographe.ajouterQuestion(questionSF);
+		conjugaison.ajouterQuestion(questionAjout2);
+		conjugaison.ajouterQuestion(questionAjout3);
+		
 		francais = new Categorie("francais",new ArrayList<Question>(
 				Arrays.asList(questionAF)));
 	}
@@ -56,22 +67,32 @@ class TestCategorie {
 	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
 	 */
 	@Test
-	void testCategorieAvecListe() {
-		assertTrue(!francais.getIntitule().equals(null) 
-				&& !francais.getListeQuestions().equals(null));
-		assertFalse(!grammaire.getIntitule().equals(null)
-				&& grammaire.getListeQuestions().size() != 0);
-	}
-
-	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String)}.
-	 */
-	@Test
-	void testCategorieIntituleSeul() {
-		assertFalse(!francais.getIntitule().equals(null) 
-				&& francais.getListeQuestions().equals(null));
-		assertTrue(!grammaire.getIntitule().equals(null)
-				&& grammaire.getListeQuestions().size() == 0);
+	void testCategorieCree() {
+		assertEquals(francais.getIntitule(), "francais"); 
+		assertNotEquals(francais.getListeQuestions(), null);
+		assertEquals(francais.getListeQuestions().size(), 1);
+		assertEquals(grammaire.getIntitule(), "grammaire");
+		assertNotEquals(grammaire.getListeQuestions(), null);
+		assertEquals(grammaire.getListeQuestions().size(), 0);
+		assertEquals(orthographe.getIntitule(), "orthographe"); 
+		assertNotEquals(orthographe.getListeQuestions(), null);
+		assertEquals(orthographe.getListeQuestions().size(), 1);
+		
+		/* Créations de catégories générant des exceptions */
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("La grammaire français"); // 21 caractères
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("La grammaire français", new ArrayList<Question>(
+					Arrays.asList(questionAF)));
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("");
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			new Categorie("", new ArrayList<Question>(
+					Arrays.asList(questionAF)));
+		});
 	}
 
 	/**
@@ -135,8 +156,8 @@ class TestCategorie {
 	 */
 	@Test
 	void testGetListeQuestions() {
-		assertTrue(francais.getListeQuestions().size() == 1);
-		assertTrue(grammaire.getListeQuestions().size() == 0);
+		assertEquals(francais.getListeQuestions().size(), 1);
+		assertEquals(grammaire.getListeQuestions().size(), 0);
 	}
 
 	/**
@@ -146,15 +167,28 @@ class TestCategorie {
 	void testSetIntitule() {
 		/*Réponse trop longue (21 char et plus)*/
 		String intituleTropLong = genererStringTailleX(25);
+		String tropCourt = " ";
 		
 		francais.setIntitule("italien");
 		assertEquals("italien",francais.getIntitule());
 		assertNotEquals("francais",francais.getIntitule());
 		
-		/* Test d'insertion d'intitulé de taille incorrecte*/
-		grammaire.setIntitule(intituleTropLong);
-		assertNotEquals(intituleTropLong,grammaire.getIntitule());
-		assertEquals("grammaire",grammaire.getIntitule());
+		/* Test d'insertion d'intitulé incorrect*/
+		assertThrows(IllegalArgumentException.class, () -> { 
+			grammaire.setIntitule(intituleTropLong);
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			grammaire.setIntitule(tropCourt);
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			grammaire.setIntitule(null);
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			grammaire.setIntitule("   ");
+		});
 	}
 
 	/**
@@ -167,6 +201,9 @@ class TestCategorie {
 		
 		/* Cas de liste de questions vide*/
 		assertFalse(grammaire.supprimerQuestion(questionAF));
+		
+		/* Cas de catégorie non présente dans la liste*/
+		assertFalse(orthographe.supprimerQuestion(questionAF));
 	}
 
 	/**
@@ -175,8 +212,14 @@ class TestCategorie {
 	@Test
 	void testSupprimerToutesQuestions() {
 		assertTrue(francais.supprimerToutesQuestions());
+		assertEquals(francais.getListeQuestions().size(), 0);
 		assertTrue(grammaire.supprimerToutesQuestions());
+		assertEquals(grammaire.getListeQuestions().size(), 0);
 		assertTrue(orthographe.supprimerToutesQuestions());
+		assertEquals(orthographe.getListeQuestions().size(), 0);
+		assertEquals(conjugaison.getListeQuestions().size(), 2);
+		assertTrue(conjugaison.supprimerToutesQuestions());
+		assertEquals(conjugaison.getListeQuestions().size(), 0);
 	}
 	
 	/**
@@ -190,10 +233,28 @@ class TestCategorie {
 		questionAjout.setCategorie(categorie1);
 		Question questionAjoutIdentique = new Question("Quelle est la bonne orthographe? ",
 				"chat",new String[]{"chatt","shat","chât"},2,categorie2);
-		categorie1.ajouterQuestion(questionAjout);
+		categorie1.ajouterQuestion(questionAjoutIdentique);
+		categorie1.ajouterQuestion(questionSF);
+		categorie1.ajouterQuestion(questionAF);
 		categorie2.ajouterQuestion(questionAjoutIdentique);
+		categorie2.ajouterQuestion(questionSF);
+		categorie2.ajouterQuestion(questionAF);
 		
 		assertEquals(categorie1, categorie2);
+		assertEquals(categorie1, categorie1);
 		assertNotEquals(orthographe, categorie1);
+		assertNotEquals(categorie1, null);
+		assertNotEquals(categorie1, questionAF);
+	}
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#toString()}.
+	 */
+	@Test
+	void testToString() {
+		assertEquals(orthographe.toString(), "orthographe");
+		assertEquals(francais.toString(), "francais");
+		assertEquals(conjugaison.toString(), "conjugaison");
+		assertEquals(grammaire.toString(), "grammaire");
 	}
 }

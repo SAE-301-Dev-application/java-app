@@ -360,6 +360,13 @@ public class Question implements Serializable {
 	
 	@Override
 	public String toString() {
-		return ""; //BUSH
+		return "Intitule : " + intitule 
+				+ "\nCategorie : " + categorie 
+				+ "\nRéponse juste : " + reponseJuste
+				+ "\nRéponses fausses : \n" + reponsesFausses[0] + "\n" 
+						+ reponsesFausses[1] + "\n" 
+						+ reponsesFausses[2] + "\n" 
+						+ reponsesFausses[3]
+				+ "\nDifficulté : " + difficulte;
 	}
 }

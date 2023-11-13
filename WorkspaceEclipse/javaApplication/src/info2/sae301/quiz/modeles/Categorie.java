@@ -47,7 +47,7 @@ public class Categorie implements Serializable {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
 		}
-		if (intitule.length() < 1) {
+		if (intitule.isBlank() || intitule.isEmpty()) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
 		}
 		
@@ -131,8 +131,7 @@ public class Categorie implements Serializable {
 			throw new IllegalArgumentException(ERR_TAILLE_ARG_MAX);
 		}
 		
-		if (intitule != null 
-			&& intitule.length() > 0
+		if (intitule.length() > 0
 		    && !intitule.isBlank() 
 		    && intitule.length() <= 20) {
 			
@@ -186,11 +185,11 @@ public class Categorie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Categorie other = (Categorie) obj;
-		return Objects.equals(intitule, other.intitule) && Objects.equals(listeQuestions, other.listeQuestions);
+		return Objects.equals(intitule, other.intitule);
 	}
 	
 	@Override
 	public String toString() {
-		return ""; //BUSH
+		return "" + intitule; //
 	}
 }
