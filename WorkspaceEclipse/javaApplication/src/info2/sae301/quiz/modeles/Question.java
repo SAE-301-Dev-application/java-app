@@ -195,8 +195,8 @@ public class Question implements Serializable {
 		
 		if (element.length() < tailleMin || element.length() > tailleMax) {
 			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE,
-					titre, tailleMin,
-					tailleMax));
+															 titre, tailleMin,
+															 tailleMax));
 		}
 		
 	}
@@ -239,53 +239,55 @@ public class Question implements Serializable {
 
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
-		if (intitule.length() <= 300) {
-			this.intitule = intitule;
-		}
+		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		this.intitule = intitule;
 	}
 
 
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
-		if (reponseJuste.length() <= 200) {
-			this.reponseJuste = reponseJuste;			
-		}
+		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
+		this.reponseJuste = reponseJuste;			
 	}
 
 
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
-		boolean estPossible = true;
-
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
-			estPossible = false;
-		} else {
-			for (String reponse : reponsesFausses) {
-				if (reponse.length() > 200) {
-					estPossible = false;
-				}
+			throw new IllegalArgumentException(NB_REPONSES_FAUSSES_INVALIDE);
+		}
+		if (reponsesFausses[0].isBlank()) {
+			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
+		}
+		
+		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
+		
+		for (int i = 0; i < reponsesFausses.length; i++) {
+			if (i == 0) {
+				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
+			} else if (reponsesFausses[i] != null) {
+				assurerTaille(reponsesFausses[i],
+						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
 			}
 		}
-
-		if (estPossible) {
-			this.reponsesFausses = reponsesFausses;
-		}
+		
+		this.reponsesFausses = reponsesFausses;
 	}
 
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
-		if ( 0 < difficulte && difficulte < 4) {
-			this.difficulte = difficulte;
+		if (difficulte < 1 || difficulte > 3) {
+			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
+		this.difficulte = difficulte;
 	}
 
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		if (feedback.length() <= 500) {
-			this.feedback = feedback;			
-		}
+		assurerTaille(feedback, "d'un feedback", 1, 500);
+		this.feedback = feedback;
 	}
 
 

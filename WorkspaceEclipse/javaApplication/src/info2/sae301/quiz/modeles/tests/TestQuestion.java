@@ -27,10 +27,10 @@ import info2.sae301.quiz.modeles.Jeu;
 class TestQuestion {
 
 	/** Categories nommée "orthographe" et "grammaire"*/
-	static Categorie orthographe,grammaire;
+	static Categorie orthographe, grammaire;
 	
 	/** Question sans feedback (SF) et avec feedback (AF)*/
-	static Question questionSF,questionAF,questionSF2,questionAF2;
+	static Question questionSF, questionAF, questionSF2, questionAF2;
 	
 	static Jeu jeu;
 	
@@ -219,15 +219,15 @@ class TestQuestion {
 		
 		/* Test d'insertion de tableau de taille incorrecte*/
 		questionSF.setReponsesFausses(repFaussesSF[1]);
-		assertFalse(Arrays.equals(repFaussesSF[1],questionSF.getReponsesFausses()));
+		assertFalse(Arrays.equals(repFaussesSF[1], questionSF.getReponsesFausses()));
 		
 		questionSF.setReponsesFausses(repFaussesSF[2]);
-		assertFalse(Arrays.equals(repFaussesSF[2],questionSF.getReponsesFausses()));
-		assertTrue(Arrays.equals(repFaussesSF[0],questionSF.getReponsesFausses()));
+		assertFalse(Arrays.equals(repFaussesSF[2], questionSF.getReponsesFausses()));
+		assertTrue(Arrays.equals(repFaussesSF[0], questionSF.getReponsesFausses()));
 		
 		/* Test d'insertion de réponses de taille incorrecte*/
 		questionAF.setReponsesFausses(repFaussesAF[1]);
-		assertFalse(Arrays.equals(repFaussesAF[1],questionAF.getReponsesFausses()));
+		assertFalse(Arrays.equals(repFaussesAF[1], questionAF.getReponsesFausses()));
 	}
 
 	/**
