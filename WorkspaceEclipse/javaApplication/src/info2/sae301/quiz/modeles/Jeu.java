@@ -308,9 +308,8 @@ public class Jeu implements Serializable {
 		question.setReponseJuste(reponseJuste);
 		question.setReponsesFausses(reponsesFausses);
 		question.setDifficulte(difficulte);
-		if (feedback != null && !feedback.isBlank()) {
-			question.setFeedback(feedback);
-		}
+		question.setFeedback(feedback);
+		
 		// Retrait de la liste des questions de l'ancienne catégorie
 		question.getCategorie().supprimerQuestion(question);
 		question.setCategorie(toutesLesCategories.get(indiceCategorie));

@@ -144,7 +144,7 @@ public class Question implements Serializable {
 		
 		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
 		for (int i = 1; i < reponsesFausses.length; i++) {
-			if (!reponsesFausses[i].isBlank()) {
+			if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
 				assurerTaille(reponsesFausses[i], "d'une réponse fausse", 1, 200);				
 			}
 		}
@@ -189,7 +189,7 @@ public class Question implements Serializable {
 			                          int tailleMin, int tailleMax)
     throws IllegalArgumentException {
 		
-		if (element != null && element.isBlank()) {
+		if (element == null || element.isBlank()) {
 			throw new IllegalArgumentException(VALEUR_VIDE);
 		}
 		
@@ -260,12 +260,10 @@ public class Question implements Serializable {
 			throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
 		}
 		
-		assurerTaille(reponsesFausses[0], "d'une réponse fausse", 1, 200);
-		
 		for (int i = 0; i < reponsesFausses.length; i++) {
 			if (i == 0) {
 				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
-			} else if (reponsesFausses[i] != null) {
+			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isBlank()) {
 				assurerTaille(reponsesFausses[i],
 						      "de la " + (i + 1) + "ème réponse fausse", 1, 200);
 			}
@@ -274,6 +272,16 @@ public class Question implements Serializable {
 		this.reponsesFausses = reponsesFausses;
 	}
 
+	/**
+	 * Vérifie si les réponses en paramètre sont toutes non égales.
+	 * 
+	 * @param reponses Les réponses à tester.
+	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 */
+	private void reponsesUniques(String[] reponses)
+	throws IllegalArgumentException {
+		
+	}
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
@@ -286,7 +294,9 @@ public class Question implements Serializable {
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
-		assurerTaille(feedback, "d'un feedback", 1, 500);
+		if (feedback != null && !feedback.isBlank()) {
+			assurerTaille(feedback, "d'un feedback", 1, 500);			
+		}
 		this.feedback = feedback;
 	}
 
