@@ -382,4 +382,47 @@ class TestQuestion {
 		assertNotEquals(question4, question2);
 		assertNotEquals(question5, question2);
 	}
+	
+	@Test
+	void testAssurerReponsesUniques() {
+		String[][] reponsesNonUniques = {{"vrai", "faux", "ne sais pas", "vrai", "peut-être"},
+										 {"chat","shat","chât","chien","chat"},
+										 {"chat","shat","chât","chât","chien"},
+										 {"chat", "", "chât", "chien", "shat"}};
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerReponsesUniques(reponsesNonUniques[0]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerReponsesUniques(reponsesNonUniques[1]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerReponsesUniques(reponsesNonUniques[2]);
+		});
+		
+		// Je pense qu'il y a une erreur dans les condition de assurerReponsesUniques()
+		assertDoesNotThrow(() -> {Question.assurerReponsesUniques(reponsesNonUniques[3]);});
+		
+		
+	}
+	
+
+	@Test
+	void testAssurerValiditeReponsesFausses() {
+		String repTropLongue = genererStringTailleX(201);
+		String[][] repFausses = {{"chatt","shat","chât"},{"cha","shat","chât","chien","chinchilla"},
+								   {""}, {repTropLongue}};
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[1]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[2]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[3]);
+		});
+		
+		assertDoesNotThrow(() -> {Question.assurerValiditeReponsesFausses(repFausses[0]);});
+	}
 }
