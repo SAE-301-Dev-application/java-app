@@ -13,3 +13,15 @@
 .label-difficile {
 	-fx-text-fill: #FF5353;
 }
+
+.choix-categories {
+	-fx-background: transparent;
+	-fx-background-color: #272C58;
+	-fx-background-radius: 20px;
+	
+	-fx-padding: 10px;
+}
+
+VBox.partie-droite {
+	-fx-spacing: 10px;
+}
