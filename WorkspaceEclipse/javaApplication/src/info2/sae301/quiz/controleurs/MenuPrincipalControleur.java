@@ -5,7 +5,9 @@
 
 package info2.sae301.quiz.controleurs;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 
 /**
  * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du
@@ -41,6 +43,11 @@ public class MenuPrincipalControleur {
 	@FXML
 	private void actionBoutonUtilisateur() {
 		//ControleurNavigation.changerVue("GestionNomUtilisateur.fxml");
+	}
+	
+	@FXML
+	private void actionBoutonFerme() {
+		Platform.exit();
 	}
 
 	@FXML

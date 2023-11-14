@@ -5,8 +5,12 @@
 
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Jeu;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du
@@ -31,6 +35,8 @@ public class NouvellePartieControleur {
 	 * - 3 = difficile
 	 */
 	private int difficulte;
+	
+	private Jeu jeu;
 	
 	/** Checkbox "5 questions". */
 	@FXML
@@ -60,9 +66,32 @@ public class NouvellePartieControleur {
 	@FXML
 	private CheckBox checkBoxDifficulteDifficile;
 	
+	/** Conteneur des catégories de question. */
+	@FXML
+	private AnchorPane conteneurCategories;
+	
 	@FXML
 	private void initialize() {
+		/*
+		 * Valeurs par défaut :
+		 * - 5 questions
+		 * - Difficulté "Indifférent"  
+		 */
+		
 		this.choix5Questions();
+		this.choixDifficulteIndifferent();
+		
+		/*
+		 * Chargement des catégories de question.
+		 */
+		
+		CheckBox checkBoxCategorie;
+		
+		for (Categorie categorieCourante: this.jeu.getToutesLesCategories()) {
+			checkBoxCategorie = new CheckBox();
+			
+			this.conteneurCategories.getChildren().add(checkBoxCategorie);  // TODO: ajouter élément catégorie.
+		}
 	}
 	
 	/**

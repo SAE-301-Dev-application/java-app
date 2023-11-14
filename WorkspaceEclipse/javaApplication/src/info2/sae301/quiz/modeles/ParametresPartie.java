@@ -27,10 +27,10 @@ public class ParametresPartie {
 	/**
 	 * La difficulté des questions à proposer à l'utilisateur :
 	 * <ul>
-	 *     <li>- 0 : Indifférente</li>
-	 *     <li>- 1 : Facile</li>
-	 *     <li>- 2 : Moyenne</li>
-     *     <li>- 3: Difficile</li>
+	 *     <li>0 : Indifférente</li>
+	 *     <li>1 : Facile</li>
+	 *     <li>2 : Moyenne</li>
+     *     <li>3: Difficile</li>
      * </ul>
 	 */
 	private int difficulteQuestions;
@@ -38,9 +38,9 @@ public class ParametresPartie {
 	/**
 	 * Le nombre de questions à proposer à l'utilisateur :
 	 * <ul>
-	 *     <li>- 5</li>
-	 *     <li>- 10</li>
-	 *     <li>- 20</li>
+	 *     <li>5</li>
+	 *     <li>10</li>
+	 *     <li>20</li>
      * </ul>
 	 */
 	private int nombreQuestions;
@@ -99,7 +99,7 @@ public class ParametresPartie {
 	
 	/**
 	 * Choisis en fonction des paramètres de la partie courante des questions
-	 * à proposer à l'utilisateur parmis les catégories sélectionnées.
+	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
 	 * 
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
