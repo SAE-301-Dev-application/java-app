@@ -6,6 +6,7 @@
 package info2.sae301.quiz.modeles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects; 
 
@@ -372,6 +373,11 @@ public class Question implements Serializable {
 			}
 		}
 		return resultatFinal;
+	}
+	
+	/** TODO javadoc simon */
+	public ArrayList<String> ordreAleatoireReponses() {
+		return new ArrayList<String>();
 	}
 	
 	/**
