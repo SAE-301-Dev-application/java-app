@@ -1,5 +1,5 @@
 /*
- * Testjeu.java             									     6 nov. 2023
+ * TestJeu.java             									     6 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 

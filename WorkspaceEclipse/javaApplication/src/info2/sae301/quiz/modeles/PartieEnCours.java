@@ -8,7 +8,8 @@ package info2.sae301.quiz.modeles;
 import java.util.ArrayList;
 
 /**
- * TODO javadoc
+ * Partie de jeu de Quiz en cours contenant les questions posées,
+ * les réponses de l'utilisateur, les paramètres ainsi que la question courante.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -37,6 +38,11 @@ public class PartieEnCours {
 		this.parametresPartie = new ParametresPartie();
 		this.indiceQuestionCourante = 0;
 	}
+	
+	/** TODO javadoc */
+	public void melangerQuestionsProposees() {
+		// TODO
+	}
 
 	/** TODO javadoc */
 	public ArrayList<Question> getQuestionsProposees() {
@@ -61,11 +67,6 @@ public class PartieEnCours {
 	/** TODO javadoc */
 	public void setIndiceQuestionCourante(int indiceQuestionCourante) {
 		this.indiceQuestionCourante = indiceQuestionCourante;
-	}
-	
-	/** TODO javadoc */
-	public void melangerQuestionsProposees() {
-		// TODO
 	}
 
 	@Override
