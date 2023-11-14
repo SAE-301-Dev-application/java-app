@@ -5,8 +5,9 @@
 
 package info2.sae301.quiz.modeles.tests;
 
-import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -32,9 +33,42 @@ import org.junit.jupiter.api.Test;
  */
 class TestParametresPartie {
 	
+	private String[] nomsCategories = {
+		"catégorie1", "caté2", "caté3", "caté4", "caté5"
+	};
+	
+	private ParametresPartie parametresTest = new ParametresPartie();
+	
+	private ArrayList<Categorie> categories1 = new ArrayList<Categorie>();
+	
+	private ArrayList<Categorie> categories2 = new ArrayList<Categorie>();
+	
 	@BeforeEach
 	void init() {
+		parametresTest = new ParametresPartie();
+		categories1 = new ArrayList<Categorie>();
+		categories2 = new ArrayList<Categorie>();
 		
+		for (String nom : nomsCategories) {
+			categories1.add(new Categorie(nom));
+			categories2.add(new Categorie(nom));
+		}
+		
+		for (int i = 0; i < nomsCategories.length; i++) {
+			Question question1
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       1, categories1.get(i));
+			
+			categories1.get(i).ajouterQuestion(question1);
+			
+			Question question2
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       3, categories2.get(i));
+			
+			categories2.get(i).ajouterQuestion(question2);
+		}
 	}
 	
 	/**
@@ -43,7 +77,9 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testConstructeur() {
-	    // TODO le test
+		assertEquals(0, parametresTest.getCategoriesSelectionnees().size());
+	    assertEquals(0, parametresTest.getDifficulteQuestions());
+	    assertEquals(10, parametresTest.getNombreQuestions());
 	}
 	
 	/**
@@ -52,7 +88,11 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testSelectionnerCategories() {
-		// TODO le test
+		assertEquals(0, parametresTest.getCategoriesSelectionnees().size());
+		
+		parametresTest.setCategoriesSelectionnees(categories1);
+		assertEquals(nomsCategories.length,
+				     parametresTest.getCategoriesSelectionnees().size());
 	}
 	
 	/**
@@ -61,7 +101,28 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testAAssezQuestions() {
-		// TODO le test
+		parametresTest.setCategoriesSelectionnees(categories2);
+		parametresTest.setDifficulteQuestions(1);
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		Categorie categorie = new Categorie("TestCate");
+		Question question
+		= new Question("questiontest", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		categorie.ajouterQuestion(question);
+		
+		categories2.add(categorie);
+		parametresTest.setCategoriesSelectionnees(categories2);
+		parametresTest.setNombreQuestions(5);
+		
+		assertThrows(NumberFormatException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
 	}
 	
 	/**
@@ -70,7 +131,28 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testChoisirQuestionsProposees() {
-		// TODO le test
+		parametresTest.setCategoriesSelectionnees(categories1);
+		parametresTest.setDifficulteQuestions(0);
+		
+		assertEquals(nomsCategories.length, parametresTest.choisirQuestionsProposees().size());
+		
+		parametresTest.setCategoriesSelectionnees(categories2);
+		parametresTest.setDifficulteQuestions(1);
+		
+		assertEquals(0, parametresTest.choisirQuestionsProposees().size());
+		
+		Categorie categorie = new Categorie("TestCate");
+		Question question
+		= new Question("questiontest", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		categorie.ajouterQuestion(question);
+		
+		categories2.add(categorie);
+		parametresTest.setCategoriesSelectionnees(categories2);
+		
+		assertEquals(1, parametresTest.choisirQuestionsProposees().size());
 	}
 	
 	/**
