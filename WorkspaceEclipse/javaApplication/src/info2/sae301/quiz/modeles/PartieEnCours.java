@@ -6,6 +6,7 @@
 package info2.sae301.quiz.modeles;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Partie de jeu de Quiz en cours contenant les questions posées,
@@ -19,52 +20,54 @@ import java.util.ArrayList;
  */
 public class PartieEnCours {
 
-	/** TODO javadoc */
+	/** ArrayList de questions proposées pour le quiz de la partie en cours */
 	private ArrayList<Question> questionsProposees;
 
-	/** TODO javadoc */
+	/** ArrayList de réponses de l'utilisateur sur les questions */
 	private ArrayList<Question> reponsesUtilisateur;
 	
-	/** TODO javadoc */
+	/** Instance de ParametresPartie précédemment créée dans ParametresPartie*/
 	private ParametresPartie parametresPartie;
 	
-	/** TODO javadoc */
+	/** Indice permettant de savoir l'indice de la question en cours */
 	private int indiceQuestionCourante;
+	
 	
 	/** TODO javadoc */
 	public PartieEnCours() {
+		
 		this.questionsProposees = new ArrayList<Question>();
 		this.reponsesUtilisateur = new ArrayList<Question>();
 		this.parametresPartie = new ParametresPartie();
 		this.indiceQuestionCourante = 0;
 	}
 	
-	/** TODO javadoc */
+	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
 	public void melangerQuestionsProposees() {
-		// TODO
+		 Collections.shuffle(questionsProposees);
 	}
 
-	/** TODO javadoc */
+	/** @return l'ArrayList des questions proposées pour la partie en cours */
 	public ArrayList<Question> getQuestionsProposees() {
 		return questionsProposees;
 	}
 
-	/** TODO javadoc */
+	/** @return l'ArrayList des réponses actuelles de l'utilisateur */
 	public ArrayList<Question> getReponsesUtilisateur() {
 		return reponsesUtilisateur;
 	}
 	
-	/** TODO javadoc */
+	/** @return l'instance de ParametresPartie */
 	public ParametresPartie getParametresPartie() {
 		return parametresPartie;
 	}
 	
-	/** TODO javadoc */
+	/**  @return l'indice de la question courante */
 	public int getIndiceQuestionCourante() {
 		return indiceQuestionCourante;
 	}
 	
-	/** TODO javadoc */
+	/** Remplace l'indice de la question courante par celui en paramètre */
 	public void setIndiceQuestionCourante(int indiceQuestionCourante) {
 		this.indiceQuestionCourante = indiceQuestionCourante;
 	}
