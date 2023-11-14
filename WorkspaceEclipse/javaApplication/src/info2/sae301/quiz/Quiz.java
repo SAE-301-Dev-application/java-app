@@ -7,6 +7,8 @@ package info2.sae301.quiz;
 
 import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.PartieEnCours;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -26,11 +28,18 @@ import javafx.fxml.FXMLLoader;
 public class Quiz extends Application {
 	
 	/**
-	 * Instance de jeu permettant de stocker les questions et catégories.
+	 * Instance de Jeu permettant de stocker les questions et catégories.
 	 * Pas d'accès via un getter ici car il faut pouvoir modifier directement
 	 * dans l'instance les valeurs via les setters et méthodes.
 	 * */
 	public static Jeu jeu;
+	
+	/**
+	 * Instance de PartieEnCours permettant de stocker les paramètres de la
+	 * partie démarrée ainsi que la question courante, les réponses aux questions
+	 * et l'ordre des réponses de chaque question proposée.
+	 * */
+	public static PartieEnCours partieCourante;
 	
 	/**
 	 * Chargement des vues et affichage du menu principal.
