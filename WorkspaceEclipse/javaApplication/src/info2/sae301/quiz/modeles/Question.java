@@ -6,6 +6,7 @@
 package info2.sae301.quiz.modeles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects; 
 
@@ -225,12 +226,12 @@ public class Question implements Serializable {
 	}
 	
 	/**
-	 * Vérifie si les réponses en paramètre sont toutes non égales.
+	 * Vérifie si les réponses en paramètre sont toutes différentes.
 	 * 
 	 * @param reponses Les réponses à vérifier.
 	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
 	 */
-	private static void assurerReponsesUniques(String[] reponses)
+	public static void assurerReponsesUniques(String[] reponses)
 	throws IllegalArgumentException {
         boolean resultat = true;
         
@@ -255,7 +256,7 @@ public class Question implements Serializable {
 	 * @throws IllegalArgumentException si la taille de chaque réponse fausse
 	 *                                  est invalide.
 	 */
-	private static void assurerValiditeReponsesFausses(String[] reponsesFausses)
+	public static void assurerValiditeReponsesFausses(String[] reponsesFausses)
 	throws IllegalArgumentException {
 		
 		if (reponsesFausses.length == 0 || reponsesFausses.length > 4) {
@@ -372,6 +373,11 @@ public class Question implements Serializable {
 			}
 		}
 		return resultatFinal;
+	}
+	
+	/** TODO javadoc simon */
+	public ArrayList<String> ordreAleatoireReponses() {
+		return new ArrayList<String>();
 	}
 	
 	/**

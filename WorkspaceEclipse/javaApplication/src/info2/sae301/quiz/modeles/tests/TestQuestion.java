@@ -275,6 +275,9 @@ class TestQuestion {
 		});
 		assertNotEquals(repFaussesSF[1], questionSF.getReponsesFausses());
 		assertFalse(Arrays.equals(repFaussesAF[1], questionAF.getReponsesFausses()));
+		
+		questionAF.setReponsesFausses(repFaussesSF[0]);
+		assertEquals(questionAF.getReponsesFausses(), repFaussesSF[0]);
 	}
 
 	/**
@@ -381,5 +384,67 @@ class TestQuestion {
 		assertNotEquals(question3, question2);
 		assertNotEquals(question4, question2);
 		assertNotEquals(question5, question2);
+	}
+	
+	@Test
+	void testAssurerReponsesUniques() {
+		String[][] reponsesNonUniques = {{"vrai", "faux", "ne sais pas", "vrai", "peut-être"},
+										 {"chat","shat","chât","chien","chat"},
+										 {"chat","shat","chât","chât","chien"},
+										 {"chat", "", "chien", "chien", "shat"},
+										 {"chat", "", "chât", "chien", "shat"}};
+		
+		for (int i = 0; i <= 3; i++) {
+			final int INDICE = i;
+			assertThrows(IllegalArgumentException.class, () -> { 
+				Question.assurerReponsesUniques(reponsesNonUniques[INDICE]);
+			});
+		}
+		
+		assertDoesNotThrow(() -> {Question.assurerReponsesUniques(reponsesNonUniques[4]);});
+		
+		
+	}
+	
+
+	@Test
+	void testAssurerValiditeReponsesFausses() {
+		String repTropLongue = genererStringTailleX(201);
+		String[][] repFausses = {{"chatt","shat","chât"},{"cha","shat","chât","chien","chinchilla"},
+								   {""}, {repTropLongue}};
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[1]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[2]);
+		});
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.assurerValiditeReponsesFausses(repFausses[3]);
+		});
+		
+		assertDoesNotThrow(() -> {Question.assurerValiditeReponsesFausses(repFausses[0]);});
+	}
+	
+	@Test
+	void testMemeReponsesFausses() {
+		String[][] repFausses = {{"chatt","shat","chât"},{"chtt","shat","chât"}, 
+								 {"rai","raient"}
+								};
+		
+		/* Test pour les memes réponses fausses */
+		assertTrue(questionAF.memesReponsesFausses(questionAF2));
+		
+		/* Test pour le même nombre de réponses fausses mais pas les mêmes */
+		
+		questionSF2.setReponsesFausses(repFausses[1]);
+		assertFalse(questionSF.memesReponsesFausses(questionSF2));
+		
+		questionAF2.setReponsesFausses(repFausses[2]);
+		assertFalse(questionAF.memesReponsesFausses(questionAF2));
+		
+		/* Test pour un nombre différent de mauvaises réponses */
+		assertFalse(questionAF.memesReponsesFausses(questionSF));
+		
 	}
 }
