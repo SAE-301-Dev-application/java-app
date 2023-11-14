@@ -69,8 +69,20 @@ public class PartieEnCours {
 		this.indiceQuestionCourante = indiceQuestionCourante;
 	}
 
-	@Override
-	public String toString() {
-		return "";
-	}
+	/** non javadoc - @see {@link java.util.Objects#toString()}. */
+//	@Override
+//	public String toString() {
+//		String resultat = "";
+//		
+//		for (Question question : this.questionsProposees) {
+//			resultat += question.getIntitule() + " :\n";
+//			
+//			ArrayList<String> reponses = question.melangerReponses();
+//			
+//			for (int i = 0; i < reponses.size(); i++) {
+//				resultat += "- " + reponses.get(i) + "\n";
+//			}
+//		}
+//		return resultat;
+//	}
 }
