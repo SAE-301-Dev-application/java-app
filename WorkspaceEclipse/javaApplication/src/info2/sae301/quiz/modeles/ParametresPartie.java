@@ -93,12 +93,16 @@ public class ParametresPartie {
 		default:
 		case 0:
 			texteDifficulte = "indifférente";
+			break;
 		case 1:
 			texteDifficulte = "facile";
+			break;
 		case 2:
 			texteDifficulte = "moyenne";
+			break;
 		case 3:
 			texteDifficulte = "difficile";
+			break;
 		}
 		
 		String AUCUNE_QUESTION
@@ -158,8 +162,26 @@ public class ParametresPartie {
 	}
 
 	
-	/** @param difficulteQuestions La difficulté des questions à proposer. */
-	public void setDifficulteQuestions(int difficulteQuestions) {
+	/**
+	 * @param difficulteQuestions La difficulté des questions à proposer.
+	 * @throws IllegalArgumentException si la difficulté est invalide.
+	 */
+	public void setDifficulteQuestions(int difficulteQuestions)
+	throws IllegalArgumentException {
+		final String DIFFICULTE_INVALIDE
+		= """
+		  La difficulté sélectionnée est invalide.
+		  
+		  Les difficultés existantes sont :
+		  0. Indifférent
+		  1. Facile
+		  2. Moyen
+		  3. Difficile
+		  """;
+		
+		if (difficulteQuestions < 0 || difficulteQuestions > 3) {
+			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
+		}
 		this.difficulteQuestions = difficulteQuestions;
 	}
 
@@ -178,7 +200,11 @@ public class ParametresPartie {
 	public void setNombreQuestions(int nombreQuestions)
 	throws IllegalArgumentException {
 		final String NOMBRE_INVALIDE
-		= "Le nombre de questions à proposer doit être 5, 10 ou 20.";
+		= """
+		  Le nombre de questions sélectionné est invalide.
+		  
+		  Le nombre de questions à proposer doit être 5, 10 ou 20.";
+		  """;
 		
 		if (nombreQuestions != 5 && nombreQuestions != 10
 		    && nombreQuestions != 20) {

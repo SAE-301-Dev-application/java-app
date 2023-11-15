@@ -33,16 +33,17 @@ public class NouvellePartieControleur {
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
 	= "Nombre incorrect de questions";
 	
-	private static final String ERREUR_NOMBRE_QUESTIONS_MESSAGE
+	private static final String NOMBRE_INVALIDE
 	= """
-	  Le nombre sélectionné de questions est incorrect. 
-	  Vous ne pouvez sélectionner que 5, 10 ou 20 questions.
+	  Le nombre de questions sélectionné est invalide.
+	  
+	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
 	
-	private static final String ERREUR_DIFFICULTE_MESSAGE
+	private static final String DIFFICULTE_INVALIDE
 	= """
 	  La difficulté sélectionnée est invalide.
 	  
@@ -72,8 +73,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
 	 */
-	private static void erreurNombreQuestions() {
-		AlerteControleur.autreAlerte(ERREUR_NOMBRE_QUESTIONS_MESSAGE, 
+	private static void erreurNombreQuestions(String messageErreur) {
+		AlerteControleur.autreAlerte(messageErreur, 
 				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -82,8 +83,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * La difficulté est invalide, inexistante.
 	 */
-	private static void erreurDifficulte() {
-		AlerteControleur.autreAlerte(ERREUR_DIFFICULTE_MESSAGE, 
+	private static void erreurDifficulte(String messageErreur) {
+		AlerteControleur.autreAlerte(messageErreur,
 				 					 ERREUR_DIFFICULTE_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -140,6 +141,8 @@ public class NouvellePartieControleur {
 	
 	@FXML
 	private void initialize() {
+		this.parametres = Quiz.partieCourante.getParametresPartie();
+		
 		/*
 		 * Valeurs par défaut :
 		 * - 5 questions
@@ -209,7 +212,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			erreurNombreQuestions();
+			erreurNombreQuestions(NOMBRE_INVALIDE);
 		} else {
 			this.nombreQuestions = nombre;
 
@@ -224,7 +227,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
-			erreurDifficulte();
+			erreurDifficulte(DIFFICULTE_INVALIDE);
 		} else {
 			boolean checkBoxDifficulteIndifferent,
 					checkBoxDifficulteFacile,
@@ -241,7 +244,9 @@ public class NouvellePartieControleur {
 			this.checkBoxDifficulteIndifferent.setSelected(checkBoxDifficulteIndifferent);
 			this.checkBoxDifficulteFacile.setSelected(checkBoxDifficulteFacile);
 			this.checkBoxDifficulteMoyen.setSelected(checkBoxDifficulteMoyen);
-			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);		
+			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);
+			
+			this.parametres.setDifficulteQuestions(difficulte);
 		}
 	}
 	
@@ -266,41 +271,37 @@ public class NouvellePartieControleur {
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
-		lancerPartie = false;
-
-		if (this.nombreQuestions != 5 
-			&& this.nombreQuestions != 10 
-			&& this.nombreQuestions != 20) {
-			
-			erreurNombreQuestions();
-			
-		} else if (this.difficulte < 0 || this.difficulte > 3) {
-			
-			erreurDifficulte();
-			
-		} else {
-			try {
-				this.parametres.aAssezQuestions();
-				lancerPartie = true;
-			} catch (AucuneQuestionCorrespondanteException e) {
-				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
-			} catch (NbInsuffisantQuestionsException e) {
-				lancerPartie 
-				= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
-			}
+	
+		try {
+			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
+			this.parametres.aAssezQuestions();
+			lancerPartie = true;
+		} catch (AucuneQuestionCorrespondanteException e) {
+			lancerPartie = false;
+			AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+		} catch (NbInsuffisantQuestionsException e) {
+			lancerPartie 
+			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
 		}
 		
 		if (lancerPartie) {
 			this.parametres = new ParametresPartie();
-			this.parametres.setNombreQuestions(this.nombreQuestions);
-			this.parametres.setDifficulteQuestions(this.difficulte);
-			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
-
 			
-			Quiz.partieCourante.setParametresPartie(this.parametres);
+			try {
+				this.parametres.setNombreQuestions(this.nombreQuestions);					
+			} catch(IllegalArgumentException e) {
+				erreurNombreQuestions(e.getMessage());
+			}
+			
+			try {
+				this.parametres.setDifficulteQuestions(this.difficulte);
+			} catch(IllegalArgumentException e) {
+				erreurDifficulte(e.getMessage());
+			}
+
+			Quiz.partieCourante.setParametresPartie(parametres);
 			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
 			Quiz.partieCourante.melangerQuestionsProposees();
-			
 			
 			NavigationControleur.changerVue("PartieEnCours.fxml");	
 		}
