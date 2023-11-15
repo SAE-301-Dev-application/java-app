@@ -131,6 +131,7 @@ public class Jeu implements Serializable {
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
 	}
 	
+	
 	/**
 	 * Récupère une catégorie selon son intitulé
 	 * 
@@ -140,6 +141,7 @@ public class Jeu implements Serializable {
 	public Categorie getCategorieParIntitule(String intituleCategorie) {
 		return toutesLesCategories.get(indiceCategorie(intituleCategorie));
 	}
+	
 	
 	/**
 	 * Récupère une liste de catégories selon leurs intitulés
@@ -160,6 +162,7 @@ public class Jeu implements Serializable {
 		return categoriesARetourner;
 	}	
 	
+	
 	/**
 	 * Réinitialise/Vide la liste des catégories. Seule la catégorie
 	 * "Général" restera. 
@@ -173,6 +176,7 @@ public class Jeu implements Serializable {
 	public void supprimerToutesQuestions() {
 		toutesLesQuestions = new ArrayList<>();
 	}
+	
 	
 	/**
 	 * Crée une nouvelle catégorie et l'ajoute à la liste des catégories.
@@ -189,7 +193,8 @@ public class Jeu implements Serializable {
 			throw new IllegalArgumentException("Cette catégorie existe déjà.");
 		}
 	}
-		
+	
+	
 	/**
 	 * Crée une nouvelle question et l'ajoute à la liste des questions.
 	 * 
@@ -224,6 +229,7 @@ public class Jeu implements Serializable {
 			throw new IllegalArgumentException("Cette question existe déjà.");
 		}
 	}
+	
 	
 	/**
 	 * Supprime de la liste des catégories les catégories spécifiées dans la
@@ -304,6 +310,7 @@ public class Jeu implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * Édite la question sélectionnée.
 	 * 
@@ -367,6 +374,7 @@ public class Jeu implements Serializable {
 		question.getCategorie().ajouterQuestion(question);
 	}
 	
+	
 	/**
 	 * Vérification de l'existence d'une catégorie dans la liste des catégories.
 	 * 
@@ -424,6 +432,7 @@ public class Jeu implements Serializable {
 		return resultat;
 	}
 
+ 	
  	/**
  	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
  	 * méthode est appliquée, ici une instance de Jeu.
@@ -444,6 +453,7 @@ public class Jeu implements Serializable {
 		return Objects.hash(toutesLesCategories, toutesLesQuestions);
 	}
 
+	
 	/**
 	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
 	 * leurs attributs
@@ -463,6 +473,8 @@ public class Jeu implements Serializable {
 				&& Objects.equals(toutesLesQuestions, aComparer.toutesLesQuestions);
 	}
 	
+	
+	/** non javadoc - @see {@link java.util.Objects#toString()}. */
 	@Override
 	public String toString() {
 		return ""; //TODO faire le toString

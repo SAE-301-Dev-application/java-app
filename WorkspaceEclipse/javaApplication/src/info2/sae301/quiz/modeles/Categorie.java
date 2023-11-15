@@ -204,6 +204,8 @@ public class Categorie implements Serializable {
 		return Objects.equals(intitule, other.intitule);
 	}
 	
+	
+	/** non javadoc - @see {@link java.util.Objects#toString()}. */
 	@Override
 	public String toString() {
 		return "" + intitule;

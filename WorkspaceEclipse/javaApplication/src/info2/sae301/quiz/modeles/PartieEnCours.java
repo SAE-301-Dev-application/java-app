@@ -33,7 +33,10 @@ public class PartieEnCours {
 	private int indiceQuestionCourante;
 	
 	
-	/** TODO javadoc */
+	/**
+	 * Initialisation d'une partie de quiz avec ses paramètres, 
+	 * les questions proposées et les réponses de l'utilisateur
+	 */
 	public PartieEnCours() {
 		
 		this.questionsProposees = new ArrayList<Question>();
@@ -42,35 +45,42 @@ public class PartieEnCours {
 		this.indiceQuestionCourante = 0;
 	}
 	
+	
 	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
 	public void melangerQuestionsProposees() {
 		 Collections.shuffle(questionsProposees);
 	}
 
+	
 	/** @return l'ArrayList des questions proposées pour la partie en cours */
 	public ArrayList<Question> getQuestionsProposees() {
 		return questionsProposees;
 	}
 
+	
 	/** @return l'ArrayList des réponses actuelles de l'utilisateur */
 	public ArrayList<String> getReponsesUtilisateur() {
 		return reponsesUtilisateur;
 	}
+	
 	
 	/** @return l'instance de ParametresPartie */
 	public ParametresPartie getParametresPartie() {
 		return parametresPartie;
 	}
 	
+	
 	/**  @return l'indice de la question courante */
 	public int getIndiceQuestionCourante() {
 		return indiceQuestionCourante;
 	}
 	
+	
 	/** Remplace l'indice de la question courante par celui en paramètre */
 	public void setIndiceQuestionCourante(int indiceQuestionCourante) {
 		this.indiceQuestionCourante = indiceQuestionCourante;
 	}
+	
 	
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante
@@ -91,20 +101,48 @@ public class PartieEnCours {
 		this.indiceQuestionCourante +=1;
 	}
 
+	
+	/**
+	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
+	 * de la question
+	 * @param questionRepondue question répondue par l'utilisateur
+	 * @param reponseUser réponse de l'utilisateur
+	 * @return true si réponseUser == reponseJusteQuestion, false sinon
+	 */
+	public boolean verifierReponse(Question questionRepondue, String reponseUser) {
+		return questionRepondue.getReponseJuste().equals(reponseUser);
+	}
+	
+	
+	/**
+	 * Comptabilise les réponses justes de l'utilisateur
+	 * @return le nombre de réponses justes de l'utilisateur, 0 si tout faux
+	 */
+	public int nbReponsesJustes() {
+		int nbRepJustes;
+		nbRepJustes = 0;
+		for (int i = 0; i < questionsProposees.size(); i++ ) {
+			nbRepJustes += questionsProposees.get(i).getReponseJuste()
+					.equals(reponsesUtilisateur.get(i)) ? 1 : 0;
+		}
+		return nbRepJustes;
+	}
+	
+	
 	/** non javadoc - @see {@link java.util.Objects#toString()}. */
-//	@Override
-//	public String toString() {
-//		String resultat = "";
-//		
-//		for (Question question : this.questionsProposees) {
-//			resultat += question.getIntitule() + " :\n";
-//			
-//			ArrayList<String> reponses = question.melangerReponses();
-//			
-//			for (int i = 0; i < reponses.size(); i++) {
-//				resultat += "- " + reponses.get(i) + "\n";
-//			}
-//		}
-//		return resultat;
-//	}
+	@Override
+	public String toString() {
+		String resultat = "";
+		
+		for (Question question : this.questionsProposees) {
+			resultat += question.getIntitule() + " :\n";
+			
+			ArrayList<String> reponses = question.melangerReponses();
+			
+			for (int i = 0; i < reponses.size(); i++) {
+				resultat += "- " + reponses.get(i) + "\n";
+			}
+		}
+		return resultat;
+	}
 }

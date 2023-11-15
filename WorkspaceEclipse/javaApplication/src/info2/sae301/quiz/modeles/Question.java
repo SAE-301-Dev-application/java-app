@@ -489,6 +489,8 @@ public class Question implements Serializable {
 				&& Arrays.equals(reponsesFausses, other.reponsesFausses);
 	}
 	
+	
+	/** non javadoc - @see {@link java.util.Objects#toString()}. */
 	@Override
 	public String toString() {
 		return "Intitule : " + intitule 
