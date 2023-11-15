@@ -266,7 +266,7 @@ public class NouvellePartieControleur {
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
-		lancerPartie = true;
+		lancerPartie = false;
 
 		if (this.nombreQuestions != 5 
 			&& this.nombreQuestions != 10 
@@ -282,30 +282,28 @@ public class NouvellePartieControleur {
 			
 			try {
 				this.parametres.aAssezQuestions();
+				lancerPartie = true;
 			} catch (AucuneQuestionCorrespondanteException e) {
 				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
-				
-				lancerPartie = false;
 			} catch (NbInsuffisantQuestionsException e) {
 				lancerPartie 
 				= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
 			}
-			
-			if (lancerPartie) {
-				this.parametres = new ParametresPartie();
-				this.parametres.setNombreQuestions(this.nombreQuestions);
-				this.parametres.setDifficulteQuestions(this.difficulte);
-				this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
+		}
+		
+		if (lancerPartie) {
+			this.parametres = new ParametresPartie();
+			this.parametres.setNombreQuestions(this.nombreQuestions);
+			this.parametres.setDifficulteQuestions(this.difficulte);
+			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 
-				
-				Quiz.partieCourante.setParametresPartie(this.parametres);
-				Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
-				Quiz.partieCourante.melangerQuestionsProposees();
-				
-				
-				NavigationControleur.changerVue("PartieEnCours.fxml");	
-			}
 			
+			Quiz.partieCourante.setParametresPartie(this.parametres);
+			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
+			Quiz.partieCourante.melangerQuestionsProposees();
+			
+			
+			NavigationControleur.changerVue("PartieEnCours.fxml");	
 		}
 	}
 	
