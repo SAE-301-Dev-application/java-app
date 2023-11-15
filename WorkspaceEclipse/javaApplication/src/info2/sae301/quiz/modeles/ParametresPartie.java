@@ -55,7 +55,7 @@ public class ParametresPartie {
 	public ParametresPartie() {
 		this.categoriesSelectionnees = new ArrayList<Categorie>();
 		this.difficulteQuestions = 0; // Indifférente
-		this.nombreQuestions = 10;
+		this.nombreQuestions = 5;
 	}
 	
 	

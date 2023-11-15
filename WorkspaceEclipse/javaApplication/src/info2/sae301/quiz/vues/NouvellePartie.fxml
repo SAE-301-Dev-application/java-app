@@ -6,7 +6,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -24,14 +23,14 @@
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets></Label>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
@@ -109,13 +108,9 @@
                      <children>
                         <Label styleClass="label-champ" text="Catégories :" />
                         <ScrollPane hbarPolicy="NEVER" prefHeight="337.0" prefWidth="410.0" styleClass="choix-categories">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="441.0" style="-fx-background-color: transparent;">
-                                 <children>
-                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="CheckBox" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
+                           <content>
+                              <VBox fx:id="listeCategories" prefHeight="265.0" prefWidth="389.0" styleClass="partie-droite" />
+                           </content>
                         </ScrollPane>
                         <Label styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
                      </children>

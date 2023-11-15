@@ -13,8 +13,8 @@ import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.VBox;
 
 /**
  * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du
@@ -27,6 +27,29 @@ import javafx.scene.layout.AnchorPane;
  * @author Samuel Lacam
  */
 public class NouvellePartieControleur {
+	
+	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
+	= "Nombre incorrect de questions";
+	
+	private static final String ERREUR_NOMBRE_QUESTIONS_MESSAGE
+	= """
+	  Le nombre sélectionné de questions est incorrect. 
+	  Vous ne pouvez sélectionner que 5, 10 ou 20 questions.
+	  """;
+	
+	private static final String ERREUR_DIFFICULTE_TITRE 
+	= "Difficulté invalide";
+	
+	private static final String ERREUR_DIFFICULTE_MESSAGE
+	= """
+	  La difficulté sélectionnée est invalide.
+	  
+	  Les difficultés existantes sont :
+	  0. Indifférent
+	  1. Facile
+	  2. Moyen
+	  3. Difficile
+	  """;
 	
 	/** Indice du niveau de difficulté "Indifférent". */
 	private static final int DIFFICULTE_INDIFFERENT = 0;
@@ -91,7 +114,7 @@ public class NouvellePartieControleur {
 	
 	/** Conteneur des catégories de question. */
 	@FXML
-	private AnchorPane conteneurCategories;
+	private VBox listeCategories;
 	
 	@FXML
 	private void initialize() {
@@ -149,11 +172,13 @@ public class NouvellePartieControleur {
 		
 		for (Categorie categorieCourante: jeu.getToutesLesCategories()) {
 			checkBoxCategorie = new CheckBox();
+			checkBoxCategorie.setText(categorieCourante.getIntitule());
+			
 			checkBoxCategorie.setOnAction(event -> {
 				this.selectionCategorie(categorieCourante);
 			});
 			
-			this.conteneurCategories.getChildren().add(checkBoxCategorie);
+			this.listeCategories.getChildren().add(checkBoxCategorie);
 		}
 	}
 	
@@ -162,7 +187,9 @@ public class NouvellePartieControleur {
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			// TODO: erreur
+			AlerteControleur.autreAlerte(ERREUR_NOMBRE_QUESTIONS_MESSAGE, 
+										 ERREUR_NOMBRE_QUESTIONS_TITRE, 
+										 AlertType.ERROR);
 		} else {
 			this.nombreQuestions = nombre;
 
@@ -177,7 +204,9 @@ public class NouvellePartieControleur {
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
-			// TODO: erreur.
+			AlerteControleur.autreAlerte(ERREUR_DIFFICULTE_MESSAGE, 
+					 					 ERREUR_DIFFICULTE_TITRE, 
+					 					 AlertType.ERROR);
 		} else {
 			boolean checkBoxDifficulteIndifferent,
 					checkBoxDifficulteFacile,
@@ -199,15 +228,11 @@ public class NouvellePartieControleur {
 	}
 	
 	private void selectionCategorie(Categorie categorieConcernee) {
-		this.categoriesSelectionnees = this.parametres.getCategoriesSelectionnees();
-		
-		/*
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
-			this.parametres.deselectionnerCategorie(categorieConcernee);
+			this.categoriesSelectionnees.remove(categorieConcernee);
 		} else {
-			this.parametres.selectionnerCategorie(categorieConcernee);
+			this.categoriesSelectionnees.add(categorieConcernee);
 		}
-		*/
 	}
 	
 	@FXML
@@ -217,12 +242,17 @@ public class NouvellePartieControleur {
 	
 	@FXML
 	private void actionBoutonRetour() {
-		//
+		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonCreer() {
-		//
+	private void actionBoutonCreer() {  System.out.println("JOUER");
+		this.parametres = new ParametresPartie();
+		this.parametres.setNombreQuestions(this.nombreQuestions);
+		this.parametres.setDifficulteQuestions(this.difficulte);
+		this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
+		
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
 }
