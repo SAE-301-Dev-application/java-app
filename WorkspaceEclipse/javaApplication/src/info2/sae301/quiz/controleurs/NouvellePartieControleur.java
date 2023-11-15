@@ -279,7 +279,6 @@ public class NouvellePartieControleur {
 			erreurDifficulte();
 			
 		} else {
-			
 			try {
 				this.parametres.aAssezQuestions();
 				lancerPartie = true;
