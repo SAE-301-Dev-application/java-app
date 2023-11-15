@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
    <children>
       <Label layoutX="228.0" layoutY="30.0" styleClass="titre-long" text="PARTIE EN COURS" />
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
@@ -21,7 +22,7 @@
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0">
                <children>
-                  <Label fx:id="intituleQuestion" alignment="CENTER" text="intituleQuestion">
+                  <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleCategorieQuestion" text="intituleQuestion">
                      <VBox.margin>
                         <Insets bottom="60.0" top="15.0" />
                      </VBox.margin>
@@ -39,5 +40,10 @@
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
+      <Label fx:id="labelDifficulte" alignment="CENTER" layoutX="76.0" layoutY="109.0" styleClass="labelDifficulte" text="dif Question" />
    </children>
+   <stylesheets>
+      <URL value="@application.css" />
+      <URL value="@partie-en-cours.css" />
+   </stylesheets>
 </Pane>

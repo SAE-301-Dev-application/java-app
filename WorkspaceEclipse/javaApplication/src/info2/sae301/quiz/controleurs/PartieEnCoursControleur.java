@@ -5,7 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
-public class PartieEnCoursControlerur {
+public class PartieEnCoursControleur {
 
 	private static final String AIDE_TITRE = "PARTIE EN COURS";
 	
@@ -34,10 +34,18 @@ public class PartieEnCoursControlerur {
 	private Label intituleQuestion;
 	
 	@FXML
+	private Label labelDifficulte;
+	
+	@FXML
 	private ScrollPane layoutAffichageReponse;
 	
 	@FXML
 	private void intialize() {
+		NavigationControleur.getScene().getStylesheets()
+		.add(getClass().getResource("/info2/sae301/quiz/vues/partie-en-cours.css")
+				       .toExternalForm());
+		//Si question Difficile
+		labelDifficulte.getStyleClass().add("questionDifficile");
 		
 	}
 	
@@ -60,7 +68,7 @@ public class PartieEnCoursControlerur {
 
 	}
 	@FXML
-	private void actionBoutonSuivant() {
+	private void actionBoutonValider() {
 		
 	}
 }
