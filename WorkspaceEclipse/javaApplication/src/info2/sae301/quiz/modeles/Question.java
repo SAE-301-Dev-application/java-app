@@ -8,6 +8,7 @@ package info2.sae301.quiz.modeles;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects; 
 
 /**
@@ -375,9 +376,68 @@ public class Question implements Serializable {
 		return resultatFinal;
 	}
 	
-	/** TODO javadoc simon */
-	public ArrayList<String> ordreAleatoireReponses() {
-		return new ArrayList<String>();
+	/**
+	 * Mélange de façon pseudo-aléatoire les réponses juste et
+	 * fausses à l'aide de la méthode shuffle 
+	 * de l'interface Collections
+	 * 
+	 * @return toutesLesReponses l'ArrayList contenant 
+	 * les réponses mélangées
+	 */
+	public ArrayList<String> melangerReponses() {
+		// Tableau contenant la réponse juste suivie des réponses fausses
+		ArrayList<String> toutesLesReponses
+			= concatenationReponses();
+        
+        Collections.shuffle(toutesLesReponses);
+		return toutesLesReponses; 
+	}
+	
+	/**
+	 * Crée une ArrayList contenant les réponses de la question
+	 * dans l'ordre suivant :
+	 * <ul>
+	 *     <li>réponse juste</li>
+	 *     <li>réponse fausse</li>
+	 *     <li>éventuelle réponse fausse</li>
+	 *     <li>éventuelle réponse fausse</li>
+	 *     <li>éventuelle réponse fausse</li>
+	 * </ul>
+	 * @return toutesLesReponses l'ArrayList contenant 
+	 * les réponses mélangées
+	 */
+	public ArrayList<String> concatenationReponses() {
+		// Tableau contenant la réponse juste suivie des réponses fausses
+		ArrayList<String> toutesLesReponses = new ArrayList<>(reponsesFausses.length + 1);
+        toutesLesReponses.add(reponseJuste);
+        
+        for (int i = 0; i < getReponsesFausses().length; i++) {
+			toutesLesReponses.add(getReponsesFausses()[i]);
+		}
+		return toutesLesReponses; 
+	}
+	
+	/**
+	 * Méthode comparant deux ArrayList pour déterminer 
+	 * si elles contiennent les mêmes réponses
+	 * Sert à tester melangerReponses()
+	 * @param reponses une ArrayList de réponses
+	 * @param reponsesMelangees une ArrayList de réponses
+	 * @return true si les ArrayList contiennent les mêmes reponses
+	 * false sinon
+	 */
+	public boolean memesReponses(ArrayList<String> reponses, ArrayList<String> reponsesMelangees) {
+		
+		boolean resultatFinal = true;
+		if (reponses.size() != reponsesMelangees.size()) {
+			return false;
+		}
+		for (int i = 0; i < reponsesMelangees.size() && resultatFinal; i++) {
+			if (!reponses.contains(reponsesMelangees.get(i))) {
+				resultatFinal = false;
+			}
+		}
+		return resultatFinal;
 	}
 	
 	/**
