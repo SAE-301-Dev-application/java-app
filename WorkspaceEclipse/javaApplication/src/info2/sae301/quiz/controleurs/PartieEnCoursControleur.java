@@ -60,7 +60,7 @@ public class PartieEnCoursControleur {
 		initDifficulteQuestion();
 		initQuestionReponse();
 	}
-	
+	 
 
 	@FXML
 	private void actionBoutonAide() {
