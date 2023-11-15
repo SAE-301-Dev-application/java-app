@@ -58,6 +58,7 @@ public class ParametresPartie {
 		this.nombreQuestions = 10;
 	}
 	
+	
 	/**
 	 * Ajoute les catégories en paramètre à la liste des catégories
 	 * sélectionnées.
@@ -67,6 +68,7 @@ public class ParametresPartie {
 	public void selectionnerCategories(ArrayList<Categorie> aSelectionner) {
 		this.categoriesSelectionnees.addAll(aSelectionner);
 	}
+	
 	
 	/**
 	 * Vérification du fait qu'il y ait assez de questions dont la difficulté est
@@ -100,6 +102,7 @@ public class ParametresPartie {
 		}
 	}
 	
+	
 	/**
 	 * Choisis en fonction des paramètres de la partie courante des questions
 	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
@@ -124,33 +127,51 @@ public class ParametresPartie {
 		return questions;
 	}
 
+	
 	/** @return Les catégories sélectionnées. */
 	public ArrayList<Categorie> getCategoriesSelectionnees() {
 		return categoriesSelectionnees;
 	}
 
+	
 	/** @param categoriesSelectionnees Les catégories de questions sélectionnées. */
 	public void setCategoriesSelectionnees(ArrayList<Categorie> categoriesSelectionnees) {
 		this.categoriesSelectionnees = categoriesSelectionnees;
 	}
 
+	
 	/** @return La difficulté des questions paramétrée. */
 	public int getDifficulteQuestions() {
 		return difficulteQuestions;
 	}
 
+	
 	/** @param difficulteQuestions La difficulté des questions à proposer. */
 	public void setDifficulteQuestions(int difficulteQuestions) {
 		this.difficulteQuestions = difficulteQuestions;
 	}
 
+	
 	/** @return Le nombre de questions paramétré. */
 	public int getNombreQuestions() {
 		return nombreQuestions;
 	}
 
-	/** @param nombreQuestions Le nombre de questions à proposer. */
-	public void setNombreQuestions(int nombreQuestions) {
+	
+	/**
+	 * @param nombreQuestions Le nombre de questions à proposer.
+	 * @throws IllegalArgumentException si le nombre de questions
+	 * n'est pas 5, 10 ou 20.
+	 */
+	public void setNombreQuestions(int nombreQuestions)
+	throws IllegalArgumentException {
+		final String NOMBRE_INVALIDE
+		= "Le nombre de questions à proposer doit être 5, 10 ou 20.";
+		
+		if (nombreQuestions != 5 && nombreQuestions != 10
+		    && nombreQuestions != 20) {
+			throw new IllegalArgumentException(NOMBRE_INVALIDE);
+		}
 		this.nombreQuestions = nombreQuestions;
 	}
 	
