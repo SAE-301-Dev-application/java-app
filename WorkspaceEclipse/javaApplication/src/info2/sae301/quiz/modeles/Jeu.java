@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.modeles;
 
+import info2.sae301.quiz.exceptions.TaillePseudoInvalideException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,8 @@ public class Jeu implements Serializable {
 	/** Toutes les questions qui ont été créées sur le jeu. */
 	private ArrayList<Question> toutesLesQuestions;
 
+	/** Pseudonyme de l'utilisateur. */
+	private String pseudo;
 	
 	/**
 	 * Construction d'une session de jeu initialisant ses questions
@@ -58,18 +62,58 @@ public class Jeu implements Serializable {
                           ? toutesLesCategories.get(0).getIntitule()
                           : "2ème catégorie");
 		}
+		
+		// Pseudonyme par défaut
+		this.pseudo = "Utilisateur";
 	}
 	
 	
 	/** @return La liste des catégories créées. */
 	public ArrayList<Categorie> getToutesLesCategories() {
-		return toutesLesCategories;
+		return this.toutesLesCategories;
 	}
 	
 	
 	/** @return La liste des questions créées. */
 	public ArrayList<Question> getToutesLesQuestions() {
-		return toutesLesQuestions;
+		return this.toutesLesQuestions;
+	}
+	
+	
+	/** @return Le pseudonyme de l'utilisateur. */
+	public String getPseudo() {
+		return this.pseudo;
+	}
+	
+	
+	/**
+	 * @param nouveauPseudo Le nouveau pseudonyme de l'utilisateur.
+	 * @throws TaillePseudoInvalideException si la taille du pseudo < 1 ou > 20.
+	 */
+	public void setPseudo(String nouveauPseudo)
+	throws TaillePseudoInvalideException {
+		/**
+	     * Message d'erreur propagé lorsque le pseudonyme est "" ou composé
+	     * seulement d'espaces.
+	     */
+	    final String TAILLE_NULLE
+	    	= "Un pseudonyme doit au moins contenir un caractère alphanumérique.";
+		
+	    /**
+	     * Message d'erreur propagé lorsque le pseudonyme fait plus de 20 caractères.
+	     */
+	    final String TAILLE_PLUS_20_CARACTERES
+	    	= "Un pseudonyme ne peut contenir plus de 20 caractères.";
+	    
+		if (nouveauPseudo == null || nouveauPseudo.isBlank()) {
+			throw new TaillePseudoInvalideException(TAILLE_NULLE);
+		}
+		
+		if (nouveauPseudo.length() > 20) {
+			throw new TaillePseudoInvalideException(TAILLE_PLUS_20_CARACTERES);
+		}
+		
+		this.pseudo = nouveauPseudo;
 	}
 	
 	
