@@ -3,6 +3,7 @@
 .pseudo {
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
+	-fx-font-size: 15px;
 }
 
 .titre {
