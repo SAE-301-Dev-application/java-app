@@ -272,7 +272,7 @@ public class NouvellePartieControleur {
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
 	
-		try {
+		try {	
 			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 			this.parametres.aAssezQuestions();
 			lancerPartie = true;
@@ -285,8 +285,6 @@ public class NouvellePartieControleur {
 		}
 		
 		if (lancerPartie) {
-			this.parametres = new ParametresPartie();
-			
 			try {
 				this.parametres.setNombreQuestions(this.nombreQuestions);					
 			} catch(IllegalArgumentException e) {
@@ -299,11 +297,13 @@ public class NouvellePartieControleur {
 				erreurDifficulte(e.getMessage());
 			}
 
-			Quiz.partieCourante.setParametresPartie(parametres);
 			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
 			Quiz.partieCourante.melangerQuestionsProposees();
 			
-			NavigationControleur.changerVue("PartieEnCours.fxml");	
+			System.out.println("Catégories sélectionnées : "
+			                   + Quiz.partieCourante.getParametresPartie().getCategoriesSelectionnees());
+			
+			NavigationControleur.changerVue("PartieEnCours.fxml");
 		}
 	}
 	
