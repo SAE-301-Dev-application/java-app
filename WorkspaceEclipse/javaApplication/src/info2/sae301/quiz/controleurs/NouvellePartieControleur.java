@@ -13,7 +13,6 @@ import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
-import info2.sae301.quiz.modeles.PartieEnCours;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
@@ -267,6 +266,7 @@ public class NouvellePartieControleur {
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
+		lancerPartie = true;
 
 		if (this.nombreQuestions != 5 
 			&& this.nombreQuestions != 10 
@@ -282,10 +282,10 @@ public class NouvellePartieControleur {
 			
 			try {
 				this.parametres.aAssezQuestions();
-				lancerPartie = true;
 			} catch (AucuneQuestionCorrespondanteException e) {
-				lancerPartie = false;
 				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+				
+				lancerPartie = false;
 			} catch (NbInsuffisantQuestionsException e) {
 				lancerPartie 
 				= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
@@ -297,9 +297,11 @@ public class NouvellePartieControleur {
 				this.parametres.setDifficulteQuestions(this.difficulte);
 				this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 
-				Quiz.partieCourante.setParametresPartie(parametres);
+				
+				Quiz.partieCourante.setParametresPartie(this.parametres);
 				Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
 				Quiz.partieCourante.melangerQuestionsProposees();
+				
 				
 				NavigationControleur.changerVue("PartieEnCours.fxml");	
 			}
