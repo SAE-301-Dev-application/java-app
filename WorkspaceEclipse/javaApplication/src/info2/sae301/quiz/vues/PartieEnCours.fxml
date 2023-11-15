@@ -20,7 +20,7 @@
       </Button>
       <ScrollPane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0">
+            <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0">
                <children>
                   <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleCategorieQuestion" text="intituleQuestion">
                      <VBox.margin>

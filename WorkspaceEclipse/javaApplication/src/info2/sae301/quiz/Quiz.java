@@ -73,6 +73,7 @@ public class Quiz extends Application {
 	 */
 	public static void main(String[] args) {
 		jeu = new Jeu();
+		partieCourante = new PartieEnCours();
 		launch(args);
 	}
 }

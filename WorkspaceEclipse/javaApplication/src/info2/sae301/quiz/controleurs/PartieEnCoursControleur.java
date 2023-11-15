@@ -1,9 +1,15 @@
 package info2.sae301.quiz.controleurs;
 
+import java.util.ArrayList;
+
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.PartieEnCours;
+import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
 public class PartieEnCoursControleur {
 
@@ -37,18 +43,25 @@ public class PartieEnCoursControleur {
 	private Label labelDifficulte;
 	
 	@FXML
-	private ScrollPane layoutAffichageReponse;
+	private VBox vBoxQuestionReponses;
+	
+	private PartieEnCours partieCourante;
+	
+	private Question questionCourante;
 	
 	@FXML
-	private void intialize() {
-		NavigationControleur.getScene().getStylesheets()
-		.add(getClass().getResource("/info2/sae301/quiz/vues/partie-en-cours.css")
-				       .toExternalForm());
-		//Si question Difficile
-		labelDifficulte.getStyleClass().add("questionDifficile");
+	private void initialize() {
+		//Initialisation des données
+		partieCourante = Quiz.partieCourante;
+		questionCourante = partieCourante.getQuestionsProposees()
+				.get(partieCourante.getIndiceQuestionCourante());
 		
+		//Initialisation de la vue
+		initDifficulteQuestion();
+		initQuestionReponse();
 	}
 	
+
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.autreAlerte(AIDE_TEXTE, AIDE_TITRE, AlertType.INFORMATION);
@@ -64,11 +77,64 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonPrecedent() {
-		
 
 	}
+	
 	@FXML
 	private void actionBoutonValider() {
 		
 	}
+	
+	/**
+	 * Initialisation de la vue qui affiche la
+	 * difficulte de la question avec sa couleur
+	 * représentative.
+	 */
+	private void initDifficulteQuestion() {
+		switch (questionCourante.getDifficulte()) {
+		//Si question Indifférente
+		case 0:
+			labelDifficulte.getStyleClass().add("questionIndifferente");
+			labelDifficulte.setText("Indifférente");
+			break;
+			
+		//Si question Facile
+		case 1:
+			labelDifficulte.getStyleClass().add("questionFacile");
+			labelDifficulte.setText("Facile");
+			break;
+			
+		//Si question Moyenne
+		case 2:
+			labelDifficulte.getStyleClass().add("questionMoyenne");
+			labelDifficulte.setText("Moyenne");
+			break;		
+			
+		//Si question Difficile
+		case 3:
+			labelDifficulte.getStyleClass().add("questionDifficile");
+			labelDifficulte.setText("Difficile");
+			break;
+		
+		default:
+			throw new IllegalArgumentException
+				("difficulte invalide, non compris entre 0 et 3");
+		}
+	}
+	
+	/**
+	 * Initialisation de la vue qui affiche
+	 * la questions courante et
+	 * les questions mélangées.
+	 */
+	private void initQuestionReponse() {
+		intituleQuestion.setText(questionCourante.getIntitule());
+		
+		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
+		for (String reponse : reponsesMelange) {
+			Label afficherReponse = new Label(reponse);
+			vBoxQuestionReponses.getChildren().add(afficherReponse);
+		}
+	}
+	
 }
