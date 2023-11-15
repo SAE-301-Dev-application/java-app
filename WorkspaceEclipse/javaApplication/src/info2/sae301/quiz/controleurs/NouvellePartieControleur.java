@@ -286,7 +286,7 @@ public class NouvellePartieControleur {
 				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
 			} catch (NbInsuffisantQuestionsException e) {
 				lancerPartie 
-				= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+				= AlerteControleur.alerteConfirmation(e.getMessage(), "Pas assez de questions");
 			}
 		}
 		
