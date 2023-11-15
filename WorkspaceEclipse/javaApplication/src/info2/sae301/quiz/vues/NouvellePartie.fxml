@@ -50,9 +50,9 @@
                               <Label styleClass="label-champ" text="    Nombre de questions :" />
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="checkBox5Questions" mnemonicParsing="false" onAction="#choix5Questions" styleClass="label-champ" text="5" />
-                                    <CheckBox fx:id="checkBox10Questions" mnemonicParsing="false" onAction="#choix10Questions" styleClass="label-champ" text="10" />
-                                    <CheckBox fx:id="checkBox20Questions" mnemonicParsing="false" onAction="#choix20Questions" styleClass="label-champ" text="20" />
+                                    <CheckBox fx:id="checkBox5Questions" mnemonicParsing="false" styleClass="label-champ" text="5" />
+                                    <CheckBox fx:id="checkBox10Questions" mnemonicParsing="false" styleClass="label-champ" text="10" />
+                                    <CheckBox fx:id="checkBox20Questions" mnemonicParsing="false" styleClass="label-champ" text="20" />
                                  </children>
                                  <styleClass>
                                     <String fx:value="hbox-nombre-questions" />
@@ -66,20 +66,20 @@
                               <Label styleClass="label-champ" text="    Difficultés :" />
                               <VBox prefHeight="243.0" prefWidth="344.0">
                                  <children>
-                                    <CheckBox fx:id="checkBoxDifficulteIndifferent" mnemonicParsing="false" onAction="#choixDifficulteIndifferent" styleClass="label-champ" text="Indifférent" />
-                                    <CheckBox fx:id="checkBoxDifficulteFacile" mnemonicParsing="false" onAction="#choixDifficulteFacile" text="Facile">
+                                    <CheckBox fx:id="checkBoxDifficulteIndifferent" mnemonicParsing="false" styleClass="label-champ" text="Indifférent" />
+                                    <CheckBox fx:id="checkBoxDifficulteFacile" mnemonicParsing="false" text="Facile">
                                        <styleClass>
                                           <String fx:value="label-champ" />
                                           <String fx:value="label-facile" />
                                        </styleClass>
                                     </CheckBox>
-                                    <CheckBox fx:id="checkBoxDifficulteMoyen" mnemonicParsing="false" onAction="#choixDifficulteMoyen" text="Moyen">
+                                    <CheckBox fx:id="checkBoxDifficulteMoyen" mnemonicParsing="false" text="Moyen">
                                        <styleClass>
                                           <String fx:value="label-champ" />
                                           <String fx:value="label-moyen" />
                                        </styleClass>
                                     </CheckBox>
-                                    <CheckBox fx:id="checkBoxDifficulteDifficile" mnemonicParsing="false" onAction="#choixDifficulteDifficile" text="Difficile">
+                                    <CheckBox fx:id="checkBoxDifficulteDifficile" mnemonicParsing="false" text="Difficile">
                                        <styleClass>
                                           <String fx:value="label-champ" />
                                           <String fx:value="label-difficile" />

@@ -27,6 +27,18 @@ import javafx.scene.layout.AnchorPane;
  */
 public class NouvellePartieControleur {
 	
+	/** Indice du niveau de difficulté "Indifférent". */
+	private final int DIFFICULTE_INDIFFERENT = 0;
+	
+	/** Indice du niveau de difficulté "Facile". */
+	private final int DIFFICULTE_FACILE = 1;
+	
+	/** Indice du niveau de difficulté "Moyen". */
+	private final int DIFFICULTE_MOYEN = 2;
+	
+	/** Indice du niveau de difficulté "Difficile". */
+	private final int DIFFICULTE_DIFFICILE = 3;
+	
 	/** Nombre de questions du futur quiz. */
 	private int nombreQuestions;
 	
@@ -39,8 +51,13 @@ public class NouvellePartieControleur {
 	 */
 	private int difficulte;
 	
+	/** Catégories sélectionnées pour le futur quiz. */
+	private ArrayList<Categorie> categoriesSelectionnees;
+	
+	/** Instance du jeu. */
 	private Jeu jeu;
 	
+	/** Instance des paramètres de la future partie. */
 	private ParametresPartie parametres;
 	
 	/** Checkbox "5 questions". */
@@ -85,8 +102,44 @@ public class NouvellePartieControleur {
 		
 		this.parametres = new ParametresPartie();
 		
-		this.choix5Questions();
-		this.choixDifficulteIndifferent();
+		this.choixNombreQuestions(5);
+		this.choixDifficulte(0);
+		
+		/*
+		 * Choix du nombre de questions.
+		 */
+		
+		this.checkBox5Questions.setOnAction(event -> {
+			this.choixNombreQuestions(5);
+		});
+		
+		this.checkBox10Questions.setOnAction(event -> {
+			this.choixNombreQuestions(10);
+		});
+		
+		this.checkBox20Questions.setOnAction(event -> {
+			this.choixNombreQuestions(20);
+		});
+		
+		/*
+		 * Choix des difficultés.
+		 */
+		
+		this.checkBoxDifficulteIndifferent.setOnAction(event -> {
+			this.choixDifficulte(0);
+		});
+		
+		this.checkBoxDifficulteFacile.setOnAction(event -> {
+			this.choixDifficulte(1);
+		});
+		
+		this.checkBoxDifficulteMoyen.setOnAction(event -> {
+			this.choixDifficulte(2);
+		});
+		
+		this.checkBoxDifficulteDifficile.setOnAction(event -> {
+			this.choixDifficulte(3);
+		});
 		
 		/*
 		 * Chargement des catégories de question.
@@ -105,91 +158,46 @@ public class NouvellePartieControleur {
 	}
 	
 	/**
-	 * Choix de 5 questions pour le quiz.
+	 * Choix du nombre de questions pour le quiz.
 	 */
 	@FXML
-	private void choix5Questions() {
-		this.checkBox5Questions.setSelected(true);
-		this.checkBox10Questions.setSelected(false);
-		this.checkBox20Questions.setSelected(false);
-		
-		this.parametres.setNombreQuestions(5);
-	}
-	
-	/**
-	 * Choix de 10 questions pour le quiz.
-	 */
-	@FXML
-	private void choix10Questions() {
-		this.checkBox5Questions.setSelected(false);
-		this.checkBox10Questions.setSelected(true);
-		this.checkBox20Questions.setSelected(false);
-		
-		this.parametres.setNombreQuestions(10);
-	}
-	
-	/**
-	 * Choix de 20 questions pour le quiz.
-	 */
-	@FXML
-	private void choix20Questions() {
-		this.checkBox5Questions.setSelected(false);
-		this.checkBox10Questions.setSelected(false);
-		this.checkBox20Questions.setSelected(true);
-
-		this.parametres.setNombreQuestions(20);
+	private void choixNombreQuestions(int nombre) {
+		if (nombre != 5 && nombre != 10 && nombre != 20) {
+			// TODO: erreur.
+		} else {
+			this.nombreQuestions = nombre;
+			
+			this.checkBox5Questions.setSelected(true);
+			this.checkBox10Questions.setSelected(false);
+			this.checkBox20Questions.setSelected(false);
+		}
 	}
 
 	/**
 	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
 	 */
 	@FXML
-	private void choixDifficulteIndifferent() {
-		this.checkBoxDifficulteIndifferent.setSelected(true);
-		this.checkBoxDifficulteFacile.setSelected(false);
-		this.checkBoxDifficulteMoyen.setSelected(false);
-		this.checkBoxDifficulteDifficile.setSelected(false);
-		
-		this.parametres.setDifficulteQuestions(0);
-	}
-	
-	/**
-	 * Choix du niveau de difficilté "Facile" pour le quiz.
-	 */
-	@FXML
-	private void choixDifficulteFacile() {
-		this.checkBoxDifficulteIndifferent.setSelected(false);
-		this.checkBoxDifficulteFacile.setSelected(true);
-		this.checkBoxDifficulteMoyen.setSelected(false);
-		this.checkBoxDifficulteDifficile.setSelected(false);
-		
-		this.parametres.setDifficulteQuestions(1);
-	}
-	
-	/**
-	 * Choix du niveau de difficilté "Moyen" pour le quiz.
-	 */
-	@FXML
-	private void choixDifficulteMoyen() {
-		this.checkBoxDifficulteIndifferent.setSelected(false);
-		this.checkBoxDifficulteFacile.setSelected(false);
-		this.checkBoxDifficulteMoyen.setSelected(true);
-		this.checkBoxDifficulteDifficile.setSelected(false);
-		
-		this.parametres.setDifficulteQuestions(2);
-	}
-	
-	/**
-	 * Choix du niveau de difficilté "Difficile" pour le quiz.
-	 */
-	@FXML
-	private void choixDifficulteDifficile() {
-		this.checkBoxDifficulteIndifferent.setSelected(false);
-		this.checkBoxDifficulteFacile.setSelected(false);
-		this.checkBoxDifficulteMoyen.setSelected(false);
-		this.checkBoxDifficulteDifficile.setSelected(true);
-		
-		this.parametres.setDifficulteQuestions(3);
+	private void choixDifficulte(int difficulte) {
+		if (difficulte < 0 || difficulte > 3) {
+			// TODO: erreur.
+		} else {
+			boolean checkBoxDifficulteIndifferent,
+					checkBoxDifficulteFacile,
+					checkBoxDifficulteMoyen,
+					checkBoxDifficulteDifficile;
+			
+			checkBoxDifficulteIndifferent = difficulte == 0;
+			checkBoxDifficulteFacile = difficulte == 1;
+			checkBoxDifficulteMoyen = difficulte == 2;
+			checkBoxDifficulteDifficile = difficulte == 3;
+			
+			this.checkBoxDifficulteIndifferent.setSelected(checkBoxDifficulteIndifferent);
+			this.checkBoxDifficulteFacile.setSelected(checkBoxDifficulteFacile);
+			this.checkBoxDifficulteMoyen.setSelected(checkBoxDifficulteMoyen);
+			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);
+			
+			this.parametres.setDifficulteQuestions(0);			
+		}
 	}
 	
 	@FXML
@@ -197,11 +205,13 @@ public class NouvellePartieControleur {
 		ArrayList<Categorie> categoriesSelectionnees;
 		categoriesSelectionnees = this.parametres.getCategoriesSelectionnees();
 		
+		/*
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
 			this.parametres.deselectionnerCategorie(categorieConcernee);
 		} else {
 			this.parametres.selectionnerCategorie(categorieConcernee);
 		}
+		*/
 	}
 	
 	@FXML
