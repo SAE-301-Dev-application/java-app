@@ -5,6 +5,9 @@
 
 package info2.sae301.quiz.modeles;
 
+import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
+
 import java.util.ArrayList;
 
 /**
@@ -90,10 +93,10 @@ public class ParametresPartie {
 		  + "critères. Souhaitez-vous tout de même jouer ?";
 		
 		if (NOMBRE_QUESTIONS == 0) {
-			throw new IllegalArgumentException(AUCUNE_QUESTION);
+			throw new AucuneQuestionCorrespondanteException(AUCUNE_QUESTION);
 		}
 		if (this.nombreQuestions > NOMBRE_QUESTIONS) {
-			throw new NumberFormatException(MOINS_QUESTIONS);
+			throw new NbInsuffisantQuestionsException(MOINS_QUESTIONS);
 		}
 	}
 	
