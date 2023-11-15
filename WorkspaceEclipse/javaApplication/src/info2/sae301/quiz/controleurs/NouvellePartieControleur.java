@@ -163,7 +163,7 @@ public class NouvellePartieControleur {
 	@FXML
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			// TODO: erreur.
+			// TODO: erreur
 		} else {
 			this.nombreQuestions = nombre;
 			
