@@ -8,6 +8,8 @@ package info2.sae301.quiz.controleurs;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
+import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
@@ -65,6 +67,26 @@ public class NouvellePartieControleur {
 	
 	/** Instance du jeu. */
 	private static Jeu jeu = Quiz.jeu;
+	
+	/**
+	 * Affichage de l'erreur :
+	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
+	 */
+	private static void erreurNombreQuestions() {
+		AlerteControleur.autreAlerte(ERREUR_NOMBRE_QUESTIONS_MESSAGE, 
+				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
+				 					 AlertType.ERROR);
+	}
+	
+	/**
+	 * Affichage de l'erreur :
+	 * La difficulté est invalide, inexistante.
+	 */
+	private static void erreurDifficulte() {
+		AlerteControleur.autreAlerte(ERREUR_DIFFICULTE_MESSAGE, 
+				 					 ERREUR_DIFFICULTE_TITRE, 
+				 					 AlertType.ERROR);
+	}
 	
 	/** Nombre de questions du futur quiz. */
 	private int nombreQuestions;
@@ -187,9 +209,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			AlerteControleur.autreAlerte(ERREUR_NOMBRE_QUESTIONS_MESSAGE, 
-										 ERREUR_NOMBRE_QUESTIONS_TITRE, 
-										 AlertType.ERROR);
+			erreurNombreQuestions();
 		} else {
 			this.nombreQuestions = nombre;
 
@@ -204,9 +224,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
-			AlerteControleur.autreAlerte(ERREUR_DIFFICULTE_MESSAGE, 
-					 					 ERREUR_DIFFICULTE_TITRE, 
-					 					 AlertType.ERROR);
+			erreurDifficulte();
 		} else {
 			boolean checkBoxDifficulteIndifferent,
 					checkBoxDifficulteFacile,
@@ -246,13 +264,41 @@ public class NouvellePartieControleur {
 	}
 	
 	@FXML
-	private void actionBoutonCreer() {  System.out.println("JOUER");
-		this.parametres = new ParametresPartie();
-		this.parametres.setNombreQuestions(this.nombreQuestions);
-		this.parametres.setDifficulteQuestions(this.difficulte);
-		this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
+	private void actionBoutonCreer() {
+		boolean lancerPartie;
+		lancerPartie = true;
 		
-		NavigationControleur.changerVue("PartieEnCours.fxml");
+		if (this.nombreQuestions != 5 
+			&& this.nombreQuestions != 10 
+			&& this.nombreQuestions != 20) {
+			
+			erreurNombreQuestions();
+			
+		} else if (this.difficulte < 0 || this.difficulte > 3) {
+			
+			erreurDifficulte();
+			
+		} else {
+			
+			try {
+				this.parametres.aAssezQuestions();
+			} catch (AucuneQuestionCorrespondanteException e) {
+				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+			} catch (NbInsuffisantQuestionsException e) {
+				lancerPartie 
+				= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+			}
+			
+			if (lancerPartie) {
+				this.parametres = new ParametresPartie();
+				this.parametres.setNombreQuestions(this.nombreQuestions);
+				this.parametres.setDifficulteQuestions(this.difficulte);
+				this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
+				
+				NavigationControleur.changerVue("PartieEnCours.fxml");	
+			}
+			
+		}
 	}
 	
 }
