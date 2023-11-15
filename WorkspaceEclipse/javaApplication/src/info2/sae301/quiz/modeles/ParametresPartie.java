@@ -123,14 +123,6 @@ public class ParametresPartie {
 		}
 		return questions;
 	}
-	
-	public void selectionnerCategorie(Categorie categorieASelectionner) {
-		this.categoriesSelectionnees.add(categorieASelectionner);
-	}
-	
-	public void deselectionnerCategorie(Categorie categorieADeselectionner) {
-		this.categoriesSelectionnees.remove(categorieADeselectionner);
-	}
 
 	/** @return Les catégories sélectionnées. */
 	public ArrayList<Categorie> getCategoriesSelectionnees() {

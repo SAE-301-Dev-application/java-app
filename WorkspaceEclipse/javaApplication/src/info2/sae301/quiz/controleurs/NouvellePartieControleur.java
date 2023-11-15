@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.controleurs;
 
+import java.util.ArrayList;
+
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
@@ -191,8 +193,15 @@ public class NouvellePartieControleur {
 	}
 	
 	@FXML
-	private void selectionnerCategorie() {
-		// TODO
+	private void selectionCategorie(Categorie categorieConcernee) {
+		ArrayList<Categorie> categoriesSelectionnees;
+		categoriesSelectionnees = this.parametres.getCategoriesSelectionnees();
+		
+		if (categoriesSelectionnees.contains(categorieConcernee)) {
+			this.parametres.deselectionnerCategorie(categorieConcernee);
+		} else {
+			this.parametres.selectionnerCategorie(categorieConcernee);
+		}
 	}
 	
 	@FXML
