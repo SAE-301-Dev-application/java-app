@@ -17,17 +17,19 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="232.0" layoutY="68.0" styleClass="titre" text="PSEUDONYME">
+      <Label layoutX="270.0" layoutY="65.0" styleClass="titre-long" text="PSEUDONYME">
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets></Label>
       <VBox layoutX="36.0" layoutY="105.0" prefHeight="394.0" prefWidth="728.0">
          <children>
             <TextField fx:id="pseudoEntre" prefWidth="655.0" promptText="Pseudonyme utilisateur (20 caractères max)" stylesheets="@application.css" />
+            <Label styleClass="texte-pseudo" text="Votre nom d’utilisateur sera utilisé par l’application pour personnaliser votre expérience." />
          </children>
          <styleClass>
             <String fx:value="conteneur-boutons" />
             <String fx:value="centrer" />
+            <String fx:value="vbox-categories-questions" />
          </styleClass>
       </VBox>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" stylesheets="@application.css" text="ANNULER">
@@ -49,5 +51,6 @@
    <stylesheets>
       <URL value="@application.css" />
       <URL value="@menu-principal.css" />
+      <URL value="@gestion-pseudo.css" />
    </stylesheets>
 </Pane>
