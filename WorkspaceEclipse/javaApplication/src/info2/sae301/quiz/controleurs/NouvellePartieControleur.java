@@ -7,6 +7,7 @@ package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.ParametresPartie;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
@@ -37,6 +38,8 @@ public class NouvellePartieControleur {
 	private int difficulte;
 	
 	private Jeu jeu;
+	
+	private ParametresPartie parametres;
 	
 	/** Checkbox "5 questions". */
 	@FXML
@@ -78,6 +81,8 @@ public class NouvellePartieControleur {
 		 * - Difficulté "Indifférent"  
 		 */
 		
+		this.parametres = new ParametresPartie();
+		
 		this.choix5Questions();
 		this.choixDifficulteIndifferent();
 		
@@ -89,6 +94,9 @@ public class NouvellePartieControleur {
 		
 		for (Categorie categorieCourante: this.jeu.getToutesLesCategories()) {
 			checkBoxCategorie = new CheckBox();
+			checkBoxCategorie.setOnAction(event -> {
+				// TODO
+			});
 			
 			this.conteneurCategories.getChildren().add(checkBoxCategorie);  // TODO: ajouter élément catégorie.
 		}
@@ -99,11 +107,11 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choix5Questions() {
-		this.nombreQuestions = 5;
-		
 		this.checkBox5Questions.setSelected(true);
 		this.checkBox10Questions.setSelected(false);
 		this.checkBox20Questions.setSelected(false);
+		
+		this.parametres.setNombreQuestions(5);
 	}
 	
 	/**
@@ -111,11 +119,11 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choix10Questions() {
-		this.nombreQuestions = 10;
-		
 		this.checkBox5Questions.setSelected(false);
 		this.checkBox10Questions.setSelected(true);
 		this.checkBox20Questions.setSelected(false);
+		
+		this.parametres.setNombreQuestions(10);
 	}
 	
 	/**
@@ -123,11 +131,11 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choix20Questions() {
-		this.nombreQuestions = 20;
-		
 		this.checkBox5Questions.setSelected(false);
 		this.checkBox10Questions.setSelected(false);
 		this.checkBox20Questions.setSelected(true);
+
+		this.parametres.setNombreQuestions(20);
 	}
 
 	/**
@@ -135,12 +143,12 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choixDifficulteIndifferent() {
-		this.difficulte = 0;
-		
 		this.checkBoxDifficulteIndifferent.setSelected(true);
 		this.checkBoxDifficulteFacile.setSelected(false);
 		this.checkBoxDifficulteMoyen.setSelected(false);
 		this.checkBoxDifficulteDifficile.setSelected(false);
+		
+		this.parametres.setDifficulteQuestions(0);
 	}
 	
 	/**
@@ -148,12 +156,12 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choixDifficulteFacile() {
-		this.difficulte = 1;
-		
 		this.checkBoxDifficulteIndifferent.setSelected(false);
 		this.checkBoxDifficulteFacile.setSelected(true);
 		this.checkBoxDifficulteMoyen.setSelected(false);
 		this.checkBoxDifficulteDifficile.setSelected(false);
+		
+		this.parametres.setDifficulteQuestions(1);
 	}
 	
 	/**
@@ -161,12 +169,12 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choixDifficulteMoyen() {
-		this.difficulte = 2;
-		
 		this.checkBoxDifficulteIndifferent.setSelected(false);
 		this.checkBoxDifficulteFacile.setSelected(false);
 		this.checkBoxDifficulteMoyen.setSelected(true);
 		this.checkBoxDifficulteDifficile.setSelected(false);
+		
+		this.parametres.setDifficulteQuestions(2);
 	}
 	
 	/**
@@ -174,12 +182,17 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void choixDifficulteDifficile() {
-		this.difficulte = 3;
-		
 		this.checkBoxDifficulteIndifferent.setSelected(false);
 		this.checkBoxDifficulteFacile.setSelected(false);
 		this.checkBoxDifficulteMoyen.setSelected(false);
 		this.checkBoxDifficulteDifficile.setSelected(true);
+		
+		this.parametres.setDifficulteQuestions(3);
+	}
+	
+	@FXML
+	private void selectionnerCategorie() {
+		// TODO
 	}
 	
 	@FXML
