@@ -56,6 +56,7 @@ class TestQuestion {
 		
 		orthographe.ajouterQuestion(questionSF);
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, info2.sae301.quiz.modeles.Categorie)}.
@@ -70,6 +71,7 @@ class TestQuestion {
 		assertEquals(questionSF.getDifficulte(), 2);
 		assertEquals(questionSF.getCategorie().getIntitule(), "orthographe");
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#Question(java.lang.String, java.lang.String, java.lang.String[], int, java.lang.String, info2.sae301.quiz.modeles.Categorie)}.
@@ -86,6 +88,7 @@ class TestQuestion {
 		assertEquals(questionAF.getFeedback(), "rez car vieux mot");
 		assertEquals(questionAF.getCategorie().getIntitule(), "orthographe");
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getIntitule()}.
@@ -98,6 +101,7 @@ class TestQuestion {
 				questionAF.getIntitule());
 		assertNotEquals("",questionAF.getIntitule());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getReponseJuste()}.
@@ -110,6 +114,7 @@ class TestQuestion {
 		assertEquals("rez",questionAF.getReponseJuste());
 		assertNotEquals("",questionAF.getReponseJuste());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getReponsesFausses()}.
@@ -126,6 +131,7 @@ class TestQuestion {
 		assertFalse(Arrays.equals(repFaussesSF[1],questionSF.getReponsesFausses()));
 		assertFalse(Arrays.equals(repFaussesSF[2],questionSF.getReponsesFausses()));
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getDifficulte()}.
@@ -138,6 +144,7 @@ class TestQuestion {
 		assertNotEquals(Integer.MAX_VALUE,questionAF.getDifficulte());
 		assertNotEquals(Integer.MIN_VALUE,questionSF.getDifficulte());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getFeedback()}.
@@ -149,6 +156,7 @@ class TestQuestion {
 		assertEquals("rez car vieux mot",questionAF.getFeedback());
 		assertNotEquals("",questionAF.getFeedback());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#getCategorie()}.
@@ -234,6 +242,7 @@ class TestQuestion {
 		questionAF.setReponseJuste("chien");
 		assertEquals("chien",questionAF.getReponseJuste());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#setReponsesFausses(java.lang.String[])}.
@@ -282,6 +291,7 @@ class TestQuestion {
 		assertEquals(questionAF.getReponsesFausses(), repFaussesSF[0]);
 	}
 
+	
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#setDifficulte(int)}.
 	 */
@@ -314,6 +324,7 @@ class TestQuestion {
 		questionAF.setDifficulte(3);
 		assertEquals(3, questionAF.getDifficulte());
 	}
+	
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#setFeedback(java.lang.String)}.
@@ -345,6 +356,7 @@ class TestQuestion {
 		assertNotEquals("   " ,questionSF.getFeedback());
 	}
 
+	
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#setCategorie(info2.sae301.quiz.modeles.Categorie)}.
 	 */
@@ -354,6 +366,7 @@ class TestQuestion {
 		assertEquals(grammaire,questionAF.getCategorie());
 		assertNotEquals(orthographe,questionAF.getCategorie());
 	}
+	
 	
 	/**
 	 * Test method for {@link info2.sae301.quiz.modeles.Question#equals(Object)}.
@@ -388,6 +401,10 @@ class TestQuestion {
 		assertNotEquals(question5, question2);
 	}
 	
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#assurerReponsesUniques(String[])}.
+	 */
 	@Test
 	void testAssurerReponsesUniques() {
 		String[][] reponsesNonUniques = {{"vrai", "faux", "ne sais pas", "vrai", "peut-être"},
@@ -409,6 +426,9 @@ class TestQuestion {
 	}
 	
 
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#assurerValiditeReponsesFausses(String[])}.
+	 */
 	@Test
 	void testAssurerValiditeReponsesFausses() {
 		String repTropLongue = genererStringTailleX(201);
@@ -428,6 +448,10 @@ class TestQuestion {
 		assertDoesNotThrow(() -> {Question.assurerValiditeReponsesFausses(repFausses[0]);});
 	}
 	
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#memesReponsesFausses(Question)}.
+	 */
 	@Test
 	void testMemeReponsesFausses() {
 		String[][] repFausses = {{"chatt","shat","chât"},{"chtt","shat","chât"}, 
@@ -450,6 +474,10 @@ class TestQuestion {
 		
 	}
 	
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#melangerReponses()}.
+	 */
 	@Test
 	void testMelangerReponses() {
 		// Tableau contenant la réponse juste suivie des réponses fausses
@@ -468,6 +496,10 @@ class TestQuestion {
 		
 	}
 	
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.Question#memesReponses(ArrayList, ArrayList)}.
+	 */
 	@Test
 	void testMemeReponses() {
 		String[][] repFausses = {{"chatt","shat","chât"},{"chtt","shat","chât"}, 

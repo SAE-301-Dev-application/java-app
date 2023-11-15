@@ -166,6 +166,7 @@ public class Categorie implements Serializable {
     	}
     	return listeQuestions.isEmpty();
     }
+    
 
     /**
 	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
@@ -185,6 +186,7 @@ public class Categorie implements Serializable {
 	public int hashCode() {
 		return Objects.hash(intitule, listeQuestions);
 	}
+	
 
 	/**
 	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs

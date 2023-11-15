@@ -45,9 +45,12 @@ public class PartieEnCours {
 		this.indiceQuestionCourante = 0;
 	}
 	
+	
+	/** @param questionsProposees la liste des questions à proposer */
 	public void setQuestionsProposees(ArrayList<Question> questionsProposees) {
 		this.questionsProposees = questionsProposees;
 	}
+	
 	
 	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
 	public void melangerQuestionsProposees() {
@@ -84,10 +87,12 @@ public class PartieEnCours {
 		this.indiceQuestionCourante = indiceQuestionCourante;
 	}
 	
+	
 	/** @param parametres Les nouveaux paramètres. */
 	public void setParametresPartie(ParametresPartie parametres) {
 		this.parametresPartie = parametres;
 	}
+	
 	
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante

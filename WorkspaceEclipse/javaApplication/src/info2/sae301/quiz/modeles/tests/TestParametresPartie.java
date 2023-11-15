@@ -81,7 +81,7 @@ class TestParametresPartie {
 	public void testConstructeur() {
 		assertEquals(0, parametresTest.getCategoriesSelectionnees().size());
 	    assertEquals(0, parametresTest.getDifficulteQuestions());
-	    assertEquals(10, parametresTest.getNombreQuestions());
+	    assertEquals(5, parametresTest.getNombreQuestions());
 	}
 	
 	

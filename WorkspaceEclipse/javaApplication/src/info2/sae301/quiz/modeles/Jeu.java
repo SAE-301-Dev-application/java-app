@@ -172,6 +172,7 @@ public class Jeu implements Serializable {
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 	}
 	
+	
 	/** Réinitialise/Vide la liste des questions. */
 	public void supprimerToutesQuestions() {
 		toutesLesQuestions = new ArrayList<>();

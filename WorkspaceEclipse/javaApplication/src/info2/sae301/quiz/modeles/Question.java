@@ -130,6 +130,7 @@ public class Question implements Serializable {
 		this.categorie = categorie;
 		this.feedback = feedback;
 	}
+	
 
 	/**
 	 * Vérification puis initialisation des attributs pour les deux constructeurs.
@@ -158,6 +159,7 @@ public class Question implements Serializable {
 		}	
 	}
 	
+	
 	/**
 	 * Vérification puis initialisation des attributs pour les deux constructeurs.
 	 * 
@@ -178,6 +180,7 @@ public class Question implements Serializable {
 		assurerTaille(feedback, "d'un feedback", 1, 500);
 		
 	}
+	
 
 	/**
 	 * Vérification que la taille d'un élément soit supérieure à tailleMin
@@ -206,6 +209,7 @@ public class Question implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * Ajoute la réponse juste à un tableau contenant également les réponses fausses
 	 * et vérifie l'unicité des réponses du tableau.
@@ -225,6 +229,7 @@ public class Question implements Serializable {
         
         assurerReponsesUniques(toutesLesReponses);
 	}
+	
 	
 	/**
 	 * Vérifie si les réponses en paramètre sont toutes différentes.
@@ -247,6 +252,7 @@ public class Question implements Serializable {
             throw new IllegalArgumentException(REPONSES_NON_UNIQUES);
         }
 	}
+	
 
 	/**
 	 * Vérifie que les réponses fausses en paramètre soient valides.
@@ -273,6 +279,7 @@ public class Question implements Serializable {
 			}
 		}
 	}
+	
 
 	/** @return l'intitule de la question */
 	public String getIntitule() {
@@ -329,6 +336,7 @@ public class Question implements Serializable {
         assurerValiditeReponsesFausses(reponsesFausses);
 		this.reponsesFausses = reponsesFausses;
 	}
+	
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
@@ -337,6 +345,7 @@ public class Question implements Serializable {
 		}
 		this.difficulte = difficulte;
 	}
+	
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
@@ -350,6 +359,7 @@ public class Question implements Serializable {
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
+	
 
 	/**
 	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
@@ -376,6 +386,7 @@ public class Question implements Serializable {
 		return resultatFinal;
 	}
 	
+	
 	/**
 	 * Mélange de façon pseudo-aléatoire les réponses juste et
 	 * fausses à l'aide de la méthode shuffle 
@@ -392,6 +403,7 @@ public class Question implements Serializable {
         Collections.shuffle(toutesLesReponses);
 		return toutesLesReponses; 
 	}
+	
 	
 	/**
 	 * Crée une ArrayList contenant les réponses de la question
@@ -417,6 +429,7 @@ public class Question implements Serializable {
 		return toutesLesReponses; 
 	}
 	
+	
 	/**
 	 * Méthode comparant deux ArrayList pour déterminer 
 	 * si elles contiennent les mêmes réponses
@@ -439,6 +452,7 @@ public class Question implements Serializable {
 		}
 		return resultatFinal;
 	}
+	
 	
 	/**
 	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 

@@ -78,21 +78,33 @@ public class ParametresPartie {
 	 * @throws IllegalArgumentException si aucune question ne correspond aux critères.
 	 * @throws NumberFormatException si moins de questions que le nombre de questions
 	 * souhaitées correspondent aux critères.
-	 * @return true si il y a assez de questions.
 	 */
 	public void aAssezQuestions()
 	throws IllegalArgumentException, NumberFormatException {
 		final int NOMBRE_QUESTIONS
 		= choisirQuestionsProposees().size();
 		
-		final String AUCUNE_QUESTION
-		= "Il n'y a aucune question dans les catégories sélectionnées dont"
-		  + "la difficulté est égale à " + this.difficulteQuestions + ".\n"
-		  + "Veuillez entrer d'autres paramètres ou créer des questions.";
-		
 		final String MOINS_QUESTIONS
 		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
 		  + "critères. Souhaitez-vous tout de même jouer ?";
+		
+		String texteDifficulte;
+		switch (this.difficulteQuestions) {
+		default:
+		case 0:
+			texteDifficulte = "indifférente";
+		case 1:
+			texteDifficulte = "facile";
+		case 2:
+			texteDifficulte = "moyenne";
+		case 3:
+			texteDifficulte = "difficile";
+		}
+		
+		String AUCUNE_QUESTION
+		= "Il n'y a aucune question dans les catégories sélectionnées dont "
+		  + "la difficulté est " + texteDifficulte + ".\n"
+		  + "Veuillez entrer d'autres paramètres ou créer des questions.";
 		
 		if (NOMBRE_QUESTIONS == 0) {
 			throw new AucuneQuestionCorrespondanteException(AUCUNE_QUESTION);
