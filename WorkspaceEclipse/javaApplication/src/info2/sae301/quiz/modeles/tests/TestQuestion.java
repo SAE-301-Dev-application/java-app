@@ -4,8 +4,10 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
-import static org.junit.jupiter.api.Assertions.*; 
+import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -445,6 +447,46 @@ class TestQuestion {
 		
 		/* Test pour un nombre différent de mauvaises réponses */
 		assertFalse(questionAF.memesReponsesFausses(questionSF));
+		
+	}
+	
+	@Test
+	void testMelangerReponses() {
+		// Tableau contenant la réponse juste suivie des réponses fausses
+		ArrayList<String> toutesLesReponses = new ArrayList<>(questionAF.getReponsesFausses().length + 1);
+		toutesLesReponses.add(questionAF.getReponseJuste());
+		
+		for (int i = 0; i < questionAF.getReponsesFausses().length; i++) {
+			toutesLesReponses.add(questionAF.getReponsesFausses()[i]);
+		}
+		
+		ArrayList<String> reponsesMelangees = questionAF.melangerReponses();
+		System.out.println(toutesLesReponses);
+		System.out.println(reponsesMelangees);
+		assertTrue(questionAF.memesReponses(toutesLesReponses, reponsesMelangees));
+		
+		
+	}
+	
+	@Test
+	void testMemeReponses() {
+		String[][] repFausses = {{"chatt","shat","chât"},{"chtt","shat","chât"}, 
+								 {"rai","raient"}
+								};
+		
+		/* Test pour les memes réponses fausses */
+		assertTrue(questionAF.memesReponses(questionAF.concatenationReponses(), questionAF2.concatenationReponses()));
+		
+		/* Test pour le même nombre de réponses fausses mais pas les mêmes */
+		
+		questionSF2.setReponsesFausses(repFausses[1]);
+		assertFalse(questionAF.memesReponses(questionAF.concatenationReponses(), questionSF2.concatenationReponses()));
+		
+		questionAF2.setReponsesFausses(repFausses[2]);
+		assertFalse(questionAF.memesReponses(questionAF.concatenationReponses(), questionAF2.concatenationReponses()));
+		
+		/* Test pour un nombre différent de mauvaises réponses */
+		assertFalse(questionAF.memesReponses(questionAF.concatenationReponses(), questionSF.concatenationReponses()));
 		
 	}
 }
