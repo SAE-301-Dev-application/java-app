@@ -7,6 +7,7 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
+import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
@@ -28,16 +29,19 @@ import javafx.scene.layout.AnchorPane;
 public class NouvellePartieControleur {
 	
 	/** Indice du niveau de difficulté "Indifférent". */
-	private final int DIFFICULTE_INDIFFERENT = 0;
+	private static final int DIFFICULTE_INDIFFERENT = 0;
 	
 	/** Indice du niveau de difficulté "Facile". */
-	private final int DIFFICULTE_FACILE = 1;
+	private static final int DIFFICULTE_FACILE = 1;
 	
 	/** Indice du niveau de difficulté "Moyen". */
-	private final int DIFFICULTE_MOYEN = 2;
+	private static final int DIFFICULTE_MOYEN = 2;
 	
 	/** Indice du niveau de difficulté "Difficile". */
-	private final int DIFFICULTE_DIFFICILE = 3;
+	private static final int DIFFICULTE_DIFFICILE = 3;
+	
+	/** Instance du jeu. */
+	private static Jeu jeu = Quiz.jeu;
 	
 	/** Nombre de questions du futur quiz. */
 	private int nombreQuestions;
@@ -53,9 +57,6 @@ public class NouvellePartieControleur {
 	
 	/** Catégories sélectionnées pour le futur quiz. */
 	private ArrayList<Categorie> categoriesSelectionnees;
-	
-	/** Instance du jeu. */
-	private Jeu jeu;
 	
 	/** Instance des paramètres de la future partie. */
 	private ParametresPartie parametres;
@@ -100,10 +101,9 @@ public class NouvellePartieControleur {
 		 * - Difficulté "Indifférent"  
 		 */
 		
-		this.parametres = new ParametresPartie();
-		
 		this.choixNombreQuestions(5);
 		this.choixDifficulte(0);
+		this.categoriesSelectionnees = new ArrayList<>();
 		
 		/*
 		 * Choix du nombre de questions.
@@ -147,36 +147,34 @@ public class NouvellePartieControleur {
 		
 		CheckBox checkBoxCategorie;
 		
-		for (Categorie categorieCourante: this.jeu.getToutesLesCategories()) {
+		for (Categorie categorieCourante: jeu.getToutesLesCategories()) {
 			checkBoxCategorie = new CheckBox();
 			checkBoxCategorie.setOnAction(event -> {
-				// TODO
+				this.selectionCategorie(categorieCourante);
 			});
 			
-			this.conteneurCategories.getChildren().add(checkBoxCategorie);  // TODO: ajouter élément catégorie.
+			this.conteneurCategories.getChildren().add(checkBoxCategorie);
 		}
 	}
 	
 	/**
 	 * Choix du nombre de questions pour le quiz.
 	 */
-	@FXML
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			// TODO: erreur.
+			// TODO: erreur
 		} else {
 			this.nombreQuestions = nombre;
-			
-			this.checkBox5Questions.setSelected(true);
-			this.checkBox10Questions.setSelected(false);
-			this.checkBox20Questions.setSelected(false);
+
+			this.checkBox5Questions.setSelected(nombre == 5);
+			this.checkBox10Questions.setSelected(nombre == 10);
+			this.checkBox20Questions.setSelected(nombre == 20);
 		}
 	}
 
 	/**
 	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
 	 */
-	@FXML
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
 			// TODO: erreur.
@@ -186,24 +184,22 @@ public class NouvellePartieControleur {
 					checkBoxDifficulteMoyen,
 					checkBoxDifficulteDifficile;
 			
-			checkBoxDifficulteIndifferent = difficulte == 0;
-			checkBoxDifficulteFacile = difficulte == 1;
-			checkBoxDifficulteMoyen = difficulte == 2;
-			checkBoxDifficulteDifficile = difficulte == 3;
+			checkBoxDifficulteIndifferent = difficulte == DIFFICULTE_INDIFFERENT;
+			checkBoxDifficulteFacile = difficulte == DIFFICULTE_FACILE;
+			checkBoxDifficulteMoyen = difficulte == DIFFICULTE_MOYEN;
+			checkBoxDifficulteDifficile = difficulte == DIFFICULTE_DIFFICILE;
+			
+			this.difficulte = difficulte;
 			
 			this.checkBoxDifficulteIndifferent.setSelected(checkBoxDifficulteIndifferent);
 			this.checkBoxDifficulteFacile.setSelected(checkBoxDifficulteFacile);
 			this.checkBoxDifficulteMoyen.setSelected(checkBoxDifficulteMoyen);
-			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);
-			
-			this.parametres.setDifficulteQuestions(0);			
+			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);		
 		}
 	}
 	
-	@FXML
 	private void selectionCategorie(Categorie categorieConcernee) {
-		ArrayList<Categorie> categoriesSelectionnees;
-		categoriesSelectionnees = this.parametres.getCategoriesSelectionnees();
+		this.categoriesSelectionnees = this.parametres.getCategoriesSelectionnees();
 		
 		/*
 		if (categoriesSelectionnees.contains(categorieConcernee)) {

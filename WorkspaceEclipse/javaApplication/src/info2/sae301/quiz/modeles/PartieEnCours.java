@@ -24,7 +24,7 @@ public class PartieEnCours {
 	private ArrayList<Question> questionsProposees;
 
 	/** ArrayList de réponses de l'utilisateur sur les questions */
-	private ArrayList<Question> reponsesUtilisateur;
+	private ArrayList<String> reponsesUtilisateur;
 	
 	/** Instance de ParametresPartie précédemment créée dans ParametresPartie*/
 	private ParametresPartie parametresPartie;
@@ -37,7 +37,7 @@ public class PartieEnCours {
 	public PartieEnCours() {
 		
 		this.questionsProposees = new ArrayList<Question>();
-		this.reponsesUtilisateur = new ArrayList<Question>();
+		this.reponsesUtilisateur = new ArrayList<String>();
 		this.parametresPartie = new ParametresPartie();
 		this.indiceQuestionCourante = 0;
 	}
@@ -53,7 +53,7 @@ public class PartieEnCours {
 	}
 
 	/** @return l'ArrayList des réponses actuelles de l'utilisateur */
-	public ArrayList<Question> getReponsesUtilisateur() {
+	public ArrayList<String> getReponsesUtilisateur() {
 		return reponsesUtilisateur;
 	}
 	
@@ -70,6 +70,25 @@ public class PartieEnCours {
 	/** Remplace l'indice de la question courante par celui en paramètre */
 	public void setIndiceQuestionCourante(int indiceQuestionCourante) {
 		this.indiceQuestionCourante = indiceQuestionCourante;
+	}
+	
+	/**
+	 * Ajoute la réponse de l'utilisateur sur la question courante
+	 * à l'ArrayList reponsesUtilisateur
+	 */ 
+	public void ajouterReponseUtilisateur(String repAAjouter) {
+		this.reponsesUtilisateur.add(repAAjouter);
+	}
+	
+	
+	/**
+	 * Passe à la question suivante en sauvegardant la réponses de 
+	 * l'utilisateur.
+	 * Si l'utilisateur passe la question, une String vide sera rajoutée
+	 * dans la liste reponsesUtilisateur
+	 */
+	public void passerQuestionCourante() {
+		this.indiceQuestionCourante +=1;
 	}
 
 	/** non javadoc - @see {@link java.util.Objects#toString()}. */
