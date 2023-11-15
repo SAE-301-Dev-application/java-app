@@ -8,7 +8,8 @@ package info2.sae301.quiz.modeles.tests;
 import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -104,7 +105,7 @@ class TestParametresPartie {
 		parametresTest.setCategoriesSelectionnees(categories2);
 		parametresTest.setDifficulteQuestions(1);
 		
-		assertThrows(IllegalArgumentException.class, () -> {
+		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
 		    parametresTest.aAssezQuestions();
 	    });
 		
@@ -120,7 +121,7 @@ class TestParametresPartie {
 		parametresTest.setCategoriesSelectionnees(categories2);
 		parametresTest.setNombreQuestions(5);
 		
-		assertThrows(NumberFormatException.class, () -> {
+		assertThrows(NbInsuffisantQuestionsException.class, () -> {
 		    parametresTest.aAssezQuestions();
 	    });
 	}
