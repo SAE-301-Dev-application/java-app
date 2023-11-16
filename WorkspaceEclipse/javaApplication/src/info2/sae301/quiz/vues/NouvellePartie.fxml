@@ -62,7 +62,7 @@
                         </VBox>
                         <VBox prefHeight="258.0" prefWidth="348.0">
                            <children>
-                              <Label styleClass="label-champ" text="    Difficultés :" />
+                              <Label styleClass="label-champ" text="    Difficulté :" />
                               <VBox prefHeight="243.0" prefWidth="344.0">
                                  <children>
                                     <CheckBox fx:id="checkBoxDifficulteIndifferent" mnemonicParsing="false" styleClass="label-champ" text="Indifférent" />
@@ -112,7 +112,7 @@
                               <VBox fx:id="listeCategories" prefHeight="265.0" prefWidth="389.0" styleClass="partie-droite" />
                            </content>
                         </ScrollPane>
-                        <Label styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
+                        <Label fx:id="indicationNbQuestions" styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
                      </children>
                   </VBox>
                </children>

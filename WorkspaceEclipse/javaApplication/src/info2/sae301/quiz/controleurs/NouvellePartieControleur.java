@@ -19,6 +19,7 @@ import info2.sae301.quiz.modeles.ParametresPartie;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
@@ -39,6 +40,9 @@ public class NouvellePartieControleur {
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
+	
+	private static final String INDICATION_NB_QUESTIONS
+	= "Total de questions%s dans les catégories sélectionnées : %d";
 	
 	/** Indice du niveau de difficulté "Indifférent". */
 	private static final int DIFFICULTE_INDIFFERENT = 0;
@@ -90,9 +94,6 @@ public class NouvellePartieControleur {
 	/** Catégories sélectionnées pour le futur quiz. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
-	/** Instance des paramètres de la future partie. */
-	private ParametresPartie parametres;
-	
 	/** Checkbox "5 questions". */
 	@FXML
 	private CheckBox checkBox5Questions;
@@ -126,8 +127,10 @@ public class NouvellePartieControleur {
 	private VBox listeCategories;
 	
 	@FXML
+	private Label indicationNbQuestions;
+	
+	@FXML
 	private void initialize() {
-		this.parametres = Quiz.partieCourante.getParametresPartie();
 		
 		/*
 		 * Valeurs par défaut :
@@ -138,6 +141,14 @@ public class NouvellePartieControleur {
 		this.choixNombreQuestions(5);
 		this.choixDifficulte(0);
 		this.categoriesSelectionnees = new ArrayList<>();
+		
+		/*
+		 * Affichage indication du nombre de questions sélectionnées
+		 */
+		
+		indicationNbQuestions.setText(
+		    String.format(INDICATION_NB_QUESTIONS,
+		    		      ParametresPartie.texteDifficulte(difficulte), 0));
 		
 		/*
 		 * Choix du nombre de questions.
@@ -195,6 +206,21 @@ public class NouvellePartieControleur {
 	
 	
 	/**
+	 * Met à jour l'indication du nombre de questions
+	 * dans les catégories sélectionnées.
+	 */
+	private void majNombreQuestionsCategories() {
+		indicationNbQuestions.setText(
+		    String.format(INDICATION_NB_QUESTIONS,
+		    		      ParametresPartie.texteDifficulte(difficulte),
+		    		      ParametresPartie
+		    		      .recupQuestionsValides(this.difficulte,
+		    		    		                 this.categoriesSelectionnees)
+		    		      .size()));
+}
+	
+	
+	/**
 	 * Choix du nombre de questions pour le quiz.
 	 */
 	private void choixNombreQuestions(int nombre) {
@@ -243,6 +269,7 @@ public class NouvellePartieControleur {
 		} else {
 			this.categoriesSelectionnees.add(categorieConcernee);
 		}
+		majNombreQuestionsCategories();
 	}
 	
 	
