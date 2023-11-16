@@ -312,11 +312,12 @@ public class NouvellePartieControleur {
 			lancerPartie = true;
 			
 		} catch (AucuneQuestionCorrespondanteException e) {
-			AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+			AlerteControleur.autreAlerte(e.getMessage(), "Aucune question correspondante",
+					                     AlertType.ERROR);
 			
 		} catch (NbInsuffisantQuestionsException e) {
 			lancerPartie 
-			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+			= AlerteControleur.alerteConfirmation(e.getMessage(), "Pas assez de questions");
 			
 		} catch (DifficulteInvalideException e) {
 			erreurDifficulte();
