@@ -205,11 +205,12 @@ public class ParametresPartie {
 		
 		switch (nombreQuestions) {
 		case 20:
-			questionsValides.subList(0, 20).clear();
+			questionsValides.subList(0, 20);
 		case 10:
-			questionsValides.subList(0, 10).clear();
+			questionsValides.subList(0, 10);
 		case 5:
-			questionsValides.subList(0, 5).clear();
+			questionsValides.subList(0, 5);
+		default:
 		}
 		return questionsValides;
 	}
