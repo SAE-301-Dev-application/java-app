@@ -41,7 +41,6 @@ public class PartieEnCours {
 		
 		setQuestionsProposees(new ArrayList<Question>());
 		this.reponsesUtilisateur = new ArrayList<String>();
-		setParametresPartie(new ParametresPartie());
 		setIndiceQuestionCourante(0);
 	}
 	
