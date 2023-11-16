@@ -9,6 +9,7 @@ import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Les paramètres d'une partie de jeu.
@@ -82,7 +83,7 @@ public class ParametresPartie {
 	public void aAssezQuestions()
 	throws IllegalArgumentException, NumberFormatException {
 		final int NOMBRE_QUESTIONS
-		= choisirQuestionsProposees().size();
+		= choisirQuestionsProposees(recupQuestionsValides()).size();
 		
 		final String MOINS_QUESTIONS
 		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
@@ -120,12 +121,12 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Choisis en fonction des paramètres de la partie courante des questions
+	 * Récupère en fonction des paramètres de la partie courante des questions
 	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
 	 * 
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
-	public ArrayList<Question> choisirQuestionsProposees() {
+	public ArrayList<Question> recupQuestionsValides() {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		
 		for (Categorie categorie : this.categoriesSelectionnees) {
@@ -141,6 +142,30 @@ public class ParametresPartie {
 		    }
 		}
 		return questions;
+	}
+	
+	
+	/**
+	 * Mélange la liste des questions correspondantes aux paramètres et 
+	 * ne récupère que le nombre de questions autorisé et choisi par
+	 * l'utilisateur
+	 * 
+	 * @return La liste des questions correspondantes aux paramètres.
+	 */
+	public ArrayList<Question> choisirQuestionsProposees(
+			ArrayList<Question> questionsValides) {
+		
+		Collections.shuffle(questionsValides);
+		
+		switch (nombreQuestions) {
+		case 20:
+			questionsValides.subList(0, 20).clear();
+		case 10:
+			questionsValides.subList(0, 10).clear();
+		case 5:
+			questionsValides.subList(0, 5).clear();
+		}
+		return questionsValides;
 	}
 
 	
