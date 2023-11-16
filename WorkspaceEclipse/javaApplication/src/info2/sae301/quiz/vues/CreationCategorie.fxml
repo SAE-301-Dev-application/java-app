@@ -17,14 +17,7 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="139.0" layoutY="65.0" text="CRÉATION CATÉGORIE">
-         <stylesheets>
-            <URL value="@application.css" />
-         </stylesheets>
-         <styleClass>
-            <String fx:value="titre" />
-            <String fx:value="titre-long" />
-         </styleClass></Label>
+      <Label layoutX="196.0" layoutY="65.0" styleClass="titre-long" text="CRÉATION CATÉGORIE" />
       <VBox layoutX="36.0" layoutY="105.0" prefHeight="394.0" prefWidth="728.0">
          <children>
             <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@application.css" />

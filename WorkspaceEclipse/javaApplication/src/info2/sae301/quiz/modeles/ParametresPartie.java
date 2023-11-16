@@ -7,8 +7,11 @@ package info2.sae301.quiz.modeles;
 
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
+import info2.sae301.quiz.exceptions.DifficulteInvalideException;
+import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Les paramètres d'une partie de jeu.
@@ -24,7 +27,18 @@ import java.util.ArrayList;
  */
 public class ParametresPartie {
 
-	/** TODO javadoc */
+	public static final String DIFFICULTE_INVALIDE
+	= """
+	  La difficulté sélectionnée est invalide.
+	  
+	  Les difficultés existantes sont :
+	  0. Indifférent
+	  1. Facile
+	  2. Moyen
+	  3. Difficile
+	  """;
+	
+	/** Les catégories de questions sélectionnées. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
 	/**
@@ -53,9 +67,9 @@ public class ParametresPartie {
 	 * indifférente et 10 questions affichées dans le jeu par défaut.
 	 */
 	public ParametresPartie() {
-		this.categoriesSelectionnees = new ArrayList<Categorie>();
-		this.difficulteQuestions = 0; // Indifférente
-		this.nombreQuestions = 5;
+		setCategoriesSelectionnees(new ArrayList<Categorie>());
+		setDifficulteQuestions(0); // Indifférente
+		setNombreQuestions(5);
 	}
 	
 	
@@ -120,12 +134,12 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Choisis en fonction des paramètres de la partie courante des questions
+	 * Récupère en fonction des paramètres de la partie courante des questions
 	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
 	 * 
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
-	public ArrayList<Question> choisirQuestionsProposees() {
+	public ArrayList<Question> recupQuestionsValides() {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		
 		for (Categorie categorie : this.categoriesSelectionnees) {
@@ -141,6 +155,29 @@ public class ParametresPartie {
 		    }
 		}
 		return questions;
+	}
+	
+	
+	/**
+	 * Mélange la liste des questions correspondantes aux paramètres et 
+	 * ne récupère que le nombre de questions autorisé et choisi par
+	 * l'utilisateur
+	 * 
+	 * @return La liste des questions correspondantes aux paramètres.
+	 */
+	public ArrayList<Question> choisirQuestionsProposees() {
+		ArrayList<Question> questionsValides = recupQuestionsValides();
+		Collections.shuffle(questionsValides);
+		
+		switch (nombreQuestions) {
+		case 20:
+			questionsValides.subList(0, 20).clear();
+		case 10:
+			questionsValides.subList(0, 10).clear();
+		case 5:
+			questionsValides.subList(0, 5).clear();
+		}
+		return questionsValides;
 	}
 
 	
@@ -164,23 +201,12 @@ public class ParametresPartie {
 	
 	/**
 	 * @param difficulteQuestions La difficulté des questions à proposer.
-	 * @throws IllegalArgumentException si la difficulté est invalide.
+	 * @throws DifficulteInvalideException si la difficulté est invalide.
 	 */
 	public void setDifficulteQuestions(int difficulteQuestions)
-	throws IllegalArgumentException {
-		final String DIFFICULTE_INVALIDE
-		= """
-		  La difficulté sélectionnée est invalide.
-		  
-		  Les difficultés existantes sont :
-		  0. Indifférent
-		  1. Facile
-		  2. Moyen
-		  3. Difficile
-		  """;
-		
+	throws DifficulteInvalideException {
 		if (difficulteQuestions < 0 || difficulteQuestions > 3) {
-			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
+			throw new DifficulteInvalideException(DIFFICULTE_INVALIDE);
 		}
 		this.difficulteQuestions = difficulteQuestions;
 	}
@@ -194,11 +220,11 @@ public class ParametresPartie {
 	
 	/**
 	 * @param nombreQuestions Le nombre de questions à proposer.
-	 * @throws IllegalArgumentException si le nombre de questions
+	 * @throws NombreQuestionsInvalideException si le nombre de questions
 	 * n'est pas 5, 10 ou 20.
 	 */
 	public void setNombreQuestions(int nombreQuestions)
-	throws IllegalArgumentException {
+	throws NombreQuestionsInvalideException {
 		final String NOMBRE_INVALIDE
 		= """
 		  Le nombre de questions sélectionné est invalide.
@@ -208,7 +234,7 @@ public class ParametresPartie {
 		
 		if (nombreQuestions != 5 && nombreQuestions != 10
 		    && nombreQuestions != 20) {
-			throw new IllegalArgumentException(NOMBRE_INVALIDE);
+			throw new NombreQuestionsInvalideException(NOMBRE_INVALIDE);
 		}
 		this.nombreQuestions = nombreQuestions;
 	}

@@ -17,6 +17,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
 
@@ -44,11 +45,14 @@ class TestParametresPartie {
 	
 	private ArrayList<Categorie> categorie2 = new ArrayList<Categorie>();
 	
+	private ArrayList<Categorie> categorie3 = new ArrayList<Categorie>();
+	
 	@BeforeEach
 	void init() {
 		parametresTest = new ParametresPartie();
 		categorie1 = new ArrayList<Categorie>();
 		categorie2 = new ArrayList<Categorie>();
+		categorie3 = new ArrayList<Categorie>();
 		
 		for (String nom : nomsCategories) {
 			categorie1.add(new Categorie(nom));
@@ -105,28 +109,151 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testAAssezQuestions() {
-		parametresTest.setCategoriesSelectionnees(categorie2);
+		
+		parametresTest.setCategoriesSelectionnees(categorie3);
 		parametresTest.setDifficulteQuestions(1);
 		
 		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
 		    parametresTest.aAssezQuestions();
 	    });
 		
+		parametresTest.setDifficulteQuestions(2);
+		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		parametresTest.setDifficulteQuestions(3);
+		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		parametresTest.setDifficulteQuestions(0);
+		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		parametresTest.setNombreQuestions(5);
+		
 		Categorie categorie = new Categorie("TestCate");
-		Question question
-		= new Question("questiontest", "rjuste",
+		Question question1
+		= new Question("questiontest1", "rjuste",
 			           new String[] {"rf0", "rf1", "rf2", "rf3"},
 			           1, categorie);
 		
-		categorie.ajouterQuestion(question);
+		categorie.ajouterQuestion(question1);
 		
-		categorie2.add(categorie);
-		parametresTest.setCategoriesSelectionnees(categorie2);
-		parametresTest.setNombreQuestions(5);
+		categorie3.add(categorie);
+		parametresTest.setCategoriesSelectionnees(categorie3);
+		
 		
 		assertThrows(NbInsuffisantQuestionsException.class, () -> {
 		    parametresTest.aAssezQuestions();
 	    });
+		
+		Question question2
+		= new Question("questiontest2", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		Question question3
+		= new Question("questiontest3", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		Question question4
+		= new Question("questiontest4", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           3, categorie);
+		
+		Question question5
+		= new Question("questiontest5", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		categorie.ajouterQuestion(question2);
+		categorie.ajouterQuestion(question3);
+		categorie.ajouterQuestion(question4);
+		categorie.ajouterQuestion(question5);
+		
+		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		
+		Question question6
+		= new Question("questiontest6", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		Question question7
+		= new Question("questiontest7", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		Question question8
+		= new Question("questiontest8", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		Question question9
+		= new Question("questiontest9", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		categorie.ajouterQuestion(question6);
+		categorie.ajouterQuestion(question7);
+		categorie.ajouterQuestion(question8);
+		categorie.ajouterQuestion(question9);
+		
+		parametresTest.setDifficulteQuestions(1);
+		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		
+		parametresTest.setDifficulteQuestions(2);
+		assertThrows(NbInsuffisantQuestionsException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		parametresTest.setDifficulteQuestions(3);
+		assertThrows(NbInsuffisantQuestionsException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		question6
+		= new Question("questiontest6", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		question7
+		= new Question("questiontest7", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		question8
+		= new Question("questiontest8", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           2, categorie);
+		
+		question9
+		= new Question("questiontest9", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           1, categorie);
+		
+		categorie.ajouterQuestion(question6);
+		categorie.ajouterQuestion(question7);
+		categorie.ajouterQuestion(question8);
+		categorie.ajouterQuestion(question9);
+		
+		parametresTest.setDifficulteQuestions(2);
+		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		
+		parametresTest.setDifficulteQuestions(1);
+		assertThrows(NbInsuffisantQuestionsException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		parametresTest.setDifficulteQuestions(3);
+		assertThrows(NbInsuffisantQuestionsException.class, () -> {
+		    parametresTest.aAssezQuestions();
+	    });
+		
+		
 	}
 	
 	

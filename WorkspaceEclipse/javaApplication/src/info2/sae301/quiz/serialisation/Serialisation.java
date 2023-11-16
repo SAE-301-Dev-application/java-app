@@ -1,6 +1,6 @@
 package info2.sae301.quiz.serialisation;
 
-import java.io.FileInputStream;
+import java.io.FileInputStream; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;

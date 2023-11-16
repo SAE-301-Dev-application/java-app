@@ -39,10 +39,16 @@ public class PartieEnCours {
 	 */
 	public PartieEnCours() {
 		
-		this.questionsProposees = new ArrayList<Question>();
+		setQuestionsProposees(new ArrayList<Question>());
 		this.reponsesUtilisateur = new ArrayList<String>();
-		this.parametresPartie = new ParametresPartie();
-		this.indiceQuestionCourante = 0;
+		setParametresPartie(new ParametresPartie());
+		setIndiceQuestionCourante(0);
+	}
+	
+	
+	/** @return l'ArrayList des questions proposées pour la partie en cours */
+	public ArrayList<Question> getQuestionsProposees() {
+		return questionsProposees;
 	}
 	
 	
@@ -51,18 +57,6 @@ public class PartieEnCours {
 		this.questionsProposees = questionsProposees;
 	}
 	
-	
-	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
-	public void melangerQuestionsProposees() {
-		 Collections.shuffle(questionsProposees);
-	}
-
-	
-	/** @return l'ArrayList des questions proposées pour la partie en cours */
-	public ArrayList<Question> getQuestionsProposees() {
-		return questionsProposees;
-	}
-
 	
 	/** @return l'ArrayList des réponses actuelles de l'utilisateur */
 	public ArrayList<String> getReponsesUtilisateur() {
@@ -73,6 +67,12 @@ public class PartieEnCours {
 	/** @return l'instance de ParametresPartie */
 	public ParametresPartie getParametresPartie() {
 		return parametresPartie;
+	}
+	
+	
+	/** @param parametres Les nouveaux paramètres. */
+	public void setParametresPartie(ParametresPartie parametres) {
+		this.parametresPartie = parametres;
 	}
 	
 	
@@ -88,9 +88,9 @@ public class PartieEnCours {
 	}
 	
 	
-	/** @param parametres Les nouveaux paramètres. */
-	public void setParametresPartie(ParametresPartie parametres) {
-		this.parametresPartie = parametres;
+	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
+	public void melangerQuestionsProposees() {
+		 Collections.shuffle(questionsProposees);
 	}
 	
 	

@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.exceptions.DifficulteInvalideException;
+import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
+
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
@@ -37,7 +41,7 @@ public class NouvellePartieControleur {
 	= """
 	  Le nombre de questions sélectionné est invalide.
 	  
-	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
+	  Le nombre de questions à proposer doit être 5, 10 ou 20.
 	  """;
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
@@ -207,6 +211,7 @@ public class NouvellePartieControleur {
 		}
 	}
 	
+	
 	/**
 	 * Choix du nombre de questions pour le quiz.
 	 */
@@ -222,6 +227,7 @@ public class NouvellePartieControleur {
 		}
 	}
 
+	
 	/**
 	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
 	 */
@@ -245,10 +251,9 @@ public class NouvellePartieControleur {
 			this.checkBoxDifficulteFacile.setSelected(checkBoxDifficulteFacile);
 			this.checkBoxDifficulteMoyen.setSelected(checkBoxDifficulteMoyen);
 			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);
-			
-			this.parametres.setDifficulteQuestions(difficulte);
 		}
 	}
+	
 	
 	private void selectionCategorie(Categorie categorieConcernee) {
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
@@ -258,21 +263,28 @@ public class NouvellePartieControleur {
 		}
 	}
 	
+	
 	@FXML
 	private void actionBoutonAide() {
 		//AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
+	
 	
 	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
+	
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
-	
-		try {	
+		lancerPartie = false;
+		
+		try {
+			this.parametres.setNombreQuestions(this.nombreQuestions);	
+			this.parametres.setDifficulteQuestions(this.difficulte);
+			this.parametres.setDifficulteQuestions(difficulte);
 			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 			this.parametres.aAssezQuestions();
 			lancerPartie = true;
@@ -282,20 +294,13 @@ public class NouvellePartieControleur {
 		} catch (NbInsuffisantQuestionsException e) {
 			lancerPartie 
 			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+		} catch (DifficulteInvalideException e) {
+			erreurDifficulte(e.getMessage());
+		} catch (NombreQuestionsInvalideException e) {
+			erreurNombreQuestions(e.getMessage());
 		}
 		
 		if (lancerPartie) {
-			try {
-				this.parametres.setNombreQuestions(this.nombreQuestions);					
-			} catch(IllegalArgumentException e) {
-				erreurNombreQuestions(e.getMessage());
-			}
-			
-			try {
-				this.parametres.setDifficulteQuestions(this.difficulte);
-			} catch(IllegalArgumentException e) {
-				erreurDifficulte(e.getMessage());
-			}
 
 			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
 			Quiz.partieCourante.melangerQuestionsProposees();
