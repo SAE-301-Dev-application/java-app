@@ -43,7 +43,7 @@
          </styleClass></Label>
       <VBox layoutX="226.0" layoutY="233.0" prefHeight="323.0" prefWidth="354.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#actionBoutonJouer" text="       JOUER">
+            <Button mnemonicParsing="false" onAction="#actionBoutonJouer" text="     JOUER">
                <styleClass>
                   <String fx:value="bouton" />
                   <String fx:value="bouton-important" />
