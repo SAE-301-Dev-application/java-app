@@ -172,18 +172,22 @@ public class NouvellePartieControleur {
 		
 		this.checkBoxDifficulteIndifferent.setOnAction(event -> {
 			this.choixDifficulte(0);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteFacile.setOnAction(event -> {
 			this.choixDifficulte(1);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteMoyen.setOnAction(event -> {
 			this.choixDifficulte(2);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteDifficile.setOnAction(event -> {
 			this.choixDifficulte(3);
+			majNombreQuestionsCategories();
 		});
 		
 		/*
@@ -210,13 +214,22 @@ public class NouvellePartieControleur {
 	 * dans les catégories sélectionnées.
 	 */
 	private void majNombreQuestionsCategories() {
-		indicationNbQuestions.setText(
-		    String.format(INDICATION_NB_QUESTIONS,
-		    		      ParametresPartie.texteDifficulte(difficulte),
-		    		      ParametresPartie
-		    		      .recupQuestionsValides(this.difficulte,
-		    		    		                 this.categoriesSelectionnees)
-		    		      .size()));
+		String texteDifficulte = ParametresPartie.texteDifficulte(difficulte);
+		
+		if (!texteDifficulte.isEmpty()) {
+			texteDifficulte = " " + texteDifficulte + "s";
+		}
+		
+		String texteFinal
+		= (difficulte != 0 ? " " : "")
+		  + String.format(INDICATION_NB_QUESTIONS,
+				        texteDifficulte,
+  		                ParametresPartie
+  		                .recupQuestionsValides(this.difficulte,
+	    		                               this.categoriesSelectionnees)
+  		                .size());
+		
+		indicationNbQuestions.setText(texteFinal);
 }
 	
 	
