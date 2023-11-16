@@ -10,7 +10,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class PartieEnCoursControleur {
@@ -57,6 +56,8 @@ public class PartieEnCoursControleur {
 	
 	private Question questionCourante;
 	
+	private ArrayList<CheckBox> touteslesCheckboxReponses;
+	
 	@FXML
 	private void initialize() {
 		//Initialisation des données
@@ -92,8 +93,23 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonValider() {
-		partieCourante.passerQuestionSuivante();
-		NavigationControleur.changerVue("PartieEnCours.fxml");
+		int nbReponseCocher = 0;
+		String reponseUtilisateur = "";
+		for (CheckBox reponse : touteslesCheckboxReponses) {
+			if (reponse.isSelected()) {
+				reponseUtilisateur = reponse.getText();
+				nbReponseCocher++;
+			}
+		}
+		if (nbReponseCocher == 1 || nbReponseCocher == 0) {
+			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+			partieCourante.passerQuestionSuivante();
+			NavigationControleur.changerVue("PartieEnCours.fxml");
+		} else {
+			AlerteControleur.autreAlerte("Cocher 1 ou aucune réponse",
+					"Problème validation réponse", AlertType.ERROR);
+		}
+		
 	}
 	
 	/**
@@ -140,11 +156,14 @@ public class PartieEnCoursControleur {
 	 */
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
+		touteslesCheckboxReponses = new ArrayList<CheckBox>();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
-		for (String reponse : reponsesMelange) {
-			CheckBox afficherReponse = new CheckBox(reponse);
+		for (int i = 0; i < reponsesMelange.size(); i++) {
+			CheckBox afficherReponse = new CheckBox(reponsesMelange.get(i));
+			afficherReponse.setId("" + i);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
+			touteslesCheckboxReponses.add(afficherReponse);
 		}
 	}
 	
@@ -155,8 +174,8 @@ public class PartieEnCoursControleur {
 	 * à la dernière question de la partie
 	 */
 	private void initBoutonsPrecedentSuivant() {
-//		System.out.println(partieCourante.getIndiceQuestionCourante());
-//		System.out.println(partieCourante.getQuestionsProposees().size() -1);
+		System.out.println(partieCourante.getIndiceQuestionCourante());
+		System.out.println(partieCourante.getQuestionsProposees().size() -1);
 		if (partieCourante.getIndiceQuestionCourante() == 0) {
 			boutonPrecedent.setVisible(false);
 		}
