@@ -19,6 +19,7 @@ import info2.sae301.quiz.modeles.ParametresPartie;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
@@ -39,6 +40,9 @@ public class NouvellePartieControleur {
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
+	
+	private static final String INDICATION_NB_QUESTIONS
+	= "Total de questions%s dans les catégories sélectionnées : %d";
 	
 	/** Indice du niveau de difficulté "Indifférent". */
 	private static final int DIFFICULTE_INDIFFERENT = 0;
@@ -90,9 +94,6 @@ public class NouvellePartieControleur {
 	/** Catégories sélectionnées pour le futur quiz. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
-	/** Instance des paramètres de la future partie. */
-	private ParametresPartie parametres;
-	
 	/** Checkbox "5 questions". */
 	@FXML
 	private CheckBox checkBox5Questions;
@@ -126,8 +127,10 @@ public class NouvellePartieControleur {
 	private VBox listeCategories;
 	
 	@FXML
+	private Label indicationNbQuestions;
+	
+	@FXML
 	private void initialize() {
-		this.parametres = Quiz.partieCourante.getParametresPartie();
 		
 		/*
 		 * Valeurs par défaut :
@@ -138,6 +141,14 @@ public class NouvellePartieControleur {
 		this.choixNombreQuestions(5);
 		this.choixDifficulte(0);
 		this.categoriesSelectionnees = new ArrayList<>();
+		
+		/*
+		 * Affichage indication du nombre de questions sélectionnées
+		 */
+		
+		indicationNbQuestions.setText(
+		    String.format(INDICATION_NB_QUESTIONS,
+		    		      ParametresPartie.texteDifficulte(difficulte), 0));
 		
 		/*
 		 * Choix du nombre de questions.
@@ -161,18 +172,22 @@ public class NouvellePartieControleur {
 		
 		this.checkBoxDifficulteIndifferent.setOnAction(event -> {
 			this.choixDifficulte(0);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteFacile.setOnAction(event -> {
 			this.choixDifficulte(1);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteMoyen.setOnAction(event -> {
 			this.choixDifficulte(2);
+			majNombreQuestionsCategories();
 		});
 		
 		this.checkBoxDifficulteDifficile.setOnAction(event -> {
 			this.choixDifficulte(3);
+			majNombreQuestionsCategories();
 		});
 		
 		/*
@@ -192,6 +207,30 @@ public class NouvellePartieControleur {
 			this.listeCategories.getChildren().add(checkBoxCategorie);
 		}
 	}
+	
+	
+	/**
+	 * Met à jour l'indication du nombre de questions
+	 * dans les catégories sélectionnées.
+	 */
+	private void majNombreQuestionsCategories() {
+		String texteDifficulte = ParametresPartie.texteDifficulte(difficulte);
+		
+		if (!texteDifficulte.isEmpty()) {
+			texteDifficulte = " " + texteDifficulte + "s";
+		}
+		
+		String texteFinal
+		= (difficulte != 0 ? " " : "")
+		  + String.format(INDICATION_NB_QUESTIONS,
+				        texteDifficulte,
+  		                ParametresPartie
+  		                .recupQuestionsValides(this.difficulte,
+	    		                               this.categoriesSelectionnees)
+  		                .size());
+		
+		indicationNbQuestions.setText(texteFinal);
+}
 	
 	
 	/**
@@ -243,6 +282,7 @@ public class NouvellePartieControleur {
 		} else {
 			this.categoriesSelectionnees.add(categorieConcernee);
 		}
+		majNombreQuestionsCategories();
 	}
 	
 	
@@ -272,11 +312,12 @@ public class NouvellePartieControleur {
 			lancerPartie = true;
 			
 		} catch (AucuneQuestionCorrespondanteException e) {
-			AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+			AlerteControleur.autreAlerte(e.getMessage(), "Aucune question correspondante",
+					                     AlertType.ERROR);
 			
 		} catch (NbInsuffisantQuestionsException e) {
 			lancerPartie 
-			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+			= AlerteControleur.alerteConfirmation(e.getMessage(), "Pas assez de questions");
 			
 		} catch (DifficulteInvalideException e) {
 			erreurDifficulte();
