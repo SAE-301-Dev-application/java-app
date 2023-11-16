@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -341,6 +342,48 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testChoisirQuestionsProposees() {
+		Categorie categorieTest = new Categorie("Test");
+		for (int i = 0; i <= 9; i++) {
+			Question question1
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       1, categorieTest);
+			
+			categorieTest.ajouterQuestion(question1);
+		}
+		categorie3.add(categorieTest);
+		parametresTest.setCategoriesSelectionnees(categorie3);
+		parametresTest.setDifficulteQuestions(1);
+		parametresTest.setNombreQuestions(10);
+		
+		ArrayList<Question> listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(10, listeQuestionsProposees.size());
+		for (int i = 0; i < categorieTest.getListeQuestions().size(); i++) {
+			boolean questionPresente = false;
+			for (int j = 0; j < categorieTest.getListeQuestions().size() && !questionPresente; j++) {
+				if (listeQuestionsProposees.get(i) == categorieTest.getListeQuestions().get(j)) {
+					questionPresente = true;
+				}
+			}
+			assertTrue(questionPresente);
+		}
+		parametresTest.setNombreQuestions(5);
+		listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(5, listeQuestionsProposees.size());
+		for (int i = 0; i < listeQuestionsProposees.size(); i++) {
+			assertTrue(categorieTest.getListeQuestions().contains(listeQuestionsProposees.get(i)));
+		}
+		
+		parametresTest.setNombreQuestions(20);
+		listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(10, listeQuestionsProposees.size());
+		for (int i = 0; i < listeQuestionsProposees.size(); i++) {
+			assertTrue(categorieTest.getListeQuestions().contains(listeQuestionsProposees.get(i)));
+		}
+		
+		
+		
+		
 		
 	}
 	
