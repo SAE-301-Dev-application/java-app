@@ -300,12 +300,21 @@ class TestParametresPartie {
 		parametresTest.setCategoriesSelectionnees(categorie1);
 		parametresTest.setDifficulteQuestions(0);
 		
-		assertEquals(nomsCategories.length, parametresTest.recupQuestionsValides().size());
+		assertEquals(nomsCategories.length,
+				     ParametresPartie.recupQuestionsValides(parametresTest
+				    		                                .getDifficulteQuestions(),
+				    		                                parametresTest
+				    		                                .getCategoriesSelectionnees())
+				                                            .size());
 		
 		parametresTest.setCategoriesSelectionnees(categorie2);
 		parametresTest.setDifficulteQuestions(1);
 		
-		assertTrue(parametresTest.recupQuestionsValides().isEmpty());
+		assertTrue(ParametresPartie.recupQuestionsValides(parametresTest
+											              .getDifficulteQuestions(),
+											              parametresTest
+											              .getCategoriesSelectionnees())
+											              .isEmpty());
 		
 		Categorie categorie = new Categorie("TestCate");
 		Question question
@@ -318,7 +327,11 @@ class TestParametresPartie {
 		categorie2.add(categorie);
 		parametresTest.setCategoriesSelectionnees(categorie2);
 		
-		assertEquals(1, parametresTest.recupQuestionsValides().size());
+		assertEquals(1, ParametresPartie.recupQuestionsValides(parametresTest
+												               .getDifficulteQuestions(),
+												               parametresTest
+												               .getCategoriesSelectionnees())
+												               .size());
 	}
 	
 	

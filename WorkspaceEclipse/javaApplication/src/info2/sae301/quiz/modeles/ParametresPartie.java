@@ -117,6 +117,35 @@ public class ParametresPartie {
 	
 	
 	/**
+	 * Accès à un texte de difficulté grâce à son indice de difficulté.
+	 * 
+	 * @param difficulte Indice de difficulté.
+	 * @return le texte indiquant la difficulté.
+	 */
+	public static String texteDifficulte(int difficulte) {
+		String texte;
+		
+		switch (difficulte) {
+		default:
+		case 0:
+			texte = "";
+			break;
+		case 1:
+			texte = "facile";
+			break;
+		case 2:
+			texte = "moyenne";
+			break;
+		case 3:
+			texte = "difficile";
+			break;
+		}
+		
+		return texte;
+	}
+	
+	
+	/**
 	 * Vérification du fait qu'il y ait assez de questions dont la difficulté est
 	 * difficulteQuestions dans les catégories sélectionnées afin
 	 * d'afficher nombreQuestions questions.
@@ -128,28 +157,17 @@ public class ParametresPartie {
 	public void aAssezQuestions()
 	throws IllegalArgumentException, NumberFormatException {
 		final int NOMBRE_QUESTIONS
-		= recupQuestionsValides().size();
+		= recupQuestionsValides(this.difficulteQuestions,
+				                this.categoriesSelectionnees).size();
 
 		
 		final String MOINS_QUESTIONS
 		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
 		  + "critères. Souhaitez-vous tout de même jouer ?";
 		
-		String texteDifficulte;
-		switch (this.difficulteQuestions) {
-		default:
-		case 0:
-			texteDifficulte = "";
-			break;
-		case 1:
-			texteDifficulte = "dont la difficulté est facile";
-			break;
-		case 2:
-			texteDifficulte = "dont la difficulté est moyenne";
-			break;
-		case 3:
-			texteDifficulte = "dont la difficulté est difficile";
-			break;
+		String texteDifficulte = texteDifficulte(this.difficulteQuestions);
+		if (!texteDifficulte.isEmpty()) {
+			texteDifficulte = " dont la difficulté est " + texteDifficulte;
 		}
 		
 		String AUCUNE_QUESTION
@@ -170,18 +188,22 @@ public class ParametresPartie {
 	 * Récupère en fonction des paramètres de la partie courante des questions
 	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
 	 * 
+	 * @param difficulte La difficulté des questions à récupérer.
+	 * @param categories Les catégories desquelles récupérer les questions.
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
-	public ArrayList<Question> recupQuestionsValides() {
+	public static ArrayList<Question> recupQuestionsValides(int difficulte,
+													        ArrayList<Categorie>
+	                                                        categories) {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		
-		for (Categorie categorie : this.categoriesSelectionnees) {
-			if (difficulteQuestions == 0) {
+		for (Categorie categorie : categories) {
+			if (difficulte == 0) {
 				questions.addAll(categorie.getListeQuestions());
 			} else {
 				// Recherche des questions dont la difficulté est en paramètre.
 				for (Question question : categorie.getListeQuestions()) {
-					if (question.getDifficulte() == this.getDifficulteQuestions()) {
+					if (question.getDifficulte() == difficulte) {
 						questions.add(question);
 					}
 				}
@@ -199,7 +221,9 @@ public class ParametresPartie {
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
 	public ArrayList<Question> choisirQuestionsProposees() {
-		ArrayList<Question> questionsValides = recupQuestionsValides();
+		ArrayList<Question> questionsValides
+		= recupQuestionsValides(this.difficulteQuestions,
+								this.categoriesSelectionnees);
 		
 		Collections.shuffle(questionsValides);
 		
