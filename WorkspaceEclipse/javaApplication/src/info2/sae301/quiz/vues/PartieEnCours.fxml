@@ -31,8 +31,8 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonValider" styleClass="bouton" text="VALIDER" />
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" styleClass="bouton" text="PRÉCÉDENT" />
+      <Button fx:id="boutonValider" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonValider" styleClass="bouton" text="VALIDER" />
+      <Button fx:id="boutonPrecedent" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" styleClass="bouton" text="PRÉCÉDENT" />
       <Button layoutX="630.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionBoutonAbandonner" prefHeight="51.0" prefWidth="169.0" text="ABANDONNER">
          <styleClass>
             <String fx:value="petit-bouton" />

@@ -109,8 +109,19 @@ public class PartieEnCours {
 	 * Si l'utilisateur passe la question, une String vide sera rajoutée
 	 * dans la liste reponsesUtilisateur
 	 */
-	public void passerQuestionCourante() {
+	public void passerQuestionSuivante() {
 		this.indiceQuestionCourante +=1;
+	}
+	
+	
+	/**
+	 * Retour à la question précédente en sauvegardant la réponses de 
+	 * l'utilisateur.
+	 * Si l'utilisateur passe la question, une String vide sera rajoutée
+	 * dans la liste reponsesUtilisateur
+	 */
+	public void retourQuestionPrecedente() {
+		this.indiceQuestionCourante -=1;
 	}
 
 	

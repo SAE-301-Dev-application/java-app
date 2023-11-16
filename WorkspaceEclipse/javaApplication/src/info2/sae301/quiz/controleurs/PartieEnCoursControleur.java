@@ -7,6 +7,7 @@ import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -45,6 +46,12 @@ public class PartieEnCoursControleur {
 	@FXML
 	private VBox vBoxQuestionReponses;
 	
+	@FXML
+	private Button boutonPrecedent;
+	
+	@FXML
+	private Button boutonSuivant;
+	
 	private PartieEnCours partieCourante;
 	
 	private Question questionCourante;
@@ -59,6 +66,7 @@ public class PartieEnCoursControleur {
 		//Initialisation de la vue
 		initDifficulteQuestion();
 		initQuestionReponse();
+		initBoutonsPrecedentSuivant();
 	}
 	 
 
@@ -77,12 +85,14 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonPrecedent() {
-
+		partieCourante.retourQuestionPrecedente();
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
 	@FXML
 	private void actionBoutonValider() {
-		
+		partieCourante.passerQuestionSuivante();
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
 	/**
@@ -134,6 +144,19 @@ public class PartieEnCoursControleur {
 		for (String reponse : reponsesMelange) {
 			Label afficherReponse = new Label(reponse);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
+		}
+	}
+	
+	private void initBoutonsPrecedentSuivant() {
+		System.out.println(partieCourante.getIndiceQuestionCourante());
+		System.out.println(partieCourante.getQuestionsProposees().size() -1);
+		if (partieCourante.getIndiceQuestionCourante() == 0) {
+			boutonPrecedent.setVisible(false);
+		}
+		
+		if (partieCourante.getIndiceQuestionCourante()
+				== partieCourante.getQuestionsProposees().size() -1) {
+			boutonSuivant.setVisible(false);
 		}
 	}
 	
