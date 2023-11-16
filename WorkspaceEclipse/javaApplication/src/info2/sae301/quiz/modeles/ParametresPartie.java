@@ -53,9 +53,9 @@ public class ParametresPartie {
 	 * indifférente et 10 questions affichées dans le jeu par défaut.
 	 */
 	public ParametresPartie() {
-		this.categoriesSelectionnees = new ArrayList<Categorie>();
-		this.difficulteQuestions = 0; // Indifférente
-		this.nombreQuestions = 5;
+		setCategoriesSelectionnees(new ArrayList<Categorie>());
+		setDifficulteQuestions(0); // Indifférente
+		setNombreQuestions(5);
 	}
 	
 	
