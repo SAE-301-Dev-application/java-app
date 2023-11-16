@@ -13,6 +13,7 @@ import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Les paramètres d'une partie de jeu.
@@ -224,19 +225,12 @@ public class ParametresPartie {
 		ArrayList<Question> questionsValides
 		= recupQuestionsValides(this.difficulteQuestions,
 								this.categoriesSelectionnees);
-		
+
 		Collections.shuffle(questionsValides);
 		
-		switch (nombreQuestions) {
-		case 20:
-			questionsValides.subList(0, 20);
-		case 10:
-			questionsValides.subList(0, 10);
-		case 5:
-			questionsValides.subList(0, 5);
-		default:
-		}
-		return questionsValides;
+		return new ArrayList<>(questionsValides
+				               .subList(0, Math.min(questionsValides.size(),
+				                                    nombreQuestions)));
 	}
 
 	
