@@ -160,11 +160,6 @@ public class ParametresPartie {
 		final int NOMBRE_QUESTIONS
 		= recupQuestionsValides(this.difficulteQuestions,
 				                this.categoriesSelectionnees).size();
-
-		
-		final String MOINS_QUESTIONS
-		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
-		  + "critères. Souhaitez-vous tout de même jouer ?";
 		
 		String texteDifficulte = texteDifficulte(this.difficulteQuestions);
 		if (!texteDifficulte.isEmpty()) {
@@ -178,9 +173,6 @@ public class ParametresPartie {
 		
 		if (NOMBRE_QUESTIONS == 0) {
 			throw new AucuneQuestionCorrespondanteException(AUCUNE_QUESTION);
-		}
-		if (this.nombreQuestions > NOMBRE_QUESTIONS) {
-			throw new NbInsuffisantQuestionsException(MOINS_QUESTIONS);
 		}
 	}
 	
