@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
 public class PartieEnCoursControleur {
@@ -94,22 +95,15 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonValider() {
-		int nbReponseCocher = 0;
 		String reponseUtilisateur = "";
 		for (RadioButton reponse : touteslesCheckboxReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
-				nbReponseCocher++;
 			}
 		}
-		if (nbReponseCocher == 1 || nbReponseCocher == 0) {
-			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
-			partieCourante.passerQuestionSuivante();
-			NavigationControleur.changerVue("PartieEnCours.fxml");
-		} else {
-			AlerteControleur.autreAlerte("Cocher 1 ou aucune réponse",
-					"Problème validation réponse", AlertType.ERROR);
-		}
+		partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+		partieCourante.passerQuestionSuivante();
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 		
 	}
 	
@@ -120,12 +114,6 @@ public class PartieEnCoursControleur {
 	 */
 	private void initDifficulteQuestion() {
 		switch (questionCourante.getDifficulte()) {
-		//Si question Indifférente
-		case 0:
-			labelDifficulte.getStyleClass().add("questionIndifferente");
-			labelDifficulte.setText("Indifférente");
-			break;
-			
 		//Si question Facile
 		case 1:
 			labelDifficulte.getStyleClass().add("questionFacile");
@@ -158,11 +146,14 @@ public class PartieEnCoursControleur {
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
 		touteslesCheckboxReponses = new ArrayList<RadioButton>();
+		ToggleGroup radioGroupe = new ToggleGroup();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
 			RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
+			afficherReponse.getStyleClass().add("reponse");
 			afficherReponse.setId("" + i);
+			afficherReponse.setToggleGroup(radioGroupe);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesCheckboxReponses.add(afficherReponse);
 		}

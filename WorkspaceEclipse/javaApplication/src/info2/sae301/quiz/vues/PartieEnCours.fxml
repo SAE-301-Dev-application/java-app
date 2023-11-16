@@ -22,7 +22,7 @@
          <content>
             <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0" spacing="10.0">
                <children>
-                  <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleCategorieQuestion" text="intituleQuestion">
+                  <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleQuestion" text="intituleQuestion">
                      <VBox.margin>
                         <Insets bottom="60.0" top="15.0" />
                      </VBox.margin>
