@@ -96,7 +96,7 @@ public class ParametresPartie {
 	public void aAssezQuestions()
 	throws IllegalArgumentException, NumberFormatException {
 		final int NOMBRE_QUESTIONS
-		= choisirQuestionsProposees(recupQuestionsValides()).size();
+		= choisirQuestionsProposees().size();
 		
 		final String MOINS_QUESTIONS
 		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
@@ -165,9 +165,8 @@ public class ParametresPartie {
 	 * 
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
-	public ArrayList<Question> choisirQuestionsProposees(
-			ArrayList<Question> questionsValides) {
-		
+	public ArrayList<Question> choisirQuestionsProposees() {
+		ArrayList<Question> questionsValides = recupQuestionsValides();
 		Collections.shuffle(questionsValides);
 		
 		switch (nombreQuestions) {
