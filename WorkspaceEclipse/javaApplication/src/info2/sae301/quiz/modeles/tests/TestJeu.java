@@ -82,6 +82,7 @@ class TestJeu {
 		}
 	}
 	
+	
 	/**
 	 * Vérification que les listes en paramètre aient les mêmes catégories.
 	 * @param liste1 La première liste à vérifier.

@@ -128,7 +128,8 @@ public class ParametresPartie {
 	public void aAssezQuestions()
 	throws IllegalArgumentException, NumberFormatException {
 		final int NOMBRE_QUESTIONS
-		= choisirQuestionsProposees().size();
+		= recupQuestionsValides().size();
+
 		
 		final String MOINS_QUESTIONS
 		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
@@ -138,22 +139,22 @@ public class ParametresPartie {
 		switch (this.difficulteQuestions) {
 		default:
 		case 0:
-			texteDifficulte = "indifférente";
+			texteDifficulte = "";
 			break;
 		case 1:
-			texteDifficulte = "facile";
+			texteDifficulte = "dont la difficulté est facile";
 			break;
 		case 2:
-			texteDifficulte = "moyenne";
+			texteDifficulte = "dont la difficulté est moyenne";
 			break;
 		case 3:
-			texteDifficulte = "difficile";
+			texteDifficulte = "dont la difficulté est difficile";
 			break;
 		}
 		
 		String AUCUNE_QUESTION
-		= "Il n'y a aucune question dans les catégories sélectionnées dont "
-		  + "la difficulté est " + texteDifficulte + ".\n"
+		= "Il n'y a aucune question dans les catégories sélectionnées"
+		  + texteDifficulte + ".\n"
 		  + "Veuillez entrer d'autres paramètres ou créer des questions.";
 		
 		if (NOMBRE_QUESTIONS == 0) {
@@ -199,6 +200,7 @@ public class ParametresPartie {
 	 */
 	public ArrayList<Question> choisirQuestionsProposees() {
 		ArrayList<Question> questionsValides = recupQuestionsValides();
+		
 		Collections.shuffle(questionsValides);
 		
 		switch (nombreQuestions) {
