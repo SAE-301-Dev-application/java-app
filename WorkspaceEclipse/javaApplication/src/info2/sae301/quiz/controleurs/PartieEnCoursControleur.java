@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.VBox;
 
 public class PartieEnCoursControleur {
@@ -56,7 +57,7 @@ public class PartieEnCoursControleur {
 	
 	private Question questionCourante;
 	
-	private ArrayList<CheckBox> touteslesCheckboxReponses;
+	private ArrayList<RadioButton> touteslesCheckboxReponses;
 	
 	@FXML
 	private void initialize() {
@@ -95,7 +96,7 @@ public class PartieEnCoursControleur {
 	private void actionBoutonValider() {
 		int nbReponseCocher = 0;
 		String reponseUtilisateur = "";
-		for (CheckBox reponse : touteslesCheckboxReponses) {
+		for (RadioButton reponse : touteslesCheckboxReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
 				nbReponseCocher++;
@@ -156,11 +157,11 @@ public class PartieEnCoursControleur {
 	 */
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
-		touteslesCheckboxReponses = new ArrayList<CheckBox>();
+		touteslesCheckboxReponses = new ArrayList<RadioButton>();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
-			CheckBox afficherReponse = new CheckBox(reponsesMelange.get(i));
+			RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
 			afficherReponse.setId("" + i);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesCheckboxReponses.add(afficherReponse);
