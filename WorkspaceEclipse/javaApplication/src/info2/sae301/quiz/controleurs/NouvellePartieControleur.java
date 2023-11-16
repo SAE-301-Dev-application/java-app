@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.exceptions.DifficulteInvalideException;
+import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
+
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
@@ -33,16 +37,17 @@ public class NouvellePartieControleur {
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
 	= "Nombre incorrect de questions";
 	
-	private static final String ERREUR_NOMBRE_QUESTIONS_MESSAGE
+	private static final String NOMBRE_INVALIDE
 	= """
-	  Le nombre sélectionné de questions est incorrect. 
-	  Vous ne pouvez sélectionner que 5, 10 ou 20 questions.
+	  Le nombre de questions sélectionné est invalide.
+	  
+	  Le nombre de questions à proposer doit être 5, 10 ou 20.
 	  """;
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
 	
-	private static final String ERREUR_DIFFICULTE_MESSAGE
+	private static final String DIFFICULTE_INVALIDE
 	= """
 	  La difficulté sélectionnée est invalide.
 	  
@@ -72,8 +77,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
 	 */
-	private static void erreurNombreQuestions() {
-		AlerteControleur.autreAlerte(ERREUR_NOMBRE_QUESTIONS_MESSAGE, 
+	private static void erreurNombreQuestions(String messageErreur) {
+		AlerteControleur.autreAlerte(messageErreur, 
 				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -82,8 +87,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * La difficulté est invalide, inexistante.
 	 */
-	private static void erreurDifficulte() {
-		AlerteControleur.autreAlerte(ERREUR_DIFFICULTE_MESSAGE, 
+	private static void erreurDifficulte(String messageErreur) {
+		AlerteControleur.autreAlerte(messageErreur,
 				 					 ERREUR_DIFFICULTE_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -140,6 +145,8 @@ public class NouvellePartieControleur {
 	
 	@FXML
 	private void initialize() {
+		this.parametres = Quiz.partieCourante.getParametresPartie();
+		
 		/*
 		 * Valeurs par défaut :
 		 * - 5 questions
@@ -204,12 +211,13 @@ public class NouvellePartieControleur {
 		}
 	}
 	
+	
 	/**
 	 * Choix du nombre de questions pour le quiz.
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			erreurNombreQuestions();
+			erreurNombreQuestions(NOMBRE_INVALIDE);
 		} else {
 			this.nombreQuestions = nombre;
 
@@ -219,12 +227,13 @@ public class NouvellePartieControleur {
 		}
 	}
 
+	
 	/**
 	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
-			erreurDifficulte();
+			erreurDifficulte(DIFFICULTE_INVALIDE);
 		} else {
 			boolean checkBoxDifficulteIndifferent,
 					checkBoxDifficulteFacile,
@@ -241,9 +250,10 @@ public class NouvellePartieControleur {
 			this.checkBoxDifficulteIndifferent.setSelected(checkBoxDifficulteIndifferent);
 			this.checkBoxDifficulteFacile.setSelected(checkBoxDifficulteFacile);
 			this.checkBoxDifficulteMoyen.setSelected(checkBoxDifficulteMoyen);
-			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);		
+			this.checkBoxDifficulteDifficile.setSelected(checkBoxDifficulteDifficile);
 		}
 	}
+	
 	
 	private void selectionCategorie(Categorie categorieConcernee) {
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
@@ -253,21 +263,28 @@ public class NouvellePartieControleur {
 		}
 	}
 	
+	
 	@FXML
 	private void actionBoutonAide() {
 		//AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
+	
 	
 	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
+	
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie;
-	
-		try {	
+		lancerPartie = false;
+		
+		try {
+			this.parametres.setNombreQuestions(this.nombreQuestions);	
+			this.parametres.setDifficulteQuestions(this.difficulte);
+			this.parametres.setDifficulteQuestions(difficulte);
 			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 			this.parametres.aAssezQuestions();
 			lancerPartie = true;
@@ -277,32 +294,13 @@ public class NouvellePartieControleur {
 		} catch (NbInsuffisantQuestionsException e) {
 			lancerPartie 
 			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+		} catch (DifficulteInvalideException e) {
+			erreurDifficulte(e.getMessage());
+		} catch (NombreQuestionsInvalideException e) {
+			erreurNombreQuestions(e.getMessage());
 		}
 		
 		if (lancerPartie) {
-			try {
-				this.parametres.setNombreQuestions(this.nombreQuestions);					
-			} catch(IllegalArgumentException e) {
-				erreurNombreQuestions(e.getMessage());
-			}
-			
-		} else {
-			try {
-				this.parametres.aAssezQuestions();
-				lancerPartie = true;
-			} catch (AucuneQuestionCorrespondanteException e) {
-				AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
-			} catch (NbInsuffisantQuestionsException e) {
-				lancerPartie 
-				= AlerteControleur.alerteConfirmation(e.getMessage(), "Pas assez de questions");
-			}
-		}
-		
-		if (lancerPartie) {
-			this.parametres = new ParametresPartie();
-			this.parametres.setNombreQuestions(this.nombreQuestions);
-			this.parametres.setDifficulteQuestions(this.difficulte);
-			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
 
 			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
 			Quiz.partieCourante.melangerQuestionsProposees();
