@@ -35,28 +35,10 @@ import javafx.scene.layout.VBox;
 public class NouvellePartieControleur {
 	
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
-	= "Nombre incorrect de questions";
-	
-	private static final String NOMBRE_INVALIDE
-	= """
-	  Le nombre de questions sélectionné est invalide.
-	  
-	  Le nombre de questions à proposer doit être 5, 10 ou 20.
-	  """;
+	= "Nombre de questions incorrect";
 	
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
-	
-	private static final String DIFFICULTE_INVALIDE
-	= """
-	  La difficulté sélectionnée est invalide.
-	  
-	  Les difficultés existantes sont :
-	  0. Indifférent
-	  1. Facile
-	  2. Moyen
-	  3. Difficile
-	  """;
 	
 	/** Indice du niveau de difficulté "Indifférent". */
 	private static final int DIFFICULTE_INDIFFERENT = 0;
@@ -77,8 +59,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
 	 */
-	private static void erreurNombreQuestions(String messageErreur) {
-		AlerteControleur.autreAlerte(messageErreur, 
+	private static void erreurNombreQuestions() {
+		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
 				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -87,8 +69,8 @@ public class NouvellePartieControleur {
 	 * Affichage de l'erreur :
 	 * La difficulté est invalide, inexistante.
 	 */
-	private static void erreurDifficulte(String messageErreur) {
-		AlerteControleur.autreAlerte(messageErreur,
+	private static void erreurDifficulte() {
+		AlerteControleur.autreAlerte(ParametresPartie.DIFFICULTE_INVALIDE,
 				 					 ERREUR_DIFFICULTE_TITRE, 
 				 					 AlertType.ERROR);
 	}
@@ -217,7 +199,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
-			erreurNombreQuestions(NOMBRE_INVALIDE);
+			erreurNombreQuestions();
 		} else {
 			this.nombreQuestions = nombre;
 
@@ -233,7 +215,7 @@ public class NouvellePartieControleur {
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
-			erreurDifficulte(DIFFICULTE_INVALIDE);
+			erreurDifficulte();
 		} else {
 			boolean checkBoxDifficulteIndifferent,
 					checkBoxDifficulteFacile,
@@ -282,32 +264,28 @@ public class NouvellePartieControleur {
 		lancerPartie = false;
 		
 		try {
-			this.parametres.setNombreQuestions(this.nombreQuestions);	
-			this.parametres.setDifficulteQuestions(this.difficulte);
-			this.parametres.setDifficulteQuestions(difficulte);
-			this.parametres.setCategoriesSelectionnees(this.categoriesSelectionnees);
-			this.parametres.aAssezQuestions();
+			ParametresPartie nouveauxParametres
+			= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
+					               this.nombreQuestions);
+			
+			Quiz.partieCourante.setParametresPartie(nouveauxParametres);
 			lancerPartie = true;
+			
 		} catch (AucuneQuestionCorrespondanteException e) {
-			lancerPartie = false;
 			AlerteControleur.autreAlerte(e.getMessage(), "Questions inexistantes", AlertType.ERROR);
+			
 		} catch (NbInsuffisantQuestionsException e) {
 			lancerPartie 
 			= AlerteControleur.alerteConfirmation("Pas assez de questions", e.getMessage());
+			
 		} catch (DifficulteInvalideException e) {
-			erreurDifficulte(e.getMessage());
+			erreurDifficulte();
+			
 		} catch (NombreQuestionsInvalideException e) {
-			erreurNombreQuestions(e.getMessage());
+			erreurNombreQuestions();
 		}
 		
 		if (lancerPartie) {
-
-			Quiz.partieCourante.setQuestionsProposees(this.parametres.choisirQuestionsProposees());
-			Quiz.partieCourante.melangerQuestionsProposees();
-			
-			System.out.println("Catégories sélectionnées : "
-			                   + Quiz.partieCourante.getParametresPartie().getCategoriesSelectionnees());
-			
 			NavigationControleur.changerVue("PartieEnCours.fxml");
 		}
 	}

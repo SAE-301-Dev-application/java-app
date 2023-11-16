@@ -6,6 +6,7 @@
 package info2.sae301.quiz.modeles;
 
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 import info2.sae301.quiz.exceptions.DifficulteInvalideException;
 import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
@@ -29,13 +30,20 @@ public class ParametresPartie {
 
 	public static final String DIFFICULTE_INVALIDE
 	= """
-	  La difficulté sélectionnée est invalide.
+	  La difficulté sélectionnée est incorrect.
 	  
 	  Les difficultés existantes sont :
 	  0. Indifférent
 	  1. Facile
 	  2. Moyen
 	  3. Difficile
+	  """;
+	
+	public static final String NOMBRE_INVALIDE
+	= """
+	  Le nombre de questions sélectionné est incorrect.
+	  
+	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
 	
 	/** Les catégories de questions sélectionnées. */
@@ -70,6 +78,30 @@ public class ParametresPartie {
 		setCategoriesSelectionnees(new ArrayList<Categorie>());
 		setDifficulteQuestions(0); // Indifférente
 		setNombreQuestions(5);
+	}
+	
+	
+	/**
+	 * Paramètres d'une partie de jeu nouvellement initialisée avec les catégories
+	 * sélectionnées, la difficulté et le nombre de questions en paramètres.
+	 * 
+	 * @param categoriesSelectionnees Les catégories sélectionnées.
+	 * @param difficulteQuestions La difficulté des questions.
+	 * @param nombreQuestions Le nombre de questions.
+	 */
+	public ParametresPartie(ArrayList<Categorie> categoriesSelectionnees,
+			                int difficulteQuestions, int nombreQuestions) {
+		
+		setCategoriesSelectionnees(categoriesSelectionnees);
+		setDifficulteQuestions(difficulteQuestions);
+		setNombreQuestions(nombreQuestions);
+		aAssezQuestions();
+		
+		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
+		Quiz.partieCourante.melangerQuestionsProposees();
+		
+		System.out.println("Catégories sélectionnées : "
+		                   + getCategoriesSelectionnees());
 	}
 	
 	
@@ -225,12 +257,6 @@ public class ParametresPartie {
 	 */
 	public void setNombreQuestions(int nombreQuestions)
 	throws NombreQuestionsInvalideException {
-		final String NOMBRE_INVALIDE
-		= """
-		  Le nombre de questions sélectionné est invalide.
-		  
-		  Le nombre de questions à proposer doit être 5, 10 ou 20.";
-		  """;
 		
 		if (nombreQuestions != 5 && nombreQuestions != 10
 		    && nombreQuestions != 20) {
