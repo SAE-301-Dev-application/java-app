@@ -8,6 +8,7 @@ import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -50,7 +51,7 @@ public class PartieEnCoursControleur {
 	private Button boutonPrecedent;
 	
 	@FXML
-	private Button boutonSuivant;
+	private Button boutonValider;
 	
 	private PartieEnCours partieCourante;
 	
@@ -142,21 +143,27 @@ public class PartieEnCoursControleur {
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (String reponse : reponsesMelange) {
-			Label afficherReponse = new Label(reponse);
+			CheckBox afficherReponse = new CheckBox(reponse);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 		}
 	}
 	
+	/**
+	 * Rend non visible boutonPrecedent si on est
+	 * à la première question de la partie
+	 * Rend non visible boutonValider si on est
+	 * à la dernière question de la partie
+	 */
 	private void initBoutonsPrecedentSuivant() {
-		System.out.println(partieCourante.getIndiceQuestionCourante());
-		System.out.println(partieCourante.getQuestionsProposees().size() -1);
+//		System.out.println(partieCourante.getIndiceQuestionCourante());
+//		System.out.println(partieCourante.getQuestionsProposees().size() -1);
 		if (partieCourante.getIndiceQuestionCourante() == 0) {
 			boutonPrecedent.setVisible(false);
 		}
 		
 		if (partieCourante.getIndiceQuestionCourante()
 				== partieCourante.getQuestionsProposees().size() -1) {
-			boutonSuivant.setVisible(false);
+			boutonValider.setVisible(false);
 		}
 	}
 	
