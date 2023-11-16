@@ -41,6 +41,7 @@ public class Quiz extends Application {
 	 * */
 	public static PartieEnCours partieCourante;
 	
+	
 	/**
 	 * Chargement des vues et affichage du menu principal.
 	 * 

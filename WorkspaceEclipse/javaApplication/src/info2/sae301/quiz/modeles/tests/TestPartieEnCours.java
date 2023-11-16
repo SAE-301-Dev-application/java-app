@@ -1,28 +1,22 @@
-/*
- * TestParametresPartie.java             							14 nov. 2023
- * IUT de Rodez, pas de copyright ni de "copyleft".
+/**
+ * TestPartieEnCours.java									14 nov. 2023
+ * IUT de Rodez, no copyright ni "copyleft"
  */
-
 package info2.sae301.quiz.modeles.tests;
 
-import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.Jeu;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.PartieEnCours;
+import info2.sae301.quiz.modeles.Question;
+
 /**
- * Tests unitaires de la classe {@link info2.sae301.quiz.modeles.ParametresPartie}.
+ * Gestion des catégories et des questions créées par l'utilisateur.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -31,82 +25,164 @@ import org.junit.jupiter.api.Test;
  * @author Samuel Lacam
  */
 class TestPartieEnCours {
+
 	
+	static PartieEnCours partie1;
+	static PartieEnCours partie2;
+	
+	private ArrayList<Question> question1 = new ArrayList<>();
+	
+	private Categorie cat1 = new Categorie("Java");
+	
+	/**
+	 * TODO comment method role and describe it
+	 * @throws java.lang.Exception
+	 */
 	@BeforeEach
 	void init() {
 		
+		partie1 = new PartieEnCours();
+		partie2 =new PartieEnCours();
+		ArrayList<Question> qProposees = new ArrayList<>();
+		
+		for (int i = 0; i < 24; i++) {
+			Question aAjouter = new Question("q" + i, "rjuste" + i,
+				       new String[] {"rf0", "rf1", "rf2", "rf3"},
+				       1, cat1);
+			qProposees.add(aAjouter);
+		}
+		partie1.setQuestionsProposees(qProposees);
+		
+		
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#PartieEnCours()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#PartieEnCours()}.
 	 */
 	@Test
-	public void testConstructeur() {
-	    // TODO le test
+	void testPartieEnCours() {
+		assertEquals(new ArrayList<Question>(),partie1.getQuestionsProposees());
+		assertEquals(new ArrayList<String>(),partie1.getReponsesUtilisateur());
+		assertEquals(0,partie1.getIndiceQuestionCourante());
+		assertEquals(null,partie1.getParametresPartie());
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#melangerQuestionsProposees()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getQuestionsProposees()}.
 	 */
 	@Test
-	public void testMelangerQuestionsProposees() {
-		// TODO le test
+	void testGetQuestionsProposees() { //TODO finir test
+		
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#getQuestionsProposees()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#setQuestionsProposees(java.util.ArrayList)}.
 	 */
 	@Test
-	public void testGetQuestionsProposees() {
-		// TODO le test
+	void testSetQuestionsProposees() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#getReponsesUtilisateur()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getReponsesUtilisateur()}.
 	 */
 	@Test
-	public void testGetReponsesUtilisateur() {
-		// TODO le test
+	void testGetReponsesUtilisateur() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#getParametresPartie()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getParametresPartie()}.
 	 */
 	@Test
-	public void testGetParametresPartie() {
-		// TODO le test
+	void testGetParametresPartie() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#getIndiceQuestionCourante()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#setParametresPartie(info2.sae301.quiz.modeles.ParametresPartie)}.
 	 */
 	@Test
-	public void testGetIndiceQuestionCourante() {
-		// TODO le test
+	void testSetParametresPartie() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#setIndiceQuestionCourante(int)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getIndiceQuestionCourante()}.
 	 */
 	@Test
-	public void testSetIndiceQuestionCourante() {
-		// TODO le test
+	void testGetIndiceQuestionCourante() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
 	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#toString()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#setIndiceQuestionCourante(int)}.
 	 */
 	@Test
-	public void testToString() {
-		// TODO le test
+	void testSetIndiceQuestionCourante() { //TODO finir test
+		fail("Not yet implemented");
 	}
+
 	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#melangerQuestionsProposees()}.
+	 */
+	@Test
+	void testMelangerQuestionsProposees() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#ajouterReponseUtilisateur(java.lang.String)}.
+	 */
+	@Test
+	void testAjouterReponseUtilisateur() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#passerQuestionSuivante()}.
+	 */
+	@Test
+	void testPasserQuestionSuivante() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#retourQuestionPrecedente()}.
+	 */
+	@Test
+	void testRetourQuestionPrecedente() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#verifierReponse(info2.sae301.quiz.modeles.Question, java.lang.String)}.
+	 */
+	@Test
+	void testVerifierReponse() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#nbReponsesJustes()}.
+	 */
+	@Test
+	void testNbReponsesJustes() { //TODO finir test
+		fail("Not yet implemented");
+	}
+
 }

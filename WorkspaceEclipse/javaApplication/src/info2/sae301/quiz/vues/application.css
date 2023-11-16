@@ -90,7 +90,7 @@
 }
 
 VBox {
-	-fx-border-color: transparent;    /* TODO: temporaire, retirer si vbox prête. */
+	-fx-border-color: transparent;
 	-fx-border-width: 2px;
 	-fx-border-style: solid;
 }

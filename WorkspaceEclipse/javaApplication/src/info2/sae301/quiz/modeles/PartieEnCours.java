@@ -39,9 +39,9 @@ public class PartieEnCours {
 	 */
 	public PartieEnCours() {
 		
-		setQuestionsProposees(new ArrayList<Question>());
+		this.questionsProposees = new ArrayList<Question>();
 		this.reponsesUtilisateur = new ArrayList<String>();
-		setIndiceQuestionCourante(0);
+		this.indiceQuestionCourante = 0;
 	}
 	
 	
