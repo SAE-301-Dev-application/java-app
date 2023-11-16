@@ -44,6 +44,13 @@ public class NouvellePartieControleur {
 	private static final String INDICATION_NB_QUESTIONS
 	= "Total de questions%s dans les catégories sélectionnées : %d";
 	
+	private static final String ERREUR_MOINS_QUESTIONS_TITRE
+	= "Pas assez de questions";
+	
+	private static final String ERREUR_MOINS_QUESTIONS_MESSAGE
+	= "Seulement %d question(s) correspondent à vos "
+	  + "critères. Souhaitez-vous tout de même jouer ?";
+	
 	/** Indice du niveau de difficulté "Indifférent". */
 	private static final int DIFFICULTE_INDIFFERENT = 0;
 	
@@ -300,34 +307,45 @@ public class NouvellePartieControleur {
 	
 	@FXML
 	private void actionBoutonCreer() {
-		boolean lancerPartie;
-		lancerPartie = false;
+		int nombreQuestionsDisponibles;
 		
-		try {
-			ParametresPartie nouveauxParametres
-			= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
-					               this.nombreQuestions);
-			
-			Quiz.partieCourante.setParametresPartie(nouveauxParametres);
-			lancerPartie = true;
-			
-		} catch (AucuneQuestionCorrespondanteException e) {
-			AlerteControleur.autreAlerte(e.getMessage(), "Aucune question correspondante",
-					                     AlertType.ERROR);
-			
-		} catch (NbInsuffisantQuestionsException e) {
-			lancerPartie 
-			= AlerteControleur.alerteConfirmation(e.getMessage(), "Pas assez de questions");
-			
-		} catch (DifficulteInvalideException e) {
-			erreurDifficulte();
-			
-		} catch (NombreQuestionsInvalideException e) {
-			erreurNombreQuestions();
-		}
+		boolean assezDeQuestions;
 		
-		if (lancerPartie) {
-			NavigationControleur.changerVue("PartieEnCours.fxml");
+		String erreurMoinsQuestionsMessageFormat;
+		
+		nombreQuestionsDisponibles
+		= ParametresPartie
+			.recupQuestionsValides(this.difficulte, 
+								   this.categoriesSelectionnees).size();
+		
+		assezDeQuestions = nombreQuestionsDisponibles >= this.nombreQuestions;
+		
+		erreurMoinsQuestionsMessageFormat
+		= String.format(ERREUR_MOINS_QUESTIONS_MESSAGE, nombreQuestionsDisponibles);
+		
+		if (assezDeQuestions 
+			|| AlerteControleur.alerteConfirmation(erreurMoinsQuestionsMessageFormat, 
+												   ERREUR_MOINS_QUESTIONS_TITRE)) {
+			
+			try {
+				ParametresPartie nouveauxParametres
+				= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
+						               this.nombreQuestions);
+				
+				Quiz.partieCourante.setParametresPartie(nouveauxParametres);
+				NavigationControleur.changerVue("PartieEnCours.fxml");
+				
+			} catch (AucuneQuestionCorrespondanteException e) {
+				AlerteControleur.autreAlerte(e.getMessage(), "Aucune question correspondante",
+						                     AlertType.ERROR);
+				
+			} catch (DifficulteInvalideException e) {
+				erreurDifficulte();
+				
+			} catch (NombreQuestionsInvalideException e) {
+				erreurNombreQuestions();
+			}
+			
 		}
 	}
 	
