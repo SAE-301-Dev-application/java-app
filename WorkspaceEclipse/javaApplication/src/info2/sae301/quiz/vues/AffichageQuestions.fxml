@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.AffichageQuestionsControleur">
    <children>
@@ -36,20 +37,24 @@
             </Button>
          </children>
       </Pane>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" prefWidth="225.0" styleClass="bouton" text="RETOUR" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" styleClass="bouton" text="CRÉER" />
-      <Button layoutX="592.0" layoutY="117.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="SUPPRIMER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" prefWidth="225.0" styleClass="bouton" text="          RETOUR" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" styleClass="bouton" text="        CRÉER" />
+      <Button layoutX="592.0" layoutY="117.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="           SUPPRIMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />
          </styleClass>
       </Button>
-      <Button layoutX="407.0" layoutY="117.0" mnemonicParsing="false" onAction="#actionBoutonEditer" text="ÉDITER">
+      <Button layoutX="407.0" layoutY="117.0" mnemonicParsing="false" onAction="#actionBoutonEditer" text="       ÉDITER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />
          </styleClass>
       </Button>
-      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" prefHeight="26.0" prefWidth="238.0" onAction="#selectionFiltre" styleClass="menu-selection" />
+      <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" onAction="#selectionFiltre" prefHeight="26.0" prefWidth="238.0" styleClass="menu-selection" />
+      <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-106.0" layoutY="289.0" onMouseClicked="#actionBoutonRetour" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" layoutX="323.0" layoutY="289.0" onMouseClicked="#actionBoutonCreer" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" layoutX="195.0" layoutY="-119.0" onMouseClicked="#actionBoutonEditer" scaleX="0.03" scaleY="0.03" styleClass="user-solid" />
+      <SVGPath content="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" layoutX="405.0" layoutY="-119.0" onMouseClicked="#actionBoutonSupprimer" scaleX="0.03" scaleY="0.03" styleClass="user-solid" />
    </children>
 </Pane>
