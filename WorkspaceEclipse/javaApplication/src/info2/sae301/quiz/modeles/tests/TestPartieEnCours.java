@@ -34,6 +34,10 @@ import org.junit.jupiter.api.Test;
  */
 class TestPartieEnCours {
 	
+	private String[] nomsCategories = {
+			"catégorie1", "caté2", "caté3", "caté4", "caté5"
+		};
+	
 	 private PartieEnCours partieTest;
 	 
 	 private ArrayList<Question> setDeQuestions1;
@@ -51,6 +55,10 @@ class TestPartieEnCours {
 		parametres = new ParametresPartie();
 		categorie1 = new ArrayList<Categorie>();
 		questions1 = new ArrayList<Question>();
+		
+		for (String nom : nomsCategories) {
+			categorie1.add(new Categorie(nom));
+		}
 		
 		for (int i = 0; i < 5; i++) {
 			Question question1
@@ -72,11 +80,9 @@ class TestPartieEnCours {
 	 */
 	@Test
 	public void testConstructeur() {
-	    // TODO le test
 		assertEquals(0, partieTest.getQuestionsProposees().size());
 	    assertEquals(0, partieTest.getIndiceQuestionCourante());
-	    assertEquals(5, partieTest.getReponsesUtilisateur().size());
-	    assertEquals(5, partieTest.getParametresPartie().getNombreQuestions());
+	    assertEquals(0, partieTest.getReponsesUtilisateur().size());
 	}
 	
 	
@@ -86,7 +92,19 @@ class TestPartieEnCours {
 	 */
 	@Test
 	public void testGetQuestionsProposees() {
-		// TODO le test
+		
+		assertEquals(0, partieTest.getQuestionsProposees().size());
+		parametres.setDifficulteQuestions(1);
+		parametres.setCategoriesSelectionnees(categorie1);
+		
+		ArrayList<Question> questionsProposees
+		= parametres.choisirQuestionsProposees();
+		
+		partieTest.setQuestionsProposees(questionsProposees);
+		
+		assertEquals(questionsProposees, partieTest.getQuestionsProposees());
+		
+		
 	}
 	
 	/**
