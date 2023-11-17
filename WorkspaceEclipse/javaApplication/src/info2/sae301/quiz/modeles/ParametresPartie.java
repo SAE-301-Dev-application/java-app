@@ -104,9 +104,7 @@ public class ParametresPartie {
 		setDifficulteQuestions(difficulteQuestions);
 		setNombreQuestions(nombreQuestions);
 		
-		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
-		Quiz.partieCourante.melangerQuestionsProposees();
-		
+		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());		
 		System.out.println("Catégories sélectionnées : "
 		                   + getCategoriesSelectionnees());
 	}

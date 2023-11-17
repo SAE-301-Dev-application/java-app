@@ -32,6 +32,9 @@ import org.junit.jupiter.api.Test;
  */
 class TestPartieEnCours {
 	
+	
+	
+	
 	@BeforeEach
 	void init() {
 		
@@ -46,14 +49,6 @@ class TestPartieEnCours {
 	    // TODO le test
 	}
 	
-	/**
-	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.PartieEnCours#melangerQuestionsProposees()}.
-	 */
-	@Test
-	public void testMelangerQuestionsProposees() {
-		// TODO le test
-	}
 	
 	/**
 	 * Méthode de test de la méthode
