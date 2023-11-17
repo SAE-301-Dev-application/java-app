@@ -9,6 +9,7 @@ import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
+import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,13 +41,13 @@ class TestParametresPartie {
 		"catégorie1", "caté2", "caté3", "caté4", "caté5"
 	};
 	
-	private ParametresPartie parametresTest = new ParametresPartie();
+	private ParametresPartie parametresTest;
 	
-	private ArrayList<Categorie> categorie1 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie1;
 	
-	private ArrayList<Categorie> categorie2 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie2;
 	
-	private ArrayList<Categorie> categorie3 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie3;
 	
 	@BeforeEach
 	void init() {
@@ -114,22 +116,34 @@ class TestParametresPartie {
 		parametresTest.setDifficulteQuestions(1);
 		
 		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		parametresTest.setDifficulteQuestions(2);
 		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		parametresTest.setDifficulteQuestions(3);
 		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		parametresTest.setDifficulteQuestions(0);
 		assertThrows(AucuneQuestionCorrespondanteException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		parametresTest.setNombreQuestions(5);
@@ -147,7 +161,10 @@ class TestParametresPartie {
 		
 		
 		assertThrows(NbInsuffisantQuestionsException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		Question question2
@@ -175,7 +192,12 @@ class TestParametresPartie {
 		categorie.ajouterQuestion(question4);
 		categorie.ajouterQuestion(question5);
 		
-		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
 		
 		Question question6
 		= new Question("questiontest6", "rjuste",
@@ -203,55 +225,127 @@ class TestParametresPartie {
 		categorie.ajouterQuestion(question9);
 		
 		parametresTest.setDifficulteQuestions(1);
-		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
 		
 		parametresTest.setDifficulteQuestions(2);
 		assertThrows(NbInsuffisantQuestionsException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
 		parametresTest.setDifficulteQuestions(3);
 		assertThrows(NbInsuffisantQuestionsException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
 		
-		question6
-		= new Question("questiontest6", "rjuste",
+		Question question10
+		= new Question("questiontest10", "rjuste",
 			           new String[] {"rf0", "rf1", "rf2", "rf3"},
 			           2, categorie);
 		
-		question7
-		= new Question("questiontest7", "rjuste",
+		Question question11
+		= new Question("questiontest11", "rjuste",
 			           new String[] {"rf0", "rf1", "rf2", "rf3"},
 			           2, categorie);
 		
-		question8
-		= new Question("questiontest8", "rjuste",
+		Question question12
+		= new Question("questiontest12", "rjuste",
 			           new String[] {"rf0", "rf1", "rf2", "rf3"},
 			           2, categorie);
 		
-		question9
-		= new Question("questiontest9", "rjuste",
+		Question question13
+		= new Question("questiontest13", "rjuste",
 			           new String[] {"rf0", "rf1", "rf2", "rf3"},
 			           1, categorie);
 		
-		categorie.ajouterQuestion(question6);
-		categorie.ajouterQuestion(question7);
-		categorie.ajouterQuestion(question8);
-		categorie.ajouterQuestion(question9);
+		categorie.ajouterQuestion(question10);
+		categorie.ajouterQuestion(question11);
+		categorie.ajouterQuestion(question12);
+		categorie.ajouterQuestion(question13);
 		
 		parametresTest.setDifficulteQuestions(2);
-		assertDoesNotThrow(() -> {parametresTest.aAssezQuestions();});
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
 		
 		parametresTest.setDifficulteQuestions(1);
-		assertThrows(NbInsuffisantQuestionsException.class, () -> {
-		    parametresTest.aAssezQuestions();
-	    });
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
 		
 		parametresTest.setDifficulteQuestions(3);
+		
 		assertThrows(NbInsuffisantQuestionsException.class, () -> {
-		    parametresTest.aAssezQuestions();
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
 	    });
+		
+		Question question14
+		= new Question("questiontest14", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           3, categorie);
+		
+		Question question15
+		= new Question("questiontest15", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           3, categorie);
+		
+		Question question16
+		= new Question("questiontest16", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           3, categorie);
+		
+		Question question17
+		= new Question("questiontest17", "rjuste",
+			           new String[] {"rf0", "rf1", "rf2", "rf3"},
+			           3, categorie);
+		
+		categorie.ajouterQuestion(question14);
+		categorie.ajouterQuestion(question15);
+		categorie.ajouterQuestion(question16);
+		categorie.ajouterQuestion(question17);
+		
+		parametresTest.setDifficulteQuestions(2);
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
+		
+		parametresTest.setDifficulteQuestions(1);
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
+		
+		parametresTest.setDifficulteQuestions(3);
+		assertDoesNotThrow(() -> {
+		    ParametresPartie
+		    .aAssezQuestions(parametresTest.getDifficulteQuestions(),
+		    			     parametresTest.getNombreQuestions(),
+		    			     parametresTest.getCategoriesSelectionnees());
+		});
 		
 		
 	}
@@ -259,19 +353,28 @@ class TestParametresPartie {
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.ParametresPartie#choisirQuestionsProposees()}.
+	 * {@link info2.sae301.quiz.modeles.ParametresPartie#recupQuestionsValides()}.
 	 */
 	@Test
-	public void testChoisirQuestionsProposees() {
+	public void testRecupQuestionsValides() {
 		parametresTest.setCategoriesSelectionnees(categorie1);
 		parametresTest.setDifficulteQuestions(0);
 		
-		assertEquals(nomsCategories.length, parametresTest.choisirQuestionsProposees().size());
+		assertEquals(nomsCategories.length,
+				     ParametresPartie.recupQuestionsValides(parametresTest
+				    		                                .getDifficulteQuestions(),
+				    		                                parametresTest
+				    		                                .getCategoriesSelectionnees())
+				                                            .size());
 		
 		parametresTest.setCategoriesSelectionnees(categorie2);
 		parametresTest.setDifficulteQuestions(1);
 		
-		assertEquals(0, parametresTest.choisirQuestionsProposees().size());
+		assertTrue(ParametresPartie.recupQuestionsValides(parametresTest
+											              .getDifficulteQuestions(),
+											              parametresTest
+											              .getCategoriesSelectionnees())
+											              .isEmpty());
 		
 		Categorie categorie = new Categorie("TestCate");
 		Question question
@@ -284,9 +387,64 @@ class TestParametresPartie {
 		categorie2.add(categorie);
 		parametresTest.setCategoriesSelectionnees(categorie2);
 		
-		assertEquals(1, parametresTest.choisirQuestionsProposees().size());
+		assertEquals(1, ParametresPartie.recupQuestionsValides(parametresTest
+												               .getDifficulteQuestions(),
+												               parametresTest
+												               .getCategoriesSelectionnees())
+												               .size());
 	}
 	
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.ParametresPartie#choisirQuestionsProposees()}.
+	 */
+	@Test
+	public void testChoisirQuestionsProposees() {
+		Categorie categorieTest = new Categorie("Test");
+		for (int i = 0; i <= 9; i++) {
+			Question question1
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       1, categorieTest);
+			
+			categorieTest.ajouterQuestion(question1);
+		}
+		categorie3.add(categorieTest);
+		parametresTest.setCategoriesSelectionnees(categorie3);
+		parametresTest.setDifficulteQuestions(1);
+		parametresTest.setNombreQuestions(10);
+		
+		ArrayList<Question> listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(10, listeQuestionsProposees.size());
+		for (int i = 0; i < categorieTest.getListeQuestions().size(); i++) {
+			boolean questionPresente = false;
+			for (int j = 0; j < categorieTest.getListeQuestions().size() && !questionPresente; j++) {
+				if (listeQuestionsProposees.get(i) == categorieTest.getListeQuestions().get(j)) {
+					questionPresente = true;
+				}
+			}
+			assertTrue(questionPresente);
+		}
+		parametresTest.setNombreQuestions(5);
+		listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(5, listeQuestionsProposees.size());
+		for (int i = 0; i < listeQuestionsProposees.size(); i++) {
+			assertTrue(categorieTest.getListeQuestions().contains(listeQuestionsProposees.get(i)));
+		}
+		
+		parametresTest.setNombreQuestions(20);
+		listeQuestionsProposees = parametresTest.choisirQuestionsProposees();
+		assertEquals(10, listeQuestionsProposees.size());
+		for (int i = 0; i < listeQuestionsProposees.size(); i++) {
+			assertTrue(categorieTest.getListeQuestions().contains(listeQuestionsProposees.get(i)));
+		}
+		
+		
+		
+		
+		
+	}
 	
 	/**
 	 * Méthode de test de la méthode
@@ -295,8 +453,11 @@ class TestParametresPartie {
 	@Test
 	public void testGetCategoriesSelectionnees() {
 		parametresTest.setCategoriesSelectionnees(categorie1);
-		assertEquals(categorie1.size(),
-				     parametresTest.getCategoriesSelectionnees().size());
+		for (int i = 0; i < categorie1.size(); i++) {
+			assertEquals(categorie1.get(i),
+				     parametresTest.getCategoriesSelectionnees().get(i));
+		}
+		
 	}
 	
 	
@@ -306,9 +467,11 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testSetCategoriesSelectionnees() {
-		parametresTest.setCategoriesSelectionnees(categorie1);
-		assertEquals(categorie1.size(),
-				     parametresTest.getCategoriesSelectionnees().size());
+		parametresTest.setCategoriesSelectionnees(categorie2);
+		for (int i = 0; i < categorie1.size(); i++) {
+			assertEquals(categorie2.get(i),
+				     parametresTest.getCategoriesSelectionnees().get(i));
+		}
 	}
 	
 	
@@ -318,7 +481,6 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testGetDifficulteQuestions() {
-		parametresTest.setDifficulteQuestions(0);
 		assertEquals(0, parametresTest.getDifficulteQuestions());
 		
 		parametresTest.setDifficulteQuestions(2);
@@ -332,11 +494,16 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testSetDifficulteQuestions() {
-		parametresTest.setDifficulteQuestions(0);
 		assertEquals(0, parametresTest.getDifficulteQuestions());
+		
+		parametresTest.setDifficulteQuestions(1);
+		assertEquals(1, parametresTest.getDifficulteQuestions());
 		
 		parametresTest.setDifficulteQuestions(2);
 		assertEquals(2, parametresTest.getDifficulteQuestions());
+		
+		parametresTest.setDifficulteQuestions(3);
+		assertEquals(3, parametresTest.getDifficulteQuestions());
 	}
 	
 	
@@ -346,8 +513,10 @@ class TestParametresPartie {
 	 */
 	@Test
 	public void testGetNombreQuestions() {
-		parametresTest.setNombreQuestions(5);
 		assertEquals(5, parametresTest.getNombreQuestions());
+		
+		parametresTest.setNombreQuestions(10);
+		assertEquals(10, parametresTest.getNombreQuestions());
 		
 		parametresTest.setNombreQuestions(20);
 		assertEquals(20, parametresTest.getNombreQuestions());
@@ -363,11 +532,26 @@ class TestParametresPartie {
 		parametresTest.setNombreQuestions(5);
 		assertEquals(5, parametresTest.getNombreQuestions());
 		
+		parametresTest.setNombreQuestions(10);
+		assertEquals(10, parametresTest.getNombreQuestions());
+		
 		parametresTest.setNombreQuestions(20);
 		assertEquals(20, parametresTest.getNombreQuestions());
 		
-		assertThrows(IllegalArgumentException.class, () -> {
-			parametresTest.setNombreQuestions(2);
+		assertThrows(NombreQuestionsInvalideException.class, () -> {
+			parametresTest.setNombreQuestions(1);
+		});
+		
+		assertThrows(NombreQuestionsInvalideException.class, () -> {
+			parametresTest.setNombreQuestions(4);
+		});
+		
+		assertThrows(NombreQuestionsInvalideException.class, () -> {
+			parametresTest.setNombreQuestions(9);
+		});
+		
+		assertThrows(NombreQuestionsInvalideException.class, () -> {
+			parametresTest.setNombreQuestions(19);
 		});
 	}
 	

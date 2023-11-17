@@ -188,3 +188,7 @@ VBox.centrer-verticale {
 	/*-fx-alignment: center-left;*/
 	-fx-spacing: 20px;
 }
+
+.icone-vert {
+	-fx-fill: #1F9D00;
+}

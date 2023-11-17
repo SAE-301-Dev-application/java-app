@@ -6,31 +6,29 @@ import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
 public class PartieEnCoursControleur {
 
 	private static final String AIDE_TITRE = "PARTIE EN COURS";
 	
-	private static final String AIDE_TEXTE =
-			"""
-			La partie en cours se compose d’une suite de questions posées. À 
-			chacune d’elles, il est demandé au joueur de sélectionner une seule
-			réponse parmi celles proposées.
-			
-			Le niveau de difficulté est affiché pour chacune de ces questions,
-			afin de renseigner davantage l’utilisateur.
-			
-			L’utilisateur peut passer la question si aucune réponse n’est
-			sélectionnée, a contrario, il validera la question avec la réponse
-			sélectionnée. Il peut également retourner sur les questions
-			précédentes via le bouton précédent.
-			""";
+	private static final String AIDE_TEXTE
+	= """
+	  La partie en cours se compose d’une suite de questions posées. À 
+	  chacune d’elles, il est demandé au joueur de sélectionner une seule
+	  réponse parmi celles proposées.
+	  
+	  Le niveau de difficulté est affiché pour chacune de ces questions,
+	  afin de renseigner davantage l’utilisateur.
+	  
+	  L’utilisateur peut passer la question si aucune réponse n’est
+	  sélectionnée, à contrario, il validera la question avec la réponse
+	  sélectionnée. Il peut également retourner sur les questions
+	  précédentes via le bouton précédent.
+	  """;
 	
 	private static final String MESSAGE_ALERTE_QUITTER =
 			"Vous êtes sur le point de quitter la partie, si vous confirmer "
@@ -57,6 +55,8 @@ public class PartieEnCoursControleur {
 	
 	private Question questionCourante;
 	
+	private ArrayList<RadioButton> touteslesCheckboxReponses;
+	
 	@FXML
 	private void initialize() {
 		//Initialisation des données
@@ -71,9 +71,12 @@ public class PartieEnCoursControleur {
 	}
 	 
 
+	/**
+	 * Affichage d'une pop-up d'aide concernant les réponses à une question.
+	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.autreAlerte(AIDE_TEXTE, AIDE_TITRE, AlertType.INFORMATION);
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	@FXML
@@ -92,8 +95,16 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonValider() {
+		String reponseUtilisateur = "";
+		for (RadioButton reponse : touteslesCheckboxReponses) {
+			if (reponse.isSelected()) {
+				reponseUtilisateur = reponse.getText();
+			}
+		}
+		partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
 		partieCourante.passerQuestionSuivante();
 		NavigationControleur.changerVue("PartieEnCours.fxml");
+		
 	}
 	
 	/**
@@ -103,12 +114,6 @@ public class PartieEnCoursControleur {
 	 */
 	private void initDifficulteQuestion() {
 		switch (questionCourante.getDifficulte()) {
-		//Si question Indifférente
-		case 0:
-			labelDifficulte.getStyleClass().add("questionIndifferente");
-			labelDifficulte.setText("Indifférente");
-			break;
-			
 		//Si question Facile
 		case 1:
 			labelDifficulte.getStyleClass().add("questionFacile");
@@ -140,11 +145,17 @@ public class PartieEnCoursControleur {
 	 */
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
+		touteslesCheckboxReponses = new ArrayList<RadioButton>();
+		ToggleGroup radioGroupe = new ToggleGroup();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
-		for (String reponse : reponsesMelange) {
-			CheckBox afficherReponse = new CheckBox(reponse);
+		for (int i = 0; i < reponsesMelange.size(); i++) {
+			RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
+			afficherReponse.getStyleClass().add("reponse");
+			afficherReponse.setId("" + i);
+			afficherReponse.setToggleGroup(radioGroupe);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
+			touteslesCheckboxReponses.add(afficherReponse);
 		}
 	}
 	
@@ -155,8 +166,8 @@ public class PartieEnCoursControleur {
 	 * à la dernière question de la partie
 	 */
 	private void initBoutonsPrecedentSuivant() {
-//		System.out.println(partieCourante.getIndiceQuestionCourante());
-//		System.out.println(partieCourante.getQuestionsProposees().size() -1);
+		System.out.println(partieCourante.getIndiceQuestionCourante());
+		System.out.println(partieCourante.getQuestionsProposees().size() -1);
 		if (partieCourante.getIndiceQuestionCourante() == 0) {
 			boutonPrecedent.setVisible(false);
 		}

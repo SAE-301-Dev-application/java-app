@@ -13,7 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.NouvellePartieControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
@@ -23,31 +23,28 @@
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets></Label>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" text="      RETOUR">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
-            <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" text="       CRÉER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
-            <String fx:value="boutonEnregistrer" />
          </styleClass>
       </Button>
-      <SVGPath content="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" layoutX="275.0" layoutY="290.0" scaleX="0.07" scaleY="0.07" styleClass="save-solid" />
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
             <HBox layoutX="6.0" prefHeight="359.0" prefWidth="733.0">
                <children>
                   <VBox prefHeight="359.0" prefWidth="275.0">
                      <children>
-                        <VBox prefHeight="77.0" prefWidth="309.0">
+                        <VBox prefHeight="193.0" prefWidth="256.0">
                            <children>
-                              <Label styleClass="label-champ" text="    Nombre de questions :" />
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <Label prefHeight="30.0" prefWidth="164.0" styleClass="label-champ" text="    Nombre de questions :" />
+                              <HBox prefHeight="41.0" prefWidth="252.0">
                                  <children>
                                     <CheckBox fx:id="checkBox5Questions" mnemonicParsing="false" styleClass="label-champ" text="5" />
                                     <CheckBox fx:id="checkBox10Questions" mnemonicParsing="false" styleClass="label-champ" text="10" />
@@ -60,9 +57,9 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox prefHeight="258.0" prefWidth="348.0">
+                        <VBox prefHeight="258.0" prefWidth="256.0">
                            <children>
-                              <Label styleClass="label-champ" text="    Difficultés :" />
+                              <Label styleClass="label-champ" text="    Difficulté :" />
                               <VBox prefHeight="243.0" prefWidth="344.0">
                                  <children>
                                     <CheckBox fx:id="checkBoxDifficulteIndifferent" mnemonicParsing="false" styleClass="label-champ" text="Indifférent" />
@@ -112,13 +109,15 @@
                               <VBox fx:id="listeCategories" prefHeight="265.0" prefWidth="389.0" styleClass="partie-droite" />
                            </content>
                         </ScrollPane>
-                        <Label styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
+                        <Label fx:id="indicationNbQuestions" styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
                      </children>
                   </VBox>
                </children>
             </HBox>
          </children>
       </Pane>
+      <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-116.0" layoutY="289.0" onMouseClicked="#actionBoutonRetour" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" layoutX="323.0" layoutY="289.0" onMouseClicked="#actionBoutonCreer" scaleX="0.05" scaleY="0.05" styleClass="user-solid" translateX="-4.0" />
    </children>
    <stylesheets>
       <URL value="@application.css" />

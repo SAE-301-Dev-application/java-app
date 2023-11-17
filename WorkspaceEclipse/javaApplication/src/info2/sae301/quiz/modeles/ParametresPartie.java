@@ -27,7 +27,7 @@ import java.util.Collections;
  * @author Samuel Lacam
  */
 public class ParametresPartie {
-
+	
 	public static final String DIFFICULTE_INVALIDE
 	= """
 	  La difficulté sélectionnée est incorrect.
@@ -45,6 +45,14 @@ public class ParametresPartie {
 	  
 	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
+	
+	private static final String AUCUNE_QUESTION
+	= "Il n'y a aucune question%s dans les catégories sélectionnées.\n"
+	  + "Veuillez entrer d'autres paramètres ou créer des questions.";
+	
+	private static final String PAS_ASSEZ_QUESTIONS
+	= "Seulement %d question(s) correspondent à vos "
+	  + "critères. Souhaitez-vous tout de même jouer ?";
 	
 	/** Les catégories de questions sélectionnées. */
 	private ArrayList<Categorie> categoriesSelectionnees;
@@ -95,11 +103,8 @@ public class ParametresPartie {
 		setCategoriesSelectionnees(categoriesSelectionnees);
 		setDifficulteQuestions(difficulteQuestions);
 		setNombreQuestions(nombreQuestions);
-		aAssezQuestions();
 		
 		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
-		Quiz.partieCourante.melangerQuestionsProposees();
-		
 		System.out.println("Catégories sélectionnées : "
 		                   + getCategoriesSelectionnees());
 	}
@@ -117,50 +122,67 @@ public class ParametresPartie {
 	
 	
 	/**
+	 * Accès à un texte de difficulté grâce à son indice de difficulté.
+	 * 
+	 * @param difficulte Indice de difficulté.
+	 * @return le texte indiquant la difficulté.
+	 */
+	public static String texteDifficulte(int difficulte) {
+		String texte;
+		
+		switch (difficulte) {
+		default:
+		case 0:
+			texte = "";
+			break;
+		case 1:
+			texte = "facile";
+			break;
+		case 2:
+			texte = "moyenne";
+			break;
+		case 3:
+			texte = "difficile";
+			break;
+		}
+		
+		return texte;
+	}
+	
+	
+	/**
 	 * Vérification du fait qu'il y ait assez de questions dont la difficulté est
 	 * difficulteQuestions dans les catégories sélectionnées afin
 	 * d'afficher nombreQuestions questions.
 	 * 
-	 * @throws IllegalArgumentException si aucune question ne correspond aux critères.
-	 * @throws NumberFormatException si moins de questions que le nombre de questions
-	 * souhaitées correspondent aux critères.
+	 * 
+	 * @throws AucuneQuestionCorrespondanteException si aucune question
+	 * ne correspond aux critères.
+	 * @throws NbInsuffisantQuestionsException si moins de questions
+	 * que le nombre de questions souhaitées correspondent aux critères.
 	 */
-	public void aAssezQuestions()
-	throws IllegalArgumentException, NumberFormatException {
+	public static void aAssezQuestions(int difficulteQuestions,
+									   int nombreQuestions,
+			                           ArrayList<Categorie> categories)
+	throws AucuneQuestionCorrespondanteException, NbInsuffisantQuestionsException {
 		final int NOMBRE_QUESTIONS
-		= choisirQuestionsProposees().size();
+		= recupQuestionsValides(difficulteQuestions, categories).size();
 		
-		final String MOINS_QUESTIONS
-		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
-		  + "critères. Souhaitez-vous tout de même jouer ?";
+		String texteDifficulte = texteDifficulte(difficulteQuestions);
 		
-		String texteDifficulte;
-		switch (this.difficulteQuestions) {
-		default:
-		case 0:
-			texteDifficulte = "indifférente";
-			break;
-		case 1:
-			texteDifficulte = "facile";
-			break;
-		case 2:
-			texteDifficulte = "moyenne";
-			break;
-		case 3:
-			texteDifficulte = "difficile";
-			break;
+		if (!texteDifficulte.isEmpty()) {
+			texteDifficulte = " dont la difficulté est " + texteDifficulte;
 		}
-		
-		String AUCUNE_QUESTION
-		= "Il n'y a aucune question dans les catégories sélectionnées dont "
-		  + "la difficulté est " + texteDifficulte + ".\n"
-		  + "Veuillez entrer d'autres paramètres ou créer des questions.";
 		
 		if (NOMBRE_QUESTIONS == 0) {
-			throw new AucuneQuestionCorrespondanteException(AUCUNE_QUESTION);
+			String message = String.format(AUCUNE_QUESTION, texteDifficulte);
+			throw new AucuneQuestionCorrespondanteException(message);
 		}
-		if (this.nombreQuestions > NOMBRE_QUESTIONS) {
-			throw new NbInsuffisantQuestionsException(MOINS_QUESTIONS);
+		
+		if (NOMBRE_QUESTIONS < nombreQuestions) {
+			throw new NbInsuffisantQuestionsException(String
+					                                  .format(PAS_ASSEZ_QUESTIONS,
+					                                		  NOMBRE_QUESTIONS));
 		}
 	}
 	
@@ -169,18 +191,22 @@ public class ParametresPartie {
 	 * Récupère en fonction des paramètres de la partie courante des questions
 	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
 	 * 
+	 * @param difficulte La difficulté des questions à récupérer.
+	 * @param categories Les catégories desquelles récupérer les questions.
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
-	public ArrayList<Question> recupQuestionsValides() {
+	public static ArrayList<Question> recupQuestionsValides(int difficulte,
+													        ArrayList<Categorie>
+	                                                        categories) {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		
-		for (Categorie categorie : this.categoriesSelectionnees) {
-			if (difficulteQuestions == 0) {
+		for (Categorie categorie : categories) {
+			if (difficulte == 0) {
 				questions.addAll(categorie.getListeQuestions());
 			} else {
 				// Recherche des questions dont la difficulté est en paramètre.
 				for (Question question : categorie.getListeQuestions()) {
-					if (question.getDifficulte() == this.getDifficulteQuestions()) {
+					if (question.getDifficulte() == difficulte) {
 						questions.add(question);
 					}
 				}
@@ -198,19 +224,15 @@ public class ParametresPartie {
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
 	public ArrayList<Question> choisirQuestionsProposees() {
-		ArrayList<Question> questionsValides = recupQuestionsValides();
+		ArrayList<Question> questionsValides
+		= recupQuestionsValides(this.difficulteQuestions,
+								this.categoriesSelectionnees);
+
 		Collections.shuffle(questionsValides);
 		
-		switch (nombreQuestions) {
-		case 20:
-			questionsValides.subList(0, 20);
-		case 10:
-			questionsValides.subList(0, 10);
-		case 5:
-			questionsValides.subList(0, 5);
-		default:
-		}
-		return questionsValides;
+		return new ArrayList<>(questionsValides
+				               .subList(0, Math.min(questionsValides.size(),
+				                                    nombreQuestions)));
 	}
 
 	

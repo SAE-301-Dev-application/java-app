@@ -4,7 +4,18 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.ParametresPartie;
+import info2.sae301.quiz.modeles.PartieEnCours;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -27,33 +38,44 @@ import info2.sae301.quiz.modeles.Question;
 class TestPartieEnCours {
 
 	
-	static PartieEnCours partie1;
-	static PartieEnCours partie2;
+	private String[] nomsCategories = {
+			"catégorie1", "caté2", "caté3", "caté4", "caté5"
+		};
 	
-	private ArrayList<Question> question1 = new ArrayList<>();
+	 private PartieEnCours partieTest;
+	 
+	 private ArrayList<Question> setDeQuestions1;
+	 
+	 private ParametresPartie parametres;
+	 
+	 private ArrayList<Categorie> categorie1;
+	 
+	 private ArrayList<Question> questions1;
 	
-	private Categorie cat1 = new Categorie("Java");
 	
-	/**
-	 * TODO comment method role and describe it
-	 * @throws java.lang.Exception
-	 */
 	@BeforeEach
 	void init() {
+		partieTest = new PartieEnCours();
+		parametres = new ParametresPartie();
+		categorie1 = new ArrayList<Categorie>();
+		questions1 = new ArrayList<Question>();
 		
-		partie1 = new PartieEnCours();
-		partie2 =new PartieEnCours();
-		ArrayList<Question> qProposees = new ArrayList<>();
-		
-		for (int i = 0; i < 24; i++) {
-			Question aAjouter = new Question("q" + i, "rjuste" + i,
-				       new String[] {"rf0", "rf1", "rf2", "rf3"},
-				       1, cat1);
-			qProposees.add(aAjouter);
+		for (String nom : nomsCategories) {
+			categorie1.add(new Categorie(nom));
 		}
-		partie1.setQuestionsProposees(qProposees);
 		
+		for (int i = 0; i < 5; i++) {
+			Question question1
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       1, categorie1.get(0));
+			
+			questions1.add(question1);
+			categorie1.get(0).ajouterQuestion(question1);
+		}
 		
+		parametres.setCategoriesSelectionnees(categorie1);
+		partieTest.setParametresPartie(parametres);
 	}
 
 	
@@ -61,11 +83,10 @@ class TestPartieEnCours {
 	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#PartieEnCours()}.
 	 */
 	@Test
-	void testPartieEnCours() {
-		assertEquals(new ArrayList<Question>(),partie1.getQuestionsProposees());
-		assertEquals(new ArrayList<String>(),partie1.getReponsesUtilisateur());
-		assertEquals(0,partie1.getIndiceQuestionCourante());
-		assertEquals(null,partie1.getParametresPartie());
+	public void testConstructeur() {
+		assertEquals(0, partieTest.getQuestionsProposees().size());
+	    assertEquals(0, partieTest.getIndiceQuestionCourante());
+	    assertEquals(0, partieTest.getReponsesUtilisateur().size());
 	}
 
 	
@@ -82,8 +103,20 @@ class TestPartieEnCours {
 	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#setQuestionsProposees(java.util.ArrayList)}.
 	 */
 	@Test
-	void testSetQuestionsProposees() { //TODO finir test
-		fail("Not yet implemented");
+	public void testGetQuestionsProposees() {
+		
+		assertEquals(0, partieTest.getQuestionsProposees().size());
+		parametres.setDifficulteQuestions(1);
+		parametres.setCategoriesSelectionnees(categorie1);
+		
+		ArrayList<Question> questionsProposees
+		= parametres.choisirQuestionsProposees();
+		
+		partieTest.setQuestionsProposees(questionsProposees);
+		
+		assertEquals(questionsProposees, partieTest.getQuestionsProposees());
+		
+		
 	}
 
 	
