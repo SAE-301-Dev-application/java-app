@@ -35,6 +35,22 @@ import javafx.scene.layout.VBox;
  */
 public class NouvellePartieControleur {
 	
+	private static final String AIDE_TITRE = "CRÉER UNE PARTIE";
+
+	private static final String AIDE_TEXTE
+	= """
+	  Trois paramètres sont à renseigner afin de créer une partie :
+	  - les catégories qui seront incluse dans le quiz,
+	  - le nombre de questions,
+	  - le ou les niveaux de difficultés acceptés.
+
+      Le choix du niveau de difficulté est optionel
+      puisque le choix indifférent sélectionné par défaut.
+      
+      Afin de personnaliser davantage la partie, il est possible
+      de choisir une ou plusieurs difficultés entre facile, moyenne et difficile.
+	  """;
+	
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
 	= "Nombre de questions incorrect";
 	
@@ -294,7 +310,7 @@ public class NouvellePartieControleur {
 	
 	@FXML
 	private void actionBoutonAide() {
-		//AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	
