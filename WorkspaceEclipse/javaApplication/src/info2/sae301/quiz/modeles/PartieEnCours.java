@@ -87,12 +87,6 @@ public class PartieEnCours {
 	}
 	
 	
-	/** Mélange les questions proposées à l'utilisateur pour la partie en cours */
-	public void melangerQuestionsProposees() {
-		 Collections.shuffle(questionsProposees);
-	}
-	
-	
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante
 	 * à l'ArrayList reponsesUtilisateur

@@ -48,7 +48,19 @@ public class GestionPseudoControleur {
 	private TextField pseudoEntre;
 	
 	/**
-	 * TODO : coder aide
+	 * Affichage du pseudo si celui n'est pas celui par défaut.
+	 */
+	@FXML
+	private void initialize() {
+		String pseudoActuel = jeu.getPseudo();
+		
+		if (pseudoActuel != null && !pseudoActuel.equals("Utilisateur")) {
+			pseudoEntre.setText(jeu.getPseudo());
+		}
+	}
+	
+	/**
+	 * Affichage d'une pop-up d'aide concernant les pseudonymes.
 	 */
 	@FXML
 	private void actionBoutonAide() {

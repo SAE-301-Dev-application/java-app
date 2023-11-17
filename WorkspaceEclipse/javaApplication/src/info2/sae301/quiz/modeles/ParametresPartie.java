@@ -46,6 +46,14 @@ public class ParametresPartie {
 	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
 	
+	public static final String AUCUNE_QUESTION
+	= "Il n'y a aucune question%s dans les catégories sélectionnées.\n"
+	  + "Veuillez entrer d'autres paramètres ou créer des questions.";
+	
+	public static final String PAS_ASSEZ_QUESTIONS
+	= "Seulement %d question(s) correspondent à vos "
+	  + "critères. Souhaitez-vous tout de même jouer ?";
+	
 	/** Les catégories de questions sélectionnées. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
@@ -95,11 +103,8 @@ public class ParametresPartie {
 		setCategoriesSelectionnees(categoriesSelectionnees);
 		setDifficulteQuestions(difficulteQuestions);
 		setNombreQuestions(nombreQuestions);
-		aAssezQuestions();
 		
-		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
-		Quiz.partieCourante.melangerQuestionsProposees();
-		
+		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());		
 		System.out.println("Catégories sélectionnées : "
 		                   + getCategoriesSelectionnees());
 	}
@@ -150,36 +155,34 @@ public class ParametresPartie {
 	 * difficulteQuestions dans les catégories sélectionnées afin
 	 * d'afficher nombreQuestions questions.
 	 * 
-	 * @throws IllegalArgumentException si aucune question ne correspond aux critères.
-	 * @throws NumberFormatException si moins de questions que le nombre de questions
-	 * souhaitées correspondent aux critères.
+	 * 
+	 * @throws AucuneQuestionCorrespondanteException si aucune question
+	 * ne correspond aux critères.
+	 * @throws NbInsuffisantQuestionsException si moins de questions
+	 * que le nombre de questions souhaitées correspondent aux critères.
 	 */
-	public void aAssezQuestions()
-	throws IllegalArgumentException, NumberFormatException {
+	public static void aAssezQuestions(int difficulteQuestions,
+									   int nombreQuestions,
+			                           ArrayList<Categorie> categories)
+	throws AucuneQuestionCorrespondanteException, NbInsuffisantQuestionsException {
 		final int NOMBRE_QUESTIONS
-		= recupQuestionsValides(this.difficulteQuestions,
-				                this.categoriesSelectionnees).size();
-
+		= recupQuestionsValides(difficulteQuestions, categories).size();
 		
-		final String MOINS_QUESTIONS
-		= "Seulement " + NOMBRE_QUESTIONS + " questions correspondent à vos "
-		  + "critères. Souhaitez-vous tout de même jouer ?";
+		String texteDifficulte = texteDifficulte(difficulteQuestions);
 		
-		String texteDifficulte = texteDifficulte(this.difficulteQuestions);
 		if (!texteDifficulte.isEmpty()) {
 			texteDifficulte = " dont la difficulté est " + texteDifficulte;
 		}
 		
-		String AUCUNE_QUESTION
-		= "Il n'y a aucune question dans les catégories sélectionnées"
-		  + texteDifficulte + ".\n"
-		  + "Veuillez entrer d'autres paramètres ou créer des questions.";
-		
 		if (NOMBRE_QUESTIONS == 0) {
-			throw new AucuneQuestionCorrespondanteException(AUCUNE_QUESTION);
+			String message = String.format(AUCUNE_QUESTION, texteDifficulte);
+			throw new AucuneQuestionCorrespondanteException(message);
 		}
-		if (this.nombreQuestions > NOMBRE_QUESTIONS) {
-			throw new NbInsuffisantQuestionsException(MOINS_QUESTIONS);
+		
+		if (NOMBRE_QUESTIONS < nombreQuestions) {
+			throw new NbInsuffisantQuestionsException(String
+					                                  .format(PAS_ASSEZ_QUESTIONS,
+					                                		  NOMBRE_QUESTIONS));
 		}
 	}
 	
@@ -224,19 +227,12 @@ public class ParametresPartie {
 		ArrayList<Question> questionsValides
 		= recupQuestionsValides(this.difficulteQuestions,
 								this.categoriesSelectionnees);
-		
+
 		Collections.shuffle(questionsValides);
 		
-		switch (nombreQuestions) {
-		case 20:
-			questionsValides.subList(0, 20);
-		case 10:
-			questionsValides.subList(0, 10);
-		case 5:
-			questionsValides.subList(0, 5);
-		default:
-		}
-		return questionsValides;
+		return new ArrayList<>(questionsValides
+				               .subList(0, Math.min(questionsValides.size(),
+				                                    nombreQuestions)));
 	}
 
 	
