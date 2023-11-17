@@ -8,6 +8,8 @@ package info2.sae301.quiz.modeles.tests;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.ParametresPartie;
+import info2.sae301.quiz.modeles.PartieEnCours;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -32,12 +34,36 @@ import org.junit.jupiter.api.Test;
  */
 class TestPartieEnCours {
 	
-	
+	 private PartieEnCours partieTest;
+	 
+	 private ArrayList<Question> setDeQuestions1;
+	 
+	 private ParametresPartie parametres;
+	 
+	 private ArrayList<Categorie> categorie1;
+	 
+	 private ArrayList<Question> questions1;
 	
 	
 	@BeforeEach
 	void init() {
+		partieTest = new PartieEnCours();
+		parametres = new ParametresPartie();
+		categorie1 = new ArrayList<Categorie>();
+		questions1 = new ArrayList<Question>();
 		
+		for (int i = 0; i < 5; i++) {
+			Question question1
+			= new Question("q" + i, "rjuste" + i,
+					       new String[] {"rf0", "rf1", "rf2", "rf3"},
+					       1, categorie1.get(0));
+			
+			questions1.add(question1);
+			categorie1.get(0).ajouterQuestion(question1);
+		}
+		
+		parametres.setCategoriesSelectionnees(categorie1);
+		partieTest.setParametresPartie(parametres);
 	}
 	
 	/**
@@ -47,6 +73,10 @@ class TestPartieEnCours {
 	@Test
 	public void testConstructeur() {
 	    // TODO le test
+		assertEquals(0, partieTest.getQuestionsProposees().size());
+	    assertEquals(0, partieTest.getIndiceQuestionCourante());
+	    assertEquals(5, partieTest.getReponsesUtilisateur().size());
+	    assertEquals(5, partieTest.getParametresPartie().getNombreQuestions());
 	}
 	
 	

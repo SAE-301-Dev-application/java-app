@@ -41,13 +41,13 @@ class TestParametresPartie {
 		"catégorie1", "caté2", "caté3", "caté4", "caté5"
 	};
 	
-	private ParametresPartie parametresTest = new ParametresPartie();
+	private ParametresPartie parametresTest;
 	
-	private ArrayList<Categorie> categorie1 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie1;
 	
-	private ArrayList<Categorie> categorie2 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie2;
 	
-	private ArrayList<Categorie> categorie3 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie3;
 	
 	@BeforeEach
 	void init() {
