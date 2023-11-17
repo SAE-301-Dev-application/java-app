@@ -1,5 +1,5 @@
 /*
- * NouvellePartie.java							            10 nov. 2023
+ * NouvellePartie.java							                    17 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -24,8 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du
- * démarrage de l'application.
+ * Contrôleur FXML de la vue ParametresPartie.fxml permettant de paramétrer
+ * une partie de jeu.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -151,6 +151,10 @@ public class NouvellePartieControleur {
 	@FXML
 	private Label indicationNbQuestions;
 	
+	/**
+	 * Initialisation du nombre de questions, de la difficulté et des catégories
+	 * existantes à sélectionner.
+	 */
 	@FXML
 	private void initialize() {
 		
@@ -218,6 +222,7 @@ public class NouvellePartieControleur {
 		
 		CheckBox checkBoxCategorie;
 		
+		/* Affichage des catégories */
 		for (Categorie categorieCourante: jeu.getToutesLesCategories()) {
 			checkBoxCategorie = new CheckBox();
 			checkBoxCategorie.setText(categorieCourante.getIntitule());
@@ -297,7 +302,12 @@ public class NouvellePartieControleur {
 		}
 	}
 	
-	
+	/**
+	 * Clic sur une checkbox permettant d'ajouter une catégorie
+	 * à la liste des catégories sélectionnées.
+	 * 
+	 * @param categorieConcernee La catégorie dont la checkbox a été cliquée.
+	 */
 	private void selectionCategorie(Categorie categorieConcernee) {
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
 			this.categoriesSelectionnees.remove(categorieConcernee);
@@ -308,18 +318,28 @@ public class NouvellePartieControleur {
 	}
 	
 	
+	/**
+	 * Affichage d'une pop-up d'aide concernant le paramétrage de la partie.
+	 */
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	
+	/**
+	 * Retour vers la vue MenuPrincipal.
+	 */
 	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
 	
+	/**
+	 * Vérification que les paramètres soient valides et lancement d'une partie
+	 * avec ces paramètres.
+	 */
 	@FXML
 	private void actionBoutonCreer() {
 		boolean lancerPartie = true;
@@ -353,7 +373,6 @@ public class NouvellePartieControleur {
 			} catch (NombreQuestionsInvalideException e) {
 				erreurNombreQuestions();
 			}
-			
 		}
 	}
 	
