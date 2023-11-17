@@ -6,7 +6,6 @@ import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
@@ -15,20 +14,20 @@ public class PartieEnCoursControleur {
 
 	private static final String AIDE_TITRE = "PARTIE EN COURS";
 	
-	private static final String AIDE_TEXTE =
-			"""
-			La partie en cours se compose d’une suite de questions posées. À 
-			chacune d’elles, il est demandé au joueur de sélectionner une seule
-			réponse parmi celles proposées.
-			
-			Le niveau de difficulté est affiché pour chacune de ces questions,
-			afin de renseigner davantage l’utilisateur.
-			
-			L’utilisateur peut passer la question si aucune réponse n’est
-			sélectionnée, a contrario, il validera la question avec la réponse
-			sélectionnée. Il peut également retourner sur les questions
-			précédentes via le bouton précédent.
-			""";
+	private static final String AIDE_TEXTE
+	= """
+	  La partie en cours se compose d’une suite de questions posées. À 
+	  chacune d’elles, il est demandé au joueur de sélectionner une seule
+	  réponse parmi celles proposées.
+	  
+	  Le niveau de difficulté est affiché pour chacune de ces questions,
+	  afin de renseigner davantage l’utilisateur.
+	  
+	  L’utilisateur peut passer la question si aucune réponse n’est
+	  sélectionnée, à contrario, il validera la question avec la réponse
+	  sélectionnée. Il peut également retourner sur les questions
+	  précédentes via le bouton précédent.
+	  """;
 	
 	private static final String MESSAGE_ALERTE_QUITTER =
 			"Vous êtes sur le point de quitter la partie, si vous confirmer "
@@ -62,9 +61,12 @@ public class PartieEnCoursControleur {
 	}
 	 
 
+	/**
+	 * Affichage d'une pop-up d'aide concernant les réponses à une question.
+	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.autreAlerte(AIDE_TEXTE, AIDE_TITRE, AlertType.INFORMATION);
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	@FXML

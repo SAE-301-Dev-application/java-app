@@ -27,7 +27,7 @@ import java.util.Collections;
  * @author Samuel Lacam
  */
 public class ParametresPartie {
-
+	
 	public static final String DIFFICULTE_INVALIDE
 	= """
 	  La difficulté sélectionnée est incorrect.
@@ -46,11 +46,11 @@ public class ParametresPartie {
 	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
 	
-	public static final String AUCUNE_QUESTION
+	private static final String AUCUNE_QUESTION
 	= "Il n'y a aucune question%s dans les catégories sélectionnées.\n"
 	  + "Veuillez entrer d'autres paramètres ou créer des questions.";
 	
-	public static final String PAS_ASSEZ_QUESTIONS
+	private static final String PAS_ASSEZ_QUESTIONS
 	= "Seulement %d question(s) correspondent à vos "
 	  + "critères. Souhaitez-vous tout de même jouer ?";
 	
@@ -104,7 +104,7 @@ public class ParametresPartie {
 		setDifficulteQuestions(difficulteQuestions);
 		setNombreQuestions(nombreQuestions);
 		
-		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());		
+		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
 		System.out.println("Catégories sélectionnées : "
 		                   + getCategoriesSelectionnees());
 	}
