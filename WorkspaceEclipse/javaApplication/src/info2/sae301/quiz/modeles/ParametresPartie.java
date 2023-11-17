@@ -98,9 +98,7 @@ public class ParametresPartie {
 		setNombreQuestions(nombreQuestions);
 		aAssezQuestions();
 		
-		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());
-		Quiz.partieCourante.melangerQuestionsProposees();
-		
+		Quiz.partieCourante.setQuestionsProposees(choisirQuestionsProposees());		
 		System.out.println("Catégories sélectionnées : "
 		                   + getCategoriesSelectionnees());
 	}
