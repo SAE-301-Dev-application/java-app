@@ -2,6 +2,8 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
+
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
@@ -44,6 +46,9 @@ public class PartieEnCoursControleur {
 	private Label labelDifficulte;
 	
 	@FXML
+	private Label numQuestion;
+	
+	@FXML
 	private VBox vBoxQuestionReponses;
 	
 	@FXML
@@ -66,6 +71,7 @@ public class PartieEnCoursControleur {
 				.get(partieCourante.getIndiceQuestionCourante());
 		
 		//Initialisation de la vue
+		initLabelNumQuestion();
 		initDifficulteQuestion();
 		initQuestionReponse();
 		initBoutonsPrecedentSuivant();
@@ -197,6 +203,16 @@ public class PartieEnCoursControleur {
 				== partieCourante.getQuestionsProposees().size() -1) {
 			boutonValider.setVisible(false);
 		}
+	}
+	
+	/**
+	 * Initialisation du numéro de question actuelle
+	 * de la série de question
+	 */
+	private void initLabelNumQuestion() {
+		int numero = partieCourante.getIndiceQuestionCourante() +1;
+		int nbQuestionPartie = partieCourante.getQuestionsProposees().size();
+		numQuestion.setText(numero + "/" + nbQuestionPartie);
 	}
 	
 }

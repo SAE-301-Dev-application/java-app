@@ -36,3 +36,9 @@
 	-fx-font-weight: bold;
 }
 
+.labelNumeroQuestion {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+

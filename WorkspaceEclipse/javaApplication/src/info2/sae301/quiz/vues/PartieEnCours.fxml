@@ -6,11 +6,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
    <children>
+      <Label text="Label" />
       <Label layoutX="228.0" layoutY="30.0" styleClass="titre-long" text="PARTIE EN COURS" />
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
@@ -22,9 +24,18 @@
          <content>
             <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0" spacing="10.0">
                <children>
+                  <HBox alignment="TOP_RIGHT" prefHeight="13.0" prefWidth="717.0">
+                     <children>
+                        <Label fx:id="numQuestion" styleClass="labelNumeroQuestion" text="numQuestion">
+                           <HBox.margin>
+                              <Insets right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                   <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleQuestion" text="intituleQuestion">
                      <VBox.margin>
-                        <Insets bottom="60.0" top="15.0" />
+                        <Insets bottom="60.0" />
                      </VBox.margin>
                   </Label>
                </children>
