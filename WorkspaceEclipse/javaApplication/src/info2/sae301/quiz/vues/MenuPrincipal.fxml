@@ -34,7 +34,7 @@
          </font>
       </Button>
       <SVGPath content="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" layoutX="-124.0" layoutY="-213.0" onMouseClicked="#actionBoutonUtilisateur" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
-      <Label fx:id="pseudo" layoutX="133.0" layoutY="33.0" styleClass="pseudo" text="Pseudonyme" />
+      <Label fx:id="pseudo" layoutX="135.0" layoutY="32.0" styleClass="pseudo" text="Pseudonyme" />
       <Label layoutX="331.0" layoutY="103.0" styleClass="titre" text="jeu de" />
       <Label layoutX="324.0" layoutY="146.0" text="QUIZ">
          <styleClass>
@@ -53,7 +53,7 @@
             <Button mnemonicParsing="false" onAction="#actionBoutonQuestions" styleClass="bouton" text="QUESTIONS" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="          IMPORTATION">
+                  <Button mnemonicParsing="false" text="         IMPORTATION">
                      <styleClass>
                         <String fx:value="petit-bouton" />
                         <String fx:value="bouton" />
