@@ -365,6 +365,7 @@ public class NouvellePartieControleur {
 						               this.nombreQuestions);
 				
 				Quiz.partieCourante.setParametresPartie(nouveauxParametres);
+				Quiz.partieCourante.setIndiceDerniereQuestionVue(0);
 				NavigationControleur.changerVue("PartieEnCours.fxml");
 				
 			} catch (DifficulteInvalideException e) {

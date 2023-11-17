@@ -56,7 +56,7 @@ public class PartieEnCoursControleur {
 	
 	private Question questionCourante;
 	
-	private ArrayList<RadioButton> touteslesCheckboxReponses;
+	private ArrayList<RadioButton> touteslesRadioReponses;
 	
 	@FXML
 	private void initialize() {
@@ -99,13 +99,26 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void actionBoutonValider() {
+		//chaîne vide par défaut si l'utilisateur coche aucune réponses
 		String reponseUtilisateur = "";
-		for (RadioButton reponse : touteslesCheckboxReponses) {
+		for (RadioButton reponse : touteslesRadioReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
 			}
 		}
-		partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+		
+		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
+		if (partieCourante.getIndiceDerniereQuestionVue()
+				== partieCourante.getIndiceQuestionCourante()){
+			
+			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+			partieCourante.setIndiceDerniereQuestionVue(
+					partieCourante.getIndiceDerniereQuestionVue() +1);
+		} else {
+			partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
+		}
+
+		System.out.println(partieCourante.getReponsesUtilisateur());
 		partieCourante.passerQuestionSuivante();
 		NavigationControleur.changerVue("PartieEnCours.fxml");
 		
@@ -149,19 +162,23 @@ public class PartieEnCoursControleur {
 	 */
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
-		touteslesCheckboxReponses = new ArrayList<RadioButton>();
+		touteslesRadioReponses = new ArrayList<RadioButton>();
 		ToggleGroup radioGroupe = new ToggleGroup();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
 			RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
+			if (partieCourante.radioDejaSelectionne(reponsesMelange.get(i))) {
+				afficherReponse.setSelected(true);
+			}
 			afficherReponse.getStyleClass().add("reponse");
 			afficherReponse.setId("" + i);
 			afficherReponse.setToggleGroup(radioGroupe);
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
-			touteslesCheckboxReponses.add(afficherReponse);
+			touteslesRadioReponses.add(afficherReponse);
 		}
 	}
+	
 	
 	/**
 	 * Rend non visible boutonPrecedent si on est

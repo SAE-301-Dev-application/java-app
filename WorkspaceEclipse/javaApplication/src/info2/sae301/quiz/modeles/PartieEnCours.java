@@ -8,6 +8,8 @@ package info2.sae301.quiz.modeles;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javafx.scene.control.RadioButton;
+
 /**
  * Partie de jeu de Quiz en cours contenant les questions posées,
  * les réponses de l'utilisateur, les paramètres ainsi que la question courante.
@@ -32,6 +34,9 @@ public class PartieEnCours {
 	/** Indice permettant de savoir l'indice de la question en cours */
 	private int indiceQuestionCourante;
 	
+	/** Indice de la dernière question vue par l'utilisateur dans l'app */
+	private int indiceDerniereQuestionVue;
+	
 	
 	/**
 	 * Initialisation d'une partie de quiz avec ses paramètres, 
@@ -45,6 +50,18 @@ public class PartieEnCours {
 	}
 	
 	
+	/** @return	le dernier indice de la question vue par l'utilisateur */
+	public int getIndiceDerniereQuestionVue() {
+		return indiceDerniereQuestionVue;
+	}
+
+	/** @param indiceDerniereQuestionVue nouvelle
+	 * valeur de la dernière question vue */
+	public void setIndiceDerniereQuestionVue(int indiceDerniereQuestionVue) {
+		this.indiceDerniereQuestionVue = indiceDerniereQuestionVue;
+	}
+
+
 	/** @return l'ArrayList des questions proposées pour la partie en cours */
 	public ArrayList<Question> getQuestionsProposees() {
 		return questionsProposees;
@@ -90,9 +107,18 @@ public class PartieEnCours {
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante
 	 * à l'ArrayList reponsesUtilisateur
-	 */ 
+	 * @param repAAjouter la réponse à ajouter
+	 */
 	public void ajouterReponseUtilisateur(String repAAjouter) {
 		this.reponsesUtilisateur.add(repAAjouter);
+	}
+	
+	/**
+	 * Modifie la réponse précédemmant saisie par l'utilisateur
+	 * @param repAModifier la nouvelle réponse de l'utilisateur.
+	 */
+	public void modifierReponseUtilisateur(String repAModifier) {
+		reponsesUtilisateur.set(indiceQuestionCourante, repAModifier);
 	}
 	
 	
@@ -129,6 +155,17 @@ public class PartieEnCours {
 		return questionRepondue.getReponseJuste().equals(reponseUser);
 	}
 	
+	public boolean radioDejaSelectionne(String reponse) {
+		boolean dejaSelectionne = false;
+		if (indiceQuestionCourante < getReponsesUtilisateur().size()) {
+			if (getReponsesUtilisateur().get(indiceQuestionCourante)
+					.equals(reponse)) {
+				
+				dejaSelectionne = true;
+			}
+		}
+		return dejaSelectionne;
+	}
 	
 	/**
 	 * Comptabilise les réponses justes de l'utilisateur
