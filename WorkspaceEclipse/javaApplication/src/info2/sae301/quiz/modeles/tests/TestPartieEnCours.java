@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -89,14 +90,6 @@ class TestPartieEnCours {
 	    assertEquals(0, partieTest.getReponsesUtilisateur().size());
 	}
 
-	
-	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getQuestionsProposees()}.
-	 */
-	@Test
-	void testGetQuestionsProposees() { //TODO finir test
-		
-	}
 
 	
 	/**

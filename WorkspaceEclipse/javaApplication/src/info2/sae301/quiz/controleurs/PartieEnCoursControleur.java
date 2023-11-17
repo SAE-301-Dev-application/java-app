@@ -6,6 +6,7 @@ import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -83,6 +84,9 @@ public class PartieEnCoursControleur {
 	private void actionBoutonAbandonner() {
 		if (AlerteControleur.alerteConfirmation(
 				MESSAGE_ALERTE_QUITTER,TITRE_ALERTE_QUITTER)) {
+			
+			// remplace l'ancienne partieEnCours
+			Quiz.partieCourante = new PartieEnCours();
 			NavigationControleur.changerVue("MenuPrincipal.fxml");
 		}
 	}

@@ -44,7 +44,7 @@ public class NouvellePartieControleur {
 	  - le nombre de questions,
 	  - le ou les niveaux de difficultés acceptés.
 
-      Le choix du niveau de difficulté est optionel
+      Le choix du niveau de difficulté est optionnel
       puisque le choix indifférent sélectionné par défaut.
       
       Afin de personnaliser davantage la partie, il est possible
@@ -272,7 +272,7 @@ public class NouvellePartieControleur {
 
 	
 	/**
-	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
+	 * Choix du niveau de difficulté "Indifférent" pour le quiz.
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
