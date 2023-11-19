@@ -7,6 +7,7 @@ import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -180,6 +181,9 @@ public class PartieEnCoursControleur {
 			afficherReponse.getStyleClass().add("reponse");
 			afficherReponse.setId("" + i);
 			afficherReponse.setToggleGroup(radioGroupe);
+			
+			
+			
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesRadioReponses.add(afficherReponse);
 		}

@@ -30,7 +30,7 @@ class TestCategorie {
 	/** Categories nommée "orthographe", "grammaire" et "francais"*/
 	static Categorie orthographe,grammaire,francais,conjugaison;
 	
-	/** Question sans feedback (SF) et avec feedback (AF)*/
+	/** Questions sans feedback (SF) et avec feedback (AF)*/
 	static Question questionSF,questionAF,questionAjout,questionAjout2,questionAjout3;
 	
 	
@@ -64,7 +64,8 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#Categorie(java.lang.String, java.util.ArrayList)}.
 	 */
 	@Test
 	void testCategorieCree() {
@@ -97,6 +98,7 @@ class TestCategorie {
 
 	/**
 	 * génère une chaîne de caractères de taille X
+	 * 
 	 * @param X
 	 * @return une chaîne de caractères de taille X
 	 */
@@ -109,7 +111,8 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#getIntitule()}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#getIntitule()}.
 	 */
 	@Test
 	void testGetIntitule() {
@@ -118,7 +121,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#ajouterQuestion(info2.sae301.quiz.modeles.Question)}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#ajouterQuestion(info2.sae301.quiz.modeles.Question)}.
 	 */
 	@Test
 	void testAjouterQuestion() {
@@ -133,7 +137,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#estVide()}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#estVide()}.
 	 */
 	@Test
 	void testEstVide() {
@@ -143,7 +148,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#nbQuestions()}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#nbQuestions()}.
 	 */
 	@Test
 	void testNbQuestions() {
@@ -161,7 +167,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#setIntitule(java.lang.String)}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#setIntitule(java.lang.String)}.
 	 */
 	@Test
 	void testSetIntitule() {
@@ -192,7 +199,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#supprimerQuestion(info2.sae301.quiz.modeles.Question)}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#supprimerQuestion(info2.sae301.quiz.modeles.Question)}.
 	 */
 	@Test
 	void testSupprimerQuestion() {
@@ -207,7 +215,8 @@ class TestCategorie {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#supprimerToutesQuestions()}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#supprimerToutesQuestions()}.
 	 */
 	@Test
 	void testSupprimerToutesQuestions() {
@@ -223,7 +232,8 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#equals(Object)}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#equals(Object)}.
 	 */
 	@Test
 	void testEquals() {
@@ -248,7 +258,8 @@ class TestCategorie {
 	}
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.Categorie#toString()}.
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#toString()}.
 	 */
 	@Test
 	void testToString() {

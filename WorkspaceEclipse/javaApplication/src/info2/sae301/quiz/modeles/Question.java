@@ -12,7 +12,8 @@ import java.util.Collections;
 import java.util.Objects; 
 
 /**
- * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
+ * Objet Question composé d'un intitulé, de réponses, de feedback et 
+ * de difficulté
  * directement lié à une catégorie
  * 
  * @author Florian Fabre
@@ -36,18 +37,32 @@ public class Question implements Serializable {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
-	/** Message si erreur l'utilisateur n'a pas rentré de réponses fausses */
+	/** 
+	 * Message si erreur l'utilisateur n'a pas rentré 
+	 * de réponses fausses 
+	 */
 	private static final String REPONSE_FAUSSE_1_VIDE
 	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
 	  + "champ obligatoirement.";
 	
-	/** Message si erreur car l'utilisateru n'a pas rempli tous les champs */
+	/** 
+	 * Message si erreur car l'utilisateur n'a pas rempli tous
+	 * les champs 
+	 */
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
 	
+	/**
+	 * Message si erreur car l'utilisateur a rempli un champ avec
+	 * des espaces uniquement 
+	 */
 	private static final String VALEUR_INVALIDE
 	= "Un champ rempli d'espaces est invalide.";
 
+	/**
+	 * Message si erreur car l'utilisateur a rempli un champ des 
+	 * reponses avec des réponses non uniques 
+	 */
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
 	
@@ -130,14 +145,15 @@ public class Question implements Serializable {
 	
 
 	/**
-	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * Vérification puis initialisation des attributs pour les deux 
+	 * constructeurs.
 	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
-	 * @throws IllegalArgumentException si les attributs ne respectent pas
-	 *                                  les tailles demandées.
+	 * @throws IllegalArgumentException si les attributs ne 
+	 * respectent pas les tailles demandées.
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
@@ -158,15 +174,16 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * Vérification puis initialisation des attributs pour 
+	 * les deux constructeurs.
 	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback.
-	 * @throws IllegalArgumentException si les attributs ne respectent pas
-	 *                                  les tailles demandées.
+	 * @throws IllegalArgumentException si les attributs ne respectent 
+	 * pas les tailles demandées.
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte,
@@ -180,8 +197,8 @@ public class Question implements Serializable {
 	
 
 	/**
-	 * Vérification que la taille d'un élément soit supérieure à tailleMin
-	 * et inférieure à tailleMax.
+	 * Vérification que la taille d'un élément soit supérieure à 
+	 * tailleMin et inférieure à tailleMax.
 	 * 
 	 * @param element Element duquel vérifier la taille.
 	 * @param titre Titre de l'élément vérifié.
@@ -208,12 +225,13 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Ajoute la réponse juste à un tableau contenant également les réponses fausses
-	 * et vérifie l'unicité des réponses du tableau.
+	 * Ajoute la réponse juste à un tableau contenant également les 
+	 * réponses fausses et vérifie l'unicité des réponses du tableau.
 	 * 
 	 * @param reponses La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 * @throws IllegalArgumentException si une des réponses est égale 
+	 * à une autre.
 	 */
 	private static void assurerReponsesUniques(String reponseJuste,
 			                                   String[] reponsesFausses)
@@ -232,7 +250,8 @@ public class Question implements Serializable {
 	 * Vérifie si les réponses en paramètre sont toutes différentes.
 	 * 
 	 * @param reponses Les réponses à vérifier.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 * @throws IllegalArgumentException si une des réponses est égale
+	 * à une autre.
 	 */
 	public static void assurerReponsesUniques(String[] reponses)
 	throws IllegalArgumentException {
@@ -257,8 +276,8 @@ public class Question implements Serializable {
 	 * Les autres peuvent être nulles.
 	 * 
 	 * @param reponsesFausses Les réponses fausses à assurer.
-	 * @throws IllegalArgumentException si la taille de chaque réponse fausse
-	 *                                  est invalide.
+	 * @throws IllegalArgumentException si la taille de chaque 
+	 * réponse fausse est invalide.
 	 */
 	public static void assurerValiditeReponsesFausses(String[] reponsesFausses)
 	throws IllegalArgumentException {
@@ -362,11 +381,14 @@ public class Question implements Serializable {
 	
 
 	/**
-	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
+	 * Teste si les réponses fausses sont les mêmes dans les deux 
+	 * listes.
 	 * 
 	 * @param reponsesFausses1 Les réponses fausses à comparer.
-	 * @param reponsesFausses2 Les secondes réponses fausses à comparer.
-	 * @return true si les liste contiennent les mêmes réponses fausses, false sinon.
+	 * @param reponsesFausses2 Les secondes réponses fausses à 
+	 * comparer.
+	 * @return true si les liste contiennent les mêmes réponses 
+	 * fausses, false sinon.
 	 */
 	public boolean memesReponsesFausses(Question aComparerRepFausses) {
 		boolean resultatFinal = true;
@@ -455,15 +477,17 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
- 	 * méthode est appliquée, ici une instance de Question.
- 	 * Permet une comparaison précise et complète la méthode equals() car si les
- 	 * hashCode générés pour les instances comparées sont les mêmes et que 
- 	 * la méthode equals renvoie true, alors ces instances sont égales.
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel
+	 * cette méthode est appliquée, ici une instance de Question.
+ 	 * Permet une comparaison précise et complète la méthode equals()
+ 	 * car si les hashCode générés pour les instances comparées sont 
+ 	 * les mêmes et que la méthode equals renvoie true, alors ces 
+ 	 * instances sont égales.
  	 * 
- 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
- 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
- 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous 
+ 	 * n'utilisons pas de HashSet ou de HashMap, cependant il est 
+ 	 * préférable de l'implémenter pour une maintenance future du 
+ 	 * code plus aisée et pour le respect
  	 * des conventions générales de Java.
  	 * 
  	 * @return un hashCode basé sur les attributs de l'instance passée
@@ -479,8 +503,8 @@ public class Question implements Serializable {
 	
 
 	/**
-	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
-	 * leurs critères d'identification:
+	 * Méthode permettant de comparer 2 questions en profondeur 
+	 * en se basant sur leurs critères d'identification:
 	 * - Intitulé question
 	 * - Intitule categorie
 	 * - reponseJuste

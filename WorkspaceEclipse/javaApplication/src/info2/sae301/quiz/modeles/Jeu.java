@@ -458,6 +458,7 @@ public class Jeu implements Serializable {
 	/**
 	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
 	 * leurs attributs
+	 * 
 	 * @param aComparer Jeu à comparer
 	 * @return true si les instances de jeu sont les mêmes, false sinon
 	 */

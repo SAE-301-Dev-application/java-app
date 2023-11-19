@@ -12,22 +12,19 @@ import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests unitaires de la classe {@link info2.sae301.quiz.modeles.ParametresPartie}.
+ * Tests unitaires de la classe 
+ * {@link info2.sae301.quiz.modeles.ParametresPartie}.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
