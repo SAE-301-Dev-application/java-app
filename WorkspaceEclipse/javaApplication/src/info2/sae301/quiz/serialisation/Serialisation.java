@@ -24,6 +24,9 @@ import info2.sae301.quiz.modeles.Jeu;
  */
 public class Serialisation {
 	
+	/** Nom du fichier dans lequel les données locales seront sauvegardées. */
+	public static final String NOM_FICHIER_SAUVEGARDE = "sauvegardeDonneesQuiz";
+	
 	/** Chemin du dossier pour les sauvegardes */
     public static final String CHEMIN_DOSSIER
 	= "../javaApplication/src/info2/sae301/quiz/serialisation/sauvegardes/";

@@ -46,22 +46,22 @@ public class Jeu implements Serializable {
 		this.toutesLesCategories
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 		
-		for (int i = 2; i <= 30; i++) {
-			creerCategorie("" + i + "ème catégorie");
-		}
+//		for (int i = 2; i <= 30; i++) {
+//			creerCategorie("" + i + "ème catégorie");
+//		}
 		
 		this.toutesLesQuestions = new ArrayList<>();
 		
-		for (int i = 1; i <= 30; i++) {
-			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
-					      "Réponse vraie",
-					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
-					    		        "Réponse fausse 3", "Réponse fausse 4"},
-						  2, "Feedback très court",
-                          i % 2 == 0
-                          ? toutesLesCategories.get(0).getIntitule()
-                          : "2ème catégorie");
-		}
+//		for (int i = 1; i <= 30; i++) {
+//			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
+//					      "Réponse vraie",
+//					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
+//					    		        "Réponse fausse 3", "Réponse fausse 4"},
+//						  2, "Feedback très court",
+//                          i % 2 == 0
+//                          ? toutesLesCategories.get(0).getIntitule()
+//                          : "2ème catégorie");
+//		}
 		
 		// Pseudonyme par défaut
 		this.pseudo = "Utilisateur";

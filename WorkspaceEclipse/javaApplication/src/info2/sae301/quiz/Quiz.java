@@ -8,6 +8,7 @@ package info2.sae301.quiz;
 import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
+import info2.sae301.quiz.serialisation.Serialisation;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -73,7 +74,7 @@ public class Quiz extends Application {
 	 * @param args Paramètre inutilisé.
 	 */
 	public static void main(String[] args) {
-		jeu = new Jeu();
+		jeu = Serialisation.deserialiser(Serialisation.NOM_FICHIER_SAUVEGARDE);
 		partieCourante = new PartieEnCours();
 		launch(args);
 	}

@@ -7,6 +7,7 @@ package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.serialisation.Serialisation;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -83,6 +84,7 @@ public class MenuPrincipalControleur {
 	 */
 	@FXML
 	private void actionBoutonFerme() {
+		Serialisation.serialiser(jeu, Serialisation.NOM_FICHIER_SAUVEGARDE);
 		Platform.exit();
 	}
 

@@ -34,10 +34,10 @@ class TestSerialisation {
 	= Serialisation.CHEMIN_DOSSIER;
 	
 	/** Nom du fichier de sauvegarde des données */
-	private static final String FICHIER_SAUVEGARDE = "sauvegardeDonneesQuiz.ser";
+	private static final String FICHIER_SAUVEGARDE = "testDonneesModifiees.ser";
 	
 	/** Nom du fichier de sauvegarde des données non modifiées */
-	private static final String FICHIER_SAUVEGARDE_VIDE = "donneesNonModifiees.ser";
+	private static final String FICHIER_SAUVEGARDE_VIDE = "testDonneesNonModifiees.ser";
 	
 	@BeforeEach
 	void init() throws Exception {
