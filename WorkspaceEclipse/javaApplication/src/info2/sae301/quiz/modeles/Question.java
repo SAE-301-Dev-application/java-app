@@ -23,8 +23,6 @@ import java.util.Objects;
  */
 public class Question implements Serializable {
 	
-	/* Constantes utilisées dans la classe */
-	
 	/** Message si erreur sur les tailles de champ */
 	private static final String TAILLE_INVALIDE
 	= "La taille %s doit être comprise entre %d et %d.";
@@ -53,8 +51,7 @@ public class Question implements Serializable {
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
 	
-	
-	/* Attributs d'une instance de classe de Question */
+    
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
@@ -272,6 +269,9 @@ public class Question implements Serializable {
 		
 		for (int i = 0; i < reponsesFausses.length; i++) {
 			if (i == 0) {
+				if (reponsesFausses[i] == null || reponsesFausses[i].isEmpty()) {
+					throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
+				}
 				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
 			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isEmpty()) {
 				assurerTaille(reponsesFausses[i],
