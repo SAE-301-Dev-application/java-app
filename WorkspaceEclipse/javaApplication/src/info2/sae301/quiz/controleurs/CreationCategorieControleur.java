@@ -13,8 +13,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 /**
- * Contrôleur FXML de la vue CreationCategorie qui permet la création d'une
- * nouvelle catégorie.
+ * Contrôleur FXML de la vue CreationCategorie qui permet la création
+ * d'une nouvelle catégorie.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
  */
 public class CreationCategorieControleur {
 	
+	/** String pour le titre de l'alerte */
 	private static final String TITRE_ALERTE = "Erreur de création";
 	
 	/**
@@ -35,13 +36,17 @@ public class CreationCategorieControleur {
 	@FXML
 	private TextField nouveauNomCategorie;
 	
+	
 	/**
-	 * TODO : coder aide
+	 * Permet d'afficher une pop up d'aide concernant la création
+	 * des catégories
 	 */
 	@FXML
 	private void boutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE,
+							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue AffichageCategories.fxml
@@ -50,6 +55,7 @@ public class CreationCategorieControleur {
 	private void boutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
+	
 	
 	/**
 	 * Enregistrer le nouveau nom de la catégorie.
@@ -63,6 +69,5 @@ public class CreationCategorieControleur {
 			AlerteControleur.autreAlerte(e.getMessage(),
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
-	}
-	
+	}	
 }

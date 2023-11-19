@@ -59,9 +59,10 @@ public class ChoixEditionQuestionControleur {
 	
 	private Label questionCourante;
 	
+	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des questions et du bouton suivant.
+	 * Initialisation de la vue avec le style CSS correspondant et 
+	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -80,13 +81,16 @@ public class ChoixEditionQuestionControleur {
 		afficherQuestions();
 	}
 	
+	
 	/** @return L'intitulé de la question sélectionnée. */
 	public static int getIndiceQuestionSelectionnee() {
 		return indiceQuestionSelectionnee;
 	}
 	
+	
 	/**
-	 * Réaffichage des questions lorsqu'une catégorie est sélectionnée.
+	 * Réaffichage des questions lorsqu'une catégorie est 
+	 * sélectionnée.
 	 */
 	@FXML
 	public void selectionFiltre() {
@@ -98,10 +102,11 @@ public class ChoixEditionQuestionControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
 	 * Affiche 5 questions au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de questions précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de questions
+	 * précédentes et suivantes.
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
@@ -142,11 +147,14 @@ public class ChoixEditionQuestionControleur {
 	    		                 && indiceFin < questionsAAfficher.size());
 	}
 	
+	
 	/**
-	 * Changement de vue et modification de l'attribut de la catégorie sélectionnée
-	 * dans la classe de sauvegarde des paramètres, questions et questions.
+	 * Changement de vue et modification de l'attribut de la 
+	 * catégorie sélectionnée dans la classe de sauvegarde des 
+	 * paramètres, questions et questions.
 	 * 
-	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
+	 * @param intitule L'intitulé de la catégorie sélectionnée à 
+	 * 				   sauvegarder.
 	 */
 	private void actionEditerQuestion(String intitule, String reponseJuste,
 			                          String[] reponsesFausses, int difficulte,
@@ -159,9 +167,10 @@ public class ChoixEditionQuestionControleur {
 		
 	}
 	
+	
 	/**
-	 * Retrait de 5 questions à l'indice de la première catégorie à afficher
-	 * et affichage des 5 questions précédentes. 
+	 * Retrait de 5 questions à l'indice de la première catégorie à 
+	 * afficher et affichage des 5 questions précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -170,9 +179,10 @@ public class ChoixEditionQuestionControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
-	 * Ajout de 5 questions à l'indice de la première catégorie à afficher
-	 * et affichage des 5 questions suivantes. 
+	 * Ajout de 5 questions à l'indice de la première catégorie à 
+	 * afficher et affichage des 5 questions suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -181,14 +191,17 @@ public class ChoixEditionQuestionControleur {
 	    afficherQuestions();
 	}
 	
+	
 	/**
-	 * TODO : coder action bouton aide
+	 * Permet d'afficher une pop up d'aide concernant l'édition
+	 * des questions
 	 */
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
 				              AffichageQuestionsControleur.AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue AffichageQuestions.
@@ -197,5 +210,4 @@ public class ChoixEditionQuestionControleur {
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
-	
 }

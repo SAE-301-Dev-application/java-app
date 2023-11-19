@@ -17,8 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue ChoixRenommerCategories qui affiche la liste des
- * catégories sous forme de boutons.
+ * Contrôleur FXML de la vue ChoixRenommerCategories qui affiche la 
+ * liste des catégories sous forme de boutons.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -46,16 +46,22 @@ public class ChoixRenommerCategorieControleur {
 	@FXML
 	private Button boutonSuivant;
 	
-	/** Indice de la première catégorie affichée sur la "page" courante. */
+	/** 
+	 * Indice de la première catégorie affichée sur la 
+	 * "page" courante. 
+	 */
 	private int indiceCategorie = 0; 
 	
-	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
+	/** Liste comprenant la totalité des catégories */
+	private ArrayList<Categorie> toutesLesCategories = 
+							jeu.getToutesLesCategories();
 	
 	private Label categorieCourante;
 	
+	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des catégories et du bouton suivant.
+	 * Initialisation de la vue avec le style CSS correspondant et
+	 * l'affichage des catégories et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -66,17 +72,20 @@ public class ChoixRenommerCategorieControleur {
 		afficherCategories();
 	}
 	
+	
 	/** @return L'intitulé de la catégorie sélectionnée. */
 	public static String getIntituleCategorieSelectionnee() {
 		return intituleCategorieSelectionnee;
 	}
 	
+	
 	/**
 	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
-	 * @throws IllegalArgumentException si la taille est invalide ou qu'une catégorie
-	 *                                  du nouveau nom existe déjà.
+	 * @throws IllegalArgumentException si la taille est invalide ou
+	 *  								qu'une catégorie du nouveau 
+	 *  								nom existe déjà.
 	 */
 	public static void renommerCategorieSelectionnee(String nouveauIntitule)
 	                   throws IllegalArgumentException {
@@ -85,10 +94,11 @@ public class ChoixRenommerCategorieControleur {
 		intituleCategorieSelectionnee = null;
 	}
 	
+	
 	/**
-	 * Affiche 5 catégories au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de catégories précédentes
-	 * et suivantes.
+	 * Affiche 5 catégories au maximum et gère l'affichage des 
+	 * boutons précédent et suivant en fonction du nombre de 
+	 * catégories précédentes et suivantes.
 	 */
 	private void afficherCategories() {
 	    // Calcul des indices pour l'affichage des catégories
@@ -124,20 +134,24 @@ public class ChoixRenommerCategorieControleur {
 	    		                 && indiceFin < toutesLesCategories.size());
 	}
 	
+	
 	/**
-	 * Changement de vue et modification de l'attribut de la catégorie sélectionnée
-	 * dans la classe de sauvegarde des paramètres, catégories et questions.
+	 * Changement de vue et modification de l'attribut de la 
+	 * catégorie sélectionnée dans la classe de sauvegarde des 
+	 * paramètres, catégories et questions.
 	 * 
-	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
+	 * @param intitule L'intitulé de la catégorie sélectionnée 
+	 * 				   à sauvegarder.
 	 */
 	private void actionRenommerCategorie(String intitule) {
 		intituleCategorieSelectionnee = intitule;
 		NavigationControleur.changerVue("RenommerCategories.fxml");
 	}
 	
+	
 	/**
-	 * Retrait de 5 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 5 catégories précédentes. 
+	 * Retrait de 5 catégories à l'indice de la première catégorie 
+	 * à afficher et affichage des 5 catégories précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -146,9 +160,10 @@ public class ChoixRenommerCategorieControleur {
 		afficherCategories();
 	}
 	
+	
 	/**
-	 * Ajout de 5 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 5 catégories suivantes. 
+	 * Ajout de 5 catégories à l'indice de la première catégorie à 
+	 * afficher et affichage des 5 catégories suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -157,13 +172,17 @@ public class ChoixRenommerCategorieControleur {
 	    afficherCategories();
 	}
 	
+	
 	/**
-	 * TODO : coder action bouton aide
+	 * Permet d'afficher une pop up d'aide concernant l'édition 
+	 * des catégories
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE,
+							AffichageCategoriesControleur.AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue AffichageCategories.

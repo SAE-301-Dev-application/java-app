@@ -24,8 +24,10 @@ import javafx.scene.control.Label;
  */
 public class MenuPrincipalControleur {
 	
+	/** Titre de l'aide de la page du menu principal  */
 	private final String AIDE_TITRE = "COMMENT JOUER ?";
 	
+	/** Texte de l'aide du menu principal */
 	private final String AIDE_TEXTE 
 	= """
       Bienvenue sur le jeu de quiz !
@@ -47,31 +49,37 @@ public class MenuPrincipalControleur {
 	@FXML
 	private Label pseudo;
 
+	
 	@FXML
 	private void initialize() {
 		pseudo.setText(jeu.getPseudo());
 	}
+	
 	
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 
+	
 	@FXML
 	private void actionBoutonUtilisateur() {
 		NavigationControleur.changerVue("GestionPseudo.fxml");
 	}
+	
 	
 	@FXML
 	private void actionBoutonFerme() {
 		Platform.exit();
 	}
 
+	
 	@FXML
 	private void actionBoutonJouer() {
 		NavigationControleur.changerVue("NouvellePartie.fxml");
 	}
 
+	
 	/**
 	 * Redirection vers la vue AffichageCategories.fxml
 	 */
@@ -80,6 +88,7 @@ public class MenuPrincipalControleur {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 
+	
 	/**
 	 * Redirection vers la vue AffichageQuestions.fxml
 	 */
@@ -88,6 +97,7 @@ public class MenuPrincipalControleur {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 
+	
 	/**
 	 * Redirection vers la vue Importation.fxml
 	 */
@@ -95,6 +105,7 @@ public class MenuPrincipalControleur {
 	private void actionBoutonImportation() {
 		
 	}
+	
 	
 	/**
 	 * Redirection vers la vue Exportation.fxml
