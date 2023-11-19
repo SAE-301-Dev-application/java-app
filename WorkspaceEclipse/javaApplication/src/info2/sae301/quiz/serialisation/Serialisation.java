@@ -1,3 +1,8 @@
+/*
+ * Serialisation.java             									8 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.serialisation;
 
 import java.io.FileInputStream; 
@@ -16,7 +21,7 @@ public class Serialisation{
 	
 	
 	
-	//Chemin pour les sauvegardes
+	/** Chemin du dossier pour les sauvegardes */
 	private static String cheminDossier = "../sauvegarde/";
 	
 
@@ -34,10 +39,7 @@ public class Serialisation{
 			FileOutputStream fileOutputStream = new FileOutputStream(cheminDossier + nomFichier);
 			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
 
-//			System.out.println("Ecriture de " + aSerialiser.toString());
 			fluxEcriture.writeObject(aSerialiser);
-
-			// Fermeture du fichier
 			fluxEcriture.close();
 		} catch (IOException e) { 
 			System.out.println("Problème d'accès au fichier " + nomFichier);
@@ -60,12 +62,9 @@ public class Serialisation{
 	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
 	        
 	        jeuEnCours = (Jeu) fluxLecture.readObject();
-
-			// Fermeture du fichier
 			fluxLecture.close();
-//			System.out.println(jeuEnCours);
 
-		} catch (IOException e) { // problème fichier
+		} catch (IOException e) { 
 			System.out.println("Problème d'accès au fichier " + nomFichier);
 		} catch (ClassNotFoundException e) {
 
