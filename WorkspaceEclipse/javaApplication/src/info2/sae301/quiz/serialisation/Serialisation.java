@@ -1,5 +1,5 @@
 /*
- * Serialisation.java             									8 nov. 2023
+ * Serialisation.java             									19 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -14,17 +14,20 @@ import java.io.ObjectOutputStream;
 import info2.sae301.quiz.modeles.Jeu;
 
 /**
- * Classe de sérialisation pour les objets de type "Jeu" 
- * @author LACAM Samuel, FABRE Florian
+ * Classe de sérialisation pour les objets de type "Jeu".
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
-public class Serialisation{
-	
-	
+public class Serialisation {
 	
 	/** Chemin du dossier pour les sauvegardes */
-	private static String cheminDossier = "../sauvegarde/";
+    public static final String CHEMIN_DOSSIER
+	= "../javaApplication/src/info2/sae301/quiz/serialisation/sauvegardes/";
 	
-
 	/**
 	 * Sérialise les instances de type Jeu et les enregistre dans un fichier
 	 * de sauvegarde
@@ -33,15 +36,15 @@ public class Serialisation{
 	 */
 	public static void serialiser(Jeu aSerialiser, String nomFichier) {
 		try {
-
 			// Déclaration et création du fichier qui recevra les objets
-			System.out.println(cheminDossier + nomFichier);
-			FileOutputStream fileOutputStream = new FileOutputStream(cheminDossier + nomFichier);
+			FileOutputStream fileOutputStream = new FileOutputStream(CHEMIN_DOSSIER
+					                                                 + nomFichier);
 			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
 
 			fluxEcriture.writeObject(aSerialiser);
 			fluxEcriture.close();
-		} catch (IOException e) { 
+		} catch (IOException e) {
+			System.out.println("-- Erreur de sérialisation : ");
 			System.out.println("Problème d'accès au fichier " + nomFichier);
 		}
 	}
@@ -58,19 +61,22 @@ public class Serialisation{
 
 		// déclaration du fichier et lecture dans le fichier
 		try {
-	        FileInputStream fileInputStream = new FileInputStream(cheminDossier + nomFichier);
+	        FileInputStream fileInputStream = new FileInputStream(CHEMIN_DOSSIER
+	        		                                              + nomFichier);
 	        ObjectInputStream fluxLecture = new ObjectInputStream(fileInputStream);
 	        
 	        jeuEnCours = (Jeu) fluxLecture.readObject();
 			fluxLecture.close();
 
 		} catch (IOException e) { 
+			System.out.println("-- Erreur de désérialisation : ");
 			System.out.println("Problème d'accès au fichier " + nomFichier);
+			System.out.println(e.getMessage());
 		} catch (ClassNotFoundException e) {
 
 			// exception levée si l'objet lu n'est pas de type Jeu
 			System.out.println("Problème lors de la lecture du fichier "
-					+ nomFichier);
+				           	   + nomFichier);
 		}
 		return jeuEnCours;
 	}
