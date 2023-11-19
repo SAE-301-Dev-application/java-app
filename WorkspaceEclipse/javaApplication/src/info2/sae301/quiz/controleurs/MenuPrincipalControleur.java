@@ -50,30 +50,46 @@ public class MenuPrincipalControleur {
 	private Label pseudo;
 
 	
+	/**
+	 * Affichage du pseudo si celui n'est pas celui par défaut.
+	 */
 	@FXML
 	private void initialize() {
 		pseudo.setText(jeu.getPseudo());
 	}
 	
 	
+	/**
+	 * Affichage d'une pop-up d'aide concernant le menu principal.
+	 */
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 
 	
+	/**
+	 * Redirection vers la vue GestionPseudo.fxml
+	 */
 	@FXML
 	private void actionBoutonUtilisateur() {
 		NavigationControleur.changerVue("GestionPseudo.fxml");
 	}
 	
 	
+	/**
+	 * Redirection vers la vue ConfirmationQuitter.fxml
+	 * TODO changer pour que ça passe sur la confirmation de quitter
+	 */
 	@FXML
 	private void actionBoutonFerme() {
 		Platform.exit();
 	}
 
 	
+	/**
+	 * Redirection vers la vue NouvellePartie.fxml
+	 */
 	@FXML
 	private void actionBoutonJouer() {
 		NavigationControleur.changerVue("NouvellePartie.fxml");
@@ -103,7 +119,7 @@ public class MenuPrincipalControleur {
 	 */
 	@FXML
 	private void actionBoutonImportation() {
-		
+		//TODO implement view
 	}
 	
 	
@@ -112,7 +128,7 @@ public class MenuPrincipalControleur {
 	 */
 	@FXML
 	private void actionBoutonExportation() {
-		
+		//TODO implement view
 	}
 	
 }

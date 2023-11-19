@@ -24,8 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue ParametresPartie.fxml permettant de paramétrer
- * une partie de jeu.
+ * Contrôleur FXML de la vue ParametresPartie.fxml permettant de 
+ * paramétrer une partie de jeu.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -35,8 +35,10 @@ import javafx.scene.layout.VBox;
  */
 public class NouvellePartieControleur {
 	
+	/** Titre d'erreur pour l'alerte de la création partie */
 	private static final String AIDE_TITRE = "CRÉER UNE PARTIE";
 
+	/** Texte de l'aide */
 	private static final String AIDE_TEXTE
 	= """
 	  Trois paramètres sont à renseigner afin de créer une partie :
@@ -51,18 +53,26 @@ public class NouvellePartieControleur {
       de choisir une ou plusieurs difficultés entre facile, moyenne et difficile.
 	  """;
 	
+	/** Texte d'erreur pour un nombre de questions incorrect */
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
 	= "Nombre de questions incorrect";
 	
+	/** Texte d'erreur pour une difficulté invalide */
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
 	
+	/** Texte indiquant le nombre de questions disponibles dans 
+	 * les catégories sélectionnées
+	 */
 	private static final String INDICATION_NB_QUESTIONS
 	= "Total de questions%s dans les catégories sélectionnées : %d";
 	
+	
+	/** Texte d'erreur pour indiquer qu'il y a aucune question */
 	private static final String ERREUR_AUCUNE_QUESTION_TITRE
 	= "Aucune question";
 	
+	/** Texte d'erreur pour dire qu'il n'y a pas assez de questions */
 	private static final String ERREUR_MOINS_QUESTIONS_TITRE
 	= "Pas assez de questions";
 	
@@ -81,29 +91,9 @@ public class NouvellePartieControleur {
 	/** Instance du jeu. */
 	private static Jeu jeu = Quiz.jeu;
 	
-	/**
-	 * Affichage de l'erreur :
-	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
-	 */
-	private static void erreurNombreQuestions() {
-		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
-				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
-				 					 AlertType.ERROR);
-	}
-	
-	/**
-	 * Affichage de l'erreur :
-	 * La difficulté est invalide, inexistante.
-	 */
-	private static void erreurDifficulte() {
-		AlerteControleur.autreAlerte(ParametresPartie.DIFFICULTE_INVALIDE,
-				 					 ERREUR_DIFFICULTE_TITRE, 
-				 					 AlertType.ERROR);
-	}
-	
 	/** Nombre de questions du futur quiz. */
 	private int nombreQuestions;
-	
+		
 	/**
 	 * Niveau de difficulté du quiz :
 	 * - 0 = indifférent
@@ -116,31 +106,33 @@ public class NouvellePartieControleur {
 	/** Catégories sélectionnées pour le futur quiz. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
-	/** Checkbox "5 questions". */
+	
+	/** CheckBox "5 questions". */
 	@FXML
 	private CheckBox checkBox5Questions;
 	
-	/** Checkbox "10 questions". */
+	
+	/** CheckBox "10 questions". */
 	@FXML
 	private CheckBox checkBox10Questions;
 	
-	/** Checkbox "20 questions". */
+	/** CheckBox "20 questions". */
 	@FXML
 	private CheckBox checkBox20Questions;
 	
-	/** Checkbox de difficulté "indifférent". */
+	/** CheckBox de difficulté "indifférent". */
 	@FXML
 	private CheckBox checkBoxDifficulteIndifferent;
 	
-	/** Checkbox de difficulté "facile". */
+	/** CheckBox de difficulté "facile". */
 	@FXML
 	private CheckBox checkBoxDifficulteFacile;
 	
-	/** Checkbox de difficulté "moyen". */
+	/** CheckBox de difficulté "moyen". */
 	@FXML
 	private CheckBox checkBoxDifficulteMoyen;
 	
-	/** Checkbox de difficulté "difficile". */
+	/** CheckBox de difficulté "difficile". */
 	@FXML
 	private CheckBox checkBoxDifficulteDifficile;
 	
@@ -151,9 +143,32 @@ public class NouvellePartieControleur {
 	@FXML
 	private Label indicationNbQuestions;
 	
+	
 	/**
-	 * Initialisation du nombre de questions, de la difficulté et des catégories
-	 * existantes à sélectionner.
+	 * Affichage de l'erreur :
+	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
+	 */
+	private static void erreurNombreQuestions() {
+		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
+				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
+				 					 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affichage de l'erreur :
+	 * La difficulté est invalide, inexistante.
+	 */
+	private static void erreurDifficulte() {
+		AlerteControleur.autreAlerte(ParametresPartie.DIFFICULTE_INVALIDE,
+				 					 ERREUR_DIFFICULTE_TITRE, 
+				 					 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Initialisation du nombre de questions, de la difficulté et 
+	 * des catégories existantes à sélectionner.
 	 */
 	@FXML
 	private void initialize() {
@@ -219,7 +234,6 @@ public class NouvellePartieControleur {
 		/*
 		 * Chargement des catégories de question.
 		 */
-		
 		CheckBox checkBoxCategorie;
 		
 		/* Affichage des catégories */
@@ -257,11 +271,13 @@ public class NouvellePartieControleur {
   		                .size());
 		
 		indicationNbQuestions.setText(texteFinal);
-}
+	}
 	
 	
 	/**
 	 * Choix du nombre de questions pour le quiz.
+	 * 
+	 * @param nombre
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
@@ -278,6 +294,7 @@ public class NouvellePartieControleur {
 	
 	/**
 	 * Choix du niveau de difficulté "Indifférent" pour le quiz.
+	 * @param difficulte difficulté choisie
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
@@ -302,11 +319,13 @@ public class NouvellePartieControleur {
 		}
 	}
 	
+	
 	/**
-	 * Clic sur une checkbox permettant d'ajouter une catégorie
+	 * Clic sur une CheckBox permettant d'ajouter une catégorie
 	 * à la liste des catégories sélectionnées.
 	 * 
-	 * @param categorieConcernee La catégorie dont la checkbox a été cliquée.
+	 * @param categorieConcernee La catégorie dont la CheckBox
+	 * 							a été sélectionnée.
 	 */
 	private void selectionCategorie(Categorie categorieConcernee) {
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
@@ -319,7 +338,8 @@ public class NouvellePartieControleur {
 	
 	
 	/**
-	 * Affichage d'une pop-up d'aide concernant le paramétrage de la partie.
+	 * Affichage d'une pop-up d'aide concernant le paramétrage de 
+	 * la partie.
 	 */
 	@FXML
 	private void actionBoutonAide() {
@@ -337,8 +357,8 @@ public class NouvellePartieControleur {
 	
 	
 	/**
-	 * Vérification que les paramètres soient valides et lancement d'une partie
-	 * avec ces paramètres.
+	 * Vérification que les paramètres soient valides et lancement 
+	 * d'une partie avec ces paramètres.
 	 */
 	@FXML
 	private void actionBoutonCreer() {
@@ -376,5 +396,4 @@ public class NouvellePartieControleur {
 			}
 		}
 	}
-	
 }

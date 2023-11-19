@@ -43,6 +43,7 @@ public class NavigationControleur {
 	 */
 	private static String vueCourante;
 	
+	
 	/**
 	 * (Re)définie directement l'objet de la scène
 	 * courante. Cette information est utile lors du 
@@ -53,6 +54,7 @@ public class NavigationControleur {
 	public static void setSceneCourante(Scene nouvelleScene) {
 		sceneCourante = nouvelleScene;
 	}
+	
 	
 	/**
 	 * Change de vue vers celle envoyée en 
@@ -68,7 +70,7 @@ public class NavigationControleur {
 								   RACINE_VUES + routeVueFXML));
 				Parent racine;
 				racine = FXMLLoader.load(NavigationControleur.class
-						                 .getResource(RACINE_VUES + routeVueFXML));
+						              .getResource(RACINE_VUES + routeVueFXML));
 				
 				sceneCourante.setRoot(racine);
 				vueCourante = routeVueFXML;
@@ -78,14 +80,15 @@ public class NavigationControleur {
 		}
 	}
 	
+	
 	/** @return La scène courante. */
 	public static Scene getScene() {
 		return sceneCourante;
 	}
 	
+	
 	/** @return La vue courante. */
 	public static String getVueCourante() {
 		return vueCourante;
 	}
-	
 }
