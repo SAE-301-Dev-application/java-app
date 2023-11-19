@@ -25,7 +25,7 @@ import info2.sae301.quiz.modeles.Jeu;
 public class Serialisation {
 	
 	/** Nom du fichier dans lequel les données locales seront sauvegardées. */
-	public static final String NOM_FICHIER_SAUVEGARDE = "sauvegardeDonneesQuiz";
+	public static final String NOM_FICHIER_SAUVEGARDE = "sauvegardeDonneesQuiz.ser";
 	
 	/** Chemin du dossier pour les sauvegardes */
     public static final String CHEMIN_DOSSIER
@@ -74,12 +74,13 @@ public class Serialisation {
 		} catch (IOException e) { 
 			System.out.println("-- Erreur de désérialisation : ");
 			System.out.println("Problème d'accès au fichier " + nomFichier);
-			System.out.println(e.getMessage());
+			jeuEnCours = new Jeu();
 		} catch (ClassNotFoundException e) {
-
+			System.out.println("-- Erreur de désérialisation : ");
 			// exception levée si l'objet lu n'est pas de type Jeu
 			System.out.println("Problème lors de la lecture du fichier "
 				           	   + nomFichier);
+			jeuEnCours = new Jeu();
 		}
 		return jeuEnCours;
 	}
