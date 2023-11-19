@@ -29,7 +29,8 @@ public class RenommerCategoriesControleur {
 	@FXML
 	private void initialize() {
 		entreeNomCategorie
-		.setText(ChoixRenommerCategorieControleur.getIntituleCategorieSelectionnee());
+		.setText(ChoixRenommerCategorieControleur.
+				 getIntituleCategorieSelectionnee());
 	}
 	
 	/**
@@ -37,7 +38,8 @@ public class RenommerCategoriesControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, 
+							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
 	/**
@@ -49,7 +51,8 @@ public class RenommerCategoriesControleur {
 	}
 	
 	/**
-	 * Clic sur le bouton renommer, renomme la catégorie et change de vue.
+	 * Clic sur le bouton renommer, renomme la catégorie et 
+	 * change de vue.
 	 */
 	@FXML
 	private void actionBoutonRenommer() {

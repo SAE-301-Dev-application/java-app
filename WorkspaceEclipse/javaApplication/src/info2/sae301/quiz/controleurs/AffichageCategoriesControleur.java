@@ -59,14 +59,13 @@ public class AffichageCategoriesControleur {
 	/** Indice de la première catégorie affichée sur la "page" courante. */
 	private int indiceCategorie = 0; 
 	
-	/** récupère la liste de toutes les catégories de l'instance jeu*/
+	/** Récupère la liste de toutes les catégories de l'instance jeu */
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
-	@FXML
 	private Label categorieCourante;
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
+	 * Initialisation de la vue avec le style CSS correspondant et l'affichage
 	 * des catégories et du bouton suivant.
 	 */
 	@FXML
@@ -77,6 +76,7 @@ public class AffichageCategoriesControleur {
 		
 		afficherCategories();
 	}
+	
 	
 	/**
 	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
@@ -107,6 +107,7 @@ public class AffichageCategoriesControleur {
 	    		                 && indiceFin < toutesLesCategories.size());
 	}
 	
+
 	/**
 	 * Retrait de 10 catégories à l'indice de la première catégorie à afficher
 	 * et affichage des 10 catégories précédentes. 
@@ -117,6 +118,7 @@ public class AffichageCategoriesControleur {
 		indiceCategorie -= 10;
 	    afficherCategories();
 	}
+	
 	
 	/**
 	 * Ajout de 10 catégories à l'indice de la première catégorie à afficher
@@ -129,6 +131,7 @@ public class AffichageCategoriesControleur {
 	    afficherCategories();
 	}
 	
+	
 	/**
 	 * Permet d'afficher une pop up d'aide pour les catégories
 	 */
@@ -136,6 +139,7 @@ public class AffichageCategoriesControleur {
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue ChoixRenommerCategories pour sélectionner la
@@ -146,6 +150,7 @@ public class AffichageCategoriesControleur {
 		NavigationControleur.changerVue("ChoixRenommerCategories.fxml");
 	}
 	
+	
 	/**
 	 * Redirection vers la vue SuppressionCategories pour sélectionner la ou les
 	 * catégorie(s) à supprimer.
@@ -155,6 +160,7 @@ public class AffichageCategoriesControleur {
 		NavigationControleur.changerVue("SuppressionCategories.fxml");
 	}
 	
+	
     /**
 	 * Redirection vers la vue MenuPrincipal.
      */
@@ -162,6 +168,7 @@ public class AffichageCategoriesControleur {
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
     /**
 	 * Redirection vers la vue CreationCategories pour créer de nouvelles

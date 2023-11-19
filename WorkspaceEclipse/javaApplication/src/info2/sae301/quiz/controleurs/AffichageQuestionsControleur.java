@@ -68,11 +68,11 @@ public class AffichageQuestionsControleur {
 	/** Nom de la première catégorie affichée sur la "page" courante. */
 	private String categorieCourante = "Toutes les catégories";
 	
-	@FXML
 	private Label questionCourante;
 	
+	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
+	 * Initialisation de la vue avec le style CSS correspondant et l'affichage
 	 * des questions et du bouton suivant.
 	 */
 	@FXML
@@ -92,6 +92,7 @@ public class AffichageQuestionsControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
 	 * Réaffichage des questions lorsqu'une catégorie est sélectionnée.
 	 */
@@ -104,6 +105,7 @@ public class AffichageQuestionsControleur {
 		}
 		afficherQuestions();
 	}
+	
 	
 	/**
 	 * Affiche 10 questions au maximum et gère l'affichage des boutons
@@ -136,6 +138,7 @@ public class AffichageQuestionsControleur {
 	    		                 && indiceFin < questionsAAfficher.size());
 	}
 	
+	
 	/**
 	 * Retrait de 10 questions à l'indice de la première question à afficher
 	 * et affichage des 10 questions précédentes.
@@ -146,6 +149,7 @@ public class AffichageQuestionsControleur {
 		indiceQuestion -= 10;
 	    afficherQuestions();
 	}
+	
 	
 	/**
 	 * Ajout de 10 questions à l'indice de la première question à afficher
@@ -158,6 +162,7 @@ public class AffichageQuestionsControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
 	 * Permet d'afficher une pop up d'aide pour les questions
 	 */
@@ -165,6 +170,7 @@ public class AffichageQuestionsControleur {
 	private void actionBoutonAider() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue EditerQuestions pour sélectionner la
@@ -175,6 +181,7 @@ public class AffichageQuestionsControleur {
 		NavigationControleur.changerVue("ChoixEditionQuestion.fxml");
 	}
 	
+	
 	/**
 	 * Redirection vers la vue SuppressionQuestions pour sélectionner la ou les
 	 * question(s) à supprimer.
@@ -184,6 +191,7 @@ public class AffichageQuestionsControleur {
 		NavigationControleur.changerVue("SuppressionQuestions.fxml");
 	}
 	
+	
     /**
 	 * Redirection vers la vue MenuPrincipal.
      */
@@ -191,6 +199,7 @@ public class AffichageQuestionsControleur {
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
     /**
 	 * Redirection vers la vue CreationQuestions pour créer de nouvelles

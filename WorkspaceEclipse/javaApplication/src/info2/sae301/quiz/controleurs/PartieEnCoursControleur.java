@@ -1,12 +1,16 @@
+/*
+ * PartieEnCours.java			        		            		12 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
-
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,10 +18,22 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
+/**
+ * Contrôleur FXML de la vue PartieEnCours qui permet d'afficher 
+ * les questions et d'y répondre
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class PartieEnCoursControleur {
 
+	/** Titre de l'aide de PartieEnCours */
 	private static final String AIDE_TITRE = "PARTIE EN COURS";
 	
+	/** Texte de l'aide de PartieEnCours */
 	private static final String AIDE_TEXTE
 	= """
 	  La partie en cours se compose d’une suite de questions posées. À 
@@ -28,15 +44,17 @@ public class PartieEnCoursControleur {
 	  afin de renseigner davantage l’utilisateur.
 	  
 	  L’utilisateur peut passer la question si aucune réponse n’est
-	  sélectionnée, à contrario, il validera la question avec la réponse
+	  sélectionnée, au contraire, il validera la question avec la réponse
 	  sélectionnée. Il peut également retourner sur les questions
 	  précédentes via le bouton précédent.
 	  """;
 	
+	/** Message de confirmation d'abandon de partie */
 	private static final String MESSAGE_ALERTE_QUITTER =
 			"Vous êtes sur le point de quitter la partie, si vous confirmer "
 			+ "votre choix vous perdrez votre progression, voulez-vous continuer ?";
 
+	/** Titre de l'alerte pour quitter la partie */
 	private static final String TITRE_ALERTE_QUITTER = "Quitter partie";
 	
 	@FXML
@@ -180,6 +198,9 @@ public class PartieEnCoursControleur {
 			afficherReponse.getStyleClass().add("reponse");
 			afficherReponse.setId("" + i);
 			afficherReponse.setToggleGroup(radioGroupe);
+			
+			
+			
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesRadioReponses.add(afficherReponse);
 		}

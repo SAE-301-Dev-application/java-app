@@ -84,7 +84,9 @@ class TestJeu {
 	
 	
 	/**
-	 * Vérification que les listes en paramètre aient les mêmes catégories.
+	 * Vérification que les listes en paramètre aient les mêmes 
+	 * catégories.
+	 * 
 	 * @param liste1 La première liste à vérifier.
 	 * @param liste2 La seconde liste à vérifier.
 	 * @return true si les listes ont les mêmes catégories, false sinon.
@@ -109,7 +111,9 @@ class TestJeu {
 	}
 	
 	/**
-	 * Vérification que les listes en paramètre aient les mêmes questions.
+	 * Vérification que les listes en paramètre aient les mêmes 
+	 * questions
+	 * .
 	 * @param liste1 La première liste à vérifier.
 	 * @param liste2 La seconde liste à vérifier.
 	 * @return true si les listes ont les mêmes questions, false sinon.

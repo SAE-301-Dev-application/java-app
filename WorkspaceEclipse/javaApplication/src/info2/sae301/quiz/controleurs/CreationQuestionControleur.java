@@ -17,8 +17,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
 /**
- * Contrôleur FXML de la vue CreationQuestion qui permet la création d'une
- * nouvelle question.
+ * Contrôleur FXML de la vue CreationQuestion qui permet la création 
+ * d'une nouvelle question.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -28,6 +28,7 @@ import javafx.scene.control.TextArea;
  */
 public class CreationQuestionControleur {
 	
+	/** String pour le titre de l'alerte */
 	private static final String TITRE_ALERTE = "Erreur de création de question";
 	
 	/**
@@ -63,9 +64,10 @@ public class CreationQuestionControleur {
 	@FXML
 	private TextArea reponseFausse4;
 	
+	
 	/**
-	 * Initialisation de la fenêtre de création en ajoutant les catégories
-	 * et difficultés dans les choicebox.
+	 * Initialisation de la fenêtre de création en ajoutant les 
+	 * catégories et difficultés dans les ChoiceBox.
 	 */
 	@FXML
 	private void initialize() {
@@ -87,13 +89,16 @@ public class CreationQuestionControleur {
 		difficulte.setValue(difficultes[0]);
 	}
 	
+	
 	/**
 	 * Redirection vers la page d'aide.
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
+							  AffichageQuestionsControleur.AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue AffichageQuestions.fxml
@@ -103,11 +108,12 @@ public class CreationQuestionControleur {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
+	
 	/**
-	 * Récupère chacune des informations entrées par l'utilisateur permettant de 
-	 * créer une question et tente de la créer
-	 * Si la question ne peut pas être créée, cette méthode renvoie une erreur
-	 * sous forme d'alert pour l'utilisateur
+	 * Récupère chacune des informations entrées par l'utilisateur
+	 * permettant de créer une question et tente de la créer
+	 * Si la question ne peut pas être créée, cette méthode renvoie 
+	 * une erreur sous forme d'alert pour l'utilisateur
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
@@ -127,7 +133,8 @@ public class CreationQuestionControleur {
 		
 		Categorie categorie;
 		
-		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie.getValue().toString());
+		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie
+										.getValue().toString());
 		
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
@@ -141,14 +148,16 @@ public class CreationQuestionControleur {
 		
 		reponseJusteEntree = this.reponseJuste.getText();
 		
-		difficulteEntree = Integer.parseInt("" + this.difficulte.getValue().charAt(0));
+		difficulteEntree = Integer.parseInt("" + this.difficulte
+										.getValue().charAt(0));
 		
 		try {
 			// Impossible de check dans le modèle Question, laisser ici
 			if (jeu.indiceQuestion(intituleQuestionEntre, categorie.getIntitule(),
 					               reponseJusteEntree,
 					               reponsesFausses
-					               .toArray(new String[reponsesFausses.size()])) != -1) {
+					               .toArray(new String[reponsesFausses.size()]))
+					!= -1) {
 				throw new IllegalArgumentException(QUESTION_EXISTANTE);
 			}
 			
@@ -161,5 +170,4 @@ public class CreationQuestionControleur {
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}
-	
 }

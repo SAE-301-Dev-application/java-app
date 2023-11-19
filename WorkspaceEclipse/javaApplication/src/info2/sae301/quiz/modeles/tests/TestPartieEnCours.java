@@ -49,7 +49,7 @@ class TestPartieEnCours {
 	 
 	 private ParametresPartie parametres;
 	 
-	 private ArrayList<Categorie> categorie1;
+	 private ArrayList<Categorie> categories1;
 	 
 	 private ArrayList<Question> questions1;
 	
@@ -58,24 +58,24 @@ class TestPartieEnCours {
 	void init() {
 		partieTest = new PartieEnCours();
 		parametres = new ParametresPartie();
-		categorie1 = new ArrayList<Categorie>();
+		categories1 = new ArrayList<Categorie>();
 		questions1 = new ArrayList<Question>();
 		
 		for (String nom : nomsCategories) {
-			categorie1.add(new Categorie(nom));
+			categories1.add(new Categorie(nom));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			Question question1
 			= new Question("q" + i, "rjuste" + i,
 					       new String[] {"rf0", "rf1", "rf2", "rf3"},
-					       1, categorie1.get(0));
+					       1, categories1.get(0));
 			
 			questions1.add(question1);
-			categorie1.get(0).ajouterQuestion(question1);
+			categories1.get(0).ajouterQuestion(question1);
 		}
 		
-		parametres.setCategoriesSelectionnees(categorie1);
+		parametres.setCategoriesSelectionnees(categories1);
 		partieTest.setParametresPartie(parametres);
 	}
 
@@ -100,7 +100,7 @@ class TestPartieEnCours {
 		
 		assertEquals(0, partieTest.getQuestionsProposees().size());
 		parametres.setDifficulteQuestions(1);
-		parametres.setCategoriesSelectionnees(categorie1);
+		parametres.setCategoriesSelectionnees(categories1);
 		
 		ArrayList<Question> questionsProposees
 		= parametres.choisirQuestionsProposees();
@@ -118,7 +118,20 @@ class TestPartieEnCours {
 	 */
 	@Test
 	void testGetReponsesUtilisateur() { //TODO finir test
-		fail("Not yet implemented");
+		assertEquals(0, partieTest.getReponsesUtilisateur().size());
+		
+		ArrayList<String> reponsesTest = new ArrayList<>();
+		
+		for (int i = 0; i < 5; i++) {
+			reponsesTest.add(questions1.get(i).getReponsesFausses()[0]);
+		}
+		
+		
+		for (int i = 0; i < 5; i++) {
+			partieTest.ajouterReponseUtilisateur(questions1.get(i).getReponsesFausses()[0]);
+		}
+		
+		assertEquals(reponsesTest, partieTest.getReponsesUtilisateur());
 	}
 
 	

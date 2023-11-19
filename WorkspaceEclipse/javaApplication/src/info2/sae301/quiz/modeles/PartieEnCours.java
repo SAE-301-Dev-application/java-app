@@ -5,10 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javafx.scene.control.RadioButton;
+import java.util.ArrayList; 
 
 /**
  * Partie de jeu de Quiz en cours contenant les questions posées,
@@ -107,6 +104,7 @@ public class PartieEnCours {
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante
 	 * à l'ArrayList reponsesUtilisateur
+	 * 
 	 * @param repAAjouter la réponse à ajouter
 	 */
 	public void ajouterReponseUtilisateur(String repAAjouter) {
@@ -115,6 +113,7 @@ public class PartieEnCours {
 	
 	/**
 	 * Modifie la réponse précédemmant saisie par l'utilisateur
+	 * 
 	 * @param repAModifier la nouvelle réponse de l'utilisateur.
 	 */
 	public void modifierReponseUtilisateur(String repAModifier) {
@@ -147,6 +146,7 @@ public class PartieEnCours {
 	/**
 	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
 	 * de la question
+	 * 
 	 * @param questionRepondue question répondue par l'utilisateur
 	 * @param reponseUser réponse de l'utilisateur
 	 * @return true si réponseUser == reponseJusteQuestion, false sinon
@@ -155,6 +155,13 @@ public class PartieEnCours {
 		return questionRepondue.getReponseJuste().equals(reponseUser);
 	}
 	
+	
+	/**
+	 * Vérifie si un bouton radio est déjà sélectionné
+	 * 
+	 * @param reponse la réponse sélectionnées
+	 * @return true si le bouton était sélectionné, false sinon
+	 */
 	public boolean radioDejaSelectionne(String reponse) {
 		boolean dejaSelectionne = false;
 		if (indiceQuestionCourante < getReponsesUtilisateur().size()) {
@@ -169,6 +176,7 @@ public class PartieEnCours {
 	
 	/**
 	 * Comptabilise les réponses justes de l'utilisateur
+	 * 
 	 * @return le nombre de réponses justes de l'utilisateur, 0 si tout faux
 	 */
 	public int nbReponsesJustes() {
