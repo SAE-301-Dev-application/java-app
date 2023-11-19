@@ -22,8 +22,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue SuppressionQuestions qui affiche la liste des
- * questions avec des checkbox pour les supprimer.
+ * Contrôleur FXML de la vue SuppressionQuestions qui affiche 
+ * la liste des questions avec des checkbox pour les supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -69,8 +69,8 @@ public class SuppressionQuestionsControleur {
 	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des questions et du bouton suivant.
+	 * Initialisation de la vue avec le style css correspondant et 
+	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -104,8 +104,8 @@ public class SuppressionQuestionsControleur {
 	
 	/**
 	 * Affiche 10 questions au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de questions précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de questions 
+	 * précédentes et suivantes.
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
@@ -181,8 +181,8 @@ public class SuppressionQuestionsControleur {
 	}
 	
 	/**
-	 * Retrait de 10 questions à l'indice de la première question à afficher
-	 * et affichage des 10 questions précédentes.
+	 * Retrait de 10 questions à l'indice de la première question 
+	 * à afficher et affichage des 10 questions précédentes.
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -192,8 +192,8 @@ public class SuppressionQuestionsControleur {
 	}
 	
 	/**
-	 * Ajout de 10 questions à l'indice de la première question à afficher
-	 * et affichage des 10 questions suivantes. 
+	 * Ajout de 10 questions à l'indice de la première question à 
+	 * afficher et affichage des 10 questions suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -212,8 +212,8 @@ public class SuppressionQuestionsControleur {
 	}
 	
 	/**
-	 * Redirection vers la vue SuppressionQuestions pour sélectionner la ou les
-	 * question(s) à supprimer.
+	 * Redirection vers la vue SuppressionQuestions pour sélectionner
+	 * la ou les question(s) à supprimer.
 	 */
 	@FXML
 	private void actionBoutonSupprimer() {
