@@ -21,8 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue SuppressionCategories qui affiche la liste des
- * catégories avec des checkbox pour sélectionner celles à supprimer.
+ * Contrôleur FXML de la vue SuppressionCategories qui affiche la 
+ * liste des catégories avec des checkbox pour sélectionner celles
+ * à supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -33,8 +34,10 @@ import javafx.scene.layout.VBox;
 public class SuppressionCategoriesControleur {
 	
 	/**
-	 * Récupération de l'instance du jeu créée dans la classe Quiz.
-	 * Cette instance permet la gestion des questions et catégories.
+	 * Récupération de l'instance du jeu créée dans la 
+	 * classe Quiz.
+	 * Cette instance permet la gestion des questions 
+	 * et catégories.
 	 */
 	private Jeu jeu = Quiz.jeu;
 	
@@ -65,8 +68,8 @@ public class SuppressionCategoriesControleur {
 	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des catégories et du bouton suivant.
+	 * Initialisation de la vue avec le style css correspondant 
+	 * et l'affichage des catégories et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -79,8 +82,8 @@ public class SuppressionCategoriesControleur {
 
 	/**
 	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de catégories précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de catégories 
+	 * précédentes et suivantes.
 	 */
 	private void afficherCategories() {
 	    // Calcul des indices pour l'affichage des catégories
@@ -136,8 +139,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Ajout de la catégorie correspondante à l'indiceen paramètre à la liste
-	 * des catégories sélectionnées.
+	 * Ajout de la catégorie correspondante à l'indiceen paramètre 
+	 * à la liste des catégories sélectionnées.
 	 * 
 	 * @param indice Indice de la catégorie cliquée.
 	 */
@@ -160,8 +163,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Retrait de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories précédentes. 
+	 * Retrait de 10 catégories à l'indice de la première catégorie 
+	 * à afficher et affichage des 10 catégories précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -171,8 +174,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Ajout de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories suivantes. 
+	 * Ajout de 10 catégories à l'indice de la première catégorie 
+	 * à afficher et affichage des 10 catégories suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -186,7 +189,8 @@ public class SuppressionCategoriesControleur {
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE,
+							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
     /**
