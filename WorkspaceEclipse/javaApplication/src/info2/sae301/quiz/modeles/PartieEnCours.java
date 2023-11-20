@@ -128,7 +128,7 @@ public class PartieEnCours {
 	 * dans la liste reponsesUtilisateur
 	 */
 	public void passerQuestionSuivante() {
-		this.indiceQuestionCourante +=1;
+		this.indiceQuestionCourante++;
 	}
 	
 	
@@ -139,20 +139,7 @@ public class PartieEnCours {
 	 * dans la liste reponsesUtilisateur
 	 */
 	public void retourQuestionPrecedente() {
-		this.indiceQuestionCourante -=1;
-	}
-
-	
-	/**
-	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
-	 * de la question
-	 * 
-	 * @param questionRepondue question répondue par l'utilisateur
-	 * @param reponseUser réponse de l'utilisateur
-	 * @return true si réponseUser == reponseJusteQuestion, false sinon
-	 */
-	public boolean verifierReponse(Question questionRepondue, String reponseUser) {
-		return questionRepondue.getReponseJuste().equals(reponseUser);
+		this.indiceQuestionCourante--;
 	}
 	
 	
@@ -164,6 +151,7 @@ public class PartieEnCours {
 	 */
 	public boolean radioDejaSelectionne(String reponse) {
 		boolean dejaSelectionne = false;
+		
 		if (indiceQuestionCourante < getReponsesUtilisateur().size()) {
 			if (getReponsesUtilisateur().get(indiceQuestionCourante)
 					.equals(reponse)) {

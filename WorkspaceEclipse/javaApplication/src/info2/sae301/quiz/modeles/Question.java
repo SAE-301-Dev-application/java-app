@@ -477,6 +477,18 @@ public class Question implements Serializable {
 	
 	
 	/**
+	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
+	 * de la question
+	 * 
+	 * @param reponseUser réponse de l'utilisateur
+	 * @return true si réponseUser == reponseJusteQuestion, false sinon
+	 */
+	public boolean verifierReponse(String reponseDonnee) {
+		return this.getReponseJuste().equals(reponseDonnee);
+	}
+	
+	
+	/**
 	 * Crée un hashCode se basant sur les attributs de l'objet auquel
 	 * cette méthode est appliquée, ici une instance de Question.
  	 * Permet une comparaison précise et complète la méthode equals()
