@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -148,6 +149,11 @@ public class PartieEnCoursControleur {
 		
 	}
 	
+	@FXML
+	private void actionBoutonTerminer() {
+		NavigationControleur.changerVue("ResultatsPartie.fxml");
+	}
+	
 	/**
 	 * Initialisation de la vue qui affiche la
 	 * difficulte de la question avec sa couleur
@@ -217,12 +223,20 @@ public class PartieEnCoursControleur {
 		System.out.println(partieCourante.getIndiceQuestionCourante());
 		System.out.println(partieCourante.getQuestionsProposees().size() -1);
 		if (partieCourante.getIndiceQuestionCourante() == 0) {
-			boutonPrecedent.setVisible(false);
+			boutonValider.setText("SUIVANT");
+			boutonValider.setOnAction(event -> {
+				this.actionBoutonValider();
+			});
 		}
 		
 		if (partieCourante.getIndiceQuestionCourante()
-				== partieCourante.getQuestionsProposees().size() -1) {
-			boutonValider.setVisible(false);
+				== partieCourante.getQuestionsProposees().size() - 1) {
+			
+			boutonValider.setText("TERMINER");
+			boutonValider.setOnAction(event -> {
+				this.actionBoutonTerminer();
+			});
+			
 		}
 	}
 	
