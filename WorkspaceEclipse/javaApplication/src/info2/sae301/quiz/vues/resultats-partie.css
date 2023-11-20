@@ -1,0 +1,21 @@
+.resultat-valeur {
+	-fx-font-size: 50px;
+	-fx-font-weight: bold;
+}
+
+.resultat-label {
+	-fx-font-size: 30px;
+	-fx-font-weight: bold;
+}
+
+.pourcentage {
+	-fx-text-fill: white;
+}
+
+.questions-reussites {
+	-fx-text-fill: #8AFF53;
+}
+
+.questions-ratees {
+	-fx-text-fill: #FF5353;
+}
