@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ChoixEditionQuestionControleur">
    <children>
@@ -42,7 +43,8 @@
             </Button>
          </children>
       </Pane>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="      ANNULER" />
       <ChoiceBox fx:id="menuFiltre" layoutX="83.0" layoutY="117.0" onAction="#selectionFiltre" prefHeight="26.0" prefWidth="238.0" styleClass="menu-selection" />
+      <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-125.0" layoutY="289.0" onMouseClicked="#actionBoutonAnnuler" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
    </children>
 </Pane>
