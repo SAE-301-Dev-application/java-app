@@ -19,3 +19,8 @@
 .questions-ratees {
 	-fx-text-fill: #FF5353;
 }
+
+.message {
+	-fx-text-fill: white;
+	-fx-font-size: 20px;
+}

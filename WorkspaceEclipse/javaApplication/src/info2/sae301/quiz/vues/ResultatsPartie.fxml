@@ -4,9 +4,11 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ResultatsPartieControleur">
    <children>
       <Label layoutX="292.0" layoutY="30.0" styleClass="titre-long" text="RÉSULTATS" textAlignment="CENTER" />
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
@@ -17,7 +19,7 @@
       </Button>
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="357.0" prefWidth="731.0" styleClass="rectangle-bleu-clair">
          <children>
-            <Label layoutX="35.0" layoutY="73.0" text="100%">
+            <Label fx:id="pourcentageReussite" layoutX="35.0" layoutY="73.0" text="100%">
                <styleClass>
                   <String fx:value="resultat-valeur" />
                   <String fx:value="pourcentage" />
@@ -29,7 +31,7 @@
                   <String fx:value="resultat-label" />
                </styleClass>
             </Label>
-            <Label layoutX="35.0" layoutY="147.0" text="50">
+            <Label fx:id="nombreQuestionsReussies" layoutX="35.0" layoutY="147.0" text="50">
                <styleClass>
                   <String fx:value="resultat-valeur" />
                   <String fx:value="questions-reussites" />
@@ -41,7 +43,7 @@
                   <String fx:value="resultat-label" />
                </styleClass>
             </Label>
-            <Label layoutX="35.0" layoutY="217.0" text="50">
+            <Label fx:id="nombreQuestionsRatees" layoutX="35.0" layoutY="217.0" text="50">
                <styleClass>
                   <String fx:value="resultat-valeur" />
                   <String fx:value="questions-ratees" />
@@ -53,10 +55,16 @@
                   <String fx:value="resultat-label" />
                </styleClass>
             </Label>
+            <ImageView fitHeight="132.0" fitWidth="123.0" layoutX="491.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/trophee.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="message" layoutX="449.0" layoutY="202.0" prefHeight="19.0" prefWidth="207.0" styleClass="message" text="Label" />
          </children>
       </Pane>
-      <Button fx:id="boutonValider" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonValider" styleClass="bouton" text="FEEDBACK" />
-      <Button fx:id="boutonPrecedent" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" styleClass="bouton" text="MENU PRINCIPAL" />
+      <Button fx:id="boutonValider" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonFeedback" styleClass="bouton" text="FEEDBACK" />
+      <Button fx:id="boutonPrecedent" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonMenuPrincipal" styleClass="bouton" text="MENU PRINCIPAL" />
    </children>
    <stylesheets>
       <URL value="@application.css" />
