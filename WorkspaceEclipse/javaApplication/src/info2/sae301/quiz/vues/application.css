@@ -185,7 +185,7 @@ TextArea .content {
 }
 
 VBox.centrer-verticale {
-	/*-fx-alignment: center-left;*/
+	-fx-alignment: center-left;
 	-fx-spacing: 20px;
 }
 
