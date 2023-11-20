@@ -63,8 +63,8 @@
             <Label fx:id="message" layoutX="449.0" layoutY="202.0" prefHeight="19.0" prefWidth="207.0" styleClass="message" text="Label" />
          </children>
       </Pane>
-      <Button fx:id="boutonValider" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonFeedback" styleClass="bouton" text="FEEDBACK" />
-      <Button fx:id="boutonPrecedent" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonMenuPrincipal" styleClass="bouton" text="MENU PRINCIPAL" />
+      <Button fx:id="boutonFeedback" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonFeedback" styleClass="bouton" text="FEEDBACK" />
+      <Button fx:id="boutonMenuPrincipal" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonMenuPrincipal" styleClass="bouton" text="MENU PRINCIPAL" />
    </children>
    <stylesheets>
       <URL value="@application.css" />
