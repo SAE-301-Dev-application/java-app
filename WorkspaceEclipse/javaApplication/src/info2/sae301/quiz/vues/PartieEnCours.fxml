@@ -12,7 +12,6 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
    <children>
-      <Label text="Label" />
       <Label layoutX="228.0" layoutY="30.0" styleClass="titre-long" text="PARTIE EN COURS" />
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
@@ -22,7 +21,7 @@
       </Button>
       <ScrollPane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <content>
-            <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0" spacing="10.0">
+            <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="357.0" prefWidth="731.0" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="TOP_RIGHT" prefHeight="13.0" prefWidth="717.0">
                      <children>

@@ -51,36 +51,75 @@ public class PartieEnCoursControleur {
 	
 	/** Message de confirmation d'abandon de partie */
 	private static final String MESSAGE_ALERTE_QUITTER =
-			"Vous êtes sur le point de quitter la partie, si vous confirmer "
-			+ "votre choix vous perdrez votre progression, voulez-vous continuer ?";
+			"Vous êtes sur le point de quitter la partie, si vous confirmez "
+			+ "votre choix vous perdrez votre progression,"
+			+ "voulez-vous continuer ?";
 
 	/** Titre de l'alerte pour quitter la partie */
 	private static final String TITRE_ALERTE_QUITTER = "Quitter partie";
 	
+	/** Label de l'intitule de la question */
 	@FXML
 	private Label intituleQuestion;
 	
+	/** Label montrant la difficulté de la question
+	 * - facile
+	 * - moyenne
+	 * - difficile
+	 */
 	@FXML
 	private Label labelDifficulte;
 	
+	/** Label montrant le numéro de la question courante
+	 * sur le nombre de question de la série 
+	 * (exemple : 1/20, 2/20, ... */
 	@FXML
 	private Label numQuestion;
 	
+	/**
+	 * Conteneur où sera affiché l'intitulé de la question
+	 * et ses réponses
+	 */
 	@FXML
 	private VBox vBoxQuestionReponses;
 	
+	/**
+	 * Bouton permettant de revoir la question
+	 * précedente, et de modifier la réponse saisie
+	 */
 	@FXML
 	private Button boutonPrecedent;
 	
+	/**
+	 * Bouton permettant de valider sa réponse
+	 * et de passer à la question suivante.
+	 */
 	@FXML
 	private Button boutonValider;
 	
+	/**
+	 * Instance des informations de la partie actuelle,
+	 * les paramètres de la partie et les réponses de
+	 * l'utilisateur seront stocké ici.
+	 */
 	private PartieEnCours partieCourante;
 	
+	/**
+	 * Contient les informations nécessaire 
+	 * de la questions courante à afficher :
+	 * intitulé de la question, ses réponses etc.
+	 */
 	private Question questionCourante;
 	
+	/**
+	 * Liste de Radio qui contient toutes les réponses
+	 * de la question courante.
+	 */
 	private ArrayList<RadioButton> touteslesRadioReponses;
 	
+	/**
+	 * Méthode d'initialisation de la vue.
+	 */
 	@FXML
 	private void initialize() {
 		//Initialisation des données
@@ -104,6 +143,10 @@ public class PartieEnCoursControleur {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
+	/**
+	 * Abandonne la partie, retour au Menu Principal
+	 * la progression de la partie sera perdu.
+	 */
 	@FXML
 	private void actionBoutonAbandonner() {
 		if (AlerteControleur.alerteConfirmation(
@@ -115,12 +158,20 @@ public class PartieEnCoursControleur {
 		}
 	}
 	
+	/**
+	 * Permet de revoir la question précédente
+	 * et de mofidier la réponse.
+	 */
 	@FXML
 	private void actionBoutonPrecedent() {
 		partieCourante.retourQuestionPrecedente();
 		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
+	/**
+	 * Permet de valider la question
+	 * et de passer à la question suivante.
+	 */
 	@FXML
 	private void actionBoutonValider() {
 		//chaîne vide par défaut si l'utilisateur coche aucune réponses
