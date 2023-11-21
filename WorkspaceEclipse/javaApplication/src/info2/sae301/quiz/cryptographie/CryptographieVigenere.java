@@ -60,9 +60,14 @@ public class CryptographieVigenere {
         '8', '⁸', '9', '⁹', '+', '⁺', '-', '⁻', '%', '/', '*',
         //Caractères spéciaux
         ' ', '\n', '\t', '&', '~', '"', '#', '\'', '{', '(', '[', '|',
-        '`', '_', '\\', '^', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
-        '¤', 'ù', 'µ', '?', ',', '.', ';', ':', '§', '!', '<', '>'
+        '`', '_', '\\', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
+        '¤', 'µ', '?', ',', '.', ';', ':', '§', '!', '<', '>'
     };
+
+
+	/* ^ me fait bug*/
+	
+	
 	
 	/** Clé pour Vigenère */
 	static String cle = genererCle();
@@ -76,13 +81,15 @@ public class CryptographieVigenere {
 	public static String genererCle() {
 		String cleGeneree;
 		cleGeneree = "";
-		int tailleCle = new Random().nextInt(TAILLE_MIN_CLE,TAILLE_MAX_CLE);
+		//int tailleCle = new Random().nextInt(TAILLE_MAX_CLE - TAILLE_MIN_CLE + 1) + TAILLE_MIN_CLE;
+		int tailleCle = 19;
 		for(int i = 0; i < tailleCle; i++) {
 			int rnd = new Random().nextInt(dictionnaire.length);
 		    cleGeneree += dictionnaire[rnd];
 		}
 		return cleGeneree;
 	}
+	
 	
 	/**
 	 * Chiffre un message selon la clé générée plus tôt
@@ -96,14 +103,14 @@ public class CryptographieVigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i))
-					+ trouverLettre(dictionnaire, cle.charAt(i%cle.length())))
-						%dictionnaire.length;
+			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i)) + trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) % dictionnaire.length;                          
+			
 			caractereC = dictionnaire[nbCaractere];
 			messageC += caractereC;
 		}
 		return messageC;
 	}
+	
 	
 	/**
 	 * Déchiffre un message selon la clé générée plus tôt
@@ -115,13 +122,12 @@ public class CryptographieVigenere {
 		String messageD = "";
 		for (int i = 0; i < messageC.length(); i++) {
 			int nbCaractere;
-			char caractereC;
+			char caractereD;
 			
-			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i))
-					- trouverLettre(dictionnaire, cle.charAt(i%cle.length())))
-						%dictionnaire.length;
-			caractereC = nbCaractere < 0 ? dictionnaire[nbCaractere+dictionnaire.length]:dictionnaire[nbCaractere];
-			messageD += caractereC;
+			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) - trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) % dictionnaire.length;
+			
+			caractereD = nbCaractere < 0 ? dictionnaire[nbCaractere + dictionnaire.length] : dictionnaire[nbCaractere];
+			messageD += caractereD;
 		}
 		return messageD;
 	}
@@ -134,32 +140,32 @@ public class CryptographieVigenere {
      * @param lettre   Lettre pour laquelle on cherche l'indice.
      * @return 
      */
-    public static int trouverLettre(char[] alphabet, char lettre) {
+	public static int trouverLettre(char[] alphabet, char lettre) {
+	    int indice = -1;
 
-    	int indice,
-    	    longueur;
-    	
-    	indice = -1;
-    	
-    	if (alphabet == null || alphabet.length == 0) { 
-            return indice; 
-        }
-    	
-        
-        longueur = alphabet.length; 
-        
-        for (int i = 0; i < longueur; i++) {
-            if (alphabet[i] == lettre) { 
-                indice = i;
-            }
-        }
-        return indice; 
-    }
+	    if (alphabet == null || alphabet.length == 0) {
+	        return indice;
+	    }
+
+	    for (int i = 0; i < alphabet.length; i++) {
+	        if (Character.compare(alphabet[i], lettre) == 0) {
+	            indice = i;
+	        }
+	    }
+	    return indice;
+	}
     
-    public static void main(String[] args) {
-    	System.out.println("Je suis le meilleur du monde et simon est trop cool");
-    	System.out.println(cle);
-    	System.out.println(chiffrer("Je suis le meilleur du monde et simon est trop cool"));
-    	System.out.println(dechiffrer(chiffrer("Je suis le meilleur du monde et simon est trop cool")));
-    }
+	public static void main(String[] args) {
+	    String originalMessage = "Je suis le meilleur\" et simon est trop cool";
+	    System.out.println("Original Message: " + originalMessage);
+
+	    System.out.println("Generated Key: " + cle);
+
+	    String encryptedMessage = chiffrer(originalMessage);
+	    System.out.println("Encrypted Message: " + encryptedMessage);
+
+	    String decryptedMessage = dechiffrer(encryptedMessage);
+	    System.out.println("Decrypted Message: " + decryptedMessage);
+	}
+
 }
