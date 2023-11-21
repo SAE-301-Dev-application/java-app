@@ -44,13 +44,12 @@ public class ResultatsPartieControleur {
 	  Un message de feedback afin de conclure la partie avec un message relatif aux résultats obtenus.
 	  """;
 	
-	/** Instance du jeu. */
-	private static Jeu jeu;
-	
 	/** Instance de la partie en cours. */
 	private static PartieEnCours partieCourante;
 	
+
 	/**
+	 * TODO comment method role and describe it
 	 * @return Pourcentage de réussite du joueur 
 	 * 		   pour la partie courante
 	 */
@@ -123,7 +122,7 @@ public class ResultatsPartieControleur {
 	@FXML
 	private void initialize() {
 		
-		this.jeu = Quiz.jeu;
+		
 		this.partieCourante = Quiz.partieCourante;
 
 		this.pourcentageReussite.setText(getPourcentageReussite() + "%");
