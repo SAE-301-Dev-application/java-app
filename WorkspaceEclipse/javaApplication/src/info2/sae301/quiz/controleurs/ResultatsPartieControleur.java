@@ -97,11 +97,8 @@ public class ResultatsPartieControleur {
 	/**
 	 * @return Le nombre de questions du quiz courant
 	 */
-	private static int getNombreQuestions() {
-		final ArrayList<Question> QUESTIONS_PROPOSEES
-		= partieCourante.getQuestionsProposees();
-		
-		return QUESTIONS_PROPOSEES.size();
+	public static int getNombreQuestions() {
+		return partieCourante.getQuestionsProposees().size();
 	}
 	
 	
@@ -109,23 +106,31 @@ public class ResultatsPartieControleur {
 	 * @return Le nombre de questions correctement répondues par
 	 * 		   le joueur
 	 */
-	private static int getNombreQuestionsReussies() {
+	public static int getNombreQuestionsReussies() {
 		final ArrayList<String> REPONSES_QUESTIONS
 		= partieCourante.getReponsesUtilisateur();
 		
 		final ArrayList<Question> QUESTIONS_PROPOSEES
 		= partieCourante.getQuestionsProposees();
 		
+		final int NOMBRE_QUESTIONS = getNombreQuestions();
+		
 		int nombreQuestionsReussies;
+		
+		String reponseDonnee;
+		
+		Question questionCourante;
 		
 		nombreQuestionsReussies = 0;
 		
 		for (int indiceQuestion = 0; 
-			 indiceQuestion < getNombreQuestions() - 1; 
+			 indiceQuestion < NOMBRE_QUESTIONS; 
 			 indiceQuestion++) {
 			
-			if (QUESTIONS_PROPOSEES.get(indiceQuestion)
-					.verifierReponse(REPONSES_QUESTIONS.get(indiceQuestion))) {
+			questionCourante = QUESTIONS_PROPOSEES.get(indiceQuestion);
+			reponseDonnee = REPONSES_QUESTIONS.get(indiceQuestion);
+			
+			if (questionCourante.verifierReponse(reponseDonnee)) {
 				
 				nombreQuestionsReussies++;
 				
@@ -137,7 +142,7 @@ public class ResultatsPartieControleur {
 	}
 	
 	
-	private static int getNombreQuestionsRatees() {
+	public static int getNombreQuestionsRatees() {
 		return getNombreQuestions() - getNombreQuestionsReussies();
 	}
 	
@@ -146,7 +151,7 @@ public class ResultatsPartieControleur {
 	 * @return Pourcentage de réussite du joueur 
 	 * 		   pour la partie courante
 	 */
-	private static double getPourcentageReussite() {
+	public static double getPourcentageReussite() {
 		return (double) getNombreQuestionsReussies() / getNombreQuestions() * 100.;
 	}
 	
@@ -154,7 +159,7 @@ public class ResultatsPartieControleur {
 	/**
 	 * @return Le message de conclusion lié au taux de réussite
 	 */
-	private static String getMessageConclusion() {
+	public static String getMessageConclusion() {
 		final double POURCENTAGE_REUSSITE = getPourcentageReussite();
 		
 		String messageConclusion;
@@ -170,8 +175,6 @@ public class ResultatsPartieControleur {
 		} else {
 			messageConclusion = MESSAGE_CONCLUSION_PARFAIT;
 		}
-		
-		System.out.println(POURCENTAGE_REUSSITE);
 		
 		return String.format(messageConclusion, jeu.getPseudo());
 	}

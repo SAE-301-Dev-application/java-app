@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 
 /**
  * Contrôleur FXML de la vue PartieEnCours qui permet d'afficher 
@@ -77,6 +78,9 @@ public class PartieEnCoursControleur {
 	@FXML
 	private Button boutonValider;
 	
+	@FXML
+	private SVGPath iconeBoutonPrecedent;
+	
 	private PartieEnCours partieCourante;
 	
 	private Question questionCourante;
@@ -85,6 +89,7 @@ public class PartieEnCoursControleur {
 	
 	@FXML
 	private void initialize() {
+		
 		//Initialisation des données
 		partieCourante = Quiz.partieCourante;
 		questionCourante = partieCourante.getQuestionsProposees()
@@ -123,35 +128,52 @@ public class PartieEnCoursControleur {
 		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
-	@FXML
-	private void actionBoutonValider() {
+	
+	/**
+	 * Enregistre la réponse à la question courante dans 
+	 * le modèle.
+	 * Puis, incrémente l'indice de la question courante,
+	 * afin de pouvoir passer à celle d'après.
+	 */
+	private void enregistrerReponse() {
 		//chaîne vide par défaut si l'utilisateur coche aucune réponses
-		String reponseUtilisateur = "";
-		for (RadioButton reponse : touteslesRadioReponses) {
+		String reponseUtilisateur;
+		reponseUtilisateur = "";
+		
+		for (RadioButton reponse: this.touteslesRadioReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
 			}
 		}
 		
-		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
-		if (partieCourante.getIndiceDerniereQuestionVue()
-				== partieCourante.getIndiceQuestionCourante()){
-			
-			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
-			partieCourante.setIndiceDerniereQuestionVue(
-					partieCourante.getIndiceDerniereQuestionVue() + 1);
-		} else {
-			partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
-		}
-
-		System.out.println(partieCourante.getReponsesUtilisateur());
-		partieCourante.passerQuestionSuivante();
-		NavigationControleur.changerVue("PartieEnCours.fxml");
 		
+		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
+		if (this.partieCourante.getIndiceDerniereQuestionVue()
+				== this.partieCourante.getIndiceQuestionCourante()){
+			
+			this.partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+			
+			this.partieCourante.incrementerIndiceDerniereQuestionVue();
+			
+		} else {
+			this.partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
+		}
+		
+		this.partieCourante.passerQuestionSuivante();
+	}
+	
+	
+	@FXML
+	private void actionBoutonValider() {
+		this.enregistrerReponse();
+		
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonTerminer() {
+	private void actionBoutonTerminer() { 
+		this.enregistrerReponse();
+		
 		NavigationControleur.changerVue("ResultatsPartie.fxml");
 	}
 	
@@ -224,23 +246,37 @@ public class PartieEnCoursControleur {
 		final int INDICE_LIMITE_QUESTIONS_PROPOSEES
 		= partieCourante.getQuestionsProposees().size() - 1;
 		
-		System.out.printf("Indice question courante = %d\nIndice limite questions proposées = %d\n", 
-				partieCourante.getIndiceQuestionCourante(), 
-				INDICE_LIMITE_QUESTIONS_PROPOSEES);
+		final String TEXTE_BOUTON_TERMINER = "        TERMINER",
+				     TEXTE_BOUTON_SUIVANT  = "      SUIVANT";
 		
-		if (partieCourante.getIndiceQuestionCourante() 
+		boolean estLaPremiereQuestion;
+		
+		estLaPremiereQuestion = this.partieCourante.getIndiceQuestionCourante() == 0;
+		
+		this.boutonPrecedent.setVisible(!estLaPremiereQuestion);
+		this.iconeBoutonPrecedent.setVisible(!estLaPremiereQuestion);
+ 		
+		/*
+		 * Si on est à la dernière question du quiz :
+		 * 	- On affiche le bouton TERMINER, suivi de son 
+		 * 	  action au clic
+		 * 
+		 * Sinon :
+		 * 	- On affiche le bouton SUIVANT, suivi de 
+		 *    son action au clic
+		 */
+		if (this.partieCourante.getIndiceQuestionCourante() 
 				== INDICE_LIMITE_QUESTIONS_PROPOSEES) {
 			
-			boutonValider.setText("      TERMINER");
-			boutonValider.setOnAction(event -> {
+			this.boutonValider.setText(TEXTE_BOUTON_TERMINER);
+			this.boutonValider.setOnAction(event -> {
 				this.actionBoutonTerminer();
 			});
 			
-		} else if (partieCourante.getIndiceQuestionCourante() 
-						< INDICE_LIMITE_QUESTIONS_PROPOSEES) {
+		} else {
 		
-			boutonValider.setText("      SUIVANT");
-			boutonValider.setOnAction(event -> {
+			this.boutonValider.setText(TEXTE_BOUTON_SUIVANT);
+			this.boutonValider.setOnAction(event -> {
 				this.actionBoutonValider();
 			});
 			
