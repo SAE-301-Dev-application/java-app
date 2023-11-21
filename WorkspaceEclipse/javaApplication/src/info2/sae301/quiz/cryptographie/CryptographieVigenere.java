@@ -91,7 +91,9 @@ public class CryptographieVigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i)) + trouverLettre(dictionnaire, cle.charAt(i%cle.length())))%dictionnaire.length;
+			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i))
+					+ trouverLettre(dictionnaire, cle.charAt(i%cle.length())))
+						%dictionnaire.length;
 			caractereC = dictionnaire[nbCaractere];
 			messageC += caractereC;
 		}
@@ -110,7 +112,9 @@ public class CryptographieVigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) - trouverLettre(dictionnaire, cle.charAt(i%cle.length())))%dictionnaire.length;
+			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i))
+					- trouverLettre(dictionnaire, cle.charAt(i%cle.length())))
+						%dictionnaire.length;
 			caractereC = dictionnaire[nbCaractere];
 			messageD += caractereC;
 		}
