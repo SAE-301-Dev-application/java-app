@@ -8,13 +8,13 @@ package info2.sae301.quiz.controleurs;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.Quiz;
-
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 
 /**
  * Contrôleur FXML de la vue ResultatsPartie.fxml permettant de 
@@ -32,6 +32,7 @@ public class ResultatsPartieControleur {
 	/** Titre d'erreur pour l'alerte de la création partie */
 	private static final String AIDE_TITRE = "LES RÉSULTATS";
 
+	
 	/** Texte de l'aide */
 	private static final String AIDE_TEXTE
 	= """
@@ -43,6 +44,51 @@ public class ResultatsPartieControleur {
 	
 	  Un message de feedback afin de conclure la partie avec un message relatif aux résultats obtenus.
 	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  inférieur à 31%. */
+	private static final String MESSAGE_CONCLUSION_RATE
+	= """
+	  Vous n'avez pas réussi à répondre juste à une des questions posées. Réessayez encore, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  inférieur à 31%. */
+	private static final String MESSAGE_CONCLUSION_MAUVAIS
+	= """
+	  Peu de réponses justes... Vous pouvez mieux faire, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  compris entre 31% et 60%. */
+	private static final String MESSAGE_CONCLUSION_MOYEN
+	= """
+	  Des résultats moyens, vous pouvez mieux faire, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  compris entre 61% et 89%. */
+	private static final String MESSAGE_CONCLUSION_BON
+	= """
+	  De bons résultats malgré quelques erreurs, félicitations, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  supérieur à 89%. */
+	private static final String MESSAGE_CONCLUSION_PARFAIT
+	= """
+	  Très bons résultats, félicitations, %s !
+	  """;
+	
+	
+	/** Instance courante du jeu (application). */
+	private static Jeu jeu;
+	
 	
 	/** Instance de la partie en cours. */
 	private static PartieEnCours partieCourante;
@@ -105,6 +151,32 @@ public class ResultatsPartieControleur {
 	}
 	
 	
+	/**
+	 * @return Le message de conclusion lié au taux de réussite
+	 */
+	private static String getMessageConclusion() {
+		final double POURCENTAGE_REUSSITE = getPourcentageReussite();
+		
+		String messageConclusion;
+		
+		if (POURCENTAGE_REUSSITE < 1.) {
+			messageConclusion = MESSAGE_CONCLUSION_RATE;
+		} else if (POURCENTAGE_REUSSITE >= 1. && POURCENTAGE_REUSSITE <= 29.) {
+			messageConclusion = MESSAGE_CONCLUSION_MAUVAIS;
+		} else if (POURCENTAGE_REUSSITE >= 30. && POURCENTAGE_REUSSITE <= 59.) {
+			messageConclusion = MESSAGE_CONCLUSION_MOYEN;
+		} else if (POURCENTAGE_REUSSITE >= 60. && POURCENTAGE_REUSSITE <= 89.) {
+			messageConclusion = MESSAGE_CONCLUSION_BON;
+		} else {
+			messageConclusion = MESSAGE_CONCLUSION_PARFAIT;
+		}
+		
+		System.out.println(POURCENTAGE_REUSSITE);
+		
+		return messageConclusion;
+	}
+	
+	
 	/** Label d'affichage du pourcentage de réussite. */
 	@FXML
 	private Label pourcentageReussite;
@@ -122,7 +194,7 @@ public class ResultatsPartieControleur {
 	
 	/** Label d'affichage du message personnalisé de conclusion. */
 	@FXML
-	private Label message;
+	private Text message;
 	
 	
 	/** Bouton de redirection vers le feedback de la partie. */
@@ -142,8 +214,8 @@ public class ResultatsPartieControleur {
 	@FXML
 	private void initialize() {
 		
-		
-		this.partieCourante = Quiz.partieCourante;
+		jeu = Quiz.jeu;
+		partieCourante = Quiz.partieCourante;
 
 		this.pourcentageReussite
 		    .setText(String.format("%d%%", (int) getPourcentageReussite()));
@@ -153,6 +225,9 @@ public class ResultatsPartieControleur {
 		
 		this.nombreQuestionsRatees
 	    	.setText(String.valueOf(getNombreQuestionsRatees()));
+		
+		this.message
+		    .setText(String.format(getMessageConclusion(), jeu.getPseudo()));
 		
 	}
 	
