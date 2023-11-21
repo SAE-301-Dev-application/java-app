@@ -53,12 +53,12 @@
             <Button mnemonicParsing="false" onAction="#actionBoutonQuestions" styleClass="bouton" text="QUESTIONS" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="         IMPORTATION">
+                  <Button mnemonicParsing="false" onAction="#actionBoutonImportation" text="         IMPORTATION">
                      <styleClass>
                         <String fx:value="petit-bouton" />
                         <String fx:value="bouton" />
                      </styleClass></Button>
-                  <Button mnemonicParsing="false" text="          EXPORTATION">
+                  <Button mnemonicParsing="false" onAction="#actionBoutonExportation" text="          EXPORTATION">
                      <styleClass>
                         <String fx:value="petit-bouton" />
                         <String fx:value="bouton" />

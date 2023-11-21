@@ -118,7 +118,7 @@ public class MenuPrincipalControleur {
 	 */
 	@FXML
 	private void actionBoutonImportation() {
-		//TODO implement view
+		NavigationControleur.changerVue("Import.fxml");
 	}
 	
 	
