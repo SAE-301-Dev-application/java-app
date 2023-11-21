@@ -19,10 +19,10 @@ import java.util.Random;
 public class CryptographieVigenere {
 	
 	/** Constante pour la taille minimale d'une clé */
-	final int TAILLE_MIN_CLE = 3;
+	final static int TAILLE_MIN_CLE = 40;
 	
 	/** Constante pour la taille maximale  d'une clé */
-	final int TAILLE_MAX_CLE = 50;
+	final static int TAILLE_MAX_CLE = 70;
 	
 	/**
 	 * Dictionnaire sur lequel on pourra crypter les caractères.
@@ -65,20 +65,19 @@ public class CryptographieVigenere {
     };
 	
 	/** Clé pour Vigenère */
-	static String cle = genererCle(4);
+	static String cle = genererCle();
 	
 	
 	/**
 	 * Génère une clé pseudo-aléatoire de taille n
 	 * 
-	 * @param taille taille de la clé à générer
 	 * @return le clé de taille "taille" générée
 	 */
-	public static String genererCle(int taille) {
+	public static String genererCle() {
 		String cleGeneree;
 		cleGeneree = "";
-		    
-		for(int i = 0; i < taille; i++) {
+		int tailleCle = new Random().nextInt(TAILLE_MIN_CLE,TAILLE_MAX_CLE);
+		for(int i = 0; i < tailleCle; i++) {
 			int rnd = new Random().nextInt(dictionnaire.length);
 		    cleGeneree += dictionnaire[rnd];
 		}
@@ -158,9 +157,9 @@ public class CryptographieVigenere {
     }
     
     public static void main(String[] args) {
-    	System.out.println("acded");
+    	System.out.println("Je suis le meilleur du monde et simon est trop cool");
     	System.out.println(cle);
-    	System.out.println(chiffrer("acded"));
-    	System.out.println(dechiffrer(chiffrer("acded")));
+    	System.out.println(chiffrer("Je suis le meilleur du monde et simon est trop cool"));
+    	System.out.println(dechiffrer(chiffrer("Je suis le meilleur du monde et simon est trop cool")));
     }
 }
