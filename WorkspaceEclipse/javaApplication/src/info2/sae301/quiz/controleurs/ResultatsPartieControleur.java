@@ -45,10 +45,10 @@ public class ResultatsPartieControleur {
 	  """;
 	
 	/** Instance du jeu. */
-	private static Jeu jeu = Quiz.jeu;
+	private static Jeu jeu;
 	
 	/** Instance de la partie en cours. */
-	private static PartieEnCours partieCourante = Quiz.partieCourante;
+	private static PartieEnCours partieCourante;
 	
 	/**
 	 * @return Pourcentage de réussite du joueur 
@@ -82,7 +82,6 @@ public class ResultatsPartieControleur {
 				
 		}
 		
-		System.out.println("DIVISION = " + (nombreQuestionsReussies / NOMBRE_QUESTIONS));
 		return nombreQuestionsReussies / NOMBRE_QUESTIONS * 100.;
 	}
 	
@@ -123,6 +122,9 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void initialize() {
+		
+		this.jeu = Quiz.jeu;
+		this.partieCourante = Quiz.partieCourante;
 
 		this.pourcentageReussite.setText(getPourcentageReussite() + "%");
 		
