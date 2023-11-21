@@ -61,8 +61,8 @@ public class ResultatsPartieControleur {
 		final ArrayList<String> REPONSES_QUESTIONS
 		= partieCourante.getReponsesUtilisateur();
 		
-		final int NOMBRE_QUESTIONS 
-		= QUESTIONS_PROPOSEES.size();
+		final double NOMBRE_QUESTIONS 
+		= (double) QUESTIONS_PROPOSEES.size();
 		
 		int nombreQuestionsReussies;
 		
@@ -83,7 +83,7 @@ public class ResultatsPartieControleur {
 		}
 		
 		System.out.println("DIVISION = " + (nombreQuestionsReussies / NOMBRE_QUESTIONS));
-		return nombreQuestionsReussies / NOMBRE_QUESTIONS * 100;
+		return nombreQuestionsReussies / NOMBRE_QUESTIONS * 100.;
 	}
 	
 	
