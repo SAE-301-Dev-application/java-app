@@ -13,6 +13,7 @@ import info2.sae301.quiz.modeles.Question;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -230,7 +231,7 @@ public class PartieEnCoursControleur {
 		if (partieCourante.getIndiceQuestionCourante() 
 				== INDICE_LIMITE_QUESTIONS_PROPOSEES) {
 			
-			boutonValider.setText("TERMINER");
+			boutonValider.setText("      TERMINER");
 			boutonValider.setOnAction(event -> {
 				this.actionBoutonTerminer();
 			});
@@ -238,7 +239,7 @@ public class PartieEnCoursControleur {
 		} else if (partieCourante.getIndiceQuestionCourante() 
 						< INDICE_LIMITE_QUESTIONS_PROPOSEES) {
 		
-			boutonValider.setText("SUIVANT");
+			boutonValider.setText("      SUIVANT");
 			boutonValider.setOnAction(event -> {
 				this.actionBoutonValider();
 			});
