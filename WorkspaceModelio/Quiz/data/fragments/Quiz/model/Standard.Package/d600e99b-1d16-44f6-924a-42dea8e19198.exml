@@ -25,6 +25,10 @@
         <COMPID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
         <COMPID name="Quiz" mc="Standard.Class" uid="720eda50-80b7-44a4-9845-15ca034f7315"/>
         <COMPID name="Jeu" mc="Standard.Class" uid="95af27cd-868b-42e3-832f-3ad1b24d3afd"/>
+        <COMPID name="ImportLocal" mc="Standard.Class" uid="6aaaede3-1796-41b5-be53-fdb039d07e1d"/>
+        <COMPID name="ImportDistant" mc="Standard.Class" uid="5b21430b-661e-4bdc-a18e-0f793933a097"/>
+        <COMPID name="Import" mc="Standard.Class" uid="68daf08b-19b0-4c54-9368-b83ac7afc31f"/>
+        <COMPID name="Export" mc="Standard.Class" uid="97a35922-a127-4749-a308-367ea5d37f34"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="Diagramme de classe quiz" mc="Standard.ClassDiagram" uid="5ecc7e98-a2e2-4d76-b8e6-052586bd28de"/>
