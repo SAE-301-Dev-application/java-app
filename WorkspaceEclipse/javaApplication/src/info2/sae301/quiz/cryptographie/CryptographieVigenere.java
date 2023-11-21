@@ -65,7 +65,7 @@ public class CryptographieVigenere {
     };
 
 	/** Clé pour Vigenère */
-	static String cle = genererCle();
+	private static String cle = "Mon Simon est mon bro";//genererCle();
 	
 	
 	/**
@@ -86,6 +86,19 @@ public class CryptographieVigenere {
 	}
 	
 	
+	
+	public static String getCle() {
+		return cle;
+	}
+
+
+
+	public static void setCle(String cle) {
+		CryptographieVigenere.cle = cle;
+	}
+
+
+
 	/**
 	 * Chiffre un message selon la clé générée plus tôt
 	 * 
@@ -158,7 +171,7 @@ public class CryptographieVigenere {
     
 	
 	public static void main(String[] args) {
-	    String originalMessage = "Je suis le meilleur\" et simon est trop cool";
+	    String originalMessage = "&é/*-\".<>,;:!?/§'(-è_çà)=";
 	    System.out.println("Original Message: " + originalMessage);
 
 	    System.out.println("Generated Key: " + cle);

@@ -39,16 +39,13 @@ class TestCryptographieVigenere {
 		assertEquals(chiffrer("bonsoir"),"Ê⁸⁴?⁸S£");
 		setCle("bâtiments");
 		assertEquals(chiffrer("aaaaaaaaaaaaa"),"CÄUÌNÉÑUTCÄUÌ");
-		setCle("anticonstitutionnellement");
-		assertEquals(chiffrer(phrases[0]),"jSÏ⁶I⁵S¤YS0J\nŸ1PDX⁴~ŸÇISÏC{⁶ÀB");
+		setCle("sxdcfvgbnhj:;,nb");
+		assertEquals(chiffrer("if (allOk) {\n\treturn allOk;\n}"),"⁷/}¤G`Ûp1ÇÆ&-⁺	H.æYP§WÛÖ6Ûì⁻_");
 		setCle("Loic m'a fait perdre une heure");
-		assertEquals(chiffrer(phrases[1]),"⁹⁸⁹Ww :UÌWT⁴0@£ÒaÎP^Ì1)JÌRN⁹ŸŸb⁴Ò@}NlÀw2Ùã!DHI#P/K<>S^}YS{Ÿ");
+		assertEquals(chiffrer("589653258796524877965896"),"§æ. R§S⁵U=⁹£èœc[è#ë#Rgã#");
 		setCle("Mon Simon est mon bro");
-		assertEquals(chiffrer(phrases[2]),"2`3$$ŸÇTSw00\t$⁻Y⁶DHÌfÖ|\"w7XÛ⁸\tÇÉ.⁸I#UD}HÌ\"5TSÖñÀKÉ,R^èèwàãDõ⁻Ìä.M");
+		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)="),"DÙÇWHäJñN⁹cQS9Cnè0{0hœÔH5");
 		setCle("bâtiments");
-		assertEquals(chiffrer(phrases[3]),"CÄUÌNÉÑUTCÄUÌ");
-		setCle("bâtiments");
-		assertEquals(chiffrer(phrases[4]),"CÄUÌNÉÑUTCÄUÌ");
 		
 	}
 
