@@ -98,6 +98,25 @@ public class CryptographieVigenere {
 		return messageC;
 	}
 	
+	/**
+	 * Déchiffre un message selon la clé générée plus tôt
+	 * 
+	 * @param message messageC à décrypter
+	 * @return le message décrypté
+	 */
+	public static String dechiffrer(String messageC) {
+		String messageD = "";
+		for (int i = 0; i < messageC.length(); i++) {
+			int nbCaractere;
+			char caractereC;
+			
+			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) - trouverLettre(dictionnaire, cle.charAt(i%cle.length())))%dictionnaire.length;
+			caractereC = dictionnaire[nbCaractere];
+			messageD += caractereC;
+		}
+		return messageD;
+	}
+	
 	
     /**
      * Méthode de recherche linéaire afin de trouver l'indice 
