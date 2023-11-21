@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.cryptographie;
 
+import java.util.Random;
+
 /**
  * Cryptographie d'un fichier CSV avec la méthode de Vigenère.
  * 
@@ -17,9 +19,85 @@ package info2.sae301.quiz.cryptographie;
 public class CryptographieVigenere {
 	
 	/**
-	 * Alphabet sur lequel on pourra crypter les caractères.
+	 * Dictionnaire sur lequel on pourra crypter les caractères.
 	 */
-	final String[] alphabet = {};
+	public final static char[] dictionnaire = {
+		// Lettres et accents
+        'A', 'a', 'À', 'à', 'Â', 'â', 'Ä', 'ä', 'Ã', 'ã', 'Æ', 'æ',
+        'B', 'b',
+        'C', 'c', 'Ç', 'ç',
+        'D', 'd',
+        'E', 'e', 'É', 'é', 'È', 'è', 'Ê', 'ê', 'Ë', 'ë',
+        'F', 'f',
+        'G', 'g',
+        'H', 'h',
+        'I', 'i', 'Ì', 'ì', 'Î', 'î', 'Ï', 'ï',
+        'J', 'j',
+        'K', 'k',
+        'L', 'l',
+        'M', 'm',
+        'N', 'n', 'Ñ', 'ñ',
+        'O', 'o', 'Ò', 'ò', 'Ô', 'ô', 'Ö', 'ö', 'Õ', 'õ', 'Œ', 'œ',
+        'P', 'p',
+        'Q', 'q',
+        'R', 'r',
+        'S', 's',
+        'T', 't',
+        'U', 'u', 'Ù', 'ù', 'Û', 'û', 'Ü', 'ü',
+        'V', 'v',
+        'W', 'w',
+        'X', 'x',
+        'Y', 'y', 'Ÿ', 'ÿ',
+        'Z', 'z',
+        //Chiffres et opérateurs
+        '0', '⁰', '1', '¹', '2', '²', '3', '4', '⁴', '5', '⁵', '6', '⁶', '7', '⁷',
+        '8', '⁸', '9', '⁹', '+', '⁺', '-', '⁻', '%', '/', '*',
+        //Caractères spéciaux
+        ' ', '\n', '\t', '&', '~', '"', '#', '\'', '{', '(', '[', '|',
+        '`', '_', '\\', '^', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
+        '¤', 'ù', 'µ', '?', ',', '.', ';', ':', '§', '!', '<', '>'
+    };
+	
+	/** Clé pour Vigenère */
+	static String cle = genererCle(4);
+	
+	
+	/**
+	 * Génère une clé pseudo-aléatoire de taille n
+	 * 
+	 * @param taille taille de la clé à générer
+	 * @return le clé de taille "taille" générée
+	 */
+	public static String genererCle(int taille) {
+		String cleGeneree;
+		cleGeneree = "";
+		    
+		for(int i = 0; i < taille; i++) {
+			int rnd = new Random().nextInt(dictionnaire.length);
+		    cleGeneree += dictionnaire[rnd];
+		}
+		return cleGeneree;
+	}
+	
+	/**
+	 * Chiffre un message selon la clé générée plus tôt
+	 * 
+	 * @param message message à crypter
+	 * @return le message crypté
+	 */
+	public static String chiffrer(String message) {
+		String messageC = "";
+		for (int i = 0; i < message.length(); i++) {
+			int nbCaractere;
+			char caractereC;
+			
+			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i)) + trouverLettre(dictionnaire, cle.charAt(i%cle.length())))%dictionnaire.length;
+			caractereC = dictionnaire[nbCaractere];
+			messageC += caractereC;
+		}
+		return messageC;
+	}
+	
 	
     /**
      * Méthode de recherche linéaire afin de trouver l'indice 
@@ -28,26 +106,30 @@ public class CryptographieVigenere {
      * @param lettre   Lettre pour laquelle on cherche l'indice.
      * @return 
      */
-    public static int trouverLettre(int alphabet[], int lettre) {
+    public static int trouverLettre(char[] alphabet, char lettre) {
 
     	int indice,
     	    longueur;
     	
+    	indice = -1;
+    	
     	if (alphabet == null || alphabet.length == 0) { 
-            return -1; 
+            return indice; 
         }
     	
-        indice = -1;
+        
         longueur = alphabet.length; 
         
         for (int i = 0; i < longueur; i++) {
             if (alphabet[i] == lettre) { 
-                indice = i; 
-            } else { 
-                i = i + 1; 
-            } 
+                indice = i;
+            }
         }
         return indice; 
-    } 
-	
+    }
+    
+    public static void main(String[] args) {
+    	System.out.println(cle);
+    	System.out.println(chiffrer("acded"));
+    }
 }
