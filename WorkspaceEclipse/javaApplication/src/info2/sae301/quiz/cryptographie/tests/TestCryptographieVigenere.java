@@ -45,18 +45,36 @@ class TestCryptographieVigenere {
 		assertEquals(chiffrer("589653258796524877965896"),"§æ. R§S⁵U=⁹£èœc[è#ë#Rgã#");
 		setCle("Mon Simon est mon bro");
 		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)="),"DÙÇWHäJñN⁹cQS9Cnè0{0hœÔH5");
-		setCle("bâtiments");
-		
 	}
 
 	@Test
 	void testDechiffrer() {
-		fail("Not yet implemented");
+		setCle("bonsoir");
+		assertEquals(dechiffrer("Ê⁸⁴?⁸S£"),"bonsoir");
+		
+		setCle("bâtiments");
+		assertEquals(dechiffrer("CÄUÌNÉÑUTCÄUÌ"),"aaaaaaaaaaaaa");
+		
+		setCle("sxdcfvgbnhj:;,nb");
+		assertEquals(dechiffrer("⁷/}¤G`Ûp1ÇÆ&-⁺	H.æYP§WÛÖ6Ûì⁻_"),"if (allOk) {\n\treturn allOk;\n}");
+		
+		setCle("Loic m'a fait perdre une heure");
+		assertEquals(dechiffrer("§æ. R§S⁵U=⁹£èœc[è#ë#Rgã#"),"589653258796524877965896");
+		
+		setCle("Mon Simon est mon bro");
+		assertEquals(dechiffrer("DÙÇWHäJñN⁹cQS9Cnè0{0hœÔH5"),"&é/*-\".<>,;:!?/§'(-è_çà)=");
 	}
-
+	
 	@Test
 	void testTrouverLettre() {
-		fail("Not yet implemented");
+		assertTrue(0 == trouverLettre(dictionnaire, 'A'));
+		char[] alphabetVide = {};
+		assertTrue(-1 == trouverLettre(alphabetVide,'A'));
+		assertTrue(-1 == trouverLettre(null,'C'));
+		
+		assertFalse(55 == trouverLettre(dictionnaire, '¨'));
+		assertTrue(55 == trouverLettre(dictionnaire,'ñ'));
+		assertFalse(3 == trouverLettre(dictionnaire, '¶'));
 	}
 
 }
