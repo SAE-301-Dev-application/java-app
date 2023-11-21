@@ -192,3 +192,7 @@ VBox.centrer-verticale {
 .icone-vert {
 	-fx-fill: #1F9D00;
 }
+
+HBox.alignement-bas {
+	-fx-alignment: baseline-left;
+}

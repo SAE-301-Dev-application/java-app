@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ResultatsPartieControleur">
@@ -19,48 +20,72 @@
       </Button>
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="357.0" prefWidth="731.0" styleClass="rectangle-bleu-clair">
          <children>
-            <Label fx:id="pourcentageReussite" layoutX="35.0" layoutY="73.0" text="100%">
-               <styleClass>
-                  <String fx:value="resultat-valeur" />
-                  <String fx:value="pourcentage" />
-               </styleClass>
-            </Label>
-            <Label layoutX="172.0" layoutY="92.0" text="de réussite">
-               <styleClass>
-                  <String fx:value="pourcentage" />
-                  <String fx:value="resultat-label" />
-               </styleClass>
-            </Label>
-            <Label fx:id="nombreQuestionsReussies" layoutX="35.0" layoutY="147.0" text="50">
-               <styleClass>
-                  <String fx:value="resultat-valeur" />
-                  <String fx:value="questions-reussites" />
-               </styleClass>
-            </Label>
-            <Label layoutX="115.0" layoutY="166.0" text="questions réussies">
-               <styleClass>
-                  <String fx:value="questions-reussites" />
-                  <String fx:value="resultat-label" />
-               </styleClass>
-            </Label>
-            <Label fx:id="nombreQuestionsRatees" layoutX="35.0" layoutY="217.0" text="50">
-               <styleClass>
-                  <String fx:value="resultat-valeur" />
-                  <String fx:value="questions-ratees" />
-               </styleClass>
-            </Label>
-            <Label layoutX="115.0" layoutY="236.0" text="questions ratées">
-               <styleClass>
-                  <String fx:value="questions-ratees" />
-                  <String fx:value="resultat-label" />
-               </styleClass>
-            </Label>
             <ImageView fitHeight="132.0" fitWidth="123.0" layoutX="491.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/trophee.png" />
                </image>
             </ImageView>
             <Label fx:id="message" layoutX="449.0" layoutY="202.0" prefHeight="19.0" prefWidth="207.0" styleClass="message" text="Label" />
+            <HBox layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="310.0">
+               <children>
+                  <Label fx:id="pourcentageReussite" text="-%">
+                     <styleClass>
+                        <String fx:value="resultat-valeur" />
+                        <String fx:value="pourcentage" />
+                     </styleClass>
+                  </Label>
+                  <Label text="de réussite">
+                     <styleClass>
+                        <String fx:value="pourcentage" />
+                        <String fx:value="resultat-label" />
+                     </styleClass>
+                  </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="alignement-bas" />
+                  <String fx:value="vbox-liste" />
+               </styleClass>
+            </HBox>
+            <HBox layoutX="35.0" layoutY="147.0" prefHeight="26.0" prefWidth="310.0">
+               <styleClass>
+                  <String fx:value="alignement-bas" />
+                  <String fx:value="vbox-liste" />
+               </styleClass>
+               <children>
+                  <Label fx:id="nombreQuestionsReussies" text="-">
+                     <styleClass>
+                        <String fx:value="resultat-valeur" />
+                        <String fx:value="questions-reussites" />
+                     </styleClass>
+                  </Label>
+                  <Label text="questions réussies">
+                     <styleClass>
+                        <String fx:value="questions-reussites" />
+                        <String fx:value="resultat-label" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="35.0" layoutY="222.0" prefHeight="26.0" prefWidth="310.0">
+               <styleClass>
+                  <String fx:value="alignement-bas" />
+                  <String fx:value="vbox-liste" />
+               </styleClass>
+               <children>
+                  <Label fx:id="nombreQuestionsRatees" text="-">
+                     <styleClass>
+                        <String fx:value="resultat-valeur" />
+                        <String fx:value="questions-ratees" />
+                     </styleClass>
+                  </Label>
+                  <Label text="questions ratées">
+                     <styleClass>
+                        <String fx:value="questions-ratees" />
+                        <String fx:value="resultat-label" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </Pane>
       <Button fx:id="boutonFeedback" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonFeedback" styleClass="bouton" text="FEEDBACK" />
