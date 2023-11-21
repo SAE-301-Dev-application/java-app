@@ -151,7 +151,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="noLignesNonAjoutes" mc="Standard.Attribute" uid="3faea17f-9a5d-4444-8b6e-cec30ef90803"/>
+          <ID name="questionsNonAjoutes" mc="Standard.Attribute" uid="3faea17f-9a5d-4444-8b6e-cec30ef90803"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -165,12 +165,12 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[noLignesNonAjoutes]]></ATT>
+            <ATT name="Name"><![CDATA[questionsNonAjoutes]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Type">
-              <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
+              <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
             </LINK>
             <COMP relation="Descriptor">
               <OBJECT>
