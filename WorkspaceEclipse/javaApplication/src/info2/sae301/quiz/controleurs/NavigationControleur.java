@@ -8,6 +8,7 @@ package info2.sae301.quiz.controleurs;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.LoadException;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
@@ -75,7 +76,7 @@ public class NavigationControleur {
 				sceneCourante.setRoot(racine);
 				vueCourante = routeVueFXML;
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println("ERREUUUR = " + e.getMessage() + "\nLOC = " + e.getLocalizedMessage());
 			}
 		}
 	}
