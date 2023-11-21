@@ -64,11 +64,6 @@ public class CryptographieVigenere {
         '¤', 'µ', '?', ',', '.', ';', ':', '§', '!', '<', '>'
     };
 
-
-	/* ^ me fait bug*/
-	
-	
-	
 	/** Clé pour Vigenère */
 	static String cle = genererCle();
 	
@@ -161,6 +156,7 @@ public class CryptographieVigenere {
 	    return indice;
 	}
     
+	
 	public static void main(String[] args) {
 	    String originalMessage = "Je suis le meilleur\" et simon est trop cool";
 	    System.out.println("Original Message: " + originalMessage);
