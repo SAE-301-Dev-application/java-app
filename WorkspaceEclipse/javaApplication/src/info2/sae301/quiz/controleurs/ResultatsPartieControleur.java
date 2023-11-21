@@ -173,7 +173,7 @@ public class ResultatsPartieControleur {
 		
 		System.out.println(POURCENTAGE_REUSSITE);
 		
-		return messageConclusion;
+		return String.format(messageConclusion, jeu.getPseudo());
 	}
 	
 	
@@ -226,8 +226,7 @@ public class ResultatsPartieControleur {
 		this.nombreQuestionsRatees
 	    	.setText(String.valueOf(getNombreQuestionsRatees()));
 		
-		this.message
-		    .setText(String.format(getMessageConclusion(), jeu.getPseudo()));
+		this.message.setText(getMessageConclusion());
 		
 	}
 	
