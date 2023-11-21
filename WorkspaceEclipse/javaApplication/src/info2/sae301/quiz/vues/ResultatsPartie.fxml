@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ResultatsPartieControleur">
    <children>
@@ -25,7 +26,6 @@
                   <Image url="@../images/trophee.png" />
                </image>
             </ImageView>
-            <Label fx:id="message" layoutX="449.0" layoutY="202.0" prefHeight="19.0" prefWidth="207.0" styleClass="message" text="Label" />
             <HBox layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="310.0">
                <children>
                   <Label fx:id="pourcentageReussite" text="-%">
@@ -86,6 +86,7 @@
                   </Label>
                </children>
             </HBox>
+            <Text fx:id="message" layoutX="441.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="Text" wrappingWidth="222.23828125" />
          </children>
       </Pane>
       <Button fx:id="boutonFeedback" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonFeedback" styleClass="bouton" text="FEEDBACK" />
