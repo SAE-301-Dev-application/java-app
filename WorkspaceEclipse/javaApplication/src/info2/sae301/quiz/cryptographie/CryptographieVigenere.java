@@ -18,6 +18,12 @@ import java.util.Random;
  */
 public class CryptographieVigenere {
 	
+	/** Constante pour la taille minimale d'une clé */
+	final int TAILLE_MIN_CLE = 3;
+	
+	/** Constante pour la taille maximale  d'une clé */
+	final int TAILLE_MAX_CLE = 50;
+	
 	/**
 	 * Dictionnaire sur lequel on pourra crypter les caractères.
 	 */
@@ -115,7 +121,7 @@ public class CryptographieVigenere {
 			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i))
 					- trouverLettre(dictionnaire, cle.charAt(i%cle.length())))
 						%dictionnaire.length;
-			caractereC = dictionnaire[nbCaractere];
+			caractereC = nbCaractere < 0 ? dictionnaire[nbCaractere+dictionnaire.length]:dictionnaire[nbCaractere];
 			messageD += caractereC;
 		}
 		return messageD;
@@ -152,7 +158,9 @@ public class CryptographieVigenere {
     }
     
     public static void main(String[] args) {
+    	System.out.println("acded");
     	System.out.println(cle);
     	System.out.println(chiffrer("acded"));
+    	System.out.println(dechiffrer(chiffrer("acded")));
     }
 }
