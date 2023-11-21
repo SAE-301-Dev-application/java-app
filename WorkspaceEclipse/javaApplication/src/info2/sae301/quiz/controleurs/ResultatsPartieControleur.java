@@ -47,41 +47,61 @@ public class ResultatsPartieControleur {
 	/** Instance de la partie en cours. */
 	private static PartieEnCours partieCourante;
 	
-
+	
 	/**
-	 * TODO comment method role and describe it
-	 * @return Pourcentage de réussite du joueur 
-	 * 		   pour la partie courante
+	 * @return Le nombre de questions du quiz courant
 	 */
-	private static double getPourcentageReussite() {
+	private static int getNombreQuestions() {
 		final ArrayList<Question> QUESTIONS_PROPOSEES
 		= partieCourante.getQuestionsProposees();
 		
+		return QUESTIONS_PROPOSEES.size();
+	}
+	
+	
+	/**
+	 * @return Le nombre de questions correctement répondues par
+	 * 		   le joueur
+	 */
+	private static int getNombreQuestionsReussies() {
 		final ArrayList<String> REPONSES_QUESTIONS
 		= partieCourante.getReponsesUtilisateur();
 		
-		final double NOMBRE_QUESTIONS 
-		= (double) QUESTIONS_PROPOSEES.size();
+		final ArrayList<Question> QUESTIONS_PROPOSEES
+		= partieCourante.getQuestionsProposees();
 		
 		int nombreQuestionsReussies;
 		
 		nombreQuestionsReussies = 0;
 		
 		for (int indiceQuestion = 0; 
-			 indiceQuestion < NOMBRE_QUESTIONS - 1; 
+			 indiceQuestion < getNombreQuestions() - 1; 
 			 indiceQuestion++) {
 			
 			if (QUESTIONS_PROPOSEES.get(indiceQuestion)
 					.verifierReponse(REPONSES_QUESTIONS.get(indiceQuestion))) {
 				
 				nombreQuestionsReussies++;
-				System.out.println("nombreQuestionsReussies = " + nombreQuestionsReussies);
 				
 			}
 				
 		}
 		
-		return nombreQuestionsReussies / NOMBRE_QUESTIONS * 100.;
+		return nombreQuestionsReussies;
+	}
+	
+	
+	private static int getNombreQuestionsRatees() {
+		return getNombreQuestions() - getNombreQuestionsReussies();
+	}
+	
+
+	/**
+	 * @return Pourcentage de réussite du joueur 
+	 * 		   pour la partie courante
+	 */
+	private static double getPourcentageReussite() {
+		return (double) getNombreQuestionsReussies() / getNombreQuestions() * 100.;
 	}
 	
 	
@@ -125,7 +145,14 @@ public class ResultatsPartieControleur {
 		
 		this.partieCourante = Quiz.partieCourante;
 
-		this.pourcentageReussite.setText(getPourcentageReussite() + "%");
+		this.pourcentageReussite
+		    .setText(String.format("%d%%", (int) getPourcentageReussite()));
+		
+		this.nombreQuestionsReussies
+		    .setText(String.valueOf(getNombreQuestionsReussies()));
+		
+		this.nombreQuestionsRatees
+	    	.setText(String.valueOf(getNombreQuestionsRatees()));
 		
 	}
 	
