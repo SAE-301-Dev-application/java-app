@@ -81,8 +81,8 @@ public class CryptographieVigenere {
 	public static String genererCle() {
 		String cleGeneree;
 		cleGeneree = "";
-		//int tailleCle = new Random().nextInt(TAILLE_MAX_CLE - TAILLE_MIN_CLE + 1) + TAILLE_MIN_CLE;
-		int tailleCle = 19;
+		int tailleCle = new Random().nextInt(TAILLE_MAX_CLE - TAILLE_MIN_CLE + 1)
+												+ TAILLE_MIN_CLE;
 		for(int i = 0; i < tailleCle; i++) {
 			int rnd = new Random().nextInt(dictionnaire.length);
 		    cleGeneree += dictionnaire[rnd];
@@ -103,7 +103,9 @@ public class CryptographieVigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i)) + trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) % dictionnaire.length;                          
+			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i))
+					+ trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) 
+					% dictionnaire.length;                          
 			
 			caractereC = dictionnaire[nbCaractere];
 			messageC += caractereC;
@@ -124,9 +126,13 @@ public class CryptographieVigenere {
 			int nbCaractere;
 			char caractereD;
 			
-			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) - trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) % dictionnaire.length;
+			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) 
+					- trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) 
+					% dictionnaire.length;
 			
-			caractereD = nbCaractere < 0 ? dictionnaire[nbCaractere + dictionnaire.length] : dictionnaire[nbCaractere];
+			caractereD = nbCaractere < 0 ? 
+					dictionnaire[nbCaractere + dictionnaire.length] 
+							: dictionnaire[nbCaractere];
 			messageD += caractereD;
 		}
 		return messageD;
