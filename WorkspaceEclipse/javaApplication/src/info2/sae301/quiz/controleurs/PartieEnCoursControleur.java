@@ -138,7 +138,7 @@ public class PartieEnCoursControleur {
 			
 			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
 			partieCourante.setIndiceDerniereQuestionVue(
-					partieCourante.getIndiceDerniereQuestionVue() +1);
+					partieCourante.getIndiceDerniereQuestionVue() + 1);
 		} else {
 			partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
 		}
@@ -220,21 +220,27 @@ public class PartieEnCoursControleur {
 	 * à la dernière question de la partie
 	 */
 	private void initBoutonsPrecedentSuivant() {
-		System.out.println(partieCourante.getIndiceQuestionCourante());
-		System.out.println(partieCourante.getQuestionsProposees().size() -1);
-		if (partieCourante.getIndiceQuestionCourante() == 0) {
-			boutonValider.setText("SUIVANT");
-			boutonValider.setOnAction(event -> {
-				this.actionBoutonValider();
-			});
-		}
+		final int INDICE_LIMITE_QUESTIONS_PROPOSEES
+		= partieCourante.getQuestionsProposees().size() - 1;
 		
-		if (partieCourante.getIndiceQuestionCourante()
-				== partieCourante.getQuestionsProposees().size() - 1) {
+		System.out.printf("Indice question courante = %d\nIndice limite questions proposées = %d\n", 
+				partieCourante.getIndiceQuestionCourante(), 
+				INDICE_LIMITE_QUESTIONS_PROPOSEES);
+		
+		if (partieCourante.getIndiceQuestionCourante() 
+				== INDICE_LIMITE_QUESTIONS_PROPOSEES) {
 			
 			boutonValider.setText("TERMINER");
 			boutonValider.setOnAction(event -> {
 				this.actionBoutonTerminer();
+			});
+			
+		} else if (partieCourante.getIndiceQuestionCourante() 
+						< INDICE_LIMITE_QUESTIONS_PROPOSEES) {
+		
+			boutonValider.setText("SUIVANT");
+			boutonValider.setOnAction(event -> {
+				this.actionBoutonValider();
 			});
 			
 		}
