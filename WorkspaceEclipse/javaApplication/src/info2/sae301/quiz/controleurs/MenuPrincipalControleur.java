@@ -7,10 +7,8 @@ package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.serialisation.Serialisation;
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 /**
@@ -26,10 +24,10 @@ import javafx.scene.control.Label;
 public class MenuPrincipalControleur {
 	
 	/** Titre de l'aide de la page du menu principal  */
-	private final String AIDE_TITRE = "COMMENT JOUER ?";
+	private final static String AIDE_TITRE = "COMMENT JOUER ?";
 	
 	/** Texte de l'aide du menu principal */
-	private final String AIDE_TEXTE 
+	private final static String AIDE_TEXTE 
 	= """
       Bienvenue sur le jeu de quiz !
 
@@ -79,13 +77,12 @@ public class MenuPrincipalControleur {
 	
 	
 	/**
-	 * Redirection vers la vue ConfirmationQuitter.fxml
-	 * TODO changer pour que ça passe sur la confirmation de quitter
+	 * Lance la procédure de fermeture de l'application.
+	 * Affiche une pop-up de confirmation.
 	 */
 	@FXML
-	private void actionBoutonFerme() {
-		Serialisation.serialiser(jeu, Serialisation.NOM_FICHIER_SAUVEGARDE);
-		Platform.exit();
+	private void actionBoutonFermer() {
+		Quiz.fermerApplication();
 	}
 
 	
