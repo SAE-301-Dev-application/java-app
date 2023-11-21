@@ -58,7 +58,7 @@
                         <String fx:value="questions-reussites" />
                      </styleClass>
                   </Label>
-                  <Label text="questions réussies">
+                  <Label text="question(s) réussie(s)">
                      <styleClass>
                         <String fx:value="questions-reussites" />
                         <String fx:value="resultat-label" />
@@ -78,7 +78,7 @@
                         <String fx:value="questions-ratees" />
                      </styleClass>
                   </Label>
-                  <Label text="questions ratées">
+                  <Label text="question(s) ratée(s)">
                      <styleClass>
                         <String fx:value="questions-ratees" />
                         <String fx:value="resultat-label" />
