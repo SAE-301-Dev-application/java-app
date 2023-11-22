@@ -108,7 +108,23 @@ public class DiffieHellman {
     }
     
     public static int genererPuissance() {
-    	return new Random().nextInt((70-10)+1)+10;
+    	return new Random().nextInt((10000007-100000)+1)+100000;
+    }
+    
+    public static int puissance(int valeur, int exposant) {
+    	int resultat;
+    	
+    	valeur %= P;
+    	
+    	if (exposant == 0) {
+    		resultat = 1;
+    	} else if (exposant % 2 == 0) {
+    		resultat = puissance(valeur * valeur, exposant / 2);
+    	} else {
+    		resultat = valeur * puissance(valeur * valeur, (exposant - 1) / 2) % P;
+    	}
+    	
+		return resultat;
     }
 
     public static void main(String[] args) {
@@ -123,8 +139,9 @@ public class DiffieHellman {
             System.out.println(e.getMessage());
         }
         
-        for (int i = 0; i < 100; i++) {
-        	System.out.println(DiffieHellman.genererPuissance());
-        }
+        int puis = genererPuissance();
+        int test = puissance(G, puis);
+        System.out.println(puis);
+        System.out.println(test);
     }
 }
