@@ -35,7 +35,7 @@ public class DiffieHellman {
 	 */
 	
 	/** Constante pour le modulo P. */
-	private static final int P = 6301;
+	private static final int P = 10000007;
 	
 	/** Constante G choisie arbitrairement. */
 	private static final int G = 2711;
@@ -62,55 +62,26 @@ public class DiffieHellman {
 	}
 	
 	
-	/**
-     * Trouve le modulo inverse d'un nombre 'a' modulo 'm'.
-     *
-     * @param a Le nombre pour lequel on veut trouver le modulo inverse.
-     * @param m Le modulo.
-     * @return Le modulo inverse de 'a' modulo 'm'.
-     * @throws ArithmeticException Si le modulo inverse n'existe pas (c'est-à-dire si 'a' et 'm' ne sont pas premiers entre eux).
-     */
-    public static int trouverModuloInverse(int a, int m) {
-        // Calcule et stocke les coefficients de l'identité de Bézout
-        int[] resultat = algorithmeEuclideEtendu(a, m);
-
-        // Si le PGCD de 'a' et 'm' n'est pas égal à 1, alors le modulo inverse n'existe pas
-        if (resultat[0] != 1) {
-            throw new ArithmeticException("Le modulo inverse n'existe pas");
-        }
-
-        // Assure que le résultat est positif
-        int x = (resultat[1] % m + m) % m;
-        return x;
-    }
-
     /**
-     * Algorithme d'Euclide étendu pour trouver les coefficients de l'identité de Bézout.
-     *
-     * @param a Le premier entier.
-     * @param b Le deuxième entier.
-     * @return Un tableau d'entiers où le premier élément est le PGCD et les deux éléments suivants sont les coefficients de Bézout.
+     * Génère une puissance aléatoire dans l'intervalle [100000;P]
+     * 
+     * @return la puissance générée
      */
-    private static int[] algorithmeEuclideEtendu(int a, int b) {
-        if (b == 0) {
-            // Le PGCD(a, 0) est 'a', et les coefficients sont (1, 0)
-            return new int[]{a, 1, 0};
-        } else {
-            // Récursivement trouve les coefficients et le PGCD
-            int[] values = algorithmeEuclideEtendu(b, a % b);
-            int pgcd = values[0];
-            int x1 = values[2];
-            int y1 = values[1] - (a / b) * values[2];
-
-            // Retourne le PGCD et les coefficients (x et y)
-            return new int[]{pgcd, x1, y1};
-        }
-    }
-    
     public static int genererPuissance() {
-    	return new Random().nextInt((10000007-100000)+1)+100000;
+    	return new Random().nextInt((P-100000)+1)+100000;
     }
     
+    
+   
+    /**
+     * Calcule la puissance d'une valeur selon l'exposant en 
+     * paramètre, le tout modulo P
+     * 
+     * @param valeur
+     * @param exposant
+     * @return le résultat de la valeur 
+     * 		   à la puissance exposant modulo P
+     */
     public static int puissance(int valeur, int exposant) {
     	int resultat;
     	
@@ -128,17 +99,6 @@ public class DiffieHellman {
     }
 
     public static void main(String[] args) {
-        // Exemple d'utilisation :
-        int a = 2711;
-        int m = 6301;
-
-        try {
-            int inverse = trouverModuloInverse(a, m);
-            System.out.println("Le modulo inverse de " + a + " modulo " + m + " est : " + inverse);
-        } catch (ArithmeticException e) {
-            System.out.println(e.getMessage());
-        }
-        
         int puis = genererPuissance();
         int test = puissance(G, puis);
         System.out.println(puis);
