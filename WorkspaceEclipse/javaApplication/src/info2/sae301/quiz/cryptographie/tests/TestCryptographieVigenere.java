@@ -36,45 +36,45 @@ class TestCryptographieVigenere {
 	@Test
 	void testChiffrer() {
 		setCle("bonsoir");
-		assertEquals(chiffrer("bonsoir"),"Ê⁸⁴?⁸S£");
+		assertEquals(chiffrer("bonsoir"),"Ê⁸⁴,⁸S£");
 		setCle("bâtiments");
 		assertEquals(chiffrer("aaaaaaaaaaaaa"),"CÄUÌNÉÑUTCÄUÌ");
 		setCle("sxdcfvgbnhj:;,nb");
-		assertEquals(chiffrer("if (allOk) {\n\treturn allOk;\n}"),"⁷/}¤G`Ûp1ÇÆ&-⁺	H.æYP§WÛÖ6Ûì⁻_");
+		assertEquals(chiffrer("if (allOk) {\n\treturn allOk;\n}"),"⁷/}¤G`Ûp1çæ&-⁺\tH;BYP!WÛÖ6Ûì⁻_");
 		setCle("Loic m'a fait perdre une heure");
-		assertEquals(chiffrer("589653258796524877965896"),"§æ. R§S⁵U=⁹£èœc[è#ë#Rgã#");
+		assertEquals(chiffrer("589653258796524877965896"),"!B; r!s⁵u=⁹£ÊPÇ[Ê#F#rHÆ#");
 		setCle("Mon Simon est mon bro");
-		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)="),"DÙÇWHäJñN⁹cQS9Cnè0{0hœÔH5");
+		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)="),"dÙçwhÃJñN⁹cQS9cnÊ⁰{0IœÔh⁵");
 	}
 
 	@Test
 	void testDechiffrer() {
 		setCle("bonsoir");
-		assertEquals(dechiffrer("Ê⁸⁴?⁸S£"),"bonsoir");
+		assertEquals(dechiffrer("Ê⁸⁴,⁸S£"),"bonsoir");
 		
 		setCle("bâtiments");
 		assertEquals(dechiffrer("CÄUÌNÉÑUTCÄUÌ"),"aaaaaaaaaaaaa");
 		
 		setCle("sxdcfvgbnhj:;,nb");
-		assertEquals(dechiffrer("⁷/}¤G`Ûp1ÇÆ&-⁺	H.æYP§WÛÖ6Ûì⁻_"),"if (allOk) {\n\treturn allOk;\n}");
+		assertEquals(dechiffrer("⁷/}¤G`Ûp1çæ&-⁺\tH;BYP!WÛÖ6Ûì⁻_"),"if (allOk) {\n\treturn allOk;\n}");
 		
 		setCle("Loic m'a fait perdre une heure");
-		assertEquals(dechiffrer("§æ. R§S⁵U=⁹£èœc[è#ë#Rgã#"),"589653258796524877965896");
+		assertEquals(dechiffrer("!B; r!s⁵u=⁹£ÊPÇ[Ê#F#rHÆ#"),"589653258796524877965896");
 		
 		setCle("Mon Simon est mon bro");
-		assertEquals(dechiffrer("DÙÇWHäJñN⁹cQS9Cnè0{0hœÔH5"),"&é/*-\".<>,;:!?/§'(-è_çà)=");
+		assertEquals(dechiffrer("dÙçwhÃJñN⁹cQS9cnÊ⁰{0IœÔh⁵"),"&é/*-\".<>,;:!?/§'(-è_çà)=");
 	}
 	
 	@Test
 	void testTrouverLettre() {
-		assertTrue(0 == trouverLettre(dictionnaire, 'A'));
+		assertEquals(0, trouverLettre(dictionnaire, 'A'));
 		char[] alphabetVide = {};
-		assertTrue(-1 == trouverLettre(alphabetVide,'A'));
-		assertTrue(-1 == trouverLettre(null,'C'));
+		assertEquals(-1, trouverLettre(alphabetVide, 'A'));
+		assertEquals(-1, trouverLettre(null, 'C'));
 		
-		assertFalse(55 == trouverLettre(dictionnaire, '¨'));
-		assertTrue(55 == trouverLettre(dictionnaire,'ñ'));
-		assertFalse(3 == trouverLettre(dictionnaire, '¶'));
+		assertNotEquals(55, trouverLettre(dictionnaire, '¨'));
+		assertEquals(55, trouverLettre(dictionnaire, 'ñ'));
+		assertNotEquals(3, trouverLettre(dictionnaire, '¶'));
 	}
 
 }
