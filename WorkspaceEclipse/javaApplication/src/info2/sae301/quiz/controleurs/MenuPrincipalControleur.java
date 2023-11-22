@@ -7,14 +7,9 @@ package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.serialisation.Serialisation;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du

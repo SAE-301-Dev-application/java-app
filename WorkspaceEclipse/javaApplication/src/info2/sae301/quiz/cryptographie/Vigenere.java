@@ -16,7 +16,7 @@ import java.util.Random;
  * @author Simon Guiraud
  * @author Samuel Lacam
  */
-public class CryptographieVigenere {
+public class Vigenere {
 	
 	/** Constante pour la taille minimale d'une clé */
 	final static int TAILLE_MIN_CLE = 40;
@@ -94,7 +94,7 @@ public class CryptographieVigenere {
 
 
 	public static void setCle(String cle) {
-		CryptographieVigenere.cle = cle;
+		Vigenere.cle = cle;
 	}
 
 
