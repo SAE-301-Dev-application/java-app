@@ -4,6 +4,8 @@
  */
 package info2.sae301.quiz.cryptographie;
 
+import java.util.Random;
+
 /**
  * Échange sécurisé d'un fichier CSV avec l'algorithme de 
  * Diffie Hellman.
@@ -33,10 +35,10 @@ public class DiffieHellman {
 	 */
 	
 	/** Constante pour le modulo P. */
-	private static final long P = 145236992287L;
+	private static final int P = 6301;
 	
 	/** Constante G choisie arbitrairement. */
-	private static final long G = 20165487598L;
+	private static final int G = 2711;
 	
 	/**
 	 * Calcule le plus grand commun diviseur entre deux entiers
@@ -104,17 +106,25 @@ public class DiffieHellman {
             return new int[]{pgcd, x1, y1};
         }
     }
+    
+    public static int genererPuissance() {
+    	return new Random().nextInt((70-10)+1)+10;
+    }
 
     public static void main(String[] args) {
         // Exemple d'utilisation :
-        int a = 7;
-        int m = 9;
+        int a = 2711;
+        int m = 6301;
 
         try {
             int inverse = trouverModuloInverse(a, m);
             System.out.println("Le modulo inverse de " + a + " modulo " + m + " est : " + inverse);
         } catch (ArithmeticException e) {
             System.out.println(e.getMessage());
+        }
+        
+        for (int i = 0; i < 100; i++) {
+        	System.out.println(DiffieHellman.genererPuissance());
         }
     }
 }
