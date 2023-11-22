@@ -19,14 +19,9 @@ import java.util.Random;
 public class DiffieHellman {
 	
 	/*
-	 * TODO
-	 * - Un entier premier p, les calculs se feront modulo p
-	 * - Un entier g qui peut être une constante compris en [1 ; p-1]
-	 * - Méthode PGCD
-	 * - méthode trouver classe inversible
+	 * TODO:
 	 * - entier aléatoire à envoyer à l’autre 
 	 * - isCleValide
-	 * - 2 entiers a et b qui élèveront g a la puissance. 
 	 * Cependant, y a peut être de la merde simon nous trompe, 
 	 * les illuminatis sont présents
 	 * Simon le clutch !!!!!!!!!!!!!!!
@@ -35,7 +30,7 @@ public class DiffieHellman {
 	 */
 	
 	/** Constante pour le modulo P. */
-	private static final int P = 10000007;
+	private static final int P = 6301;
 	
 	/** Constante G choisie arbitrairement. */
 	private static final int G = 2711;
@@ -68,7 +63,7 @@ public class DiffieHellman {
      * @return la puissance générée
      */
     public static int genererPuissance() {
-    	return new Random().nextInt((P-100000)+1)+100000;
+    	return new Random().nextInt((10000007-100000)+1)+100000;
     }
     
     

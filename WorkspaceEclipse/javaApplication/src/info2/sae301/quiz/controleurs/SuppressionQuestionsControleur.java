@@ -203,7 +203,7 @@ public class SuppressionQuestionsControleur {
 	}
 	
 	/**
-	 * TODO : coder action bouton aide
+	 * Redirection vers la pop-up de la suppression des questions
 	 */
 	@FXML
 	private void actionBoutonAider() {
