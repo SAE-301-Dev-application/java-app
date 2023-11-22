@@ -100,6 +100,9 @@ public class PartieEnCoursControleur {
 	 */
 	@FXML
 	private Button boutonValider;
+
+	@FXML
+	private SVGPath iconeBoutonSuivant;
 	
 	@FXML
 	private SVGPath iconeBoutonPrecedent;
@@ -133,7 +136,8 @@ public class PartieEnCoursControleur {
 		//Initialisation des données
 		partieCourante = Quiz.partieCourante;
 		questionCourante = partieCourante.getQuestionsProposees()
-				.get(partieCourante.getIndiceQuestionCourante());
+				                         .get(partieCourante
+				                        	  .getIndiceQuestionCourante());
 		
 		//Initialisation de la vue
 		initLabelNumQuestion();
@@ -165,6 +169,7 @@ public class PartieEnCoursControleur {
 			NavigationControleur.changerVue("MenuPrincipal.fxml");
 		}
 	}
+	
 	
 	/**
 	 * Permet de revoir la question précédente
@@ -251,8 +256,8 @@ public class PartieEnCoursControleur {
 			break;
 		
 		default:
-			throw new IllegalArgumentException
-				("difficulte invalide, non compris entre 0 et 3");
+			throw new IllegalArgumentException("La difficulté n'est pas comprise"
+					                           + "entre 0 et 3.");
 		}
 	}
 	
@@ -275,8 +280,6 @@ public class PartieEnCoursControleur {
 			afficherReponse.getStyleClass().add("reponse");
 			afficherReponse.setId("" + i);
 			afficherReponse.setToggleGroup(radioGroupe);
-			
-			
 			
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesRadioReponses.add(afficherReponse);
@@ -314,9 +317,12 @@ public class PartieEnCoursControleur {
 		 *    son action au clic
 		 */
 		if (this.partieCourante.getIndiceQuestionCourante() 
-				== INDICE_LIMITE_QUESTIONS_PROPOSEES) {
+		    == INDICE_LIMITE_QUESTIONS_PROPOSEES) {
 			
 			this.boutonValider.setText(TEXTE_BOUTON_TERMINER);
+			this.iconeBoutonSuivant.setOnMouseClicked(event -> {
+				this.actionBoutonTerminer();
+			});
 			this.boutonValider.setOnAction(event -> {
 				this.actionBoutonTerminer();
 			});
@@ -324,6 +330,9 @@ public class PartieEnCoursControleur {
 		} else {
 		
 			this.boutonValider.setText(TEXTE_BOUTON_SUIVANT);
+			this.iconeBoutonSuivant.setOnMouseClicked(event -> {
+				this.actionBoutonValider();
+			});
 			this.boutonValider.setOnAction(event -> {
 				this.actionBoutonValider();
 			});
