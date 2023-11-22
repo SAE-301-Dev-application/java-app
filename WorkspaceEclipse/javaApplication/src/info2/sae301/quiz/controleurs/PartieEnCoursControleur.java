@@ -1,5 +1,5 @@
 /*
- * PartieEnCours.java			        		            		12 nov. 2023
+ * PartieEnCours.java			        		            		22 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
-import javafx.fxml.LoadException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -53,10 +51,13 @@ public class PartieEnCoursControleur {
 	  """;
 	
 	/** Message de confirmation d'abandon de partie */
-	private static final String MESSAGE_ALERTE_QUITTER =
-			"Vous êtes sur le point de quitter la partie, si vous confirmez "
-			+ "votre choix vous perdrez votre progression,"
-			+ "voulez-vous continuer ?";
+	private static final String MESSAGE_ALERTE_QUITTER
+	= """
+	  Vous êtes sur le point de quitter la partie.
+	  Si vous confirmez votre choix vous perdrez votre progression.
+	  
+	  Souhaitez-vous tout de même continuer ?
+	  """;
 
 	/** Titre de l'alerte pour quitter la partie */
 	private static final String TITRE_ALERTE_QUITTER = "Quitter partie";

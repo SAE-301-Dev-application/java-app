@@ -37,14 +37,14 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" prefWidth="225.0" styleClass="bouton" text="          RETOUR" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" styleClass="bouton" text="         CRÉER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" styleClass="bouton" text="        CRÉER" />
       <Button layoutX="592.0" layoutY="112.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="        SUPPRIMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />
          </styleClass>
       </Button>
-      <Button layoutX="407.0" layoutY="112.0" mnemonicParsing="false" onAction="#actionBoutonRenommer" text="          RENOMMER">
+      <Button layoutX="407.0" layoutY="112.0" mnemonicParsing="false" onAction="#actionBoutonRenommer" text="         RENOMMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="petit-bouton" />
