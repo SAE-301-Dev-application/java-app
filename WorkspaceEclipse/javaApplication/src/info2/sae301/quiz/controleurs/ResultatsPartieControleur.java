@@ -180,6 +180,24 @@ public class ResultatsPartieControleur {
 	}
 	
 	
+	/**
+	 * Gestion du pluriel, ajout du 's' à la fin des mots fournis 
+	 * si le nombre est supérieur strictement à 1.
+	 * 
+	 * @param phrase
+	 * @param nombre
+	 * @return La phrase avec gestion du pluriel
+	 */
+	private static String gestionPluriel(String phrase, int nombre) {
+		String terminaison;
+		terminaison = nombre > 1
+				? "s"
+				: "";
+		
+		return String.format(phrase, terminaison, terminaison);
+	}
+	
+	
 	/** Label d'affichage du pourcentage de réussite. */
 	@FXML
 	private Label pourcentageReussite;
@@ -190,9 +208,17 @@ public class ResultatsPartieControleur {
 	private Label nombreQuestionsReussies;
 	
 	
+	@FXML
+	private Label labelSecondaireNombreQuestionsReussies;
+	
+	
 	/** Label d'affichage du nombre de questions ratées. */
 	@FXML
 	private Label nombreQuestionsRatees;
+	
+	
+	@FXML
+	private Label labelSecondaireNombreQuestionsRatees;
 	
 	
 	/** Label d'affichage du message personnalisé de conclusion. */
@@ -217,18 +243,27 @@ public class ResultatsPartieControleur {
 	@FXML
 	private void initialize() {
 		
+		/* Récupération du jeu et de la partie courante. */
 		jeu = Quiz.jeu;
 		partieCourante = Quiz.partieCourante;
 
+		/* Affichage du pourcentage de réussite. */
 		this.pourcentageReussite
 		    .setText(String.format("%d%%", (int) getPourcentageReussite()));
 		
+		/* Affichage du nombre de questions réussies. */
 		this.nombreQuestionsReussies
 		    .setText(String.valueOf(getNombreQuestionsReussies()));
 		
+		this.gestionPlurielQuestionsReussies();
+		
+		/* Affichage du nombre de questions ratées. */
 		this.nombreQuestionsRatees
 	    	.setText(String.valueOf(getNombreQuestionsRatees()));
 		
+		this.gestionPlurielQuestionsRatees();
+		
+		/* Affichage du message de conclusion de partie. */
 		this.message.setText(getMessageConclusion());
 		
 	}
@@ -261,5 +296,35 @@ public class ResultatsPartieControleur {
 	@FXML
 	private void actionBoutonFeedback() {
 		//
+	}
+	
+	
+	/**
+	 * Gestion du pluriel pour le label secondaire du 
+	 * nombre de questions réussies.
+	 */
+	private void gestionPlurielQuestionsReussies() {
+		String contenuLabel;
+		contenuLabel 
+		= gestionPluriel("question%s réussie%s", 
+						 getNombreQuestionsReussies());
+		
+		this.labelSecondaireNombreQuestionsReussies
+		    .setText(contenuLabel);
+	}
+	
+	
+	/**
+	 * Gestion du pluriel pour le label secondaire du 
+	 * nombre de questions ratées.
+	 */
+	private void gestionPlurielQuestionsRatees() {
+		String contenuLabel;
+		contenuLabel 
+		= gestionPluriel("question%s ratée%s", 
+						 getNombreQuestionsRatees());
+		
+		this.labelSecondaireNombreQuestionsRatees
+		    .setText(contenuLabel);
 	}
 }
