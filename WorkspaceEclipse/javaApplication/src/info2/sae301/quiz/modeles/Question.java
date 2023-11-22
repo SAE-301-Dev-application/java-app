@@ -481,7 +481,8 @@ public class Question implements Serializable {
 	 * de la question
 	 * 
 	 * @param reponseUser réponse de l'utilisateur
-	 * @return true si réponseUser == reponseJusteQuestion, false sinon
+	 * @return Si la réponse donnée vaut celle correspondant à la 
+	 * 		   question de l'instance
 	 */
 	public boolean verifierReponse(String reponseDonnee) {
 		return this.getReponseJuste().equals(reponseDonnee);

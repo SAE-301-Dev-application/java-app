@@ -42,7 +42,7 @@ public class CreationCategorieControleur {
 	 * des catégories
 	 */
 	@FXML
-	private void boutonAide() {
+	private void actionBoutonAide() {
 		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE,
 							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
@@ -52,7 +52,7 @@ public class CreationCategorieControleur {
 	 * Redirection vers la vue AffichageCategories.fxml
 	 */
 	@FXML
-	private void boutonAnnuler() {
+	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
@@ -61,7 +61,7 @@ public class CreationCategorieControleur {
 	 * Enregistrer le nouveau nom de la catégorie.
 	 */
 	@FXML
-	private void boutonEnregistrer() {
+	private void actionBoutonEnregistrer() {
 		try {
 			jeu.creerCategorie(nouveauNomCategorie.getText());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
