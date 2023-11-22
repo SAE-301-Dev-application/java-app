@@ -39,8 +39,10 @@ public class DiffieHellman {
 	private static final long G = 20165487598L;
 	
 	/**
-	 * @param entier1
-	 * @param entier2
+	 * Calcule le plus grand commun diviseur entre deux entiers
+	 * 
+	 * @param dividende
+	 * @param diviseur
 	 * @return Le PGCD sachant les deux entiers donnés en argument
 	 */
 	private static int pgcd(int dividende, int diviseur) {
@@ -57,4 +59,62 @@ public class DiffieHellman {
 		return dividende;
 	}
 	
+	
+	/**
+     * Trouve le modulo inverse d'un nombre 'a' modulo 'm'.
+     *
+     * @param a Le nombre pour lequel on veut trouver le modulo inverse.
+     * @param m Le modulo.
+     * @return Le modulo inverse de 'a' modulo 'm'.
+     * @throws ArithmeticException Si le modulo inverse n'existe pas (c'est-à-dire si 'a' et 'm' ne sont pas premiers entre eux).
+     */
+    public static int trouverModuloInverse(int a, int m) {
+        // Calcule et stocke les coefficients de l'identité de Bézout
+        int[] resultat = algorithmeEuclideEtendu(a, m);
+
+        // Si le PGCD de 'a' et 'm' n'est pas égal à 1, alors le modulo inverse n'existe pas
+        if (resultat[0] != 1) {
+            throw new ArithmeticException("Le modulo inverse n'existe pas");
+        }
+
+        // Assure que le résultat est positif
+        int x = (resultat[1] % m + m) % m;
+        return x;
+    }
+
+    /**
+     * Algorithme d'Euclide étendu pour trouver les coefficients de l'identité de Bézout.
+     *
+     * @param a Le premier entier.
+     * @param b Le deuxième entier.
+     * @return Un tableau d'entiers où le premier élément est le PGCD et les deux éléments suivants sont les coefficients de Bézout.
+     */
+    private static int[] algorithmeEuclideEtendu(int a, int b) {
+        if (b == 0) {
+            // Le PGCD(a, 0) est 'a', et les coefficients sont (1, 0)
+            return new int[]{a, 1, 0};
+        } else {
+            // Récursivement trouve les coefficients et le PGCD
+            int[] values = algorithmeEuclideEtendu(b, a % b);
+            int pgcd = values[0];
+            int x1 = values[2];
+            int y1 = values[1] - (a / b) * values[2];
+
+            // Retourne le PGCD et les coefficients (x et y)
+            return new int[]{pgcd, x1, y1};
+        }
+    }
+
+    public static void main(String[] args) {
+        // Exemple d'utilisation :
+        int a = 7;
+        int m = 9;
+
+        try {
+            int inverse = trouverModuloInverse(a, m);
+            System.out.println("Le modulo inverse de " + a + " modulo " + m + " est : " + inverse);
+        } catch (ArithmeticException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
