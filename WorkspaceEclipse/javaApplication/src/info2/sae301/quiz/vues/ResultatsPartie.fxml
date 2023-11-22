@@ -26,7 +26,7 @@
                   <Image url="@../images/trophee.png" />
                </image>
             </ImageView>
-            <HBox layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="310.0">
+            <HBox layoutX="35.0" layoutY="73.0" prefHeight="73.0" prefWidth="348.0">
                <children>
                   <Label fx:id="pourcentageReussite" text="-%">
                      <styleClass>
@@ -46,7 +46,7 @@
                   <String fx:value="vbox-liste" />
                </styleClass>
             </HBox>
-            <HBox layoutX="35.0" layoutY="147.0" prefHeight="26.0" prefWidth="310.0">
+            <HBox layoutX="35.0" layoutY="147.0" prefHeight="73.0" prefWidth="389.0">
                <styleClass>
                   <String fx:value="alignement-bas" />
                   <String fx:value="vbox-liste" />
@@ -66,7 +66,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutX="35.0" layoutY="222.0" prefHeight="26.0" prefWidth="310.0">
+            <HBox layoutX="35.0" layoutY="222.0" prefHeight="73.0" prefWidth="377.0">
                <styleClass>
                   <String fx:value="alignement-bas" />
                   <String fx:value="vbox-liste" />

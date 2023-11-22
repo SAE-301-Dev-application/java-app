@@ -12,6 +12,7 @@ import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
@@ -29,7 +30,18 @@ import javafx.scene.text.Text;
  */
 public class ResultatsPartieControleur {
 	
-	/** Titre d'erreur pour l'alerte de la création partie */
+	/** Titre de la pop-up lors du clic sur "FEEDBACK" */
+	private static final String FEEDBACK_TITRE = "LE FEEDBACK";
+
+	
+	/** Texte de l'aide */
+	private static final String FEEDBACK_TEXTE
+	= """
+	  La fonctionnalité Feedback est encore en cours de développement.
+	  Merci de patienter jusqu'à la prochaine version de l'application.
+	  """;
+	
+	/** Titre de la pop-up d'aide concernant les résultats */
 	private static final String AIDE_TITRE = "LES RÉSULTATS";
 
 	
@@ -295,7 +307,8 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void actionBoutonFeedback() {
-		//
+		AlerteControleur.autreAlerte(FEEDBACK_TEXTE, FEEDBACK_TITRE,
+				                     AlertType.WARNING);
 	}
 	
 	
