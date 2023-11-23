@@ -29,11 +29,55 @@ public class DiffieHellman {
 	 * AAAAAAAAAAAAAAAHHHHHHHHHHHHHHH!!!!!
 	 */
 	
-	/** Constante pour le modulo P. */
+	/** Constante pour le modulo P premier, choisie arbitrairement. */
 	private static final int P = 6301;
 	
-	/** Constante G choisie arbitrairement. */
+	/** Constante G, générateur sous modulo P, choisi arbitrairement. */
 	private static final int G = 2711;
+	
+	/**
+	 * Entier secret servant de puissance à laquelle élever le 
+	 * générateur avant de l'envoyer à l'autre machine 
+	 */
+	private static int puissanceSecrete;
+	
+	/**
+	 * Entier reçu de l'autre machine qu'il faut élever à la 
+	 * puissance puiss+anceSecrete 
+	 */
+	private static int cleRecue;
+	
+	
+	/** @return la puissance secrète */
+	public static int getPuissanceSecrete() {
+		return puissanceSecrete;
+	}
+	
+	
+	/** @return la puissance reçue */
+	public static int getcleRecue() {
+		return cleRecue;
+	}
+	
+	/**
+	 * Permet de modifier la puissance secrète
+	 *  
+	 * @param puissance la nouvelle puissance
+	 * */
+	public static void setPuissanceSecrete(int puissance) {
+		puissanceSecrete = puissance;
+	}
+	
+	
+	/**
+	 * Permet de modifier la puissance reçue
+	 *  
+	 * @param puissance la puissance reçue
+	 * */
+	public static void setcleRecue(int nombreRecu) {
+		cleRecue = nombreRecu;
+	}
+	
 	
 	/**
 	 * Calcule le plus grand commun diviseur entre deux entiers
