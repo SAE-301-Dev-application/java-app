@@ -18,16 +18,6 @@ import java.util.Random;
  */
 public class DiffieHellman {
 	
-	/*
-	 * TODO:
-	 * - entier aléatoire à envoyer à l’autre 
-	 * - isCleValide
-	 * Cependant, y a peut être de la merde simon nous trompe, 
-	 * les illuminatis sont présents
-	 * Simon le clutch !!!!!!!!!!!!!!!
-	 * Jojo comprend, simon devient cringe, puis modulo p
-	 * AAAAAAAAAAAAAAAHHHHHHHHHHHHHHH!!!!!
-	 */
 	
 	/** Constante pour le modulo P premier, choisie arbitrairement. */
 	private static final int P = 6301;
@@ -43,7 +33,7 @@ public class DiffieHellman {
 	
 	/**
 	 * Entier reçu de l'autre machine qu'il faut élever à la 
-	 * puissance puiss+anceSecrete 
+	 * puissance puissanceSecrete 
 	 */
 	private static int cleRecue;
 	
@@ -121,25 +111,25 @@ public class DiffieHellman {
      * @return le résultat de la valeur 
      * 		   à la puissance exposant modulo P
      */
-    public static int puissance(int valeur, int exposant) {
-    	int resultat;
-    	
-    	valeur %= P;
-    	
-    	if (exposant == 0) {
-    		resultat = 1;
-    	} else if (exposant % 2 == 0) {
-    		resultat = puissance(valeur * valeur, exposant / 2);
-    	} else {
-    		resultat = valeur * puissance(valeur * valeur, (exposant - 1) / 2) % P;
-    	}
-    	
-		return resultat;
+    public static int puissanceNR(int valeur, int exposant) {
+        int resultat = 1;
+        valeur %= P;
+
+        while (exposant > 0) {
+            if (exposant % 2 == 1) {
+                resultat = (resultat * valeur) % P;
+            }
+            valeur = (valeur * valeur) % P;
+            exposant /= 2;
+        }
+
+        return resultat;
     }
 
     public static void main(String[] args) {
         int puis = genererPuissance();
-        int test = puissance(G, puis);
+        int test = puissanceNR(G, puis);
+        int test2 = puissanceNR(4950,8495403);
         System.out.println(puis);
         System.out.println(test);
     }
