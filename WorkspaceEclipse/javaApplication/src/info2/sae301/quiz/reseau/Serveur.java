@@ -36,6 +36,9 @@ public class Serveur {
 	private static final String INDICATION_RECEPTION_SERVEUR
 	= "Le serveur a reçu : ";
 	
+	private final static String MESSAGE_FERMETURE
+	= "\nLes sockets sont en cours de fermeture.";
+	
 	/** Socket pour créer le serveur sur le réseau. */
 	private static ServerSocket socketServeur;
 	
@@ -101,14 +104,14 @@ public class Serveur {
 		
 		socketsOuvertes = true;
         
-        while (socketsOuvertes && (messageClient = entreeSocket.readLine()) != null) {
+        while (socketsOuvertes
+        	   && (messageClient = entreeSocket.readLine()) != null) {
             System.out.println(INDICATION_MESSAGE_CLIENT + messageClient);
             
             sortieSocket.println(INDICATION_RECEPTION_SERVEUR + messageClient);
             
             if (messageClient.equals("fin")) {
             	socketsOuvertes = false;
-            	fermerSockets();            	
             }
         }
 	}
@@ -120,6 +123,8 @@ public class Serveur {
 	 * @throws IOException si la fermeture des sockets échoue.
 	 */
 	private static void fermerSockets() throws IOException {
+		System.out.println(MESSAGE_FERMETURE);
+		
 		entreeSocket.close();
 		sortieSocket.close();
 		
@@ -145,6 +150,8 @@ public class Serveur {
             creerFluxEntreeSortie();
             
             lectureEnvoiMessage();
+            
+            fermerSockets();
         } catch (IOException e) {
             e.printStackTrace();
         }

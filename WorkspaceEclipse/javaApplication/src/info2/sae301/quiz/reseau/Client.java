@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.reseau;
 
+import info2.sae301.quiz.cryptographie.Vigenere;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,6 +34,12 @@ public class Client {
 	/** Message envoyé dans la console du client avant qu'il envoie un message. */
 	private final static String INSTRUCTION_CLIENT
 	= "Rédigez ci-dessous un message à envoyer au serveur : ";
+	
+	private final static String INDICATION_REPONSE
+	= "\nRéponse du serveur : ";
+	
+	private final static String MESSAGE_FERMETURE
+	= "\nLes sockets sont en cours de fermeture.";
 	
 	/** Port sur lequel le serveur est accessible. */
 	private final static int PORT_SERVEUR = 65432;
@@ -76,6 +84,26 @@ public class Client {
 	
 	
 	/**
+	 * Envoie au serveur la clé gérénée par Vigenere.
+	 */
+	private static void envoyerCleVigenere() throws IOException {
+		String cleGeneree = Vigenere.genererCle();
+		String reponseServeur;
+		
+		System.out.println("Envoi de la clé générée : " + cleGeneree);
+		
+		// Envoi au serveur de la clé de chiffrement
+        sortieSocket.println("CLE = " + cleGeneree);
+        
+        // Lecture de la réponse du serveur
+        reponseServeur = entreeSocket.readLine();
+        System.out.println(INDICATION_REPONSE + reponseServeur);
+        
+        fermerSockets();
+	}
+	
+	
+	/**
 	 * Lecture de l'entrée envoyé dans la console texte par l'utilisateur
 	 * et envoi au serveur du message.
 	 * 
@@ -99,11 +127,10 @@ public class Client {
             
             // Lecture de la réponse du serveur
             reponseServeur = entreeSocket.readLine();
-            System.out.println("\nRéponse du serveur : " + reponseServeur);
+            System.out.println(INDICATION_REPONSE + reponseServeur);
             
             if (messageAEnvoyer.equals("fin")) {
             	socketOuverte = false;
-            	fermerSocket();            	
             }
         }
 	}
@@ -114,15 +141,15 @@ public class Client {
 	 * 
 	 * @throws IOException si la fermeture de la socket échoue.
 	 */
-	private static void fermerSocket() throws IOException {
-		try {
+	private static void fermerSockets() throws IOException {
+		System.out.println(MESSAGE_FERMETURE);
+		
+		if (entreeUtilisateur != null) {
 			entreeUtilisateur.close();
-			entreeSocket.close();
-			sortieSocket.close();
-            socket.close();
-		} catch (IOException e) {
-			throw new IOException(e);
 		}
+		entreeSocket.close();
+		sortieSocket.close();
+        socket.close();
 	}
 	
 	/**
@@ -136,7 +163,9 @@ public class Client {
         	
         	creerFluxEntreeSortie();
             
-            lectureEnvoiMessage();
+            // lectureEnvoiMessage();
+        	
+        	envoyerCleVigenere();
         } catch (IOException e) {
             e.printStackTrace();
         }
