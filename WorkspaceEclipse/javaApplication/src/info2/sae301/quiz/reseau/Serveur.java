@@ -34,7 +34,7 @@ public class Serveur {
 	= "\nMessage envoyé par le client :\n";
 	
 	private static final String INDICATION_RECEPTION_SERVEUR
-	= "Le serveur a reçu :\n";
+	= "Le serveur a reçu : ";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private static ServerSocket socketServeur;
@@ -69,7 +69,8 @@ public class Serveur {
 	private static void accepterConnexion() throws IOException {
         socketClient = socketServeur.accept();
         
-        System.out.println("Client connecté : " + socketClient.getInetAddress().getHostAddress());
+        System.out.println("Client connecté : " + socketClient.getInetAddress()
+                                                              .getHostAddress());
 	}
 	
 	
@@ -95,11 +96,20 @@ public class Serveur {
 	 */
 	private static void lectureEnvoiMessage() throws IOException {		
 		String messageClient;
+		
+		boolean socketsOuvertes;
+		
+		socketsOuvertes = true;
         
-        while ((messageClient = entreeSocket.readLine()) != null) {
+        while (socketsOuvertes && (messageClient = entreeSocket.readLine()) != null) {
             System.out.println(INDICATION_MESSAGE_CLIENT + messageClient);
             
             sortieSocket.println(INDICATION_RECEPTION_SERVEUR + messageClient);
+            
+            if (messageClient.equals("fin")) {
+            	socketsOuvertes = false;
+            	fermerSockets();            	
+            }
         }
 	}
 	
@@ -110,6 +120,9 @@ public class Serveur {
 	 * @throws IOException si la fermeture des sockets échoue.
 	 */
 	private static void fermerSockets() throws IOException {
+		entreeSocket.close();
+		sortieSocket.close();
+		
         // Fermeture de la socket du client
         socketClient.close();
         
@@ -118,6 +131,11 @@ public class Serveur {
 	}
 	
 	
+	/**
+	 * Etablissement d'une connexion entre le serveur et le client.
+	 * 
+	 * @param args inutilisé.
+	 */
     public static void main(String[] args) {
         try {
             creerServeur();
@@ -127,8 +145,6 @@ public class Serveur {
             creerFluxEntreeSortie();
             
             lectureEnvoiMessage();
-            
-            fermerSockets();
         } catch (IOException e) {
             e.printStackTrace();
         }
