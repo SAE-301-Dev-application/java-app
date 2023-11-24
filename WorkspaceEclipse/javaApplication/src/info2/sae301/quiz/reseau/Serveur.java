@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.reseau;
 
+import info2.sae301.quiz.cryptographie.Vigenere;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +32,9 @@ public class Serveur {
 	private static final String CONNEXION_OUVERTE
 	= "Le serveur est connecté sur le port " + PORT;
 	
+	private static final String INDICATION_CLE_VIGENERE
+	= "\nClé de vigenère reçue :\n";
+	
 	private static final String INDICATION_MESSAGE_CLIENT
 	= "\nMessage envoyé par le client :\n";
 	
@@ -50,6 +55,12 @@ public class Serveur {
 	
 	/** Message envoyé au client. */
 	private static PrintWriter sortieSocket;
+	
+	/** Clé de Vigenère permettant de crypter le CSV de données. */
+	private static String cleVigenere;
+	
+	/** Chemin du fichier CSV à envoyer. */
+	private static String cheminFichierCSV;
 	
 	
 	/**
@@ -90,6 +101,21 @@ public class Serveur {
         // Création d'un flux de sortie pour le serveur
         sortieSocket = new PrintWriter(socketClient.getOutputStream(), true);
 	}
+
+	
+	/**
+	 * Lecture de la clé de vigenère envoyée par le client
+	 * et affichage sur console texte.
+	 * 
+	 * @throws IOException si la lecture renvoie une erreur.
+	 */
+	private static void receptionCleVigenere() throws IOException {	
+		cleVigenere = entreeSocket.readLine().substring(6);
+				
+        System.out.println(INDICATION_CLE_VIGENERE + cleVigenere);
+        
+        sortieSocket.println(INDICATION_RECEPTION_SERVEUR + cleVigenere);
+	}
 	
 	
 	/**
@@ -114,6 +140,32 @@ public class Serveur {
             	socketsOuvertes = false;
             }
         }
+	}
+	
+	
+	/**
+	 * Chiffre via la méthode
+	 * {@link info2.sae301.quiz.cryptographie.Vigenere#chiffrer(String)}
+	 * le fichier CSV dont le chemin est dans l'attribut cheminFichierCSV.
+	 * Envoie ensuite via sortieSocket le fichier crypté.
+	 */
+	private static void envoyerCSVCrypte() {
+		
+        String fichierString,
+               fichierChiffre;
+
+		cheminFichierCSV = "C:/Users/Loic/Downloads/questionsBasiquesUTF8.csv";
+		
+        // lecture fichier CSV et écriture dans String fichierString
+
+        fichierString = "test"; // STUB
+        // TODO faire en sorte que ce soit le csv
+        
+        System.out.println("\nFichier crypté envoyé :\n" + fichierString);
+        
+        fichierChiffre = Vigenere.chiffrer(fichierString, cleVigenere);
+
+        sortieSocket.println(fichierChiffre);
 	}
 	
 	
@@ -149,7 +201,11 @@ public class Serveur {
             
             creerFluxEntreeSortie();
             
-            lectureEnvoiMessage();
+            receptionCleVigenere();
+            
+            envoyerCSVCrypte();
+            
+            // lectureEnvoiMessage();
             
             fermerSockets();
         } catch (IOException e) {

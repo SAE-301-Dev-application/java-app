@@ -128,7 +128,7 @@ public class Vigenere {
 	 * @param message messageC à décrypter
 	 * @return le message décrypté
 	 */
-	public static String dechiffrer(String messageC) {
+	public static String dechiffrer(String messageC, String cle) {
 		String messageD = "";
 		for (int i = 0; i < messageC.length(); i++) {
 			int nbCaractere;
@@ -179,7 +179,7 @@ public class Vigenere {
 	    String encryptedMessage = chiffrer(originalMessage, cle);
 	    System.out.println("Encrypted Message: " + encryptedMessage);
 
-	    String decryptedMessage = dechiffrer(encryptedMessage);
+	    String decryptedMessage = dechiffrer(encryptedMessage, cle);
 	    System.out.println("Decrypted Message: " + decryptedMessage);
 	}
 

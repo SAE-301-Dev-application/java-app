@@ -38,6 +38,12 @@ public class Client {
 	private final static String INDICATION_REPONSE
 	= "\nRéponse du serveur : ";
 	
+	private final static String INDICATION_FICHIER_CRYPTE
+	= "\nFichier crypté reçu :\n";
+	
+	private final static String INDICATION_FICHIER_DECRYPTE
+	= "\nFichier décrypté :\n";
+	
 	private final static String MESSAGE_FERMETURE
 	= "\nLes sockets sont en cours de fermeture.";
 	
@@ -55,6 +61,8 @@ public class Client {
 	
 	/** Message envoyé au serveur */
 	private static PrintWriter sortieSocket;
+	
+	private static String cleVigenere;
 	
 	
 	/**
@@ -87,19 +95,18 @@ public class Client {
 	 * Envoie au serveur la clé gérénée par Vigenere.
 	 */
 	private static void envoyerCleVigenere() throws IOException {
-		String cleGeneree = Vigenere.genererCle();
 		String reponseServeur;
 		
-		System.out.println("Envoi de la clé générée : " + cleGeneree);
+		cleVigenere = Vigenere.genererCle();
+		
+		System.out.println("Envoi de la clé générée : " + cleVigenere);
 		
 		// Envoi au serveur de la clé de chiffrement
-        sortieSocket.println("CLE = " + cleGeneree);
+        sortieSocket.println("CLE = " + cleVigenere);
         
         // Lecture de la réponse du serveur
         reponseServeur = entreeSocket.readLine();
         System.out.println(INDICATION_REPONSE + reponseServeur);
-        
-        fermerSockets();
 	}
 	
 	
@@ -134,6 +141,27 @@ public class Client {
             }
         }
 	}
+
+	
+	/**
+	 * Réception et déchiffrage du fichier crypté envoyé par le serveur.
+	 * 
+	 * @throws IOException si la lecture renvoie une erreur.
+	 */
+	private static void recevoirFichierCrypte() throws IOException {		
+		String fichierCrypte,
+		       fichierDecrypte;
+        
+        // Lecture du fichier crypté envoyé par le serveur
+		fichierCrypte = entreeSocket.readLine();
+		
+		// Décryptage du fichier crypté reçu
+		fichierDecrypte = Vigenere.dechiffrer(fichierCrypte, cleVigenere);
+		
+        System.out.println(INDICATION_FICHIER_CRYPTE + fichierCrypte);
+        
+        System.out.println(INDICATION_FICHIER_DECRYPTE + fichierDecrypte);
+	}
 	
 	
 	/**
@@ -166,6 +194,10 @@ public class Client {
             // lectureEnvoiMessage();
         	
         	envoyerCleVigenere();
+        	
+        	recevoirFichierCrypte();
+        	
+        	fermerSockets();
         } catch (IOException e) {
             e.printStackTrace();
         }
