@@ -22,17 +22,22 @@ import java.net.Socket;
  * @author Simon Guiraud
  * @author Samuel Lacam
  */
+
 public class Serveur {
+	
+	/** Port utilisé par le serveur */
+	public static final int PORT = 65432;
+	
     public static void main(String[] args) {
-        int port = 65432;
+        int port = PORT;
         
         try {
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server is running and listening on port " + port);
+            System.out.println("Le serveur tourne sur le port " + port);
             boolean aTester = true;
             while (aTester == true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
+                System.out.println("Client connecté : " + clientSocket.getInetAddress().getHostAddress());
                 
                 // Create input and output streams for the client
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -41,10 +46,10 @@ public class Serveur {
                 // Handle client messages
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("Received from client: " + message);
+                    System.out.println("Message reçu du client : " + message);
                     
                     // You can process the message here or send a response
-                    out.println("Server received: " + message);
+                    out.println("Le serveur a reçu : " + message);
                 }
                 
                 // Close the client socket
