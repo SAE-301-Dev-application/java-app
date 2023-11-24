@@ -23,26 +23,67 @@ import java.net.Socket;
  */
 public class Client {
 	
-	/** TODO JDoc */
+	/**
+	 * Adresse IP du serveur.
+	 * 127.0.0.1 signifie que le serveur est sûr le réseau courant.
+	 */
 	private final static String ADRESSE_SERVEUR = "127.0.0.1";
 	
-    public static void main(String[] args) {
-        String serverAddress = ADRESSE_SERVEUR; // Change this to the server's address if not running locally
-        int serverPort = 65432;
+	/** Port sur lequel le serveur est accessible. */
+	private final static int PORT_SERVEUR = 65432;
+	
+	/** Socket permettant la connexion au serveur. */
+	private static Socket socket;
+	
+	/** TODO */
+	private static BufferedReader entree;
+	
+	/** TODO */
+	private static PrintWriter sortie;
+	
+	
+	/**
+	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
+	 * et le port sont spécifiés dans les paramètres d'instanciation.
+	 * 
+	 * @throws IOException si la création de la socket échoue.
+	 */
+	private static void creerSocket() throws IOException {
+		try {
+            socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
+		} catch (IOException e) {
+			throw new IOException(e);
+		}
+	}
+	
+	
+	/**
+	 * Création d'un flux d'entrée et d'un flux de sortie pour le serveur.
+	 * 
+	 * @throws IOException si les flux ne peuvent être créés.
+	 */
+	private static void creerFluxEntreeSortie() throws IOException {
+        // Création d'un flux d'entrée pour le serveur
+        entree
+        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         
+        // Création d'un flux de sortie pour le serveur
+        sortie = new PrintWriter(socket.getOutputStream(), true);
+	}
+	
+	
+    public static void main(String[] args) {      
         try {
-            Socket socket = new Socket(serverAddress, serverPort);
-            
-            // Create input and output streams for the server
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        	creerSocket();
+        	
+        	creerFluxEntreeSortie();
             
             // Read input from the user and send it to the server
             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
             String message;
             while ((message = userInput.readLine()) != null) {
-                out.println(message);
-                String response = in.readLine();
+                sortie.println(message);
+                String response = entree.readLine();
                 System.out.println("Server response: " + response);
             }
             
