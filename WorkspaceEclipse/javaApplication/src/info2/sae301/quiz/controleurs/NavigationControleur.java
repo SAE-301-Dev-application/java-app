@@ -7,7 +7,9 @@ package info2.sae301.quiz.controleurs;
 
 import java.io.IOException;
 
+import info2.sae301.quiz.Quiz;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.LoadException;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
@@ -66,8 +68,10 @@ public class NavigationControleur {
 			System.out.println("Erreur : aucune scène courante !");
 		} else {
 			try {
+				/*
 				System.out.println(NavigationControleur.class.getResource(
 								   RACINE_VUES + routeVueFXML));
+								   */
 				Parent racine;
 				racine = FXMLLoader.load(NavigationControleur.class
 						              .getResource(RACINE_VUES + routeVueFXML));
@@ -75,7 +79,7 @@ public class NavigationControleur {
 				sceneCourante.setRoot(racine);
 				vueCourante = routeVueFXML;
 			} catch (IOException e) {
-				System.out.println(e);
+				System.out.println("ERREUR CHARGEMENT VUE : \n" + e.getMessage());
 			}
 		}
 	}

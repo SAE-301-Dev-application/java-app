@@ -1,5 +1,5 @@
 /*
- * PartieEnCours.java			        		            		12 nov. 2023
+ * PartieEnCours.java			        		            		22 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 
 /**
  * Contrôleur FXML de la vue PartieEnCours qui permet d'afficher 
@@ -51,10 +51,13 @@ public class PartieEnCoursControleur {
 	  """;
 	
 	/** Message de confirmation d'abandon de partie */
-	private static final String MESSAGE_ALERTE_QUITTER =
-			"Vous êtes sur le point de quitter la partie, si vous confirmez "
-			+ "votre choix vous perdrez votre progression,"
-			+ "voulez-vous continuer ?";
+	private static final String MESSAGE_ALERTE_QUITTER
+	= """
+	  Vous êtes sur le point de quitter la partie.
+	  Si vous confirmez votre choix vous perdrez votre progression.
+	  
+	  Souhaitez-vous tout de même continuer ?
+	  """;
 
 	/** Titre de l'alerte pour quitter la partie */
 	private static final String TITRE_ALERTE_QUITTER = "Quitter partie";
@@ -97,6 +100,12 @@ public class PartieEnCoursControleur {
 	 */
 	@FXML
 	private Button boutonValider;
+
+	@FXML
+	private SVGPath iconeBoutonSuivant;
+	
+	@FXML
+	private SVGPath iconeBoutonPrecedent;
 	
 	/**
 	 * Instance des informations de la partie actuelle,
@@ -123,10 +132,12 @@ public class PartieEnCoursControleur {
 	 */
 	@FXML
 	private void initialize() {
+		
 		//Initialisation des données
 		partieCourante = Quiz.partieCourante;
 		questionCourante = partieCourante.getQuestionsProposees()
-				.get(partieCourante.getIndiceQuestionCourante());
+				                         .get(partieCourante
+				                        	  .getIndiceQuestionCourante());
 		
 		//Initialisation de la vue
 		initLabelNumQuestion();
@@ -159,6 +170,7 @@ public class PartieEnCoursControleur {
 		}
 	}
 	
+	
 	/**
 	 * Permet de revoir la question précédente
 	 * et de mofidier la réponse.
@@ -169,39 +181,52 @@ public class PartieEnCoursControleur {
 		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
+	
 	/**
-	 * Permet de valider la question
-	 * et de passer à la question suivante.
+	 * Enregistre la réponse à la question courante dans 
+	 * le modèle.
+	 * Puis, incrémente l'indice de la question courante,
+	 * afin de pouvoir passer à celle d'après.
 	 */
-	@FXML
-	private void actionBoutonValider() {
+	private void enregistrerReponse() {
 		//chaîne vide par défaut si l'utilisateur coche aucune réponses
-		String reponseUtilisateur = "";
-		for (RadioButton reponse : touteslesRadioReponses) {
+		String reponseUtilisateur;
+		reponseUtilisateur = "";
+		
+		for (RadioButton reponse: this.touteslesRadioReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
 			}
 		}
 		
-		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
-		if (partieCourante.getIndiceDerniereQuestionVue()
-				== partieCourante.getIndiceQuestionCourante()){
-			
-			partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
-			partieCourante.setIndiceDerniereQuestionVue(
-					partieCourante.getIndiceDerniereQuestionVue() +1);
-		} else {
-			partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
-		}
-
-		System.out.println(partieCourante.getReponsesUtilisateur());
-		partieCourante.passerQuestionSuivante();
-		NavigationControleur.changerVue("PartieEnCours.fxml");
 		
+		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
+		if (this.partieCourante.getIndiceDerniereQuestionVue()
+				== this.partieCourante.getIndiceQuestionCourante()){
+			
+			this.partieCourante.ajouterReponseUtilisateur(reponseUtilisateur);
+			
+			this.partieCourante.incrementerIndiceDerniereQuestionVue();
+			
+		} else {
+			this.partieCourante.modifierReponseUtilisateur(reponseUtilisateur);
+		}
+		
+		this.partieCourante.passerQuestionSuivante();
+	}
+	
+	
+	@FXML
+	private void actionBoutonValider() {
+		this.enregistrerReponse();
+		
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonTerminer() {
+	private void actionBoutonTerminer() { 
+		this.enregistrerReponse();
+		
 		NavigationControleur.changerVue("ResultatsPartie.fxml");
 	}
 	
@@ -231,8 +256,8 @@ public class PartieEnCoursControleur {
 			break;
 		
 		default:
-			throw new IllegalArgumentException
-				("difficulte invalide, non compris entre 0 et 3");
+			throw new IllegalArgumentException("La difficulté n'est pas comprise"
+					                           + "entre 0 et 3.");
 		}
 	}
 	
@@ -256,8 +281,6 @@ public class PartieEnCoursControleur {
 			afficherReponse.setId("" + i);
 			afficherReponse.setToggleGroup(radioGroupe);
 			
-			
-			
 			vBoxQuestionReponses.getChildren().add(afficherReponse);
 			touteslesRadioReponses.add(afficherReponse);
 		}
@@ -271,21 +294,47 @@ public class PartieEnCoursControleur {
 	 * à la dernière question de la partie
 	 */
 	private void initBoutonsPrecedentSuivant() {
-		System.out.println(partieCourante.getIndiceQuestionCourante());
-		System.out.println(partieCourante.getQuestionsProposees().size() -1);
-		if (partieCourante.getIndiceQuestionCourante() == 0) {
-			boutonValider.setText("SUIVANT");
-			boutonValider.setOnAction(event -> {
+		final int INDICE_LIMITE_QUESTIONS_PROPOSEES
+		= partieCourante.getQuestionsProposees().size() - 1;
+		
+		final String TEXTE_BOUTON_TERMINER = "        TERMINER",
+				     TEXTE_BOUTON_SUIVANT  = "      SUIVANT";
+		
+		boolean estLaPremiereQuestion;
+		
+		estLaPremiereQuestion = this.partieCourante.getIndiceQuestionCourante() == 0;
+		
+		this.boutonPrecedent.setVisible(!estLaPremiereQuestion);
+		this.iconeBoutonPrecedent.setVisible(!estLaPremiereQuestion);
+ 		
+		/*
+		 * Si on est à la dernière question du quiz :
+		 * 	- On affiche le bouton TERMINER, suivi de son 
+		 * 	  action au clic
+		 * 
+		 * Sinon :
+		 * 	- On affiche le bouton SUIVANT, suivi de 
+		 *    son action au clic
+		 */
+		if (this.partieCourante.getIndiceQuestionCourante() 
+		    == INDICE_LIMITE_QUESTIONS_PROPOSEES) {
+			
+			this.boutonValider.setText(TEXTE_BOUTON_TERMINER);
+			this.iconeBoutonSuivant.setOnMouseClicked(event -> {
+				this.actionBoutonTerminer();
+			});
+			this.boutonValider.setOnAction(event -> {
+				this.actionBoutonTerminer();
+			});
+			
+		} else {
+		
+			this.boutonValider.setText(TEXTE_BOUTON_SUIVANT);
+			this.iconeBoutonSuivant.setOnMouseClicked(event -> {
 				this.actionBoutonValider();
 			});
-		}
-		
-		if (partieCourante.getIndiceQuestionCourante()
-				== partieCourante.getQuestionsProposees().size() - 1) {
-			
-			boutonValider.setText("TERMINER");
-			boutonValider.setOnAction(event -> {
-				this.actionBoutonTerminer();
+			this.boutonValider.setOnAction(event -> {
+				this.actionBoutonValider();
 			});
 			
 		}

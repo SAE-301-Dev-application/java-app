@@ -21,6 +21,7 @@
 }
 
 .message {
-	-fx-text-fill: white;
+	-fx-fill: white;
 	-fx-font-size: 20px;
+	-fx-text-alignment: center;
 }

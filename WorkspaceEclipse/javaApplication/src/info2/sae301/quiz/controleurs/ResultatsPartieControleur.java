@@ -8,21 +8,14 @@ package info2.sae301.quiz.controleurs;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
-import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
-import info2.sae301.quiz.exceptions.DifficulteInvalideException;
-import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
-
-import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 
 /**
  * Contrôleur FXML de la vue ResultatsPartie.fxml permettant de 
@@ -37,9 +30,21 @@ import javafx.scene.layout.VBox;
  */
 public class ResultatsPartieControleur {
 	
-	/** Titre d'erreur pour l'alerte de la création partie */
+	/** Titre de la pop-up lors du clic sur "FEEDBACK" */
+	private static final String FEEDBACK_TITRE = "LE FEEDBACK";
+
+	
+	/** Texte de l'aide */
+	private static final String FEEDBACK_TEXTE
+	= """
+	  La fonctionnalité Feedback est encore en cours de développement.
+	  Merci de patienter jusqu'à la prochaine version de l'application.
+	  """;
+	
+	/** Titre de la pop-up d'aide concernant les résultats */
 	private static final String AIDE_TITRE = "LES RÉSULTATS";
 
+	
 	/** Texte de l'aide */
 	private static final String AIDE_TEXTE
 	= """
@@ -52,27 +57,81 @@ public class ResultatsPartieControleur {
 	  Un message de feedback afin de conclure la partie avec un message relatif aux résultats obtenus.
 	  """;
 	
-	/** Instance du jeu. */
-	private static Jeu jeu = Quiz.jeu;
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  inférieur à 31%. */
+	private static final String MESSAGE_CONCLUSION_RATE
+	= """
+	  Vous n'avez pas réussi à répondre juste à une des questions posées. Réessayez encore, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  inférieur à 31%. */
+	private static final String MESSAGE_CONCLUSION_MAUVAIS
+	= """
+	  Peu de réponses justes... Vous pouvez mieux faire, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  compris entre 31% et 60%. */
+	private static final String MESSAGE_CONCLUSION_MOYEN
+	= """
+	  Des résultats moyens, vous pouvez mieux faire, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  compris entre 61% et 89%. */
+	private static final String MESSAGE_CONCLUSION_BON
+	= """
+	  De bons résultats malgré quelques erreurs, félicitations, %s !
+	  """;
+	
+	
+	/** Message de conclusion affiché si le taux de réussite est 
+	 *  supérieur à 89%. */
+	private static final String MESSAGE_CONCLUSION_PARFAIT
+	= """
+	  Très bons résultats, félicitations, %s !
+	  """;
+	
+	
+	/** Instance courante du jeu (application). */
+	private static Jeu jeu;
+	
 	
 	/** Instance de la partie en cours. */
-	private static PartieEnCours partieCourante = Quiz.partieCourante;
+	private static PartieEnCours partieCourante;
+	
 	
 	/**
-	 * @return Pourcentage de réussite du joueur 
-	 * 		   pour la partie courante
+	 * @return Le nombre de questions du quiz courant
 	 */
-	private static double getPourcentageReussite() {
-		final ArrayList<Question> QUESTIONS_PROPOSEES
-		= partieCourante.getQuestionsProposees();
-		
+	public static int getNombreQuestions() {
+		return partieCourante.getQuestionsProposees().size();
+	}
+	
+	
+	/**
+	 * @return Le nombre de questions correctement répondues par
+	 * 		   le joueur
+	 */
+	public static int getNombreQuestionsReussies() {
 		final ArrayList<String> REPONSES_QUESTIONS
 		= partieCourante.getReponsesUtilisateur();
 		
-		final int NOMBRE_QUESTIONS 
-		= QUESTIONS_PROPOSEES.size();
+		final ArrayList<Question> QUESTIONS_PROPOSEES
+		= partieCourante.getQuestionsProposees();
+		
+		final int NOMBRE_QUESTIONS = getNombreQuestions();
 		
 		int nombreQuestionsReussies;
+		
+		String reponseDonnee;
+		
+		Question questionCourante;
 		
 		nombreQuestionsReussies = 0;
 		
@@ -80,8 +139,10 @@ public class ResultatsPartieControleur {
 			 indiceQuestion < NOMBRE_QUESTIONS; 
 			 indiceQuestion++) {
 			
-			if (QUESTIONS_PROPOSEES.get(indiceQuestion)
-					.verifierReponse(REPONSES_QUESTIONS.get(indiceQuestion))) {
+			questionCourante = QUESTIONS_PROPOSEES.get(indiceQuestion);
+			reponseDonnee = REPONSES_QUESTIONS.get(indiceQuestion);
+			
+			if (questionCourante.verifierReponse(reponseDonnee)) {
 				
 				nombreQuestionsReussies++;
 				
@@ -89,24 +150,102 @@ public class ResultatsPartieControleur {
 				
 		}
 		
-		return nombreQuestionsReussies / NOMBRE_QUESTIONS;
+		return nombreQuestionsReussies;
 	}
+	
+	
+	public static int getNombreQuestionsRatees() {
+		return getNombreQuestions() - getNombreQuestionsReussies();
+	}
+	
+
+	/**
+	 * @return Pourcentage de réussite du joueur 
+	 * 		   pour la partie courante
+	 */
+	public static double getPourcentageReussite() {
+		return (double) getNombreQuestionsReussies() / getNombreQuestions() * 100.;
+	}
+	
+	
+	/**
+	 * @return Le message de conclusion lié au taux de réussite
+	 */
+	public static String getMessageConclusion() {
+		final double POURCENTAGE_REUSSITE = getPourcentageReussite();
+		
+		String messageConclusion;
+		
+		if (POURCENTAGE_REUSSITE < 1.) {
+			messageConclusion = MESSAGE_CONCLUSION_RATE;
+		} else if (POURCENTAGE_REUSSITE >= 1. && POURCENTAGE_REUSSITE <= 29.) {
+			messageConclusion = MESSAGE_CONCLUSION_MAUVAIS;
+		} else if (POURCENTAGE_REUSSITE >= 30. && POURCENTAGE_REUSSITE <= 59.) {
+			messageConclusion = MESSAGE_CONCLUSION_MOYEN;
+		} else if (POURCENTAGE_REUSSITE >= 60. && POURCENTAGE_REUSSITE <= 89.) {
+			messageConclusion = MESSAGE_CONCLUSION_BON;
+		} else {
+			messageConclusion = MESSAGE_CONCLUSION_PARFAIT;
+		}
+		
+		return String.format(messageConclusion, jeu.getPseudo());
+	}
+	
+	
+	/**
+	 * Gestion du pluriel, ajout du 's' à la fin des mots fournis 
+	 * si le nombre est supérieur strictement à 1.
+	 * 
+	 * @param phrase
+	 * @param nombre
+	 * @return La phrase avec gestion du pluriel
+	 */
+	private static String gestionPluriel(String phrase, int nombre) {
+		String terminaison;
+		terminaison = nombre > 1
+				? "s"
+				: "";
+		
+		return String.format(phrase, terminaison, terminaison);
+	}
+	
 	
 	/** Label d'affichage du pourcentage de réussite. */
 	@FXML
 	private Label pourcentageReussite;
 	
+	
 	/** Label d'affichage du nombre de questions réussies. */
 	@FXML
 	private Label nombreQuestionsReussies;
+	
+	
+	@FXML
+	private Label labelSecondaireNombreQuestionsReussies;
+	
 	
 	/** Label d'affichage du nombre de questions ratées. */
 	@FXML
 	private Label nombreQuestionsRatees;
 	
+	
+	@FXML
+	private Label labelSecondaireNombreQuestionsRatees;
+	
+	
 	/** Label d'affichage du message personnalisé de conclusion. */
 	@FXML
-	private Label message;
+	private Text message;
+	
+	
+	/** Bouton de redirection vers le feedback de la partie. */
+	@FXML
+	private Button boutonFeedback;
+
+	
+	/** Bouton de redirection vers le menu principal. */
+	@FXML
+	private Button boutonMenuPrincipal;
 	
 	
 	/**
@@ -115,8 +254,29 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void initialize() {
+		
+		/* Récupération du jeu et de la partie courante. */
+		jeu = Quiz.jeu;
+		partieCourante = Quiz.partieCourante;
 
-		this.pourcentageReussite.setText(getPourcentageReussite() + "%");
+		/* Affichage du pourcentage de réussite. */
+		this.pourcentageReussite
+		    .setText(String.format("%d%%", (int) getPourcentageReussite()));
+		
+		/* Affichage du nombre de questions réussies. */
+		this.nombreQuestionsReussies
+		    .setText(String.valueOf(getNombreQuestionsReussies()));
+		
+		this.gestionPlurielQuestionsReussies();
+		
+		/* Affichage du nombre de questions ratées. */
+		this.nombreQuestionsRatees
+	    	.setText(String.valueOf(getNombreQuestionsRatees()));
+		
+		this.gestionPlurielQuestionsRatees();
+		
+		/* Affichage du message de conclusion de partie. */
+		this.message.setText(getMessageConclusion());
 		
 	}
 	
@@ -136,6 +296,7 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void actionBoutonMenuPrincipal() {
+		Quiz.partieCourante = new PartieEnCours(); 
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
@@ -146,6 +307,37 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void actionBoutonFeedback() {
-		//
+		AlerteControleur.autreAlerte(FEEDBACK_TEXTE, FEEDBACK_TITRE,
+				                     AlertType.WARNING);
+	}
+	
+	
+	/**
+	 * Gestion du pluriel pour le label secondaire du 
+	 * nombre de questions réussies.
+	 */
+	private void gestionPlurielQuestionsReussies() {
+		String contenuLabel;
+		contenuLabel 
+		= gestionPluriel("question%s réussie%s", 
+						 getNombreQuestionsReussies());
+		
+		this.labelSecondaireNombreQuestionsReussies
+		    .setText(contenuLabel);
+	}
+	
+	
+	/**
+	 * Gestion du pluriel pour le label secondaire du 
+	 * nombre de questions ratées.
+	 */
+	private void gestionPlurielQuestionsRatees() {
+		String contenuLabel;
+		contenuLabel 
+		= gestionPluriel("question%s ratée%s", 
+						 getNombreQuestionsRatees());
+		
+		this.labelSecondaireNombreQuestionsRatees
+		    .setText(contenuLabel);
 	}
 }

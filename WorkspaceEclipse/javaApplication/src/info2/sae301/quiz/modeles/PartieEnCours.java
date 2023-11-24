@@ -52,10 +52,20 @@ public class PartieEnCours {
 		return indiceDerniereQuestionVue;
 	}
 
-	/** @param indiceDerniereQuestionVue nouvelle
-	 * valeur de la dernière question vue */
+	/** 
+	 * @param indiceDerniereQuestionVue nouvelle
+	 * 		  valeur de la dernière question vue 
+	 */
 	public void setIndiceDerniereQuestionVue(int indiceDerniereQuestionVue) {
 		this.indiceDerniereQuestionVue = indiceDerniereQuestionVue;
+	}
+	
+	
+	/**
+	 * Incrémentation de l'indice de la dernière question vue.
+	 */
+	public void incrementerIndiceDerniereQuestionVue() {
+		this.indiceDerniereQuestionVue++;
 	}
 
 
