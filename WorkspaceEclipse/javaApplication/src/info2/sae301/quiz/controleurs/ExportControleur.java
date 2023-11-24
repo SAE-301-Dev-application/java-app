@@ -65,7 +65,7 @@ public class ExportControleur {
 		
 		try {
 			socket = new Socket(IP_RESEAU, PORT_RESEAU);
-			ipPrivee = socket.getLocalAddress().getHostAddress();
+			ipPrivee = socket.getInetAddress().getHostAddress();
 		} catch (IOException e) {
 			System.out.println("Erreur IO : " + e.getMessage());
 		}
