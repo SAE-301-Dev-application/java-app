@@ -6,13 +6,16 @@
 package info2.sae301.quiz.reseau;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
 
-import java.io.BufferedReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Serveur permettant d'exporter les données des questions et catégories
@@ -35,9 +38,6 @@ public class Serveur {
 	private static final String INDICATION_CLE_VIGENERE
 	= "\nClé de vigenère reçue :\n";
 	
-	private static final String INDICATION_MESSAGE_CLIENT
-	= "\nMessage envoyé par le client :\n";
-	
 	private static final String INDICATION_RECEPTION_SERVEUR
 	= "Le serveur a reçu : ";
 	
@@ -51,16 +51,13 @@ public class Serveur {
 	private static Socket socketClient;
 	
 	/** Message reçu du client. */
-	private static BufferedReader entreeSocket;
+	private static ObjectInputStream entreeSocket;
 	
 	/** Message envoyé au client. */
-	private static PrintWriter sortieSocket;
+	private static ObjectOutputStream sortieSocket;
 	
 	/** Clé de Vigenère permettant de crypter le CSV de données. */
 	private static String cleVigenere;
-	
-	/** Chemin du fichier CSV à envoyer. */
-	private static String cheminFichierCSV;
 	
 	
 	/**
@@ -96,10 +93,10 @@ public class Serveur {
 	private static void creerFluxEntreeSortie() throws IOException {
         // Création d'un flux d'entrée pour le serveur
         entreeSocket
-        = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+        = new ObjectInputStream(socketClient.getInputStream());
         
         // Création d'un flux de sortie pour le serveur
-        sortieSocket = new PrintWriter(socketClient.getOutputStream(), true);
+        sortieSocket = new ObjectOutputStream(socketClient.getOutputStream());
 	}
 
 	
@@ -108,64 +105,84 @@ public class Serveur {
 	 * et affichage sur console texte.
 	 * 
 	 * @throws IOException si la lecture renvoie une erreur.
+	 * @throws ClassNotFoundException 
 	 */
-	private static void receptionCleVigenere() throws IOException {	
-		cleVigenere = entreeSocket.readLine().substring(6);
+	private static void receptionCleVigenere()
+	throws IOException, ClassNotFoundException {	
+		cleVigenere = "";
+		
+		cleVigenere = (String) entreeSocket.readObject();
+		cleVigenere = cleVigenere.substring(6);
 				
         System.out.println(INDICATION_CLE_VIGENERE + cleVigenere);
         
-        sortieSocket.println(INDICATION_RECEPTION_SERVEUR + cleVigenere);
-	}
-	
-	
-	/**
-	 * Lecture du message envoyé par le client et affichage sur console texte.
-	 * 
-	 * @throws IOException si la lecture renvoie une erreur.
-	 */
-	private static void lectureEnvoiMessage() throws IOException {		
-		String messageClient;
-		
-		boolean socketsOuvertes;
-		
-		socketsOuvertes = true;
-        
-        while (socketsOuvertes
-        	   && (messageClient = entreeSocket.readLine()) != null) {
-            System.out.println(INDICATION_MESSAGE_CLIENT + messageClient);
-            
-            sortieSocket.println(INDICATION_RECEPTION_SERVEUR + messageClient);
-            
-            if (messageClient.equals("fin")) {
-            	socketsOuvertes = false;
-            }
-        }
+        sortieSocket.writeObject(INDICATION_RECEPTION_SERVEUR + cleVigenere);
 	}
 	
 	
 	/**
 	 * Chiffre via la méthode
 	 * {@link info2.sae301.quiz.cryptographie.Vigenere#chiffrer(String)}
-	 * le fichier CSV dont le chemin est dans l'attribut cheminFichierCSV.
-	 * Envoie ensuite via sortieSocket le fichier crypté.
+	 * les noms des catégories en paramètre.
+	 * Envoie ensuite via sortieSocket chaque nom de catégorie crypté.
+	 * 
+	 * @param categories Les catégories à envoyer.
+	 * @throws IOException 
 	 */
-	private static void envoyerCSVCrypte() {
+	private static void envoyerCategories(ArrayList<Categorie> categories)
+	throws IOException {
 		
-        String fichierString,
-               fichierChiffre;
-
-		cheminFichierCSV = "C:/Users/Loic/Downloads/questionsBasiquesUTF8.csv";
+        String nomCategorie,
+               nomCategorieCrypte;
+        
+        System.out.println("\nEnvoi de noms de catégories :\n"
+        		           + "Nom initial\tNom crypté\n"
+        		           + "_____________________________");
+        
+        for (Categorie categorieCourante: categories) {
+        	nomCategorie = categorieCourante.getIntitule();
+ 
+            nomCategorieCrypte = Vigenere.chiffrer(nomCategorie, cleVigenere);
+            
+            System.out.println(nomCategorie + "\t" + nomCategorieCrypte);
+			
+		    sortieSocket.writeObject(nomCategorieCrypte);
+        }
+        
+        sortieSocket.writeObject("finCategories");
+	}
+	
+	
+	/**
+	 * Chiffre via la méthode
+	 * {@link info2.sae301.quiz.cryptographie.Vigenere#chiffrer(String)}
+	 * les données des questions en paramètre.
+	 * Envoie ensuite via sortieSocket les données cryptées des questions.
+	 * 
+	 * @param questions Les questions à envoyer.
+	 * @throws IOException 
+	 */
+	private static void envoyerQuestions(ArrayList<Question> questions)
+	throws IOException {
 		
-        // lecture fichier CSV et écriture dans String fichierString
-
-        fichierString = "test"; // STUB
-        // TODO faire en sorte que ce soit le csv
+        String donneesQuestion,
+               donneesCrypteesQuestion;
         
-        System.out.println("\nFichier crypté envoyé :\n" + fichierString);
+        System.out.println("\nEnvoi de données de questions :\n"
+        		           + "Données initiales\n-----\nDonnées cryptées\n"
+        		           + "_____________________");
         
-        fichierChiffre = Vigenere.chiffrer(fichierString, cleVigenere);
-
-        sortieSocket.println(fichierChiffre);
+        for (Question questionCourante: questions) {
+        	donneesQuestion = questionCourante.donneesToString();
+ 
+        	donneesCrypteesQuestion = Vigenere.chiffrer(donneesQuestion,
+        			                                    cleVigenere);
+            
+            System.out.println(donneesQuestion + "\n-----\n"
+                               + donneesCrypteesQuestion + "\n");
+			
+		    sortieSocket.writeObject(donneesCrypteesQuestion);
+        }
 	}
 	
 	
@@ -194,6 +211,35 @@ public class Serveur {
 	 * @param args inutilisé.
 	 */
     public static void main(String[] args) {
+    	
+    	ArrayList<Categorie> listeCategoriesTemp;
+    	
+    	ArrayList<Question> listeQuestionsTemp;
+    	
+    	listeCategoriesTemp = new ArrayList<Categorie>();
+    	
+    	listeQuestionsTemp = new ArrayList<Question>();
+    	
+    	listeCategoriesTemp.add(new Categorie("Test"));
+    	listeCategoriesTemp.add(new Categorie("Test2"));
+    	listeCategoriesTemp.add(new Categorie("Test3"));
+    	listeCategoriesTemp.add(new Categorie("Test4"));
+    	listeCategoriesTemp.add(new Categorie("Test5"));
+    	
+    	for (int i = 1; i <= 4; i++) {
+    		listeQuestionsTemp.add(new Question("intituléQ" + i,
+    				                            "réponse juste Q" + i,
+    				                            new String[] {
+    				                            	"Réponse fausse 1 Q" + i,
+    				                            	"Réponse fausse 2 Q" + i,
+    				                            	"Réponse fausse 3 Q" + i,
+    				                            	"Réponse fausse 4 Q" + i,
+    				                            },
+    				                            2,
+    				                            "feedback Q" + i,
+    				                            listeCategoriesTemp.get(i)));    		
+    	}
+    	
         try {
             creerServeur();
             
@@ -203,12 +249,12 @@ public class Serveur {
             
             receptionCleVigenere();
             
-            envoyerCSVCrypte();
+            //envoyerCategories(listeCategoriesTemp);
             
-            // lectureEnvoiMessage();
+            //envoyerQuestions(listeQuestionsTemp);
             
             fermerSockets();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

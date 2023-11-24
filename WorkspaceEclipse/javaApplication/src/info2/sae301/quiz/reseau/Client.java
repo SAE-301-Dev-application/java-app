@@ -7,10 +7,10 @@ package info2.sae301.quiz.reseau;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -31,18 +31,10 @@ public class Client {
 	 */
 	private final static String ADRESSE_SERVEUR = "127.0.0.1";
 	
-	/** Message envoyé dans la console du client avant qu'il envoie un message. */
-	private final static String INSTRUCTION_CLIENT
-	= "Rédigez ci-dessous un message à envoyer au serveur : ";
+	private final static int TIMEOUT_CONNEXION = 5000;
 	
 	private final static String INDICATION_REPONSE
 	= "\nRéponse du serveur : ";
-	
-	private final static String INDICATION_FICHIER_CRYPTE
-	= "\nFichier crypté reçu :\n";
-	
-	private final static String INDICATION_FICHIER_DECRYPTE
-	= "\nFichier décrypté :\n";
 	
 	private final static String MESSAGE_FERMETURE
 	= "\nLes sockets sont en cours de fermeture.";
@@ -53,14 +45,11 @@ public class Client {
 	/** Socket permettant la connexion au serveur. */
 	private static Socket socket;
 	
-	/** Message entré par l'utilisateur */
-	private static BufferedReader entreeUtilisateur;
-	
 	/** Message reçu du serveur */
-	private static BufferedReader entreeSocket;
+	private static ObjectInputStream entreeSocket;
 	
 	/** Message envoyé au serveur */
-	private static PrintWriter sortieSocket;
+	private static ObjectOutputStream sortieSocket;
 	
 	private static String cleVigenere;
 	
@@ -72,7 +61,12 @@ public class Client {
 	 * @throws IOException si la création de la socket échoue.
 	 */
 	private static void creerSocket() throws IOException {
-        socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
+        socket = new Socket();
+        
+        InetSocketAddress adresseServeur = new InetSocketAddress(ADRESSE_SERVEUR, PORT_SERVEUR);
+        socket.connect(adresseServeur, TIMEOUT_CONNEXION);
+        
+        System.out.println("Socket créée à l'adresse " + ADRESSE_SERVEUR);
 	}
 	
 	
@@ -82,85 +76,139 @@ public class Client {
 	 * @throws IOException si les flux ne peuvent être créés.
 	 */
 	private static void creerFluxEntreeSortie() throws IOException {
+		System.out.println("Création du flux d'entrées et sorties");
+		
+		System.out.println(socket.getInputStream());
+		
         // Création d'un flux d'entrée pour le serveur
-        entreeSocket
-        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try {
+			entreeSocket
+			= new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        System.out.println(entreeSocket);
         
         // Création d'un flux de sortie pour le serveur
-        sortieSocket = new PrintWriter(socket.getOutputStream(), true);
+        sortieSocket = new ObjectOutputStream(socket.getOutputStream());
+        
+        System.out.println("teagz");
 	}
 	
 	
 	/**
 	 * Envoie au serveur la clé gérénée par Vigenere.
+	 * @throws ClassNotFoundException 
 	 */
-	private static void envoyerCleVigenere() throws IOException {
+	private static void envoyerCleVigenere()
+	throws IOException, ClassNotFoundException {	
 		String reponseServeur;
+		
+		System.out.println("Envoi de la clé de vigenère");
 		
 		cleVigenere = Vigenere.genererCle();
 		
 		System.out.println("Envoi de la clé générée : " + cleVigenere);
 		
 		// Envoi au serveur de la clé de chiffrement
-        sortieSocket.println("CLE = " + cleVigenere);
+        sortieSocket.writeObject("CLE = " + cleVigenere);
         
-        // Lecture de la réponse du serveur
-        reponseServeur = entreeSocket.readLine();
+        /*
+         * Lecture de la réponse du serveur
+         */
+		reponseServeur = (String) entreeSocket.readObject();
+		
         System.out.println(INDICATION_REPONSE + reponseServeur);
 	}
 	
 	
 	/**
-	 * Lecture de l'entrée envoyé dans la console texte par l'utilisateur
-	 * et envoi au serveur du message.
+	 * Réception et déchiffrage des catégories cryptées envoyées par le serveur.
 	 * 
 	 * @throws IOException si la lecture renvoie une erreur.
+	 * @return les noms des catégories reçus.
+	 * @throws ClassNotFoundException 
 	 */
-	private static void lectureEnvoiMessage() throws IOException {		
-		String messageAEnvoyer,
-		       reponseServeur;
+	private static String[] recevoirCategories()
+	throws IOException, ClassNotFoundException {		
+		boolean envoiFini;
 		
-		boolean socketOuverte;
+		String nomCategorieCrypte,
+		       nomCategorieDecrypte;
 		
-		System.out.println(INSTRUCTION_CLIENT);
-        entreeUtilisateur = new BufferedReader(new InputStreamReader(System.in));
+		String[] nomsCategories = {""};
+		
+		envoiFini = false;
+		
+		System.out.println("\nRéception des noms des catégories :\n"
+				           + "Nom crypté\tNom décrypté\n"
+				           + "_____________________________");
         
-        socketOuverte = true;
-        
-        while (socketOuverte
-        	   && (messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
-        	// Envoi au serveur du message
-            sortieSocket.println(messageAEnvoyer);
-            
-            // Lecture de la réponse du serveur
-            reponseServeur = entreeSocket.readLine();
-            System.out.println(INDICATION_REPONSE + reponseServeur);
-            
-            if (messageAEnvoyer.equals("fin")) {
-            	socketOuverte = false;
-            }
-        }
+        // Lecture du nom de catégorie crypté envoyé par le serveur
+		while (!envoiFini
+			   && (nomCategorieCrypte = (String) entreeSocket.readObject())
+			      != null) {
+			
+			if (nomCategorieCrypte.equals("finCategories")) {
+				envoiFini = true;
+			} else {
+				// Décryptage du nom de catégorie crypté reçu
+				nomCategorieDecrypte = Vigenere.dechiffrer(nomCategorieCrypte,
+						                                   cleVigenere);
+				
+				System.out.println(nomCategorieCrypte + "\t" + nomCategorieDecrypte);
+		        
+		        nomsCategories[nomsCategories.length - 1] = nomCategorieDecrypte;	
+			}
+		}
+		return nomsCategories;
 	}
-
+	
 	
 	/**
-	 * Réception et déchiffrage du fichier crypté envoyé par le serveur.
+	 * Réception et déchiffrage des questions cryptées envoyées par le serveur.
 	 * 
 	 * @throws IOException si la lecture renvoie une erreur.
+	 * @return les noms des catégories reçus.
+	 * @throws ClassNotFoundException 
 	 */
-	private static void recevoirFichierCrypte() throws IOException {		
-		String fichierCrypte,
-		       fichierDecrypte;
-        
-        // Lecture du fichier crypté envoyé par le serveur
-		fichierCrypte = entreeSocket.readLine();
+	private static String[] recevoirQuestions()
+	throws IOException, ClassNotFoundException {		
+		boolean envoiFini;
 		
-		// Décryptage du fichier crypté reçu
-		fichierDecrypte = Vigenere.dechiffrer(fichierCrypte, cleVigenere);
+		String donneesCrypteesQuestion,
+		       donneesDecrypteesQuestion;
 		
-        System.out.println(INDICATION_FICHIER_CRYPTE + fichierCrypte);
+		String[] donneesQuestions = {""};
+		
+		envoiFini = false;
+		
+		System.out.println("\nRéception des données des questions :\n"
+				           + "Données cryptées\tDonnées décryptées\n"
+				           + "_________________________________");
         
-        System.out.println(INDICATION_FICHIER_DECRYPTE + fichierDecrypte);
+        // Lecture des données cryptées des questions envoyées par le serveur
+		while (!envoiFini
+			   && (donneesCrypteesQuestion = (String) entreeSocket.readObject())
+			      != null) {
+			
+			if (donneesCrypteesQuestion.equals("finQuestions")) {
+				envoiFini = true;
+			} else {
+				// Décryptage des données cryptées reçues
+				donneesDecrypteesQuestion
+				= Vigenere.dechiffrer(donneesCrypteesQuestion, cleVigenere);
+				
+				System.out.println(donneesCrypteesQuestion
+						           + "\t" + donneesDecrypteesQuestion);
+		        
+				donneesQuestions[donneesQuestions.length - 1]
+				= donneesDecrypteesQuestion;	
+			}
+		}
+		return donneesQuestions;
 	}
 	
 	
@@ -172,9 +220,6 @@ public class Client {
 	private static void fermerSockets() throws IOException {
 		System.out.println(MESSAGE_FERMETURE);
 		
-		if (entreeUtilisateur != null) {
-			entreeUtilisateur.close();
-		}
 		entreeSocket.close();
 		sortieSocket.close();
         socket.close();
@@ -190,16 +235,16 @@ public class Client {
         	creerSocket();
         	
         	creerFluxEntreeSortie();
-            
-            // lectureEnvoiMessage();
         	
         	envoyerCleVigenere();
         	
-        	recevoirFichierCrypte();
+        	//recevoirCategories();
+        	
+        	//recevoirQuestions();
         	
         	fermerSockets();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
