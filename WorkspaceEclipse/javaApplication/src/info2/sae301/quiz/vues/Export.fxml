@@ -39,7 +39,7 @@
             <VBox layoutX="26.0" layoutY="81.0" prefHeight="60.0" prefWidth="348.0">
                <children>
                   <Label styleClass="label-champ" text="    Adresse IP du destinataire :" />
-                  <TextField prefHeight="36.0" prefWidth="344.0" styleClass="textfield" />
+                  <TextField onAction="#saisieIPDestinataire" prefHeight="36.0" prefWidth="344.0" styleClass="textfield" />
                </children>
             </VBox>
             <Button layoutX="408.0" layoutY="100.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMonIP" prefWidth="213.0" text="AFFICHER MON ADRESSE IP">
