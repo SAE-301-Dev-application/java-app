@@ -56,11 +56,7 @@ public class Client {
 	 * @throws IOException si la création de la socket échoue.
 	 */
 	private static void creerSocket() throws IOException {
-		try {
-            socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
-		} catch (IOException e) {
-			throw new IOException(e);
-		}
+        socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
 	}
 	
 	

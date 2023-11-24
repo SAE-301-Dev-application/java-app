@@ -22,40 +22,55 @@ import java.net.Socket;
  * @author Simon Guiraud
  * @author Samuel Lacam
  */
-
 public class Serveur {
 	
-	/** Port utilisé par le serveur */
-	public static final int PORT = 65432;
+	/** Port utilisé par le serveur sur le réseau local. */
+	private static final int PORT = 65432;
+	
+	private static final String CONNEXION_OUVERTE
+	= "Le serveur est connecté sur le port " + PORT;
+	
+	/** TODO */
+	private static ServerSocket socketServeur;
+	
+	/** TODO */
+	private static Socket socketClient;
+	
+	/**
+	 * Crée un serveur sur le réseau local.
+	 * 
+	 * @throws IOException
+	 */
+	private static void creerServeur() throws IOException {
+		socketServeur = new ServerSocket(PORT);
+		
+        System.out.println(CONNEXION_OUVERTE);
+	}
+	
 	
     public static void main(String[] args) {
-        int port = PORT;
-        
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Le serveur tourne sur le port " + port);
-            boolean aTester = true;
-            while (aTester == true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connecté : " + clientSocket.getInetAddress().getHostAddress());
+            creerServeur();
+            
+            socketClient = socketServeur.accept();
+            System.out.println("Client connecté : " + socketClient.getInetAddress().getHostAddress());
+            
+            // Create input and output streams for the client
+            BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+            PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
+            
+            // Handle client messages
+            String message;
+            while ((message = in.readLine()) != null) {
+                System.out.println("Message reçu du client : " + message);
                 
-                // Create input and output streams for the client
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                
-                // Handle client messages
-                String message;
-                while ((message = in.readLine()) != null) {
-                    System.out.println("Message reçu du client : " + message);
-                    
-                    // You can process the message here or send a response
-                    out.println("Le serveur a reçu : " + message);
-                }
-                
-                // Close the client socket
-                aTester = false;
-                clientSocket.close();
+                // You can process the message here or send a response
+                out.println("Le serveur a reçu : " + message);
             }
+            
+            // Close the client socket
+            socketClient.close();
+            socketServeur.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
