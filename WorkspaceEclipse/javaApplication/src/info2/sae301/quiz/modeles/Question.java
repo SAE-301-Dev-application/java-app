@@ -490,6 +490,75 @@ public class Question implements Serializable {
 	
 	
 	/**
+	 * Formatte les données de la question courante afin de les rassembler
+	 * en une seule chaîne de caractères acceptable pour une ligne de CSV.
+	 * 
+	 * @return les données sous un format dit CSV.
+	 */
+	public String donneesToString() {
+		String resultat;
+		
+		resultat = formatterTexte(this.getCategorie().getIntitule())
+		           + formatterTexte("" + this.getDifficulte())
+		           + formatterTexte(this.getIntitule())
+		           + formatterTexte(this.getReponseJuste());
+				
+		for (int i = 0; i <= 3; i++) {
+			String[] reponses = this.getReponsesFausses();
+			
+			if (i < reponses.length && reponses[i] != null) {
+				resultat += formatterTexte(reponses[i]);
+			} else {
+				resultat += ";";
+			}
+		}
+		
+		if (this.getFeedback() != null && !this.getFeedback().isBlank()) {
+			resultat += formatterTexte(this.getFeedback());
+			resultat = resultat.substring(0, resultat.length() - 1);
+		}
+		
+		return resultat;
+	}
+	
+	
+	/**
+	 * TODO JDoc
+	 * 
+	 * @param texte
+	 * @return
+	 */
+	public String formatterTexte(String texte) {
+		final String GUILLEMET = "\"";
+		
+		final String POINT_VIRGULE = ";";
+		
+		String texteFormatte;
+		
+		texteFormatte = "";
+			
+		if (texte.contains(GUILLEMET)) {
+			// Si un caractère est un guillemet on le double
+			for (char caractere: texte.toCharArray()) {
+				texteFormatte += "" + caractere
+						         + (caractere == GUILLEMET.charAt(0)
+						            ? GUILLEMET
+						            : "");
+			}
+		} else {
+			texteFormatte = texte;
+		}
+		
+		if (texte.contains(POINT_VIRGULE)) {
+			texteFormatte = GUILLEMET
+					        + texteFormatte
+					        + GUILLEMET;
+		}
+		return texteFormatte + POINT_VIRGULE;
+	}
+	
+	
+	/**
 	 * Crée un hashCode se basant sur les attributs de l'objet auquel
 	 * cette méthode est appliquée, ici une instance de Question.
  	 * Permet une comparaison précise et complète la méthode equals()
