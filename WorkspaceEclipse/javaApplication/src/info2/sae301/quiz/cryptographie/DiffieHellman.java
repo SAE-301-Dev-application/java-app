@@ -38,6 +38,12 @@ public class DiffieHellman {
 	private static int cleRecue;
 	
 	
+	/** @return le générateur G */
+	public static int getGenerateur() {
+		return G;
+	}
+	
+	
 	/** @return la puissance secrète */
 	public static int getPuissanceSecrete() {
 		return puissanceSecrete;
