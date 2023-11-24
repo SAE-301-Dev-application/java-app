@@ -9,7 +9,7 @@ public class ImportLocal {
 	private static String cheminFichier;
 	
 	public static void importation() {
-		Import.ajoutDonnes(cheminFichier);
+		Import.importation(cheminFichier);
 	}
 	
 	public static void parcourirFichier() {

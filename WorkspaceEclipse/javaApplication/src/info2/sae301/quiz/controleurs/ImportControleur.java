@@ -1,5 +1,6 @@
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.reseau.Import;
 import info2.sae301.quiz.reseau.ImportLocal;
 import javafx.fxml.FXML;
 
@@ -17,6 +18,8 @@ public class ImportControleur {
 	
 	@FXML
 	private void actionBoutonImporter() {
-		
+		ImportLocal.importation();
+		System.out.println("Question non ajoutées : "
+				+ Import.getQuestionNonAjoutes());
 	}
 }
