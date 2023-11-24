@@ -39,13 +39,13 @@ public class Client {
 	/** Socket permettant la connexion au serveur. */
 	private static Socket socket;
 	
-	/** TODO */
+	/** Message entré par l'utilisateur */
 	private static BufferedReader entreeUtilisateur;
 	
-	/** TODO */
+	/** Message reçu du serveur */
 	private static BufferedReader entreeSocket;
 	
-	/** TODO */
+	/** Message envoyé au serveur */
 	private static PrintWriter sortieSocket;
 	
 	
@@ -56,11 +56,7 @@ public class Client {
 	 * @throws IOException si la création de la socket échoue.
 	 */
 	private static void creerSocket() throws IOException {
-		try {
-            socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
-		} catch (IOException e) {
-			throw new IOException(e);
-		}
+        socket = new Socket(ADRESSE_SERVEUR, PORT_SERVEUR);
 	}
 	
 	
@@ -82,6 +78,8 @@ public class Client {
 	/**
 	 * Lecture de l'entrée envoyé dans la console texte par l'utilisateur
 	 * et envoi au serveur du message.
+	 * 
+	 * @throws IOException si la lecture renvoie une erreur.
 	 */
 	private static void lectureEnvoiMessage() throws IOException {		
 		String messageAEnvoyer,
@@ -89,6 +87,8 @@ public class Client {
 		
 		System.out.println(INSTRUCTION_CLIENT);
         entreeUtilisateur = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println();
         
         while ((messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
         	// Envoi au serveur du message
@@ -104,7 +104,7 @@ public class Client {
 	/**
 	 * Fermeture de la socket précédemment créée.
 	 * 
-	 * @throws IOException si la création de la socket échoue.
+	 * @throws IOException si la fermeture de la socket échoue.
 	 */
 	private static void fermerSocket() throws IOException {
 		try {
