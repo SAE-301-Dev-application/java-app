@@ -1,3 +1,5 @@
+package info2.sae301.quiz.reseau;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
