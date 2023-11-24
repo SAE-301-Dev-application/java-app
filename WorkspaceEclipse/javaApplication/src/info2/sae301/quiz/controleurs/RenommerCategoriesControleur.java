@@ -34,7 +34,7 @@ public class RenommerCategoriesControleur {
 	}
 	
 	/**
-	 * TODO aide
+	 * Redirection vers la pop-up d'aide pour renommer des questions
 	 */
 	@FXML
 	private void actionBoutonAide() {

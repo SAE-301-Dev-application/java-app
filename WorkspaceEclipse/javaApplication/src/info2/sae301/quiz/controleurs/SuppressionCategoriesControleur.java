@@ -185,7 +185,7 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * TODO : coder action bouton aide
+	 * Redirection vers le pop-up pour la suppression des categories
 	 */
 	@FXML
 	private void actionBoutonAide() {
