@@ -29,6 +29,10 @@ public class Client {
 	 */
 	private final static String ADRESSE_SERVEUR = "127.0.0.1";
 	
+	/** Message envoyé dans la console du client avant qu'il envoie un message. */
+	private final static String INSTRUCTION_CLIENT
+	= "Rédigez ci-dessous un message à envoyer au serveur : ";
+	
 	/** Port sur lequel le serveur est accessible. */
 	private final static int PORT_SERVEUR = 65432;
 	
@@ -36,10 +40,13 @@ public class Client {
 	private static Socket socket;
 	
 	/** TODO */
-	private static BufferedReader entree;
+	private static BufferedReader entreeUtilisateur;
 	
 	/** TODO */
-	private static PrintWriter sortie;
+	private static BufferedReader entreeSocket;
+	
+	/** TODO */
+	private static PrintWriter sortieSocket;
 	
 	
 	/**
@@ -64,31 +71,63 @@ public class Client {
 	 */
 	private static void creerFluxEntreeSortie() throws IOException {
         // Création d'un flux d'entrée pour le serveur
-        entree
+        entreeSocket
         = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         
         // Création d'un flux de sortie pour le serveur
-        sortie = new PrintWriter(socket.getOutputStream(), true);
+        sortieSocket = new PrintWriter(socket.getOutputStream(), true);
 	}
 	
 	
+	/**
+	 * Lecture de l'entrée envoyé dans la console texte par l'utilisateur
+	 * et envoi au serveur du message.
+	 */
+	private static void lectureEnvoiMessage() throws IOException {		
+		String messageAEnvoyer,
+		       reponseServeur;
+		
+		System.out.println(INSTRUCTION_CLIENT);
+        entreeUtilisateur = new BufferedReader(new InputStreamReader(System.in));
+        
+        while ((messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
+        	// Envoi au serveur du message
+            sortieSocket.println(messageAEnvoyer);
+            
+            // Lecture de la réponse du serveur
+            reponseServeur = entreeSocket.readLine();
+            System.out.println("Réponse du serveur : " + reponseServeur);
+        }
+	}
+	
+	
+	/**
+	 * Fermeture de la socket précédemment créée.
+	 * 
+	 * @throws IOException si la création de la socket échoue.
+	 */
+	private static void fermerSocket() throws IOException {
+		try {
+            socket.close();
+		} catch (IOException e) {
+			throw new IOException(e);
+		}
+	}
+	
+	/**
+	 * Etablissement d'une connexion entre le client et le serveur.
+	 * 
+	 * @param args inutilisé.
+	 */
     public static void main(String[] args) {      
         try {
         	creerSocket();
         	
         	creerFluxEntreeSortie();
             
-            // Read input from the user and send it to the server
-            BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
-            String message;
-            while ((message = userInput.readLine()) != null) {
-                sortie.println(message);
-                String response = entree.readLine();
-                System.out.println("Server response: " + response);
-            }
+            lectureEnvoiMessage();
             
-            // Close the client socket
-            socket.close();
+            fermerSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
