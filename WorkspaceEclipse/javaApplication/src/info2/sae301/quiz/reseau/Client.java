@@ -39,13 +39,13 @@ public class Client {
 	/** Socket permettant la connexion au serveur. */
 	private static Socket socket;
 	
-	/** TODO */
+	/** Message entré par l'utilisateur */
 	private static BufferedReader entreeUtilisateur;
 	
-	/** TODO */
+	/** Message reçu du serveur */
 	private static BufferedReader entreeSocket;
 	
-	/** TODO */
+	/** Message envoyé au serveur */
 	private static PrintWriter sortieSocket;
 	
 	
