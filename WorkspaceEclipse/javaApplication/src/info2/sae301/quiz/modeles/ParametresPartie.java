@@ -64,8 +64,8 @@ public class ParametresPartie {
 	 * inférieur au nombre de questions demandées
 	 */
 	private static final String PAS_ASSEZ_QUESTIONS
-	= "Seulement %d question(s) correspondent à vos "
-	  + "critères. Souhaitez-vous tout de même jouer ?";
+	= "Seulement %d question(s) correspondent à vos critères."
+	  + "\nSouhaitez-vous tout de même jouer ?";
 	
 	/** Les catégories de questions sélectionnées. */
 	private ArrayList<Categorie> categoriesSelectionnees;

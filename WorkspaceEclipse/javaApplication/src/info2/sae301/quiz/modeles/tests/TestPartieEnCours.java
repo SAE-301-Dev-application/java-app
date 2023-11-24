@@ -117,7 +117,7 @@ class TestPartieEnCours {
 	 * Test method for {@link info2.sae301.quiz.modeles.PartieEnCours#getReponsesUtilisateur()}.
 	 */
 	@Test
-	void testGetReponsesUtilisateur() { //TODO finir test
+	void testGetReponsesUtilisateur() {
 		assertEquals(0, partieTest.getReponsesUtilisateur().size());
 		
 		ArrayList<String> reponsesTest = new ArrayList<>();

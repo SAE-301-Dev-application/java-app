@@ -362,12 +362,15 @@ public class NouvellePartieControleur {
 	 */
 	@FXML
 	private void actionBoutonCreer() {
-		boolean lancerPartie = true;
+		boolean lancerPartie;
+		lancerPartie = false;
 		
 		try {
 			ParametresPartie.aAssezQuestions(this.difficulte,
 											 this.nombreQuestions,
 					                         this.categoriesSelectionnees);
+			
+			lancerPartie = true;
 		} catch (AucuneQuestionCorrespondanteException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),
 										 ERREUR_AUCUNE_QUESTION_TITRE,
@@ -376,24 +379,28 @@ public class NouvellePartieControleur {
 			lancerPartie
 			= AlerteControleur.alerteConfirmation(e.getMessage(), 
 					   							  ERREUR_MOINS_QUESTIONS_TITRE);
+		} catch (DifficulteInvalideException e) {
+			erreurDifficulte();
+			
+		} catch (NombreQuestionsInvalideException e) {
+			erreurNombreQuestions();
 		}
 		
 		if (lancerPartie) {
-			try {
-				ParametresPartie nouveauxParametres
-				= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
-						               this.nombreQuestions);
-				
-				Quiz.partieCourante.setParametresPartie(nouveauxParametres);
-				Quiz.partieCourante.setIndiceDerniereQuestionVue(0);
-				NavigationControleur.changerVue("PartieEnCours.fxml");
-				
-			} catch (DifficulteInvalideException e) {
-				erreurDifficulte();
-				
-			} catch (NombreQuestionsInvalideException e) {
-				erreurNombreQuestions();
-			}
+			this.lancerPartie();
 		}
+	}
+	
+	/**
+	 * Lance la partie configurée.
+	 */
+	private void lancerPartie() {
+		ParametresPartie nouveauxParametres
+		= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
+				               this.nombreQuestions);
+		
+		Quiz.partieCourante.setParametresPartie(nouveauxParametres);
+		Quiz.partieCourante.setIndiceDerniereQuestionVue(0);
+		NavigationControleur.changerVue("PartieEnCours.fxml");
 	}
 }
