@@ -55,17 +55,17 @@ public class Vigenere {
         'X', 'x',
         'Y', 'y', 'Ÿ', 'ÿ',
         'Z', 'z',
-        //Chiffres et opérateurs
+        // Chiffres et opérateurs
         '0', '⁰', '1', '¹', '2', '²', '3', '4', '⁴', '5', '⁵', '6', '⁶', '7', '⁷',
         '8', '⁸', '9', '⁹', '+', '⁺', '-', '⁻', '%', '/', '*',
-        //Caractères spéciaux
+        // Caractères spéciaux
         ' ', '\n', '\t', '&', '~', '"', '#', '\'', '{', '(', '[', '|',
         '`', '_', '\\', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
         '¤', '?', ',', '.', ';', ':', '§', '!', '<', '>'
     };
 
 	/** Clé pour Vigenère */
-	private static String cle = "Mon Simon est mon bro";//genererCle();
+	private static String cle = genererCle();
 	
 	
 	/**
@@ -105,7 +105,7 @@ public class Vigenere {
 	 * @param message message à crypter
 	 * @return le message crypté
 	 */
-	public static String chiffrer(String message) {
+	public static String chiffrer(String message, String cle) {
 		String messageC = "";
 		for (int i = 0; i < message.length(); i++) {
 			int nbCaractere;
@@ -128,7 +128,7 @@ public class Vigenere {
 	 * @param message messageC à décrypter
 	 * @return le message décrypté
 	 */
-	public static String dechiffrer(String messageC) {
+	public static String dechiffrer(String messageC, String cle) {
 		String messageD = "";
 		for (int i = 0; i < messageC.length(); i++) {
 			int nbCaractere;
@@ -176,10 +176,10 @@ public class Vigenere {
 
 	    System.out.println("Generated Key: " + cle);
 
-	    String encryptedMessage = chiffrer(originalMessage);
+	    String encryptedMessage = chiffrer(originalMessage, cle);
 	    System.out.println("Encrypted Message: " + encryptedMessage);
 
-	    String decryptedMessage = dechiffrer(encryptedMessage);
+	    String decryptedMessage = dechiffrer(encryptedMessage, cle);
 	    System.out.println("Decrypted Message: " + decryptedMessage);
 	}
 
