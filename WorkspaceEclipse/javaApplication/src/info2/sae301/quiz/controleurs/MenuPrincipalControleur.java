@@ -127,7 +127,7 @@ public class MenuPrincipalControleur {
 	 */
 	@FXML
 	private void actionBoutonExportation() {
-		//TODO implement view
+		NavigationControleur.changerVue("Export.fxml");
 	}
 	
 }
