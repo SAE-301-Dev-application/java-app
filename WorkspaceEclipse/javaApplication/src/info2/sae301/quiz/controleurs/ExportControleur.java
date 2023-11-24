@@ -9,6 +9,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 
+
+/**
+ * Contrôleur de la vue d'export de l'application.
+ * - Gestion de la saisie de l'adresse IP du destinataire.
+ * - Recherche et affichage de l'IP privée sur le réseau
+ *   de la machine courante.
+ * - Envoi des données à exporter au destinataire valide
+ *   indiqué.
+ *   
+ * @author Jonathan GUIL
+ * @author Simon GUIRAUD
+ * @author Florian FABRE
+ * @author Loïc FAUGIERES
+ * @author Samuel LACAM
+ */
 public class ExportControleur {
 	
 	/** 
@@ -62,6 +77,7 @@ public class ExportControleur {
 	@FXML
 	private Label affichageIPPrivee;
 	
+	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
 		
@@ -69,11 +85,13 @@ public class ExportControleur {
 		
 	}
 	
+	/** Affichage de la fenêtre d'aide liée à la vue. */
 	@FXML
 	private void actionBoutonAide() {
 		// TODO: dialogbox d'aide.
 	}
 	
+	/** Affichage de l'IP privée de la machine courante. */
 	@FXML
 	private void actionBoutonAfficherMonIP() {
 		String adresseIPPrivee,
@@ -95,10 +113,18 @@ public class ExportControleur {
 	}
 	
 	@FXML
+	private void saisieIPDestinataire() {
+		// TODO
+		System.out.println("Saisie enregistrée.");
+	}
+	
+	/** Retour au menu principal de l'application. */
+	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
+	/** Export des données au destinataire indiqué. */
 	@FXML
 	private void actionBoutonExporter() {
 		// TODO: script méthode export.
