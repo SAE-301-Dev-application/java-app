@@ -1,10 +1,17 @@
+/*
+ * Client.java								                        24 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
+package info2.sae301.quiz.reseau;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class client {
+public class Client {
     public static void main(String[] args) {
         String serverAddress = "127.0.0.1"; // Change this to the server's address if not running locally
         int serverPort = 65432;

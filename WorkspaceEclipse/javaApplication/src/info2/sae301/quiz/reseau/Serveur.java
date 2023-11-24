@@ -1,3 +1,10 @@
+/*
+ * Serveur.java								                        24 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
+package info2.sae301.quiz.reseau;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,7 +12,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class serveur {
+public class Serveur {
     public static void main(String[] args) {
         int port = 65432;
         
