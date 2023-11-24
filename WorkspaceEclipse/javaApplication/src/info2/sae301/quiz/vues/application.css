@@ -71,6 +71,10 @@
 	-fx-font-size: 24px;
 }
 
+.bouton-formulaire {
+	-fx-pref-height: 30px;
+}
+
 .bouton-important {
 	-fx-background-color: #2D346F;
 }
