@@ -73,6 +73,7 @@
 
 .bouton-formulaire {
 	-fx-pref-height: 30px;
+	-fx-font-size: 13px;
 }
 
 .bouton-important {
