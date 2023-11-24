@@ -78,6 +78,8 @@ public class Client {
 	/**
 	 * Lecture de l'entrée envoyé dans la console texte par l'utilisateur
 	 * et envoi au serveur du message.
+	 * 
+	 * @throws IOException si la lecture renvoie une erreur.
 	 */
 	private static void lectureEnvoiMessage() throws IOException {		
 		String messageAEnvoyer,
@@ -85,6 +87,8 @@ public class Client {
 		
 		System.out.println(INSTRUCTION_CLIENT);
         entreeUtilisateur = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println();
         
         while ((messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
         	// Envoi au serveur du message
@@ -100,7 +104,7 @@ public class Client {
 	/**
 	 * Fermeture de la socket précédemment créée.
 	 * 
-	 * @throws IOException si la création de la socket échoue.
+	 * @throws IOException si la fermeture de la socket échoue.
 	 */
 	private static void fermerSocket() throws IOException {
 		try {

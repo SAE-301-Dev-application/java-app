@@ -30,16 +30,29 @@ public class Serveur {
 	private static final String CONNEXION_OUVERTE
 	= "Le serveur est connecté sur le port " + PORT;
 	
-	/** TODO */
+	private static final String INDICATION_MESSAGE_CLIENT
+	= "\nMessage envoyé par le client :\n";
+	
+	private static final String INDICATION_RECEPTION_SERVEUR
+	= "Le serveur a reçu :\n";
+	
+	/** Socket pour créer le serveur sur le réseau. */
 	private static ServerSocket socketServeur;
 	
-	/** TODO */
+	/** Socket permettant la connexion au client. */
 	private static Socket socketClient;
+	
+	/** Message reçu du client. */
+	private static BufferedReader entreeSocket;
+	
+	/** Message envoyé au client. */
+	private static PrintWriter sortieSocket;
+	
 	
 	/**
 	 * Crée un serveur sur le réseau local.
 	 * 
-	 * @throws IOException
+	 * @throws IOException si le socket ne peut être créé.
 	 */
 	private static void creerServeur() throws IOException {
 		socketServeur = new ServerSocket(PORT);
@@ -48,29 +61,74 @@ public class Serveur {
 	}
 	
 	
+	/**
+	 * Accepte la connexion d'un éventuel client.
+	 * 
+	 * @throws IOException si la connexion ne peut être établie.
+	 */
+	private static void accepterConnexion() throws IOException {
+        socketClient = socketServeur.accept();
+        
+        System.out.println("Client connecté : " + socketClient.getInetAddress().getHostAddress());
+	}
+	
+	
+	/**
+	 * Création d'un flux d'entrée et d'un flux de sortie pour le client.
+	 * 
+	 * @throws IOException si les flux ne peuvent être créés.
+	 */
+	private static void creerFluxEntreeSortie() throws IOException {
+        // Création d'un flux d'entrée pour le serveur
+        entreeSocket
+        = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+        
+        // Création d'un flux de sortie pour le serveur
+        sortieSocket = new PrintWriter(socketClient.getOutputStream(), true);
+	}
+	
+	
+	/**
+	 * Lecture du message envoyé par le client et affichage sur console texte.
+	 * 
+	 * @throws IOException si la lecture renvoie une erreur.
+	 */
+	private static void lectureEnvoiMessage() throws IOException {		
+		String messageClient;
+        
+        while ((messageClient = entreeSocket.readLine()) != null) {
+            System.out.println(INDICATION_MESSAGE_CLIENT + messageClient);
+            
+            sortieSocket.println(INDICATION_RECEPTION_SERVEUR + messageClient);
+        }
+	}
+	
+	
+	/**
+	 * Fermeture des sockets précédemment créées.
+	 * 
+	 * @throws IOException si la fermeture des sockets échoue.
+	 */
+	private static void fermerSockets() throws IOException {
+        // Fermeture de la socket du client
+        socketClient.close();
+        
+        // Fermeture de la socket du serveur
+        socketServeur.close();
+	}
+	
+	
     public static void main(String[] args) {
         try {
             creerServeur();
             
-            socketClient = socketServeur.accept();
-            System.out.println("Client connecté : " + socketClient.getInetAddress().getHostAddress());
+            accepterConnexion();
             
-            // Create input and output streams for the client
-            BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-            PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
+            creerFluxEntreeSortie();
             
-            // Handle client messages
-            String message;
-            while ((message = in.readLine()) != null) {
-                System.out.println("Message reçu du client : " + message);
-                
-                // You can process the message here or send a response
-                out.println("Le serveur a reçu : " + message);
-            }
+            lectureEnvoiMessage();
             
-            // Close the client socket
-            socketClient.close();
-            socketServeur.close();
+            fermerSockets();
         } catch (IOException e) {
             e.printStackTrace();
         }
