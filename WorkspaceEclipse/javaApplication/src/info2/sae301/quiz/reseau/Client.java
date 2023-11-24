@@ -85,18 +85,26 @@ public class Client {
 		String messageAEnvoyer,
 		       reponseServeur;
 		
+		boolean socketOuverte;
+		
 		System.out.println(INSTRUCTION_CLIENT);
         entreeUtilisateur = new BufferedReader(new InputStreamReader(System.in));
         
-        System.out.println();
+        socketOuverte = true;
         
-        while ((messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
+        while (socketOuverte
+        	   && (messageAEnvoyer = entreeUtilisateur.readLine()) != null) {
         	// Envoi au serveur du message
             sortieSocket.println(messageAEnvoyer);
             
             // Lecture de la réponse du serveur
             reponseServeur = entreeSocket.readLine();
-            System.out.println("Réponse du serveur : " + reponseServeur);
+            System.out.println("\nRéponse du serveur : " + reponseServeur);
+            
+            if (messageAEnvoyer.equals("fin")) {
+            	socketOuverte = false;
+            	fermerSocket();            	
+            }
         }
 	}
 	
@@ -108,6 +116,9 @@ public class Client {
 	 */
 	private static void fermerSocket() throws IOException {
 		try {
+			entreeUtilisateur.close();
+			entreeSocket.close();
+			sortieSocket.close();
             socket.close();
 		} catch (IOException e) {
 			throw new IOException(e);
@@ -126,8 +137,6 @@ public class Client {
         	creerFluxEntreeSortie();
             
             lectureEnvoiMessage();
-            
-            fermerSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
