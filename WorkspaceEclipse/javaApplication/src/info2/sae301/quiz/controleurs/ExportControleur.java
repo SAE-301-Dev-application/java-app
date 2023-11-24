@@ -11,40 +11,56 @@ import javafx.scene.control.Label;
 
 public class ExportControleur {
 	
-	private static final String ERREUR_IP_LOCALE_TITRE
+	/** 
+	 * Titre du message d'erreur de recherche de 
+	 * l'adresse IP privée. 
+	 */
+	private static final String ERREUR_IP_PRIVEE_TITRE
 	= "Erreur dans la recherche de l'IP locale";
 	
-	private static final String ERREUR_IP_LOCALE_MESSAGE
+	/**
+	 * Message d'erreur de recherche de l'adresse
+	 * IP privée.
+	 */
+	private static final String ERREUR_IP_PRIVEE_MESSAGE
 	= """
 	  Il est impossible au programme de trouver votre adresse IP sur le réseau.
 	  Veuillez vérifier que vous êtes connecté à un réseau.
 	  """;
 	
-	private static final String MODELE_LABEL_IP_LOCALE
+	/** Affichage de l'adresse IP privée. */
+	private static final String MODELE_LABEL_IP_PRIVEE
 	= "Mon adresse IP : %s";
 	
-	private static String ipLocale() {
+	/**
+	 * Recherche et retourne l'adresse IP de la machine sur 
+	 * le réseau.
+	 * 
+	 * @return Adresse IP de la machine sur le réseau (IP privée)
+	 */
+	private static String ipPrivee() {
 		final String IP_RESEAU = "192.168.1.1";
 		
 		final int PORT_RESEAU = 80;
 		
 		Socket socket;
 		
-		String ipLocale;
-		ipLocale = null;
+		String ipPrivee;
+		ipPrivee = null;
 		
 		try {
 			socket = new Socket(IP_RESEAU, PORT_RESEAU);
-			ipLocale = socket.getLocalAddress().getHostAddress();
+			ipPrivee = socket.getLocalAddress().getHostAddress();
 		} catch (IOException e) {
 			System.out.println("Erreur IO : " + e.getMessage());
 		}
 		
-		return ipLocale;
+		return ipPrivee;
 	}
 	
+	/** Label d'affichage de l'IP privée. */
 	@FXML
-	private Label affichageIPLocale;
+	private Label affichageIPPrivee;
 	
 	@FXML
 	private void initialize() {
@@ -60,19 +76,20 @@ public class ExportControleur {
 	
 	@FXML
 	private void actionBoutonAfficherMonIP() {
-		String adresseIPLocale,
-			   messageAdresseIPLocale;
+		String adresseIPPrivee,
+			   messageAdresseIPPrivee;
 		
-		adresseIPLocale = ipLocale();
+		adresseIPPrivee = ipPrivee();
+		System.out.println("IP privée = " + adresseIPPrivee);
 		
-		if (adresseIPLocale != null) {
-			messageAdresseIPLocale = String.format(MODELE_LABEL_IP_LOCALE, 
-					   							   adresseIPLocale);
+		if (adresseIPPrivee != null) {
+			messageAdresseIPPrivee = String.format(MODELE_LABEL_IP_PRIVEE, 
+					   							   adresseIPPrivee);
 			
-			affichageIPLocale.setText(messageAdresseIPLocale);
+			this.affichageIPPrivee.setText(messageAdresseIPPrivee);
 		} else {
-			AlerteControleur.autreAlerte(ERREUR_IP_LOCALE_MESSAGE,
-										 ERREUR_IP_LOCALE_TITRE, 
+			AlerteControleur.autreAlerte(ERREUR_IP_PRIVEE_MESSAGE,
+										 ERREUR_IP_PRIVEE_TITRE, 
 										 AlertType.ERROR);
 		}
 	}
