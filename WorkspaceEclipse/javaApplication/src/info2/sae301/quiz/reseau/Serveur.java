@@ -12,6 +12,16 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Serveur permettant d'exporter les données des questions et catégories
+ * vers un client connecté.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class Serveur {
     public static void main(String[] args) {
         int port = 65432;

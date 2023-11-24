@@ -11,9 +11,23 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Client permettant de se connecter à un serveur afin d'importer les données
+ * des questions et catégories proposées par le serveur.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class Client {
+	
+	/** TODO JDoc */
+	private final static String ADRESSE_SERVEUR = "127.0.0.1";
+	
     public static void main(String[] args) {
-        String serverAddress = "127.0.0.1"; // Change this to the server's address if not running locally
+        String serverAddress = ADRESSE_SERVEUR; // Change this to the server's address if not running locally
         int serverPort = 65432;
         
         try {
