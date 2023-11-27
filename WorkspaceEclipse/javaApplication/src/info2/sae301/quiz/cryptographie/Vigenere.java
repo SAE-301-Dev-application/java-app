@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.cryptographie;
 
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -24,10 +25,12 @@ public class Vigenere {
 	/** Constante pour la taille maximale  d'une clé */
 	final static int TAILLE_MAX_CLE = 70;
 	
-	/**
-	 * Dictionnaire sur lequel on pourra crypter les caractères.
-	 */
-	public final static char[] dictionnaire = {
+	/** Texte d'erreur pour une taille invalide de la clé rentrée */
+	final static String TAILLE_INVALIDE 
+			= "La taille doit être comprise entre %s et %s caractères";
+	
+	/** Tableau permettant de remplir les HashMap. */
+	public final static char[] dicoString = {
 		// Lettres et accents
         'A', 'a', 'À', 'à', 'Â', 'â', 'Ä', 'ä', 'Ã', 'ã', 'Æ', 'æ',
         'B', 'b',
@@ -63,7 +66,31 @@ public class Vigenere {
         '`', '_', '\\', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
         '¤', '?', ',', '.', ';', ':', '§', '!', '<', '>'
     };
-
+	
+	/**
+	 * Dictionnaire permettant de récupérer les lettres 
+	 * en fonction des indices
+	 */
+	public final static HashMap<Integer,Character> dictionnaire 
+								= new HashMap<>();
+	
+	/**
+	 * Dictionnaire permettant de récupérer les indices des lettres
+	 * en fonction de leur place dans la HashMap
+	 */
+	public final static HashMap<Character,Integer> dictionnaireReversed 
+								= new HashMap<>();
+	
+	/**
+	 * Initialise les HashMap pour le dictionnaire
+	 */
+	static {
+		for (int i = 0; i < dicoString.length;i++) {
+			dictionnaire.put(i,dicoString[i]);
+			dictionnaireReversed.put(dicoString[i],i);
+		};
+    }
+		
 	/** Clé pour Vigenère */
 	private static String cle = genererCle();
 	
@@ -79,24 +106,33 @@ public class Vigenere {
 		int tailleCle = new Random().nextInt(TAILLE_MAX_CLE - TAILLE_MIN_CLE + 1)
 												+ TAILLE_MIN_CLE;
 		for(int i = 0; i < tailleCle; i++) {
-			int rnd = new Random().nextInt(dictionnaire.length);
-		    cleGeneree += dictionnaire[rnd];
+			int rnd = new Random().nextInt(dictionnaire.size());
+		    cleGeneree += dictionnaire.get(rnd);
 		}
 		return cleGeneree;
 	}
 	
 	
-	
+	/**
+	 * Récupère l'attribut 'cle'
+	 * @return cle la clé de Vigenère
+	 */
 	public static String getCle() {
 		return cle;
 	}
 
 
-
+	/**
+	 * Setter de la clé de Vigenère
+	 * @param cle
+	 */
 	public static void setCle(String cle) {
+		if (cle.length() < TAILLE_MIN_CLE || cle.length() > TAILLE_MAX_CLE) {
+			throw new IllegalArgumentException(String.format(TAILLE_INVALIDE, 
+												TAILLE_MIN_CLE,TAILLE_MAX_CLE));
+		}
 		Vigenere.cle = cle;
 	}
-
 
 
 	/**
@@ -111,11 +147,11 @@ public class Vigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (trouverLettre(dictionnaire, message.charAt(i))
-					+ trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) 
-					% dictionnaire.length;                          
+			nbCaractere = (dictionnaireReversed.get(message.charAt(i))
+					+ dictionnaireReversed.get(cle.charAt(i%cle.length())))
+					% dictionnaire.size();
 			
-			caractereC = dictionnaire[nbCaractere];
+			caractereC = dictionnaire.get(nbCaractere);
 			messageC += caractereC;
 		}
 		return messageC;
@@ -134,53 +170,15 @@ public class Vigenere {
 			int nbCaractere;
 			char caractereD;
 			
-			nbCaractere = (trouverLettre(dictionnaire, messageC.charAt(i)) 
-					- trouverLettre(dictionnaire, cle.charAt(i%cle.length()))) 
-					% dictionnaire.length;
+			nbCaractere = (dictionnaireReversed.get(messageC.charAt(i))
+					- dictionnaireReversed.get(cle.charAt(i%cle.length())))
+					% dictionnaire.size();
 			
 			caractereD = nbCaractere < 0 ? 
-					dictionnaire[nbCaractere + dictionnaire.length] 
-							: dictionnaire[nbCaractere];
+					dictionnaire.get(nbCaractere + dictionnaire.size()) 
+							: dictionnaire.get(nbCaractere);
 			messageD += caractereD;
 		}
 		return messageD;
 	}
-	
-	
-    /**
-     * Méthode de recherche linéaire afin de trouver l'indice 
-     * d'un élément dans un tableau.
-     * @param alphabet Tableau sur lequel on cherche l'indice d'un élément.
-     * @param lettre   Lettre pour laquelle on cherche l'indice.
-     * @return 
-     */
-	public static int trouverLettre(char[] alphabet, char lettre) {
-	    int indice = -1;
-
-	    if (alphabet == null || alphabet.length == 0) {
-	        return indice;
-	    }
-
-	    for (int i = 0; i < alphabet.length; i++) {
-	        if (Character.compare(alphabet[i], lettre) == 0) {
-	            indice = i;
-	        }
-	    }
-	    return indice;
-	}
-    
-	
-	public static void main(String[] args) {
-	    String originalMessage = "&é/*-\".<>,;:!?/§'(-è_çà)=";
-	    System.out.println("Original Message: " + originalMessage);
-
-	    System.out.println("Generated Key: " + cle);
-
-	    String encryptedMessage = chiffrer(originalMessage, cle);
-	    System.out.println("Encrypted Message: " + encryptedMessage);
-
-	    String decryptedMessage = dechiffrer(encryptedMessage, cle);
-	    System.out.println("Decrypted Message: " + decryptedMessage);
-	}
-
 }
