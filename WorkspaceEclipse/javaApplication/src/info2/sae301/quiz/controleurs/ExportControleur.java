@@ -59,24 +59,6 @@ public class ExportControleur {
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
 	private static String ipPrivee() {
-		/*
-		final String IP_RESEAU = "192.168.1.1";
-		
-		final int PORT_RESEAU = 80;
-		
-		Socket socket;
-		
-		String ipPrivee;
-		ipPrivee = null;
-		
-		try {
-			socket = new Socket(IP_RESEAU, PORT_RESEAU);
-			ipPrivee = socket.getInetAddress().getHostAddress();
-		} catch (IOException e) {
-			System.out.println("Erreur IO : " + e.getMessage());
-		}
-		*/
-		
 		final String REGEX_IPV4 = "^([0-9.]+)$";
 		
 		String ip;
