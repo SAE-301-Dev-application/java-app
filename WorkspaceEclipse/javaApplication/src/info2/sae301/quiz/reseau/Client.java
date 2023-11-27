@@ -1,5 +1,5 @@
 /*
- * Client.java								                        24 nov. 2023
+ * Client.java								                        27 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -34,6 +34,7 @@ public class Client {
 	/** Port sur lequel le serveur est accessible. */
 	private final static int PORT_SERVEUR = 55432;
 	
+	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
 	private static final String CONNEXION_OUVERTE
@@ -61,10 +62,10 @@ public class Client {
 	/** Socket permettant la connexion au serveur. */
 	private static Socket socket;
 	
-	/** Message reçu du serveur */
+	/** Flux par lequel les messages du serveur sont reçus. */
 	private static ObjectInputStream fluxEntree;
 	
-	/** Message envoyé au serveur */
+	/** Flux par lequel envoyer des messages au serveur. */
 	private static ObjectOutputStream fluxSortie;
 	
 	private static String cleVigenere;
@@ -88,7 +89,8 @@ public class Client {
 	
 	
 	/**
-	 * Création d'un flux d'entrée pour le serveur.
+	 * Création d'un flux d'entrée pour recevoir les objets (String)
+	 * envoyés par le serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
@@ -100,7 +102,8 @@ public class Client {
 	
 	
 	/**
-	 * Fermeture d'un flux d'entrée du serveur.
+	 * Fermeture du flux d'entrée créé pour la réception
+	 * des objets envoyés par le serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -112,7 +115,8 @@ public class Client {
 	
 	
 	/**
-	 * Création d'un flux de sortie pour le serveur.
+	 * Création d'un flux de sortie pour envoyer des objets (String)
+	 * au serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
@@ -124,7 +128,8 @@ public class Client {
 	
 	
 	/**
-	 * Fermeture d'un flux de sortie vers le serveur.
+	 * Fermeture du flux de sortie créé pour envoyer des objets (String)
+	 * au serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -136,8 +141,10 @@ public class Client {
 	
 	
 	/**
-	 * Envoie au serveur la clé gérénée par Vigenere.
-	 * @throws ClassNotFoundException 
+	 * Envoie au serveur la clé gérénée par Vigenère.
+	 * 
+	 * @throws IOException si l'envoi échoue.
+	 * @throws ClassNotFoundException si le cast de la réponse échoue.
 	 */
 	private static void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException {	
@@ -168,8 +175,8 @@ public class Client {
 	 * Réception et déchiffrage des catégories cryptées envoyées par le serveur.
 	 * 
 	 * @throws IOException si la lecture renvoie une erreur.
-	 * @return les noms des catégories reçus.
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException si le cast échoue.
+	 * @return les noms des catégories reçues.
 	 */
 	private static String[] recevoirCategories()
 	throws IOException, ClassNotFoundException {		
@@ -204,6 +211,7 @@ public class Client {
 		        nomsCategories[nomsCategories.length - 1] = nomCategorieDecrypte;	
 			}
 		}
+		
 		return nomsCategories;
 	}
 	
@@ -212,8 +220,8 @@ public class Client {
 	 * Réception et déchiffrage des questions cryptées envoyées par le serveur.
 	 * 
 	 * @throws IOException si la lecture renvoie une erreur.
-	 * @return les noms des catégories reçus.
-	 * @throws ClassNotFoundException 
+	 * @return les noms des catégories reçues.
+	 * @throws ClassNotFoundException si le cast échoue.
 	 */
 	private static String[] recevoirQuestions()
 	throws IOException, ClassNotFoundException {		
@@ -254,9 +262,9 @@ public class Client {
 	
 	
 	/**
-	 * Fermeture de la socket précédemment créée.
+	 * Fermeture des flux et de la socket précédemment créée.
 	 * 
-	 * @throws IOException si la fermeture de la socket échoue.
+	 * @throws IOException si la fermeture de la socket ou des flux échoue.
 	 */
 	private static void fermerSockets() throws IOException {
 		fermerFluxEntree();

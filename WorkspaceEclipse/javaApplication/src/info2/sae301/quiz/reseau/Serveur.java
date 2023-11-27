@@ -75,7 +75,7 @@ public class Serveur {
 	/**
 	 * Crée un serveur sur le réseau local.
 	 * 
-	 * @throws IOException si le socket ne peut être créé.
+	 * @throws IOException si la socket ne peut être créée.
 	 */
 	private static void creerServeur() throws IOException {
 		socketServeur = new ServerSocket(PORT);
@@ -99,7 +99,8 @@ public class Serveur {
 	
 	
 	/**
-	 * Création d'un flux d'entrée pour le client.
+	 * Création d'un flux d'entrée pour recevoir les objets (String)
+	 * envoyés par le client.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
@@ -111,7 +112,8 @@ public class Serveur {
 	
 	
 	/**
-	 * Fermeture d'un flux d'entrée du client.
+	 * Fermeture du flux d'entrée créé pour la réception
+	 * des objets envoyés par le client.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -123,7 +125,8 @@ public class Serveur {
 	
 	
 	/**
-	 * Création d'un flux de sortie pour le client.
+	 * Création d'un flux de sortie pour envoyer des objets (String)
+	 * au client.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
@@ -135,7 +138,8 @@ public class Serveur {
 	
 	
 	/**
-	 * Fermeture d'un flux de sortie vers le client.
+	 * Fermeture du flux de sortie créé pour envoyer des objets (String)
+	 * au client.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -150,8 +154,8 @@ public class Serveur {
 	 * Lecture de la clé de vigenère envoyée par le client
 	 * et affichage sur console texte.
 	 * 
-	 * @throws IOException si la lecture renvoie une erreur.
-	 * @throws ClassNotFoundException 
+	 * @throws IOException si la lecture ou la réponse échoue.
+	 * @throws ClassNotFoundException si le cast de la clé échoue.
 	 */
 	private static void receptionCleVigenere()
 	throws IOException, ClassNotFoundException {	
@@ -175,10 +179,10 @@ public class Serveur {
 	 * Chiffre via la méthode
 	 * {@link info2.sae301.quiz.cryptographie.Vigenere#chiffrer(String)}
 	 * les noms des catégories en paramètre.
-	 * Envoie ensuite via sortieSocket chaque nom de catégorie crypté.
+	 * Envoie ensuite via fluxSortie chaque nom de catégorie crypté.
 	 * 
 	 * @param categories Les catégories à envoyer.
-	 * @throws IOException 
+	 * @throws IOException si l'envoi échoue.
 	 */
 	private static void envoyerCategories(ArrayList<Categorie> categories)
 	throws IOException {
@@ -212,7 +216,7 @@ public class Serveur {
 	 * Envoie ensuite via sortieSocket les données cryptées des questions.
 	 * 
 	 * @param questions Les questions à envoyer.
-	 * @throws IOException 
+	 * @throws IOException si l'envoi échoue.
 	 */
 	private static void envoyerQuestions(ArrayList<Question> questions)
 	throws IOException {
@@ -241,9 +245,9 @@ public class Serveur {
 	
 	
 	/**
-	 * Fermeture des sockets précédemment créées.
+	 * Fermeture des flux et sockets précédemment créées.
 	 * 
-	 * @throws IOException si la fermeture des sockets échoue.
+	 * @throws IOException si la fermeture des flux et sockets échoue.
 	 */
 	private static void fermerSockets() throws IOException {
 		fermerFluxEntree();

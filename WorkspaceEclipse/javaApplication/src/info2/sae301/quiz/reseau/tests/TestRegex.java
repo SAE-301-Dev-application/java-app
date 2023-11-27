@@ -1,4 +1,4 @@
-package info2.sae301.quiz.reseau.test;
+package info2.sae301.quiz.reseau.tests;
 
 public class TestRegex {
 	
