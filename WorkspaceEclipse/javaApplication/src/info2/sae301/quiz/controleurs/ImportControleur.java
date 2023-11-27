@@ -18,8 +18,14 @@ public class ImportControleur {
 	
 	@FXML
 	private void actionBoutonImporter() {
-		ImportLocal.importation();
-		System.out.println("Question non ajoutées : "
-				+ Import.getQuestionNonAjoutes());
+		if (ImportLocal.getCheminFichier() != null
+				&& !ImportLocal.getCheminFichier().isBlank()) {
+			
+			ImportLocal.importation();
+			
+			System.out.println("Question non ajoutées : "
+					+ Import.getQuestionNonAjoutes());
+		}
+			
 	}
 }

@@ -10,6 +10,7 @@ public class ImportLocal {
 	
 	public static void importation() {
 		Import.importation(cheminFichier);
+		cheminFichier = null;
 	}
 	
 	public static void parcourirFichier() {
@@ -24,10 +25,15 @@ public class ImportLocal {
 
         // Ouverture de l'explorateur de fichier à la racine
         choixFichier.setInitialDirectory(new File(System.getProperty("user.home")));
+        
         File fichierSelectionne = choixFichier.showOpenDialog(null);
-        
-        cheminFichier = fichierSelectionne.getPath();
-        
+        if (fichierSelectionne != null) {
+        	cheminFichier = fichierSelectionne.getPath();
+        }
+	}
+
+	public static String getCheminFichier() {
+		return cheminFichier;
 	}
 	
 }
