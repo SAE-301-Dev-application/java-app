@@ -2,12 +2,17 @@ package info2.sae301.quiz.controleurs;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
 /**
@@ -54,23 +59,47 @@ public class ExportControleur {
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
 	private static String ipPrivee() {
-		final String IP_RESEAU = "192.168.1.1";
+		final String REGEX_IPV4 = "^([0-9.]+)$";
 		
-		final int PORT_RESEAU = 80;
+		String ip;
 		
-		Socket socket;
+		Pattern patternIPV4;
+		Matcher matcherIPV4;
 		
-		String ipPrivee;
-		ipPrivee = null;
+		ip = null;
+		
+		patternIPV4 = Pattern.compile(REGEX_IPV4);
 		
 		try {
-			socket = new Socket(IP_RESEAU, PORT_RESEAU);
-			ipPrivee = socket.getInetAddress().getHostAddress();
-		} catch (IOException e) {
-			System.out.println("Erreur IO : " + e.getMessage());
-		}
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+
+                // Filtrer les interfaces loopback et les interfaces désactivées
+                if (iface.isLoopback() || !iface.isUp()) {
+                    continue;
+                }
+
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                
+                while (addresses.hasMoreElements() && ip == null) {
+                    InetAddress addr = addresses.nextElement();
+                    
+                    matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
+                    
+                    System.out.printf("it = %s\tip = %s", iface.getDisplayName(), addr.getHostAddress());
+                    
+                    if (matcherIPV4.find()) {
+                    	ip = addr.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
-		return ipPrivee;
+		return ip;
 	}
 	
 	/** Label d'affichage de l'IP privée. */
@@ -110,12 +139,6 @@ public class ExportControleur {
 										 ERREUR_IP_PRIVEE_TITRE, 
 										 AlertType.ERROR);
 		}
-	}
-	
-	@FXML
-	private void saisieIPDestinataire() {
-		// TODO
-		System.out.println("Saisie enregistrée.");
 	}
 	
 	/** Retour au menu principal de l'application. */

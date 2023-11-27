@@ -4,7 +4,6 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
@@ -35,20 +34,15 @@
       </Button>
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
-            <Label layoutX="35.0" layoutY="31.0" styleClass="sous-titre" text="En ligne :" />
-            <VBox layoutX="26.0" layoutY="81.0" prefHeight="60.0" prefWidth="348.0">
-               <children>
-                  <Label styleClass="label-champ" text="    Adresse IP du destinataire :" />
-                  <TextField onAction="#saisieIPDestinataire" prefHeight="36.0" prefWidth="344.0" styleClass="textfield" />
-               </children>
-            </VBox>
-            <Button layoutX="408.0" layoutY="100.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMonIP" prefWidth="213.0" text="AFFICHER MON ADRESSE IP">
+            <Label layoutX="26.0" layoutY="31.0" styleClass="sous-titre" text="En ligne :" />
+            <VBox layoutX="26.0" layoutY="81.0" prefHeight="60.0" prefWidth="348.0" />
+            <Button layoutX="26.0" layoutY="100.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMonIP" prefWidth="213.0" text="AFFICHER MON ADRESSE IP">
                <styleClass>
                   <String fx:value="bouton" />
                   <String fx:value="bouton-formulaire" />
                </styleClass>
             </Button>
-            <Label fx:id="affichageIPPrivee" layoutX="404.0" layoutY="140.0" prefHeight="17.0" prefWidth="315.0">
+            <Label fx:id="affichageIPPrivee" layoutX="24.0" layoutY="141.0" prefHeight="17.0" prefWidth="315.0">
                <styleClass>
                   <String fx:value="label-champ" />
                   <String fx:value="centrer" />

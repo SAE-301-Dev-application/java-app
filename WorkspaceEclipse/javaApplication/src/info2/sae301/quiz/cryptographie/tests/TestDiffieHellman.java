@@ -13,7 +13,8 @@ import org.junit.jupiter.api.Test;
  * 
  */
 class TestDiffieHellman {
-
+	
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -23,19 +24,60 @@ class TestDiffieHellman {
 	}
 
 	/**
+	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getModulo()}.
+	 */
+	@Test
+	void testGetModulo() {
+		assertEquals(DiffieHellman.getModulo(), 6301);
+		
+	}
+	
+	
+	/**
+	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getGenerateur()}.
+	 */
+	@Test
+	void testGetGenerateur() {
+		assertEquals(DiffieHellman.getGenerateur(), 2711);
+		
+	}
+	
+	
+	/**
 	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getPuissanceSecrete()}.
 	 */
 	@Test
 	void testGetPuissanceSecrete() {
-		fail("Not yet implemented");
+		DiffieHellman.setPuissanceSecrete(0);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 0);
+		
+		DiffieHellman.setPuissanceSecrete(1000);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 1000);
+		
+		DiffieHellman.setPuissanceSecrete(999999);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 999999);
+		
+		DiffieHellman.setPuissanceSecrete(589235);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 589235);
+		
 	}
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getcleRecue()}.
 	 */
 	@Test
-	void testGetcleRecue() {
-		fail("Not yet implemented");
+	void testGetCleRecue() {
+		DiffieHellman.setCleRecue(0);
+		assertEquals(DiffieHellman.getCleRecue(), 0);
+		
+		DiffieHellman.setCleRecue(1000);
+		assertEquals(DiffieHellman.getCleRecue(), 1000);
+		
+		DiffieHellman.setCleRecue(999999);
+		assertEquals(DiffieHellman.getCleRecue(), 999999);
+		
+		DiffieHellman.setCleRecue(589235);
+		assertEquals(DiffieHellman.getCleRecue(), 589235);
 	}
 
 	/**
@@ -43,15 +85,35 @@ class TestDiffieHellman {
 	 */
 	@Test
 	void testSetPuissanceSecrete() {
-		fail("Not yet implemented");
+		DiffieHellman.setPuissanceSecrete(0);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 0);
+		
+		DiffieHellman.setPuissanceSecrete(1000);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 1000);
+		
+		DiffieHellman.setPuissanceSecrete(999999);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 999999);
+		
+		DiffieHellman.setPuissanceSecrete(589235);
+		assertEquals(DiffieHellman.getPuissanceSecrete(), 589235);
 	}
 
 	/**
 	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#setcleRecue(int)}.
 	 */
 	@Test
-	void testSetcleRecue() {
-		fail("Not yet implemented");
+	void testSetCleRecue() {
+		DiffieHellman.setCleRecue(0);
+		assertEquals(DiffieHellman.getCleRecue(), 0);
+		
+		DiffieHellman.setCleRecue(1000);
+		assertEquals(DiffieHellman.getCleRecue(), 1000);
+		
+		DiffieHellman.setCleRecue(999999);
+		assertEquals(DiffieHellman.getCleRecue(), 999999);
+		
+		DiffieHellman.setCleRecue(589235);
+		assertEquals(DiffieHellman.getCleRecue(), 589235);
 	}
 
 	/**
@@ -60,7 +122,7 @@ class TestDiffieHellman {
 	@Test
 	void testGenererPuissance() {
 		int puissanceTest;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10000; i++) {
 			puissanceTest = DiffieHellman.genererPuissance();
 			assertTrue(100000 <= puissanceTest && puissanceTest <= 10000007);
 		}
@@ -72,7 +134,13 @@ class TestDiffieHellman {
 	 */
 	@Test
 	void testPuissanceNR() {
-		
+		int cleTest;
+		int puissanceTest;
+		for (int i = 0; i < 10000; i++) {
+			puissanceTest = DiffieHellman.genererPuissance();
+			cleTest = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(), puissanceTest);
+			assertTrue(0 <= cleTest && cleTest <= DiffieHellman.getModulo());
+		}
 	}
 
 }
