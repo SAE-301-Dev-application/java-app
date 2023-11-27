@@ -30,19 +30,31 @@ import java.util.ArrayList;
 public class Serveur {
 	
 	/** Port utilisé par le serveur sur le réseau local. */
-	private static final int PORT = 65432;
+	private static final int PORT = 55432;
 	
 	private static final String CONNEXION_OUVERTE
-	= "Le serveur est connecté sur le port " + PORT;
+	= "Le serveur est connecté sur le port " + PORT + ".\n";
+	
+	private static final String CREATION_FLUX_ENTREE
+	= "Création d'un flux d'entrée (réception objets du client).\n";
+	
+	private static final String FERMETURE_FLUX_ENTREE
+	= "Fermeture d'un flux d'entrée.\n";
+	
+	private static final String CREATION_FLUX_SORTIE
+	= "Création d'un flux de sortie (envoi objets au client).\n";
+	
+	private static final String FERMETURE_FLUX_SORTIE
+	= "Fermeture d'un flux de sortie.\n";
 	
 	private static final String INDICATION_CLE_VIGENERE
-	= "\nClé de vigenère reçue :\n";
+	= "Clé de vigenère reçue :\n";
 	
 	private static final String INDICATION_RECEPTION_SERVEUR
 	= "Le serveur a reçu : ";
 	
-	private final static String MESSAGE_FERMETURE
-	= "\nLes sockets sont en cours de fermeture.";
+	private final static String MESSAGE_FERMETURE_SOCKETS
+	= "Fermeture des sockets client et serveur.";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private static ServerSocket socketServeur;
@@ -51,10 +63,10 @@ public class Serveur {
 	private static Socket socketClient;
 	
 	/** Message reçu du client. */
-	private static ObjectInputStream entreeSocket;
+	private static ObjectInputStream fluxEntree;
 	
 	/** Message envoyé au client. */
-	private static ObjectOutputStream sortieSocket;
+	private static ObjectOutputStream fluxSortie;
 	
 	/** Clé de Vigenère permettant de crypter le CSV de données. */
 	private static String cleVigenere;
@@ -80,23 +92,57 @@ public class Serveur {
 	private static void accepterConnexion() throws IOException {
         socketClient = socketServeur.accept();
         
-        System.out.println("Client connecté : " + socketClient.getInetAddress()
-                                                              .getHostAddress());
+        System.out.println("Client connecté : "
+                           + socketClient.getInetAddress().getHostAddress()
+                           + "\n");
 	}
 	
 	
 	/**
-	 * Création d'un flux d'entrée et d'un flux de sortie pour le client.
+	 * Création d'un flux d'entrée pour le client.
 	 * 
-	 * @throws IOException si les flux ne peuvent être créés.
+	 * @throws IOException si le flux ne peut être créé.
 	 */
-	private static void creerFluxEntreeSortie() throws IOException {
-        // Création d'un flux d'entrée pour le serveur
-        entreeSocket
-        = new ObjectInputStream(socketClient.getInputStream());
-        
-        // Création d'un flux de sortie pour le serveur
-        sortieSocket = new ObjectOutputStream(socketClient.getOutputStream());
+	private static void creerFluxEntree() throws IOException {
+		System.out.println(CREATION_FLUX_ENTREE);
+		
+        fluxEntree = new ObjectInputStream(socketClient.getInputStream());
+	}
+	
+	
+	/**
+	 * Fermeture d'un flux d'entrée du client.
+	 * 
+	 * @throws IOException si le flux ne peut être fermé.
+	 */
+	private static void fermerFluxEntree() throws IOException {
+		System.out.println(FERMETURE_FLUX_ENTREE);
+		
+		fluxEntree.close();
+	}
+	
+	
+	/**
+	 * Création d'un flux de sortie pour le client.
+	 * 
+	 * @throws IOException si le flux ne peut être créé.
+	 */
+	private static void creerFluxSortie() throws IOException {
+		System.out.println(CREATION_FLUX_SORTIE);
+		
+        fluxSortie = new ObjectOutputStream(socketClient.getOutputStream());
+	}
+	
+	
+	/**
+	 * Fermeture d'un flux de sortie vers le client.
+	 * 
+	 * @throws IOException si le flux ne peut être fermé.
+	 */
+	private static void fermerFluxSortie() throws IOException {
+		System.out.println(FERMETURE_FLUX_SORTIE);
+		
+		fluxSortie.close();
 	}
 
 	
@@ -111,12 +157,17 @@ public class Serveur {
 	throws IOException, ClassNotFoundException {	
 		cleVigenere = "";
 		
-		cleVigenere = (String) entreeSocket.readObject();
-		cleVigenere = cleVigenere.substring(6);
-				
-        System.out.println(INDICATION_CLE_VIGENERE + cleVigenere);
+		creerFluxEntree();
+		
+		cleVigenere = ((String) fluxEntree.readObject()).substring(6);
+		
+		System.out.println(INDICATION_CLE_VIGENERE + cleVigenere + "\n");
+
+        creerFluxSortie();
         
-        sortieSocket.writeObject(INDICATION_RECEPTION_SERVEUR + cleVigenere);
+        fluxSortie.writeObject(INDICATION_RECEPTION_SERVEUR + cleVigenere);
+        
+        System.out.println(INDICATION_RECEPTION_SERVEUR + cleVigenere + "\n");
 	}
 	
 	
@@ -135,7 +186,7 @@ public class Serveur {
         String nomCategorie,
                nomCategorieCrypte;
         
-        System.out.println("\nEnvoi de noms de catégories :\n"
+        System.out.println("Envoi de noms de catégories :\n"
         		           + "Nom initial\tNom crypté\n"
         		           + "_____________________________");
         
@@ -146,10 +197,11 @@ public class Serveur {
             
             System.out.println(nomCategorie + "\t" + nomCategorieCrypte);
 			
-		    sortieSocket.writeObject(nomCategorieCrypte);
+		    fluxSortie.writeObject(nomCategorieCrypte);
         }
         
-        sortieSocket.writeObject("finCategories");
+        System.out.println();
+        fluxSortie.writeObject("finCategories");
 	}
 	
 	
@@ -168,7 +220,7 @@ public class Serveur {
         String donneesQuestion,
                donneesCrypteesQuestion;
         
-        System.out.println("\nEnvoi de données de questions :\n"
+        System.out.println("Envoi de données de questions :\n"
         		           + "Données initiales\n-----\nDonnées cryptées\n"
         		           + "_____________________");
         
@@ -181,8 +233,10 @@ public class Serveur {
             System.out.println(donneesQuestion + "\n-----\n"
                                + donneesCrypteesQuestion + "\n");
 			
-		    sortieSocket.writeObject(donneesCrypteesQuestion);
+		    fluxSortie.writeObject(donneesCrypteesQuestion);
         }
+        
+        fluxSortie.writeObject("finQuestions");
 	}
 	
 	
@@ -192,16 +246,16 @@ public class Serveur {
 	 * @throws IOException si la fermeture des sockets échoue.
 	 */
 	private static void fermerSockets() throws IOException {
-		System.out.println(MESSAGE_FERMETURE);
-		
-		entreeSocket.close();
-		sortieSocket.close();
+		fermerFluxEntree();
+		fermerFluxSortie();
 		
         // Fermeture de la socket du client
         socketClient.close();
         
         // Fermeture de la socket du serveur
         socketServeur.close();
+        
+		System.out.println(MESSAGE_FERMETURE_SOCKETS);
 	}
 	
 	
@@ -245,13 +299,11 @@ public class Serveur {
             
             accepterConnexion();
             
-            creerFluxEntreeSortie();
-            
             receptionCleVigenere();
             
-            //envoyerCategories(listeCategoriesTemp);
+            envoyerCategories(listeCategoriesTemp);
             
-            //envoyerQuestions(listeQuestionsTemp);
+            envoyerQuestions(listeQuestionsTemp);
             
             fermerSockets();
         } catch (Exception e) {

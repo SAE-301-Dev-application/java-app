@@ -31,25 +31,41 @@ public class Client {
 	 */
 	private final static String ADRESSE_SERVEUR = "127.0.0.1";
 	
+	/** Port sur lequel le serveur est accessible. */
+	private final static int PORT_SERVEUR = 55432;
+	
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
+	private static final String CONNEXION_OUVERTE
+	= "Socket créée à l'adresse " + ADRESSE_SERVEUR
+	  + " et sur le port " + PORT_SERVEUR + ".\n";
+	
+	private static final String CREATION_FLUX_ENTREE
+	= "Création d'un flux d'entrée (réception objets du serveur).\n";
+	
+	private static final String FERMETURE_FLUX_ENTREE
+	= "Fermeture d'un flux d'entrée.\n";
+	
+	private static final String CREATION_FLUX_SORTIE
+	= "Création d'un flux de sortie (envoi objets au serveur).\n";
+	
+	private static final String FERMETURE_FLUX_SORTIE
+	= "Fermeture d'un flux de sortie.\n";
+	
 	private final static String INDICATION_REPONSE
-	= "\nRéponse du serveur : ";
+	= "Réponse du serveur : ";
 	
-	private final static String MESSAGE_FERMETURE
-	= "\nLes sockets sont en cours de fermeture.";
-	
-	/** Port sur lequel le serveur est accessible. */
-	private final static int PORT_SERVEUR = 65432;
+	private final static String MESSAGE_FERMETURE_SOCKET
+	= "Fermeture de la socket.";
 	
 	/** Socket permettant la connexion au serveur. */
 	private static Socket socket;
 	
 	/** Message reçu du serveur */
-	private static ObjectInputStream entreeSocket;
+	private static ObjectInputStream fluxEntree;
 	
 	/** Message envoyé au serveur */
-	private static ObjectOutputStream sortieSocket;
+	private static ObjectOutputStream fluxSortie;
 	
 	private static String cleVigenere;
 	
@@ -63,38 +79,59 @@ public class Client {
 	private static void creerSocket() throws IOException {
         socket = new Socket();
         
-        InetSocketAddress adresseServeur = new InetSocketAddress(ADRESSE_SERVEUR, PORT_SERVEUR);
+        InetSocketAddress adresseServeur = new InetSocketAddress(ADRESSE_SERVEUR,
+        		                                                 PORT_SERVEUR);
         socket.connect(adresseServeur, TIMEOUT_CONNEXION);
         
-        System.out.println("Socket créée à l'adresse " + ADRESSE_SERVEUR);
+        System.out.println(CONNEXION_OUVERTE);
 	}
 	
 	
 	/**
-	 * Création d'un flux d'entrée et d'un flux de sortie pour le serveur.
+	 * Création d'un flux d'entrée pour le serveur.
 	 * 
-	 * @throws IOException si les flux ne peuvent être créés.
+	 * @throws IOException si le flux ne peut être créé.
 	 */
-	private static void creerFluxEntreeSortie() throws IOException {
-		System.out.println("Création du flux d'entrées et sorties");
+	private static void creerFluxEntree() throws IOException {
+		System.out.println(CREATION_FLUX_ENTREE);
 		
-		System.out.println(socket.getInputStream());
+        fluxEntree = new ObjectInputStream(socket.getInputStream());
+	}
+	
+	
+	/**
+	 * Fermeture d'un flux d'entrée du serveur.
+	 * 
+	 * @throws IOException si le flux ne peut être fermé.
+	 */
+	private static void fermerFluxEntree() throws IOException {
+		System.out.println(FERMETURE_FLUX_ENTREE);
 		
-        // Création d'un flux d'entrée pour le serveur
-        try {
-			entreeSocket
-			= new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        System.out.println(entreeSocket);
-        
-        // Création d'un flux de sortie pour le serveur
-        sortieSocket = new ObjectOutputStream(socket.getOutputStream());
-        
-        System.out.println("teagz");
+		fluxEntree.close();
+	}
+	
+	
+	/**
+	 * Création d'un flux de sortie pour le serveur.
+	 * 
+	 * @throws IOException si le flux ne peut être créé.
+	 */
+	private static void creerFluxSortie() throws IOException {
+		System.out.println(CREATION_FLUX_SORTIE);
+		
+        fluxSortie = new ObjectOutputStream(socket.getOutputStream());
+	}
+	
+	
+	/**
+	 * Fermeture d'un flux de sortie vers le serveur.
+	 * 
+	 * @throws IOException si le flux ne peut être fermé.
+	 */
+	private static void fermerFluxSortie() throws IOException {
+		System.out.println(FERMETURE_FLUX_SORTIE);
+		
+		fluxSortie.close();
 	}
 	
 	
@@ -106,21 +143,24 @@ public class Client {
 	throws IOException, ClassNotFoundException {	
 		String reponseServeur;
 		
-		System.out.println("Envoi de la clé de vigenère");
-		
 		cleVigenere = Vigenere.genererCle();
 		
-		System.out.println("Envoi de la clé générée : " + cleVigenere);
+		creerFluxSortie();
+		
+		System.out.println("Envoi de la clé de vigenère générée :\n"
+		                   + cleVigenere + "\n");
 		
 		// Envoi au serveur de la clé de chiffrement
-        sortieSocket.writeObject("CLE = " + cleVigenere);
+        fluxSortie.writeObject("CLE = " + cleVigenere);
+        
+        creerFluxEntree();
         
         /*
          * Lecture de la réponse du serveur
          */
-		reponseServeur = (String) entreeSocket.readObject();
+		reponseServeur = (String) fluxEntree.readObject();
 		
-        System.out.println(INDICATION_REPONSE + reponseServeur);
+		System.out.println(INDICATION_REPONSE + reponseServeur + "\n");
 	}
 	
 	
@@ -142,16 +182,17 @@ public class Client {
 		
 		envoiFini = false;
 		
-		System.out.println("\nRéception des noms des catégories :\n"
+		System.out.println("Réception des noms des catégories :\n"
 				           + "Nom crypté\tNom décrypté\n"
 				           + "_____________________________");
         
         // Lecture du nom de catégorie crypté envoyé par le serveur
 		while (!envoiFini
-			   && (nomCategorieCrypte = (String) entreeSocket.readObject())
+			   && (nomCategorieCrypte = (String) fluxEntree.readObject())
 			      != null) {
 			
 			if (nomCategorieCrypte.equals("finCategories")) {
+				System.out.println();
 				envoiFini = true;
 			} else {
 				// Décryptage du nom de catégorie crypté reçu
@@ -185,13 +226,13 @@ public class Client {
 		
 		envoiFini = false;
 		
-		System.out.println("\nRéception des données des questions :\n"
-				           + "Données cryptées\tDonnées décryptées\n"
+		System.out.println("Réception des données des questions :\n"
+				           + "Données cryptées\n-----\nDonnées décryptées\n"
 				           + "_________________________________");
         
         // Lecture des données cryptées des questions envoyées par le serveur
 		while (!envoiFini
-			   && (donneesCrypteesQuestion = (String) entreeSocket.readObject())
+			   && (donneesCrypteesQuestion = (String) fluxEntree.readObject())
 			      != null) {
 			
 			if (donneesCrypteesQuestion.equals("finQuestions")) {
@@ -201,8 +242,8 @@ public class Client {
 				donneesDecrypteesQuestion
 				= Vigenere.dechiffrer(donneesCrypteesQuestion, cleVigenere);
 				
-				System.out.println(donneesCrypteesQuestion
-						           + "\t" + donneesDecrypteesQuestion);
+				System.out.println(donneesCrypteesQuestion + "\n-----\n"
+				                   + donneesDecrypteesQuestion + "\n");
 		        
 				donneesQuestions[donneesQuestions.length - 1]
 				= donneesDecrypteesQuestion;	
@@ -218,10 +259,10 @@ public class Client {
 	 * @throws IOException si la fermeture de la socket échoue.
 	 */
 	private static void fermerSockets() throws IOException {
-		System.out.println(MESSAGE_FERMETURE);
+		fermerFluxEntree();
+		fermerFluxSortie();
 		
-		entreeSocket.close();
-		sortieSocket.close();
+		System.out.println(MESSAGE_FERMETURE_SOCKET);
         socket.close();
 	}
 	
@@ -234,17 +275,15 @@ public class Client {
         try {
         	creerSocket();
         	
-        	creerFluxEntreeSortie();
-        	
         	envoyerCleVigenere();
         	
-        	//recevoirCategories();
+        	recevoirCategories();
         	
-        	//recevoirQuestions();
+        	recevoirQuestions();
         	
         	fermerSockets();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        	e.printStackTrace();
         }
     }
 }
