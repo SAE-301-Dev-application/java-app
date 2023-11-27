@@ -2,12 +2,17 @@ package info2.sae301.quiz.controleurs;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
 /**
@@ -54,6 +59,7 @@ public class ExportControleur {
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
 	private static String ipPrivee() {
+		/*
 		final String IP_RESEAU = "192.168.1.1";
 		
 		final int PORT_RESEAU = 80;
@@ -69,8 +75,47 @@ public class ExportControleur {
 		} catch (IOException e) {
 			System.out.println("Erreur IO : " + e.getMessage());
 		}
+		*/
 		
-		return ipPrivee;
+		final String REGEX_IPV4 = "^([0-9.]+)$";
+		
+		String ip;
+		
+		Pattern patternIPV4;
+		Matcher matcherIPV4;
+		
+		ip = null;
+		
+		patternIPV4 = Pattern.compile(REGEX_IPV4);
+		
+		try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+
+                // Filtrer les interfaces loopback et les interfaces désactivées
+                if (iface.isLoopback() || !iface.isUp()) {
+                    continue;
+                }
+
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                
+                while (addresses.hasMoreElements() && ip == null) {
+                    InetAddress addr = addresses.nextElement();
+                    
+                    matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
+                    
+                    if (iface.getDisplayName().equals("en0") && matcherIPV4.find()) {
+                    	ip = addr.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+		return ip;
 	}
 	
 	/** Label d'affichage de l'IP privée. */
