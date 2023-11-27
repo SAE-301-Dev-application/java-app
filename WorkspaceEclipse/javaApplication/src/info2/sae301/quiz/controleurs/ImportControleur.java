@@ -12,6 +12,12 @@ public class ImportControleur {
 	}
 	
 	@FXML
+	private void saisieIPServeur() {
+		// TODO
+		System.out.println("Saisie enregistrée.");
+	}
+	
+	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}

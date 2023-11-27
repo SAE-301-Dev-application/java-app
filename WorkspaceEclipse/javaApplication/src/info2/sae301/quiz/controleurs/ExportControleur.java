@@ -141,12 +141,6 @@ public class ExportControleur {
 		}
 	}
 	
-	@FXML
-	private void saisieIPDestinataire() {
-		// TODO
-		System.out.println("Saisie enregistrée.");
-	}
-	
 	/** Retour au menu principal de l'application. */
 	@FXML
 	private void actionBoutonRetour() {
