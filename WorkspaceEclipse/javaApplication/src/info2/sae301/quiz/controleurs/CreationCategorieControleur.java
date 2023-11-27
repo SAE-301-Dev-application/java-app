@@ -63,7 +63,7 @@ public class CreationCategorieControleur {
 	@FXML
 	private void actionBoutonEnregistrer() {
 		try {
-			jeu.creerCategorie(nouveauNomCategorie.getText());
+			jeu.creerCategorie(nouveauNomCategorie.getText().trim());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),

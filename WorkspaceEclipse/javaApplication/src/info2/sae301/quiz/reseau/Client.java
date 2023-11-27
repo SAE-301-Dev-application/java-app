@@ -72,6 +72,42 @@ public class Client {
 	 */
 	private String adresseServeur;
 	
+<<<<<<< Updated upstream
+=======
+	/** Port sur lequel le serveur est accessible. */
+	private int portServeur;
+	
+	
+	/**
+	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
+	 * port sont par défaut sur le réseau local.
+	 */
+	public Client() {
+		this.adresseServeur = "127.0.0.1";
+		this.portServeur = 55432;
+	}
+	
+	
+	/**
+<<<<<<< HEAD
+	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
+	 * port sont passés en paramètres.
+	 */
+	public Client(String adresseServeur, int portServeur) {
+		this.adresseServeur = adresseServeur;
+		this.portServeur = portServeur;
+=======
+	 * Initialisation d'un client connecté à un serveur dont l'adresse est
+	 * passée en paramètre et le port est par défaut.
+	 */
+	public Client(String adresseServeur) {
+		this.adresseServeur = adresseServeur;
+		this.portServeur = 55432;
+>>>>>>> dae00ad1885417aeed7adb5fe398bc9e5feae890
+	}
+	
+	
+>>>>>>> Stashed changes
 	/**
 	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
 	 * et le port sont spécifiés dans les paramètres d'instanciation.

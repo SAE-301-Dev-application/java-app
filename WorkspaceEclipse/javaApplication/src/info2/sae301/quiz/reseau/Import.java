@@ -47,8 +47,12 @@ public class Import {
 	}
 	
 	/**
+<<<<<<< Updated upstream
 	 * Créé et ajoute à la liste des questions en mémoire la question dont
 	 * les données sont en paramètre sous forme d'une chaîne de caractères.
+=======
+	 * Ajout des données dans l'application
+>>>>>>> Stashed changes
 	 * 
 	 * @param donneesQuestion Chaîne de caractères contenant
 	 *                        les données d'une question à créer.
@@ -150,8 +154,10 @@ public class Import {
 	}
 	
 	/**
-	 * TODO jdoc
-	 * 
+	 * Lecture du CSV ligne par ligne,
+	 * Pour chaque lignes, les données sont extraites
+	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
+	 * soient ajouter à l'application.
 	 * @param cheminFichier
 	 */
 	private static void extractionDonnees(String cheminFichier) {

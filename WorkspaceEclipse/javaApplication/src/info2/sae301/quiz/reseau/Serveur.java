@@ -77,9 +77,23 @@ public class Serveur {
 	public Serveur() {
 		this.portServeur = 55432;
 	}
+<<<<<<< HEAD
 	
 	
 	/**
+<<<<<<< Updated upstream
+=======
+	 * Initialisation d'un serveur dont le port est passé en paramètre.
+	 */
+	public Serveur(int portServeur) {
+		this.portServeur = portServeur;
+	}
+=======
+>>>>>>> dae00ad1885417aeed7adb5fe398bc9e5feae890
+	
+	
+	/**
+>>>>>>> Stashed changes
 	 * Crée un serveur sur le réseau local.
 	 * 
 	 * @throws IOException si la socket ne peut être créée.

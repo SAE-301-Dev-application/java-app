@@ -38,25 +38,6 @@ public class Categorie implements Serializable {
     private ArrayList<Question> listeQuestions;
     
 
-    /**
-     * Nouvelle catégorie de questions identifiée par son intitulé
-     * 
-	 * @param intitule
-	 * @param questions
-	 */
-	public Categorie(String intitule, ArrayList<Question> questions) {
-		if (intitule.length() > 20) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
-		}
-		if (intitule.isBlank() || intitule.isEmpty()) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
-		}
-		
-		this.intitule = intitule;
-		this.listeQuestions = questions;
-	}
-
-
 	/**
 	 * Nouvelle catégorie de questions identifiée par son intitulé 
 	 * sans liste de questions prédéfinie
@@ -74,6 +55,25 @@ public class Categorie implements Serializable {
 		
 		this.intitule = intitule;
 		this.listeQuestions = new ArrayList<Question>();
+	}
+
+	
+    /**
+     * Nouvelle catégorie de questions identifiée par son intitulé
+     * 
+	 * @param intitule
+	 * @param questions
+	 */
+	public Categorie(String intitule, ArrayList<Question> questions) {
+		if (intitule.length() > 20) {
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
+		}
+		if (intitule.isBlank() || intitule.isEmpty()) {
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
+		}
+		
+		this.intitule = intitule;
+		this.listeQuestions = questions;
 	}
 
 

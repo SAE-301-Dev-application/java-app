@@ -138,15 +138,15 @@ public class CreationQuestionControleur {
 		
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
-		reponsesFausses.add(reponseFausse1.getText());
-		reponsesFausses.add(reponseFausse2.getText());
-		reponsesFausses.add(reponseFausse3.getText());
-		reponsesFausses.add(reponseFausse4.getText());
+		reponsesFausses.add(reponseFausse1.getText().trim());
+		reponsesFausses.add(reponseFausse2.getText().trim());
+		reponsesFausses.add(reponseFausse3.getText().trim());
+		reponsesFausses.add(reponseFausse4.getText().trim());
 			
-		intituleQuestionEntre = this.intituleQuestion.getText();
-		feedbackEntre = this.feedback.getText();
+		intituleQuestionEntre = this.intituleQuestion.getText().trim();
+		feedbackEntre = this.feedback.getText().trim();
 		
-		reponseJusteEntree = this.reponseJuste.getText();
+		reponseJusteEntree = this.reponseJuste.getText().trim();
 		
 		difficulteEntree = Integer.parseInt("" + this.difficulte
 										.getValue().charAt(0));

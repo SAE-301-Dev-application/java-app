@@ -273,16 +273,18 @@ public class PartieEnCoursControleur {
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
-			RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
-			if (partieCourante.radioDejaSelectionne(reponsesMelange.get(i))) {
-				afficherReponse.setSelected(true);
+			if (!reponsesMelange.get(i).isBlank()) {
+				RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
+				if (partieCourante.radioDejaSelectionne(reponsesMelange.get(i))) {
+					afficherReponse.setSelected(true);
+				}
+				afficherReponse.getStyleClass().add("reponse");
+				afficherReponse.setId("" + i);
+				afficherReponse.setToggleGroup(radioGroupe);
+				
+				vBoxQuestionReponses.getChildren().add(afficherReponse);
+				touteslesRadioReponses.add(afficherReponse);
 			}
-			afficherReponse.getStyleClass().add("reponse");
-			afficherReponse.setId("" + i);
-			afficherReponse.setToggleGroup(radioGroupe);
-			
-			vBoxQuestionReponses.getChildren().add(afficherReponse);
-			touteslesRadioReponses.add(afficherReponse);
 		}
 	}
 	

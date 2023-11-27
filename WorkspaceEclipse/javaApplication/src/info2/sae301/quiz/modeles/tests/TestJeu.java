@@ -57,7 +57,7 @@ class TestJeu {
 		for (int i = 0; i < nomsCategories.length; i++) {
 			listeCategoriesTest.add(new Categorie(nomsCategories[i]));
 			if (!nomsCategories[i].equals("Général")) {
-				jeu.creerCategorie(nomsCategories[i]);
+				jeu.creerCategorie(nomsCategories[i].trim());
 			}
 		}
 		

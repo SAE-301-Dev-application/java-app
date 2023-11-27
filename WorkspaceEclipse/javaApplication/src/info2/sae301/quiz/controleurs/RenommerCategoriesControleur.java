@@ -58,7 +58,7 @@ public class RenommerCategoriesControleur {
 	private void actionBoutonRenommer() {
 		try {
 			ChoixRenommerCategorieControleur
-			.renommerCategorieSelectionnee(entreeNomCategorie.getText());
+			.renommerCategorieSelectionnee(entreeNomCategorie.getText().trim());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),
