@@ -94,7 +94,6 @@ public class EditionQuestionControleur {
 		difficulte.setValue(difficultes[question.getDifficulte() - 1]);
 		
 		intituleQuestion.setText(question.getIntitule());
-		System.out.println(question.getFeedback());
 		feedback.setText(question.getFeedback());
 		reponseJuste.setText(question.getReponseJuste());
 		
