@@ -37,6 +37,11 @@ public class DiffieHellman {
 	 */
 	private static int cleRecue;
 	
+	/** @return le modulo P */
+	public static int getModulo() {
+		return P;
+	}
+	
 	
 	/** @return le générateur G */
 	public static int getGenerateur() {
@@ -51,7 +56,7 @@ public class DiffieHellman {
 	
 	
 	/** @return la puissance reçue */
-	public static int getcleRecue() {
+	public static int getCleRecue() {
 		return cleRecue;
 	}
 	
@@ -70,7 +75,7 @@ public class DiffieHellman {
 	 *  
 	 * @param puissance la puissance reçue
 	 * */
-	public static void setcleRecue(int nombreRecu) {
+	public static void setCleRecue(int nombreRecu) {
 		cleRecue = nombreRecu;
 	}
 	
@@ -82,7 +87,7 @@ public class DiffieHellman {
 	 * @param diviseur
 	 * @return Le PGCD sachant les deux entiers donnés en argument
 	 */
-	private static int pgcd(int dividende, int diviseur) {
+	/*private static int pgcd(int dividende, int diviseur) {
 		int reste;
 
 		reste = 0;
@@ -94,7 +99,7 @@ public class DiffieHellman {
 		}
 		
 		return dividende;
-	}
+	}*/
 	
 	
     /**
@@ -130,13 +135,5 @@ public class DiffieHellman {
         }
 
         return resultat;
-    }
-
-    public static void main(String[] args) {
-        int puis = genererPuissance();
-        int test = puissanceNR(G, puis);
-        int test2 = puissanceNR(4950,8495403);
-        System.out.println(puis);
-        System.out.println(test);
     }
 }
