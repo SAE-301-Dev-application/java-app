@@ -36,19 +36,22 @@ class TestQuestion {
 	static Jeu jeu;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	void init() throws Exception {
 		jeu = new Jeu();
 		orthographe = new Categorie("orthographe");
 		grammaire = new Categorie("grammaire");
 		
 		questionSF = new Question("Quelle est la bonne orthographe? ",
-				"chat",new String[]{"chatt","shat","chât"},2,orthographe);
+				                  "chat", new String[] {"chatt","shat","chât"},
+				                  2, orthographe);
 		
 		questionAF = new Question("Quel est le choix correct pour completer '...-de-chaussée' ? ",
-				"rez",new String[]{"raie","raient"},1,"rez car vieux mot",orthographe);
+				                  "rez", new String[] {"raie","raient"},
+				                  1, "rez car vieux mot", orthographe);
 		
 		questionSF2 = new Question("Quelle est la bonne orthographe? ",
-				"chat",new String[]{"chatt","shat","chât"},2,orthographe);
+				                   "chat", new String[] {"chatt", "shat", "chât"},
+				                   2, orthographe);
 		
 		questionAF2 = new Question("Quel est le choix correct pour completer '...-de-chaussée' ? ",
 				"rez",new String[]{"raie","raient"},1,"rez car vieux mot",orthographe);
@@ -520,9 +523,10 @@ class TestQuestion {
 	 */
 	@Test
 	void testMemeReponses() {
-		String[][] repFausses = {{"chatt","shat","chât"},{"chtt","shat","chât"}, 
-								 {"rai","raient"}
-								};
+		String[][] repFausses = {
+			{"chatt","shat","chât"},
+			{"chtt","shat","chât"}, 
+			{"rai","raient"}};
 		
 		/* Test pour les memes réponses fausses */
 		assertTrue(questionAF.memesReponses(questionAF.concatenationReponses(), questionAF2.concatenationReponses()));
@@ -537,6 +541,32 @@ class TestQuestion {
 		
 		/* Test pour un nombre différent de mauvaises réponses */
 		assertFalse(questionAF.memesReponses(questionAF.concatenationReponses(), questionSF.concatenationReponses()));
+		
+	}
+	
+	
+	/**
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Question#donneesToString()}.
+	 */
+	@Test
+	void testDonneesToString() {
+		
+		String resultat;
+		
+		resultat = "orthographe;2;Quelle est la bonne orthographe? ;chat;chatt;shat;chât;;";
+		
+		assertEquals(resultat, questionSF.donneesToString());
+		
+		resultat = "orthographe;1;Quel est le choix correct pour completer '..."
+				   + "-de-chaussée' ? ;rez;raie;raient;;;rez car vieux mot";
+		
+		assertEquals(resultat, questionAF.donneesToString());
+		
+		resultat = "orthographe;2;Quelle est la bonne orthographe? ;chat;chatt;"
+				   + "shat;chât;;";
+		
+		assertEquals(resultat, questionSF2.donneesToString());
 		
 	}
 }
