@@ -6,15 +6,12 @@
 package info2.sae301.quiz.reseau;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
-import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Question;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -278,24 +275,30 @@ public class Client {
 	}
 	
 	/**
+	 * Import des catégories depuis un serveur.
 	 * 
-	 * @param adresseServeur
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
+	 * @throws IOException si l'import échoue.
+	 * @throws ClassNotFoundException si le cast permettant de transformer
+	 *         l'objet reçu en string renvoie une erreur.
 	 */
 	public void importerCategories(String adresseServeur)
 	throws IOException, ClassNotFoundException {
 		creerSocket(adresseServeur);
 		envoyerCleVigenere();
-		recevoirCategories();
+		
+		Import.creationCategories(recevoirCategories());
+		
 		fermerSockets();
 	}
 	
 	/**
+	 * Import des questions depuis un serveur.
 	 * 
-	 * @param adresseServeur
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
+	 * @throws IOException si l'import échoue.
+	 * @throws ClassNotFoundException si le cast permettant de transformer
+	 *         l'objet reçu en string renvoie une erreur.
 	 */
 	public void importerQuestions(String adresseServeur)
 	throws IOException, ClassNotFoundException {
