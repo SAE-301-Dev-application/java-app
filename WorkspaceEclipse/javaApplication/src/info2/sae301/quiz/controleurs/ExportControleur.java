@@ -59,8 +59,6 @@ public class ExportControleur {
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
 	private static String ipPrivee() {
-		final String REGEX_IPV4 = "^([0-9.]+)$";
-		
 		String ip;
 		
 		Pattern patternIPV4;
@@ -68,7 +66,7 @@ public class ExportControleur {
 		
 		ip = null;
 		
-		patternIPV4 = Pattern.compile(REGEX_IPV4);
+		patternIPV4 = Pattern.compile(ImportControleur.REGEX_IPV4);
 		
 		try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -87,8 +85,6 @@ public class ExportControleur {
                     InetAddress addr = addresses.nextElement();
                     
                     matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
-                    
-                    System.out.printf("it = %s\tip = %s", iface.getDisplayName(), addr.getHostAddress());
                     
                     if (matcherIPV4.find()) {
                     	ip = addr.getHostAddress();
