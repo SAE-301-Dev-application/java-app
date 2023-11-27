@@ -88,7 +88,9 @@ public class ExportControleur {
                     
                     matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
                     
-                    if (iface.getDisplayName().equals("en0") && matcherIPV4.find()) {
+                    System.out.printf("it = %s\tip = %s", iface.getDisplayName(), addr.getHostAddress());
+                    
+                    if (matcherIPV4.find()) {
                     	ip = addr.getHostAddress();
                     }
                 }
