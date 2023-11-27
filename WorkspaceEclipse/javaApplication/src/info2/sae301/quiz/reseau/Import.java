@@ -18,6 +18,7 @@ public class Import {
 		// initialisation
 		jeu = Quiz.jeu;
 		questionNonAjoutes = new ArrayList<String>();
+		
 		extractionDonnees(cheminFichier);
 	}
 	
@@ -109,7 +110,7 @@ public class Import {
 			//ne pas affecté le contenue de la première ligne;
 			fichier.readLine();
 			while ((ligne = fichier.readLine()) != null) {
-				donnees = ligne.split("(?<!\\\\);(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+				donnees = ligne.split(";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
 				ajoutDonnes(donnees);
 				System.out.println();
