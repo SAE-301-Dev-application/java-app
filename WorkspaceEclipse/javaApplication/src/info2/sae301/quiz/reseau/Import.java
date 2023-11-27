@@ -12,17 +12,31 @@ public class Import {
 	
 	private static Jeu jeu;
 	
-	private static ArrayList<String> questionNonAjoutes;
+	/**
+	 * Les questions du fichier CSV non ajoutées à la liste
+	 * des questions existantes.
+	 */
+	private static ArrayList<String> questionsNonAjoutees;
 	
+	/**
+	 * TODO Jdoc
+	 * 
+	 * @param cheminFichier
+	 */
 	static void importation(String cheminFichier) {
 		// initialisation
 		jeu = Quiz.jeu;
-		questionNonAjoutes = new ArrayList<String>();
+		questionsNonAjoutees = new ArrayList<String>();
 		
 		extractionDonnees(cheminFichier);
 	}
 	
-	private static void ajoutDonnes(String[] donnees) {
+	/**
+	 * TODO Jdoc
+	 * 
+	 * @param donnees
+	 */
+	private static void ajoutDonnees(String[] donnees) {
 		String intituleCategorie,
 		       intituleQuestion,
 		       reponseJuste,
@@ -59,12 +73,12 @@ public class Import {
 		}
 		
 		if (jeu.indiceQuestion(intituleQuestion, intituleCategorie,
-				reponseJuste, reponsesFausses) == -1) {
+				               reponseJuste, reponsesFausses) == -1) {
 			jeu.creerQuestion(intituleQuestion, reponseJuste,
-					reponsesFausses, niveauDifficulte,
-					feedback, intituleCategorie);
+					          reponsesFausses, niveauDifficulte,
+					          feedback, intituleCategorie);
 		} else {
-			questionNonAjoutes.add(intituleQuestion);
+			questionsNonAjoutees.add(intituleQuestion);
 		}
 	}
 	
@@ -78,19 +92,30 @@ public class Import {
 //		return repFaussesInitialise;
 //	}
 	
+	/**
+	 * Retrait des guillemets doublés par le formattage CSV d'une phrase
+	 * passée en paramètre.
+	 * 
+	 * @param phrase Phrase à modifier.
+	 * @return la phrase avec des guillemets initiaux.
+	 */
 	private static String retirerGuillemetsInvalides(String phrase) {
+		final char CARACTERE_QUELCONQUE = 'µ';
+		
+		final char GUILLEMET = '"';
+		
 		String resultat;
+		
 		resultat = "";
-		final char caractereQuelconque = 'µ';
 		
 		for (int i = 0; i < phrase.length(); i++) {
 			char caractereCourant = phrase.charAt(i);
 			char caractereSuivant = i + 1 < phrase.length()
 					                ? phrase.charAt(i + 1)
-					                : caractereQuelconque;
+					                : CARACTERE_QUELCONQUE;
 			
-			if (caractereCourant == '"'
-			    && caractereSuivant == '"') {
+			if (caractereCourant == GUILLEMET
+			    && caractereSuivant == GUILLEMET) {
 				resultat += caractereCourant;
 				if (i + 2 < phrase.length()) {
 					i++;
@@ -102,6 +127,11 @@ public class Import {
 		return resultat;
 	}
 	
+	/**
+	 * TODO jdoc
+	 * 
+	 * @param cheminFichier
+	 */
 	private static void extractionDonnees(String cheminFichier) {
 		String ligne;
 		String[] donnees;
@@ -112,7 +142,7 @@ public class Import {
 			while ((ligne = fichier.readLine()) != null) {
 				donnees = ligne.split(";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
-				ajoutDonnes(donnees);
+				ajoutDonnees(donnees);
 				System.out.println();
 			}
 		} catch (IOException e) {
@@ -121,8 +151,9 @@ public class Import {
 		}
 	}
 	
+	/** @return Les questions non ajoutées (déjà présentes ou autre). */
 	public static ArrayList<String> getQuestionNonAjoutes() {
-		return questionNonAjoutes;
+		return questionsNonAjoutees;
 	}
 	
 }
