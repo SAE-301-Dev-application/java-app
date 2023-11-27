@@ -6,12 +6,15 @@
 package info2.sae301.quiz.reseau;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -24,6 +27,9 @@ import java.net.Socket;
  * @author Samuel Lacam
  */
 public class Client {
+	
+	/** Port sur lequel le serveur est accessible. */
+	private final static int PORT_SERVEUR = 55432;
 	
 	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
@@ -66,46 +72,22 @@ public class Client {
 	 */
 	private String adresseServeur;
 	
-	/** Port sur lequel le serveur est accessible. */
-	private int portServeur;
-	
-	
-	/**
-	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
-	 * port sont par défaut sur le réseau local.
-	 */
-	public Client() {
-		this.adresseServeur = "127.0.0.1";
-		this.portServeur = 55432;
-	}
-	
-	
-	/**
-	 * Initialisation d'un client connecté à un serveur dont l'adresse est
-	 * passée en paramètre et le port est par défaut.
-	 */
-	public Client(String adresseServeur) {
-		this.adresseServeur = adresseServeur;
-		this.portServeur = 55432;
-	}
-	
-	
 	/**
 	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
 	 * et le port sont spécifiés dans les paramètres d'instanciation.
 	 * 
 	 * @throws IOException si la création de la socket échoue.
 	 */
-	public void creerSocket() throws IOException {
+	private void creerSocket(String adresseServeur) throws IOException {
         this.socket = new Socket();
         
         InetSocketAddress adresse
-        = new InetSocketAddress(this.adresseServeur, this.portServeur);
+        = new InetSocketAddress(this.adresseServeur, PORT_SERVEUR);
         
         this.socket.connect(adresse, TIMEOUT_CONNEXION);
         
         System.out.println(String.format(CONNEXION_OUVERTE,
-        		                         this.adresseServeur, this.portServeur));
+        		                         this.adresseServeur, PORT_SERVEUR));
 	}
 	
 	
@@ -167,7 +149,7 @@ public class Client {
 	 * @throws IOException si l'envoi échoue.
 	 * @throws ClassNotFoundException si le cast de la réponse échoue.
 	 */
-	public void envoyerCleVigenere()
+	private void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException {	
 		String reponseServeur;
 		
@@ -199,7 +181,7 @@ public class Client {
 	 * @throws ClassNotFoundException si le cast échoue.
 	 * @return les noms des catégories reçues.
 	 */
-	public String[] recevoirCategories()
+	private String[] recevoirCategories()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -244,7 +226,7 @@ public class Client {
 	 * @return les noms des catégories reçues.
 	 * @throws ClassNotFoundException si le cast échoue.
 	 */
-	public String[] recevoirQuestions()
+	private String[] recevoirQuestions()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -287,11 +269,47 @@ public class Client {
 	 * 
 	 * @throws IOException si la fermeture de la socket ou des flux échoue.
 	 */
-	public void fermerSockets() throws IOException {
+	private void fermerSockets() throws IOException {
 		fermerFluxEntree();
 		fermerFluxSortie();
 		
 		System.out.println(MESSAGE_FERMETURE_SOCKET);
         this.socket.close();
+	}
+	
+	/**
+	 * 
+	 * @param adresseServeur
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void importerCategories(String adresseServeur)
+	throws IOException, ClassNotFoundException {
+		creerSocket(adresseServeur);
+		envoyerCleVigenere();
+		recevoirCategories();
+		fermerSockets();
+	}
+	
+	/**
+	 * 
+	 * @param adresseServeur
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void importerQuestions(String adresseServeur)
+	throws IOException, ClassNotFoundException {
+		String[] questionsFormatStr;
+		
+		creerSocket(adresseServeur);
+		envoyerCleVigenere();
+		
+		questionsFormatStr = recevoirQuestions();
+		
+		for (String questionCourante : questionsFormatStr) {
+			Import.creationQuestion(questionCourante);
+		}
+		
+		fermerSockets();
 	}
 }
