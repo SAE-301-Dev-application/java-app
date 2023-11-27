@@ -25,21 +25,11 @@ import java.net.Socket;
  */
 public class Client {
 	
-	/**
-	 * Adresse IP du serveur.
-	 * 127.0.0.1 signifie que le serveur est sûr le réseau courant.
-	 */
-	private final static String ADRESSE_SERVEUR = "127.0.0.1";
-	
-	/** Port sur lequel le serveur est accessible. */
-	private final static int PORT_SERVEUR = 55432;
-	
 	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
 	private static final String CONNEXION_OUVERTE
-	= "Socket créée à l'adresse " + ADRESSE_SERVEUR
-	  + " et sur le port " + PORT_SERVEUR + ".\n";
+	= "Socket créée à l'adresse %s et sur le port %d.\n";
 	
 	private static final String CREATION_FLUX_ENTREE
 	= "Création d'un flux d'entrée (réception objets du serveur).\n";
@@ -60,15 +50,44 @@ public class Client {
 	= "Fermeture de la socket.";
 	
 	/** Socket permettant la connexion au serveur. */
-	private static Socket socket;
+	private Socket socket;
 	
 	/** Flux par lequel les messages du serveur sont reçus. */
-	private static ObjectInputStream fluxEntree;
+	private ObjectInputStream fluxEntree;
 	
 	/** Flux par lequel envoyer des messages au serveur. */
-	private static ObjectOutputStream fluxSortie;
+	private ObjectOutputStream fluxSortie;
 	
-	private static String cleVigenere;
+	private String cleVigenere;
+	
+	/**
+	 * Adresse IP du serveur.
+	 * 127.0.0.1 signifie que le serveur est sûr le réseau courant.
+	 */
+	private String adresseServeur;
+	
+	/** Port sur lequel le serveur est accessible. */
+	private int portServeur;
+	
+	
+	/**
+	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
+	 * port sont par défaut sur le réseau local.
+	 */
+	public Client() {
+		this.adresseServeur = "127.0.0.1";
+		this.portServeur = 55432;
+	}
+	
+	
+	/**
+	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
+	 * port sont passés en paramètres.
+	 */
+	public Client(String adresseServeur, int portServeur) {
+		this.adresseServeur = adresseServeur;
+		this.portServeur = portServeur;
+	}
 	
 	
 	/**
@@ -77,14 +96,16 @@ public class Client {
 	 * 
 	 * @throws IOException si la création de la socket échoue.
 	 */
-	private static void creerSocket() throws IOException {
-        socket = new Socket();
+	public void creerSocket() throws IOException {
+        this.socket = new Socket();
         
-        InetSocketAddress adresseServeur = new InetSocketAddress(ADRESSE_SERVEUR,
-        		                                                 PORT_SERVEUR);
-        socket.connect(adresseServeur, TIMEOUT_CONNEXION);
+        InetSocketAddress adresse
+        = new InetSocketAddress(this.adresseServeur, this.portServeur);
         
-        System.out.println(CONNEXION_OUVERTE);
+        this.socket.connect(adresse, TIMEOUT_CONNEXION);
+        
+        System.out.println(String.format(CONNEXION_OUVERTE,
+        		                         this.adresseServeur, this.portServeur));
 	}
 	
 	
@@ -94,10 +115,10 @@ public class Client {
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
-	private static void creerFluxEntree() throws IOException {
+	private void creerFluxEntree() throws IOException {
 		System.out.println(CREATION_FLUX_ENTREE);
 		
-        fluxEntree = new ObjectInputStream(socket.getInputStream());
+        this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
 	}
 	
 	
@@ -107,10 +128,10 @@ public class Client {
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
-	private static void fermerFluxEntree() throws IOException {
+	private void fermerFluxEntree() throws IOException {
 		System.out.println(FERMETURE_FLUX_ENTREE);
 		
-		fluxEntree.close();
+		this.fluxEntree.close();
 	}
 	
 	
@@ -120,10 +141,10 @@ public class Client {
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
-	private static void creerFluxSortie() throws IOException {
+	private void creerFluxSortie() throws IOException {
 		System.out.println(CREATION_FLUX_SORTIE);
 		
-        fluxSortie = new ObjectOutputStream(socket.getOutputStream());
+        this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
 	}
 	
 	
@@ -133,10 +154,10 @@ public class Client {
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
-	private static void fermerFluxSortie() throws IOException {
+	private void fermerFluxSortie() throws IOException {
 		System.out.println(FERMETURE_FLUX_SORTIE);
 		
-		fluxSortie.close();
+		this.fluxSortie.close();
 	}
 	
 	
@@ -146,26 +167,26 @@ public class Client {
 	 * @throws IOException si l'envoi échoue.
 	 * @throws ClassNotFoundException si le cast de la réponse échoue.
 	 */
-	private static void envoyerCleVigenere()
+	public void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException {	
 		String reponseServeur;
 		
-		cleVigenere = Vigenere.genererCle();
+		this.cleVigenere = Vigenere.genererCle();
 		
 		creerFluxSortie();
 		
 		System.out.println("Envoi de la clé de vigenère générée :\n"
-		                   + cleVigenere + "\n");
+		                   + this.cleVigenere + "\n");
 		
 		// Envoi au serveur de la clé de chiffrement
-        fluxSortie.writeObject("CLE = " + cleVigenere);
+        this.fluxSortie.writeObject("CLE = " + this.cleVigenere);
         
         creerFluxEntree();
         
         /*
          * Lecture de la réponse du serveur
          */
-		reponseServeur = (String) fluxEntree.readObject();
+		reponseServeur = (String) this.fluxEntree.readObject();
 		
 		System.out.println(INDICATION_REPONSE + reponseServeur + "\n");
 	}
@@ -178,7 +199,7 @@ public class Client {
 	 * @throws ClassNotFoundException si le cast échoue.
 	 * @return les noms des catégories reçues.
 	 */
-	private static String[] recevoirCategories()
+	public String[] recevoirCategories()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -195,7 +216,7 @@ public class Client {
         
         // Lecture du nom de catégorie crypté envoyé par le serveur
 		while (!envoiFini
-			   && (nomCategorieCrypte = (String) fluxEntree.readObject())
+			   && (nomCategorieCrypte = (String) this.fluxEntree.readObject())
 			      != null) {
 			
 			if (nomCategorieCrypte.equals("finCategories")) {
@@ -204,7 +225,7 @@ public class Client {
 			} else {
 				// Décryptage du nom de catégorie crypté reçu
 				nomCategorieDecrypte = Vigenere.dechiffrer(nomCategorieCrypte,
-						                                   cleVigenere);
+						                                   this.cleVigenere);
 				
 				System.out.println(nomCategorieCrypte + "\t" + nomCategorieDecrypte);
 		        
@@ -223,7 +244,7 @@ public class Client {
 	 * @return les noms des catégories reçues.
 	 * @throws ClassNotFoundException si le cast échoue.
 	 */
-	private static String[] recevoirQuestions()
+	public String[] recevoirQuestions()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -240,7 +261,7 @@ public class Client {
         
         // Lecture des données cryptées des questions envoyées par le serveur
 		while (!envoiFini
-			   && (donneesCrypteesQuestion = (String) fluxEntree.readObject())
+			   && (donneesCrypteesQuestion = (String) this.fluxEntree.readObject())
 			      != null) {
 			
 			if (donneesCrypteesQuestion.equals("finQuestions")) {
@@ -248,7 +269,7 @@ public class Client {
 			} else {
 				// Décryptage des données cryptées reçues
 				donneesDecrypteesQuestion
-				= Vigenere.dechiffrer(donneesCrypteesQuestion, cleVigenere);
+				= Vigenere.dechiffrer(donneesCrypteesQuestion, this.cleVigenere);
 				
 				System.out.println(donneesCrypteesQuestion + "\n-----\n"
 				                   + donneesDecrypteesQuestion + "\n");
@@ -266,32 +287,11 @@ public class Client {
 	 * 
 	 * @throws IOException si la fermeture de la socket ou des flux échoue.
 	 */
-	private static void fermerSockets() throws IOException {
+	public void fermerSockets() throws IOException {
 		fermerFluxEntree();
 		fermerFluxSortie();
 		
 		System.out.println(MESSAGE_FERMETURE_SOCKET);
-        socket.close();
+        this.socket.close();
 	}
-	
-	/**
-	 * Etablissement d'une connexion entre le client et le serveur.
-	 * 
-	 * @param args inutilisé.
-	 */
-    public static void main(String[] args) {      
-        try {
-        	creerSocket();
-        	
-        	envoyerCleVigenere();
-        	
-        	recevoirCategories();
-        	
-        	recevoirQuestions();
-        	
-        	fermerSockets();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
-    }
 }
