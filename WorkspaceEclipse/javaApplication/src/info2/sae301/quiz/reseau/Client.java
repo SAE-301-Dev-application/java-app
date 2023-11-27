@@ -6,12 +6,15 @@
 package info2.sae301.quiz.reseau;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
+import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.Question;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -24,6 +27,9 @@ import java.net.Socket;
  * @author Samuel Lacam
  */
 public class Client {
+	
+	/** Port sur lequel le serveur est accessible. */
+	private final static int PORT_SERVEUR = 55432;
 	
 	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
@@ -66,53 +72,17 @@ public class Client {
 	 */
 	private String adresseServeur;
 	
-	/** Port sur lequel le serveur est accessible. */
-	private int portServeur;
-	
-	
-	/**
-	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
-	 * port sont par défaut sur le réseau local.
-	 */
-	public Client() {
-		this.adresseServeur = "127.0.0.1";
-		this.portServeur = 55432;
-	}
-	
-	
-	/**
-	 * Initialisation d'un client connecté à un serveur dont l'adresse et le
-	 * port sont passés en paramètres.
-	 */
-	public Client(String adresseServeur, int portServeur) {
-		this.adresseServeur = adresseServeur;
-		this.portServeur = portServeur;
-	}
-	
-	
 	/**
 	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
 	 * et le port sont spécifiés dans les paramètres d'instanciation.
 	 * 
 	 * @throws IOException si la création de la socket échoue.
 	 */
-	public void creerSocket() throws IOException {
-        this.socket = new Socket();
-        
-        InetSocketAddress adresse
-        = new InetSocketAddress(this.adresseServeur, this.portServeur);
-        
-        this.socket.connect(adresse, TIMEOUT_CONNEXION);
-        
-        System.out.println(String.format(CONNEXION_OUVERTE,
-        		                         this.adresseServeur, this.portServeur));
-	}
 	
 	
 	/**
 	 * Création d'un flux d'entrée pour recevoir les objets (String)
 	 * envoyés par le serveur.
-	 * 
 	 * @throws IOException si le flux ne peut être créé.
 	 */
 	private void creerFluxEntree() throws IOException {
@@ -167,7 +137,7 @@ public class Client {
 	 * @throws IOException si l'envoi échoue.
 	 * @throws ClassNotFoundException si le cast de la réponse échoue.
 	 */
-	public void envoyerCleVigenere()
+	private void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException {	
 		String reponseServeur;
 		
@@ -199,7 +169,7 @@ public class Client {
 	 * @throws ClassNotFoundException si le cast échoue.
 	 * @return les noms des catégories reçues.
 	 */
-	public String[] recevoirCategories()
+	private String[] recevoirCategories()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -215,23 +185,7 @@ public class Client {
 				           + "_____________________________");
         
         // Lecture du nom de catégorie crypté envoyé par le serveur
-		while (!envoiFini
-			   && (nomCategorieCrypte = (String) this.fluxEntree.readObject())
-			      != null) {
-			
-			if (nomCategorieCrypte.equals("finCategories")) {
-				System.out.println();
-				envoiFini = true;
-			} else {
-				// Décryptage du nom de catégorie crypté reçu
-				nomCategorieDecrypte = Vigenere.dechiffrer(nomCategorieCrypte,
-						                                   this.cleVigenere);
-				
-				System.out.println(nomCategorieCrypte + "\t" + nomCategorieDecrypte);
-		        
-		        nomsCategories[nomsCategories.length - 1] = nomCategorieDecrypte;	
 			}
-		}
 		
 		return nomsCategories;
 	}
@@ -244,7 +198,7 @@ public class Client {
 	 * @return les noms des catégories reçues.
 	 * @throws ClassNotFoundException si le cast échoue.
 	 */
-	public String[] recevoirQuestions()
+	private String[] recevoirQuestions()
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -263,11 +217,7 @@ public class Client {
 		while (!envoiFini
 			   && (donneesCrypteesQuestion = (String) this.fluxEntree.readObject())
 			      != null) {
-			
-			if (donneesCrypteesQuestion.equals("finQuestions")) {
-				envoiFini = true;
 			} else {
-				// Décryptage des données cryptées reçues
 				donneesDecrypteesQuestion
 				= Vigenere.dechiffrer(donneesCrypteesQuestion, this.cleVigenere);
 				
@@ -287,11 +237,47 @@ public class Client {
 	 * 
 	 * @throws IOException si la fermeture de la socket ou des flux échoue.
 	 */
-	public void fermerSockets() throws IOException {
+	private void fermerSockets() throws IOException {
 		fermerFluxEntree();
 		fermerFluxSortie();
 		
 		System.out.println(MESSAGE_FERMETURE_SOCKET);
         this.socket.close();
+	}
+	
+	/**
+	 * 
+	 * @param adresseServeur
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void importerCategories(String adresseServeur)
+	throws IOException, ClassNotFoundException {
+		creerSocket(adresseServeur);
+		envoyerCleVigenere();
+		recevoirCategories();
+		fermerSockets();
+	}
+	
+	/**
+	 * 
+	 * @param adresseServeur
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void importerQuestions(String adresseServeur)
+	throws IOException, ClassNotFoundException {
+		String[] questionsFormatStr;
+		
+		creerSocket(adresseServeur);
+		envoyerCleVigenere();
+		
+		questionsFormatStr = recevoirQuestions();
+		
+		for (String questionCourante : questionsFormatStr) {
+			Import.creationQuestion(questionCourante);
+		}
+		
+		fermerSockets();
 	}
 }

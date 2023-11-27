@@ -80,14 +80,6 @@ public class Serveur {
 	
 	
 	/**
-	 * Initialisation d'un serveur dont le port est passé en paramètre.
-	 */
-	public Serveur(int portServeur) {
-		this.portServeur = portServeur;
-	}
-	
-	
-	/**
 	 * Crée un serveur sur le réseau local.
 	 * 
 	 * @throws IOException si la socket ne peut être créée.
