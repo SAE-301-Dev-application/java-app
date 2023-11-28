@@ -6,9 +6,12 @@
 package info2.sae301.quiz.reseau;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
@@ -25,26 +28,79 @@ import info2.sae301.quiz.modeles.Jeu;
  */
 public class Import {
 	
+	/** Message d'erreur en cas de chemin inexistant à la sélection. */
+	private final static String ERREUR_CHEMIN_INEXISTANT
+	= "Ce chemin n'existe pas ou plus.";
+	
+	/** Instance de jeu courante. */
 	private static Jeu jeu;
+	
+	
+	private int nombreTotalQuestions;
 	
 	/**
 	 * Les questions du fichier CSV non ajoutées à la liste
 	 * des questions existantes.
 	 */
-	private static ArrayList<String> questionsNonAjoutees;
+	private ArrayList<String> questionsNonAjoutees;
+	
+	/** Chemin du fichier sélectionné. */
+	private String cheminFichier;
+	
 	
 	/**
-	 * TODO Jdoc
-	 * 
-	 * @param cheminFichier
+	 * Initialisation de l'import sans données.
 	 */
-	static void importation(String cheminFichier) {
-		// initialisation
+	public Import() {
 		jeu = Quiz.jeu;
-		questionsNonAjoutees = new ArrayList<String>();
 		
-		extractionDonnees(cheminFichier);
+		this.nombreTotalQuestions = 0;
+		this.questionsNonAjoutees = new ArrayList<>();
 	}
+
+	
+	/**
+	 * Permet à l'utilisateur de sélectionner les fichiers 
+	 * à importer sur l'application.
+	 * 
+	 * @return Nombre de questions qui n'ont pas pu 
+	 * 		   être ajoutées
+	 */
+	public void importation()
+	throws FileNotFoundException, IOException {
+		
+		this.parcourirFichiers();
+		this.extraireDonnees();
+		
+	}
+	
+	
+	/**
+	 * Lecture du CSV ligne par ligne,
+	 * Pour chaque lignes, les données sont extraites
+	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
+	 * soient ajouter à l'application.
+	 */
+	private void extraireDonnees()
+	throws IOException {
+		
+		String ligne;
+		
+		BufferedReader contenuFichier;
+		
+		contenuFichier = new BufferedReader(new FileReader(this.cheminFichier));
+		
+		// Ne pas affecter le contenu de la première ligne.
+		contenuFichier.readLine();
+		
+		while ((ligne = contenuFichier.readLine()) != null) {
+			creationQuestion(ligne);
+		}
+		
+		contenuFichier.close();
+		
+	}
+	
 	
 	/**
 	 * Créé et ajoute à la liste des questions en mémoire la question dont
@@ -53,7 +109,7 @@ public class Import {
 	 * @param donneesQuestion Chaîne de caractères contenant
 	 *                        les données d'une question à créer.
 	 */
-	public static void creationQuestion(String donneesQuestion) {
+	public void creationQuestion(String donneesQuestion) {
 		String intituleCategorie,
 		       intituleQuestion,
 		       reponseJuste,
@@ -85,8 +141,11 @@ public class Import {
 		reponseJuste = donneesDecoupees[3].trim();
 		
 		reponsesFausses = new String[] {
-			donneesDecoupees[4].trim(), donneesDecoupees[5].trim(),
-			donneesDecoupees[6].trim(), donneesDecoupees[7].trim()};
+			donneesDecoupees[4].trim(), 
+			donneesDecoupees[5].trim(),
+			donneesDecoupees[6].trim(), 
+			donneesDecoupees[7].trim()
+		};
 		
 		feedback = donneesDecoupees[8].trim();
 		
@@ -94,48 +153,76 @@ public class Import {
 			jeu.creerCategorie(intituleCategorie);
 		}
 		
+		this.nombreTotalQuestions++;
+		
 		if (jeu.indiceQuestion(intituleQuestion, intituleCategorie,
 				               reponseJuste, reponsesFausses) == -1) {
+			
 			jeu.creerQuestion(intituleQuestion, reponseJuste,
 					          reponsesFausses, niveauDifficulte,
 					          feedback, intituleCategorie);
+			
 		} else {
-			questionsNonAjoutees.add(intituleQuestion);
+			this.questionsNonAjoutees.add(intituleQuestion);
 		}
+		
+		System.out.println();  // TODO: retirer en production
 	}
 	
 	
 	/**
-	 * Créé et ajoute à la liste des catégories en mémoire les catégories dont
-	 * les noms sont en paramètre.
+	 * Sélection de fichier parmi ceux de l'utilisateur 
+	 * via une fenêtre native.
 	 * 
-	 * @param nomsCategories Chaîne de caractères contenant tous les noms
-	 *        des catégories à créer.
+	 * Sauvegarde du chemin de fichier sélectionné.
 	 */
-	public static void creationCategories(String[] nomsCategories) {
-		for (String nomCategorie : nomsCategories) {	
-			if (jeu.indiceCategorie(nomCategorie.trim()) == -1) {
-				jeu.creerCategorie(nomCategorie.trim());
-			}
-		}		
+	public void parcourirFichiers()
+	throws FileNotFoundException {
+		
+		final FileChooser choixFichier = new FileChooser();
+		
+		// Titre de l'explorateur de fichier
+        choixFichier.setTitle("Importer des données");
+        
+        // Filtre des extensions de fichier
+        choixFichier.getExtensionFilters().add(
+        		new FileChooser.ExtensionFilter("CSV", "*.csv"));
+
+        // Ouverture de l'explorateur de fichier à la racine
+        choixFichier.setInitialDirectory(new File(System.getProperty("user.home")));
+        
+        File fichierSelectionne = choixFichier.showOpenDialog(null);
+        
+        if (fichierSelectionne == null) {
+        	throw new FileNotFoundException(ERREUR_CHEMIN_INEXISTANT);
+        }
+        
+        this.cheminFichier = fichierSelectionne.getPath();
+        
 	}
 	
-//	private static ArrayList<String> repFaussesFacultativeInitialise(String[] repFaussesFacultative) {
-//		ArrayList<String> repFaussesInitialise = new ArrayList<String>();
-//		for (String reponse : repFaussesFacultative) {
-//			if (reponse != null && !reponse.isBlank()) {
-//				repFaussesInitialise.add(reponse);
-//			}
-//		}
-//		return repFaussesInitialise;
-//	}
+	
+	/** @return Nombre total de questions (ajoutées ou non). */
+	public int getNombreTotalQuestions() {
+		return this.nombreTotalQuestions;
+	}
+	
+	
+	/** 
+	 * @return Liste des questions non ajoutées 
+	 * (déjà existante ou autre). 
+	 */
+	public ArrayList<String> getQuestionsNonAjoutees() {
+		return this.questionsNonAjoutees;
+	}
+	
 	
 	/**
 	 * Retrait des guillemets doublés par le formattage CSV d'une phrase
 	 * passée en paramètre.
 	 * 
-	 * @param phrase Phrase à modifier.
-	 * @return la phrase avec des guillemets initiaux.
+	 * @param phrase Phrase à modifier
+	 * @return La phrase avec des guillemets initiaux
 	 */
 	private static String retirerGuillemetsInvalides(String phrase) {
 		final char CARACTERE_QUELCONQUE = 'µ';
@@ -154,44 +241,37 @@ public class Import {
 			
 			if (caractereCourant == GUILLEMET
 			    && caractereSuivant == GUILLEMET) {
+				
 				resultat += caractereCourant;
+				
 				if (i + 2 < phrase.length()) {
 					i++;
 				}
-			} else if (caractereCourant != '"') {
+				
+			} else if (caractereCourant != GUILLEMET) {
 				resultat += caractereCourant;
 			}
 		}
+		
 		return resultat;
 	}
 	
-	/**
-	 * Lecture du CSV ligne par ligne,
-	 * Pour chaque lignes, les données sont extraites
-	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
-	 * soient ajouter à l'application.
-	 * @param cheminFichier
-	 */
-	private static void extractionDonnees(String cheminFichier) {
-		String ligne;
-		
-		try (BufferedReader fichier = new BufferedReader
-							(new FileReader(cheminFichier))) {
-			//ne pas affecté le contenue de la première ligne;
-			fichier.readLine();
-			while ((ligne = fichier.readLine()) != null) {
-				creationQuestion(ligne);
-				System.out.println();
-			}
-		} catch (IOException e) {
-			//Cette façon de gérer cette erreur est temporaire.
-			System.out.println(e.getMessage());
-		}
-	}
 	
-	/** @return Les questions non ajoutées (déjà présentes ou autre). */
-	public static ArrayList<String> getQuestionNonAjoutes() {
-		return questionsNonAjoutees;
+	/**
+	 * Créé et ajoute à la liste des catégories en mémoire les catégories dont
+	 * les noms sont en paramètre.
+	 * 
+	 * @param nomsCategories Chaîne de caractères contenant tous les noms
+	 *        des catégories à créer.
+	 */
+	public static void creationCategories(String[] nomsCategories) {
+		for (String nomCategorie: nomsCategories) {	
+			nomCategorie = nomCategorie.trim();
+			
+			if (jeu.indiceCategorie(nomCategorie) == -1) {
+				jeu.creerCategorie(nomCategorie);
+			}
+		}		
 	}
 	
 }

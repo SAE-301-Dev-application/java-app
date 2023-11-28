@@ -305,13 +305,17 @@ public class Client {
 	throws IOException, ClassNotFoundException {
 		String[] questionsFormatStr;
 		
+		Import importation;
+
+		importation = new Import();
+		
 		creerSocket(adresseServeur);
 		envoyerCleVigenere();
 		
 		questionsFormatStr = recevoirQuestions();
 		
 		for (String questionCourante : questionsFormatStr) {
-			Import.creationQuestion(questionCourante);
+			importation.creationQuestion(questionCourante);
 		}
 		
 		fermerSockets();
