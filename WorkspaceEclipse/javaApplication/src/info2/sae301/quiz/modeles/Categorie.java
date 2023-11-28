@@ -54,7 +54,7 @@ public class Categorie implements Serializable {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
 		}
-		
+		assurerCaracteres(intitule);
 		this.intitule = intitule;
 		this.listeQuestions = new ArrayList<Question>();
 	}
