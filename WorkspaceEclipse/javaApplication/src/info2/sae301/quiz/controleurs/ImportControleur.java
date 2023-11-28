@@ -10,8 +10,11 @@ import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
 import java.io.FileNotFoundException; 
 import java.io.IOException;
+import java.nio.file.Path;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -79,6 +82,9 @@ public class ImportControleur {
 	 */
 	@FXML
 	private TextField champIpServeur;
+	
+	@FXML
+	private Label cheminCourant;
 
 	/**
 	 * Ouverture de la fenêtre native d'ouverture de 
@@ -86,8 +92,23 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonParcourir() {
+		final String LABEL_NOM_FICHIER_SELECTIONNE
+		= "Fichier sélectionné : %s";
+		
+		String nomFichierSelectionne;
+		
+		Path objetCheminCourant;
+		
 		try {
 			this.importation.parcourirFichiers();
+			
+			objetCheminCourant = Path.of(this.importation.getCheminFichier());
+			nomFichierSelectionne = objetCheminCourant.getFileName().toString();
+			
+			this.cheminCourant.setText(
+				String.format(LABEL_NOM_FICHIER_SELECTIONNE, 
+							  nomFichierSelectionne)
+			);
 		} catch (FileNotFoundException e) {
 			erreurCheminInexistant();
 		}

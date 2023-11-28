@@ -38,6 +38,12 @@
                </children>
             </VBox>
             <Label layoutX="26.0" layoutY="154.0" styleClass="sous-titre" text="En ligne :" />
+            <Label fx:id="cheminCourant" layoutX="403.0" layoutY="104.0" prefHeight="17.0" prefWidth="280.0">
+               <styleClass>
+                  <String fx:value="centrer" />
+                  <String fx:value="label-champ" />
+               </styleClass>
+            </Label>
          </children>
       </Pane>
       <Button layoutX="50.0" layoutY="524.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" styleClass="bouton" text="ANNULER" />
