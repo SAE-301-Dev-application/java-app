@@ -54,17 +54,11 @@ public class SuppressionQuestionsControleur {
 	/** Toutes les questions dont la checkbox a été sélectionnée. */
 	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
 	
-	private HBox ligneQuestion;
-	
-	private CheckBox checkBoxQuestion;
-	
 	/** Indice de la première question affichée sur la "page" courante. */
 	private int indiceQuestion = 0; 
 	
 	/** Nom de la première catégorie affichée sur la "page" courante. */
 	private String categorieCourante = "Toutes les catégories";
-	
-	private Label questionCourante;
 	
 	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
@@ -120,11 +114,11 @@ public class SuppressionQuestionsControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	ligneQuestion = new HBox();
+	    	CheckBox checkBoxQuestion;
 	    	
 	    	checkBoxQuestion = new CheckBox();
 	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
-	    	checkBoxQuestion.setId("" + i);
+//	    	checkBoxQuestion.setId("" + i);
 	    	
 	    	if (i >= toutesLesCheckBox.size()) {
 	    		toutesLesCheckBox.add(checkBoxQuestion);
@@ -132,10 +126,10 @@ public class SuppressionQuestionsControleur {
 	    		checkBoxQuestion = toutesLesCheckBox.get(i);
 	    	}
 	    	
-	    	questionCourante = new Label(questionsAAfficher.get(i)
+	    	checkBoxQuestion.setText(questionsAAfficher.get(i)
 	    			                     .getIntitule().replaceAll("\n", " "));
-	        questionCourante.getStyleClass().add("intituleCategorieQuestion");
-	        questionCourante.getStyleClass().add("intitule-padding-left");
+	    	checkBoxQuestion.getStyleClass().add("intituleCategorieQuestion");
+	    	checkBoxQuestion.getStyleClass().add("intitule-padding-left");
 	        
 	        final int INDICE = i;
 	        
@@ -143,10 +137,7 @@ public class SuppressionQuestionsControleur {
 	        	selectionnerQuestion(INDICE);
 	        });
 	        
-	        ligneQuestion.getChildren().add(checkBoxQuestion);
-	        ligneQuestion.getChildren().add(questionCourante);
-	        
-	        vBoxQuestions.getChildren().add(ligneQuestion);
+	        vBoxQuestions.getChildren().add(checkBoxQuestion);
 	    }
 	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes

@@ -67,9 +67,6 @@ public class ImportControleur {
 		return ip.matches(REGEX_IPV4);
 	}
 	
-	public void initialize() {
-		this.importation = new Import();
-	}
 	
 	private Import importation;
 	
@@ -80,6 +77,12 @@ public class ImportControleur {
 	@FXML
 	private TextField champIpServeur;
 
+	@FXML
+	private void initialize() {
+		this.importation = new Import();
+	}
+	
+	
 	/**
 	 * Ouverture de la fenêtre native d'ouverture de 
 	 * document.
