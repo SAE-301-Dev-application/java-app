@@ -135,7 +135,13 @@ public class ImportControleur {
 						                     ERREUR_FORMAT_INVALIDE_TITRE,
 						                     AlertType.ERROR);
 			}
-			
+		} else {
+			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+					 ERREUR_AUCUN_CHEMIN_TITRE, 
+					 AlertType.ERROR);
+		}
+		
+		if (importationReussie) {
 			nombreQuestionsNonImportees 
 			= this.importation.getQuestionsNonAjoutees().size();
 			
@@ -187,10 +193,6 @@ public class ImportControleur {
 			
 			NavigationControleur.changerVue("Import.fxml");
 			
-		} else {
-			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
-										 ERREUR_AUCUN_CHEMIN_TITRE, 
-										 AlertType.ERROR);
 		}
 	}
 	
