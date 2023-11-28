@@ -1,5 +1,5 @@
 /*
- * SuppressionCategoriesControleur.java								 7 nov. 2023
+p * SuppressionCategoriesControleur.java								 7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -58,12 +58,6 @@ public class SuppressionCategoriesControleur {
 	/** Toutes les catégories dont la checkbox de sélection a été cochée. */
 	private ArrayList<String> categoriesSelectionnees = new ArrayList<>();
 	
-	private HBox ligneCategorie;
-	
-	private CheckBox checkBoxCategorie;
-	
-	private Label categorieCourante;
-	
 	/** Les checkbox ajoutées devant les catégories. */
 	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
 	
@@ -96,13 +90,13 @@ public class SuppressionCategoriesControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-			ligneCategorie = new HBox();
+	    	CheckBox checkBoxCategorie;
 			
 			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
 			
 			checkBoxCategorie = new CheckBox();
 			checkBoxCategorie.getStyleClass().add("checkbox-margin");
-			checkBoxCategorie.setId("" + i);
+//			checkBoxCategorie.setId("" + i);
 			
 			// Si la checkbox n'a pas déjà été ajoutée
 			if (i >= toutesLesCheckBox.size()) {
@@ -111,11 +105,11 @@ public class SuppressionCategoriesControleur {
 				checkBoxCategorie = toutesLesCheckBox.get(i);
 			}
 			
-	        categorieCourante = new Label(intituleCategorie);
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        categorieCourante.getStyleClass().add("intitule-padding-left");
+	        checkBoxCategorie.setText(intituleCategorie);
+	        checkBoxCategorie.getStyleClass().add("intituleCategorieQuestion");
+	        checkBoxCategorie.getStyleClass().add("intitule-padding-left");
 	        
-	        ligneCategorie.getChildren().add(checkBoxCategorie);
+	        vBoxCategories.getChildren().add(checkBoxCategorie);
 	        
 	        if (!intituleCategorie.equals("Général")) {
 	        	final int INDICE = i;
@@ -127,8 +121,6 @@ public class SuppressionCategoriesControleur {
 				checkBoxCategorie.setDisable(true);
 			}
 	        
-			ligneCategorie.getChildren().add(categorieCourante);
-			vBoxCategories.getChildren().add(ligneCategorie);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
 	    boutonPrecedent.setVisible(!(indiceCategorie < 10));
