@@ -38,17 +38,17 @@ class TestVigenere {
 	void testChiffrer() {
 		assertEquals(chiffrer("bonsoir", "bonsoir"),"Ê⁸⁴,⁸S£");
 		assertEquals(chiffrer("aaaaaaaaaaaaa", "bâtiments"),"CÄUÌNÉÑUTCÄUÌ");
-		assertEquals(chiffrer("if (allOk) {\n\treturn allOk;\n}", "sxdcfvgbnhj:;,nb"),"⁷/}¤G`Ûp1çæ&-⁺\tH;BYP!WÛÖ6Ûì⁻_");
-		assertEquals(chiffrer("589653258796524877965896", "Loic m'a fait perdre une heure"),"!B; r!s⁵u=⁹£ÊPÇ[Ê#F#rHÆ#");
-		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)=", "Mon Simon est mon bro"),"dÙçwhÃJñN⁹cQS9cnÊ⁰{0IœÔh⁵");
+		assertEquals(chiffrer("if (allOk) {\n\treturn allOk;\n}", "sxdcfvgbnhj:;,nb"),"⁷/}¤G`Ûp1ÇÆ	⁺+	H;æYP!WÛÖ6ÛÌ-`");
+		assertEquals(chiffrer("589653258796524877965896", "Loic m'a fait perdre une heure"),"!æ; R!S⁵U=⁹£èœc[è#ë#Rgã#");
+		assertEquals(chiffrer("&é/*-\".<>,;:!?/§'(-è_çà)=", "Mon Simon est mon bro"),"DÙÇWHäïÑm9Cpr⁸CNè0{0hœÔH5");
 	}
 
 	@Test
 	void testDechiffrer() {
 		assertEquals(dechiffrer("Ê⁸⁴,⁸S£", "bonsoir"),"bonsoir");
 		assertEquals(dechiffrer("CÄUÌNÉÑUTCÄUÌ", "bâtiments"),"aaaaaaaaaaaaa");
-		assertEquals(dechiffrer("⁷/}¤G`Ûp1çæ&-⁺\tH;BYP!WÛÖ6Ûì⁻_", "sxdcfvgbnhj:;,nb"),"if (allOk) {\n\treturn allOk;\n}");
-		assertEquals(dechiffrer("!B; r!s⁵u=⁹£ÊPÇ[Ê#F#rHÆ#", "Loic m'a fait perdre une heure"),"589653258796524877965896");
-		assertEquals(dechiffrer("dÙçwhÃJñN⁹cQS9cnÊ⁰{0IœÔh⁵", "Mon Simon est mon bro"),"&é/*-\".<>,;:!?/§'(-è_çà)=");
+		assertEquals(dechiffrer("⁷/}¤G`Ûp1ÇÆ	⁺+	H;æYP!WÛÖ6ÛÌ-`", "sxdcfvgbnhj:;,nb"),"if (allOk) {\n\treturn allOk;\n}");
+		assertEquals(dechiffrer("!æ; R!S⁵U=⁹£èœc[è#ë#Rgã#", "Loic m'a fait perdre une heure"),"589653258796524877965896");
+		assertEquals(dechiffrer("DÙÇWHäïÑm9Cpr⁸CNè0{0hœÔH5", "Mon Simon est mon bro"),"&é/*-\".<>,;:!?/§'(-è_çà)=");
 	}
 }

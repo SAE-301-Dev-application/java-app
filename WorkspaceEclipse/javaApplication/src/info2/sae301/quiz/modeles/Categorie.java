@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.modeles;
 
+import static info2.sae301.quiz.modeles.Dictionnaire.getDictionnaireReversed;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects; 
@@ -71,7 +73,7 @@ public class Categorie implements Serializable {
 		if (intitule.isBlank() || intitule.isEmpty()) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
 		}
-		
+		assurerCaracteres(intitule);
 		this.intitule = intitule;
 		this.listeQuestions = questions;
 	}
@@ -83,6 +85,21 @@ public class Categorie implements Serializable {
     }
 
 	
+	/**
+	 * Vérification de la validité des caractères
+	 * 
+	 * @param aVerfier
+	 * @throws IllegalArgumentException 
+	 */
+	private static void assurerCaracteres(String aVerifier) 
+			throws IllegalArgumentException {
+		
+		for (int i = 0; i < aVerifier.length(); i++) {
+			if (getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				throw new IllegalArgumentException("Le caractère n'est pas supporté par l'application");
+			}
+		}	
+	}
     /**
      * Ajoute à listeQuestions la question en paramètre
      * 

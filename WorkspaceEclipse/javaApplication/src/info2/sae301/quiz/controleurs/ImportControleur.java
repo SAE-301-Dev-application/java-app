@@ -1,5 +1,6 @@
 package info2.sae301.quiz.controleurs;
 
+import java.io.FileNotFoundException; 
 import java.io.IOException;
 
 import info2.sae301.quiz.reseau.Import;
@@ -8,6 +9,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 public class ImportControleur {
+	
+	private final static String ERREUR_CHEMIN_INEXISTANT_TITRE
+	= "ERREUR AU CHARGEMENT D'UN FICHIER";
+	
+	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
+	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
+	
+	private final static String ERREUR_CARACTERE_INTERDIT_TITRE
+	= "CARACTÈRE INTERDIT DÉTECTÉ";
 	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
@@ -43,9 +53,9 @@ public class ImportControleur {
 	@FXML
 	private void actionBoutonParcourir() {
 		try {
-			this.importation.importation();
-		} catch (IOException e) {
-			AlerteControleur.autreAlerte("msg", "titre", AlertType.ERROR);  // TODO
+			this.importation.parcourirFichiers();
+		} catch (FileNotFoundException e) {
+			erreurCheminInexistant();
 		}
 	}
 	
@@ -62,12 +72,31 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		Import importation = new Import();
-		try {
-			importation.importation();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String cheminCourant;
+		cheminCourant = this.importation.getCheminFichier();
+		
+		if (cheminCourant != null
+			&& !cheminCourant.isBlank()) {
+			
+			try {
+				this.importation.importer();
+			} catch (IOException e) {
+				erreurCheminInexistant();
+			} catch (IllegalArgumentException e) {
+				AlerteControleur.autreAlerte(e.getMessage(), 
+											 ERREUR_CARACTERE_INTERDIT_TITRE, 
+											 AlertType.ERROR);
+			}
+			
+			System.out.println("Question non ajoutées : "
+					+ this.importation.getQuestionsNonAjoutees());
+			
 		}
+	}
+	
+	private static void erreurCheminInexistant() {
+		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
+									 ERREUR_CHEMIN_INEXISTANT_TITRE, 
+									 AlertType.ERROR);
 	}
 }
