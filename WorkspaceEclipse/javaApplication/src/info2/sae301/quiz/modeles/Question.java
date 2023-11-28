@@ -377,6 +377,7 @@ public class Question implements Serializable {
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		assurerCaracteres(intitule);
 		this.intitule = intitule;
 	}
 
@@ -384,6 +385,7 @@ public class Question implements Serializable {
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
+		assurerCaracteres(intitule);
 		this.reponseJuste = reponseJuste;			
 	}
 
@@ -391,12 +393,14 @@ public class Question implements Serializable {
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
         assurerValiditeReponsesFausses(reponsesFausses);
+        assurerCaracteres(intitule);
 		this.reponsesFausses = reponsesFausses;
 	}
 	
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
+		assurerCaracteres(intitule);
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
@@ -406,6 +410,7 @@ public class Question implements Serializable {
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
+		assurerCaracteres(intitule);
 		if (feedback != null && !feedback.isEmpty()) {
 			assurerTaille(feedback, "d'un feedback", 1, 500);			
 		}
@@ -414,6 +419,7 @@ public class Question implements Serializable {
 
 	/** @param categorie the categorie à changer */
 	public void setCategorie(Categorie categorie) {
+		assurerCaracteres(intitule);
 		this.categorie = categorie;
 	}
 	

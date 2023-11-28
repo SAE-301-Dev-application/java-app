@@ -150,7 +150,7 @@ public class Categorie implements Serializable {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(ERR_TAILLE_ARG_MAX);
 		}
-		
+		assurerCaracteres(intitule);
 		if (intitule.length() > 0
 		    && !intitule.isBlank() 
 		    && intitule.length() <= 20) {
