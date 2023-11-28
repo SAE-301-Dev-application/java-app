@@ -23,7 +23,7 @@
       </Button>
       <ScrollPane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <content>
-            <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="357.0" prefWidth="731.0" spacing="10.0" VBox.vgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="337.0" prefWidth="731.0" spacing="10.0" styleClass="vbox-liste" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="TOP_RIGHT" prefHeight="13.0" prefWidth="717.0">
                      <children>
@@ -35,6 +35,16 @@
                      </children>
                   </HBox>
                   <Text fx:id="intituleQuestion" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="intituleQuestion" text="intituleQuestion" wrappingWidth="630.0" />
+                  <HBox prefHeight="294.0" prefWidth="727.0" styleClass="centrer">
+                     <children>
+                        <VBox fx:id="vBoxQuestionReponses" prefHeight="259.0" prefWidth="380.0">
+                           <styleClass>
+                              <String fx:value="vbox-liste" />
+                              <String fx:value="centrer-verticale" />
+                           </styleClass>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
                <opaqueInsets>
                   <Insets />

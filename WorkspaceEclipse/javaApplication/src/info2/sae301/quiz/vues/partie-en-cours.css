@@ -28,6 +28,7 @@
 	-fx-text-fill: white;
 	-fx-font-size: 20px;
 	-fx-font-weight: bold;
+	-fx-text-alignment: center;
 	
 	-fx-max-width: 630px;
 	-fx-pref-width: 630px;
