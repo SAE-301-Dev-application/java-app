@@ -544,6 +544,11 @@ class TestQuestion {
 		
 	}
 	
+	
+	/**
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Question#verifierAttributs()}.
+	 */
 	@Test
 	void testVerifierAttributs() {
 		assertDoesNotThrow(() -> {Question.verifierAttributs(questionAF.getIntitule(),
@@ -604,6 +609,10 @@ class TestQuestion {
 	}
 	
 	
+	/**
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Question#assurerCaracteres()}.
+	 */
 	@Test
 	void testAssurerCaracteres() {
 		String[] chainesValides = {"azertyu", "|\\:;.?!\n{}*/-+=\t^@,", "la chaîne est valide"};

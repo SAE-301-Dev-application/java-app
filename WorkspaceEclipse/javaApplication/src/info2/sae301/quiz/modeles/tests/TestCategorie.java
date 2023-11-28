@@ -231,6 +231,30 @@ class TestCategorie {
 		assertEquals(conjugaison.getListeQuestions().size(), 0);
 	}
 	
+	
+	/**
+	 * Test method for 
+	 * {@link info2.sae301.quiz.modeles.Categorie#assurerCaracteres()}.
+	 */
+	@Test
+	void testAssurerCaracteres() {
+		String[] chainesValides = {"azertyu", "|\\:;.?!\n{}*/-+=\t^@,", "la chaîne est valide"};
+		String[] chainesInvalides = {"azer☺tyu", "|\\:;.└↓!\n{}*/-+=\t^@,", "la🤌🫵 ch😊aîne est invalide"};
+		
+		for (int i = 0; i < chainesValides.length; i++) {
+			final int INDICE = i;
+			assertDoesNotThrow(() -> {Question.assurerCaracteres(chainesValides[INDICE]);});
+		}
+		
+		for (int i = 0; i < chainesInvalides.length; i++) {
+			final int INDICE = i;
+			assertThrows(IllegalArgumentException.class,() -> {
+				Question.assurerCaracteres(chainesInvalides[INDICE]);
+			});
+		}
+		
+	}
+	
 	/**
 	 * Test method for 
 	 * {@link info2.sae301.quiz.modeles.Categorie#equals(Object)}.
