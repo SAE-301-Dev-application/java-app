@@ -1,3 +1,8 @@
+/*
+ * ImportControleur.java							                28 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.io.FileNotFoundException; 
@@ -8,6 +13,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
+/**
+ * Contrôleur FXML de la vue Import qui permet d'importer depuis un fichier
+ * CSV local ou depuis un ordinateur distant des questions et catégories.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class ImportControleur {
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_TITRE
@@ -18,6 +33,15 @@ public class ImportControleur {
 	
 	private final static String ERREUR_CARACTERE_INTERDIT_TITRE
 	= "CARACTÈRE INTERDIT DÉTECTÉ";
+	
+	private final static String IMPORTATION_SUCCESS_TITRE
+	= "IMPORTATION TERMINÉE";
+	
+	private final static String IMPORTATION_SUCCESS_MESSAGE
+	= "L'importation de %d questions s'est terminée avec succès.";
+	
+	private final static String QUESTIONS_NON_IMPORTEES
+	= " Néanmoins, %d questions n'ont pas pu être importées :";
 	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
@@ -72,7 +96,13 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		String cheminCourant;
+		int nombreQuestionsImportees,
+			nombreQuestionsNonImportees,
+			nombreQuestionsNonImporteesAAfficher;
+		
+		String cheminCourant,
+			   messageImportationSucces;
+		
 		cheminCourant = this.importation.getCheminFichier();
 		
 		if (cheminCourant != null
@@ -84,12 +114,55 @@ public class ImportControleur {
 				erreurCheminInexistant();
 			} catch (IllegalArgumentException e) {
 				AlerteControleur.autreAlerte(e.getMessage(), 
-											 ERREUR_CARACTERE_INTERDIT_TITRE, 
+											 ERREUR_CARACTERE_INTERDIT_TITRE,
 											 AlertType.ERROR);
 			}
 			
-			System.out.println("Question non ajoutées : "
-					+ this.importation.getQuestionsNonAjoutees());
+			nombreQuestionsNonImportees 
+			= this.importation.getQuestionsNonAjoutees().size();
+			
+			nombreQuestionsImportees 
+			= this.importation.getNombreTotalQuestions() 
+			  - nombreQuestionsNonImportees;
+			
+			if (nombreQuestionsImportees == 0) {
+				messageImportationSucces
+				= "Aucune question n'a été importée.";
+			} else if (nombreQuestionsNonImportees > 0) {
+				messageImportationSucces 
+				= String.format(IMPORTATION_SUCCESS_MESSAGE 
+								+ QUESTIONS_NON_IMPORTEES, 
+								nombreQuestionsImportees, 
+								nombreQuestionsNonImportees);
+				
+				nombreQuestionsNonImporteesAAfficher
+				= Math.min(10, nombreQuestionsNonImportees);
+				
+				for (int i = 0; 
+					 i < nombreQuestionsNonImporteesAAfficher; 
+					 i++) {
+					
+					messageImportationSucces 
+					+= '\n' 
+					   + this.importation.getQuestionsNonAjoutees().get(i);
+					
+				}
+				
+				if (nombreQuestionsNonImporteesAAfficher 
+					< nombreQuestionsNonImportees) {
+					
+					messageImportationSucces += '\n' + "Et X autres questions...";
+					
+				}
+			} else {
+				messageImportationSucces 
+				= String.format(IMPORTATION_SUCCESS_MESSAGE, 
+								nombreQuestionsImportees);
+			}
+
+			AlerteControleur.autreAlerte(messageImportationSucces, 
+										 IMPORTATION_SUCCESS_TITRE, 
+										 AlertType.INFORMATION);
 			
 		}
 	}
