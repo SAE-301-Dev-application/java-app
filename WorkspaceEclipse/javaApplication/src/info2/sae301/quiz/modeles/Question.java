@@ -5,7 +5,10 @@
 
 package info2.sae301.quiz.modeles;
 
+import static info2.sae301.quiz.modeles.Dictionnaire.*;
+
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -128,10 +131,12 @@ public class Question implements Serializable {
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback à afficher pour corriger la réponse.
 	 * @param categorie La catégorie contenant la question.
+	 * @throws  
+	 * @throws IllegalArgumentException 
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, String feedback,
-			        Categorie categorie) {
+			        Categorie categorie) throws IllegalArgumentException {
 
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte,
 				          feedback);
@@ -140,6 +145,7 @@ public class Question implements Serializable {
 		this.reponsesFausses = reponsesFausses;
 		this.difficulte = difficulte;
 		this.categorie = categorie;
+		assurerCaracteres(feedback);
 		this.feedback = feedback;
 	}
 	
@@ -160,8 +166,9 @@ public class Question implements Serializable {
 	throws IllegalArgumentException {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		assurerCaracteres(intitule);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
-		
+		assurerCaracteres(reponseJuste);
 		// Vérification de la taille des réponses fausses
 		assurerValiditeReponsesFausses(reponsesFausses);
 		// Vérification de l'unicité des réponses
@@ -174,6 +181,23 @@ public class Question implements Serializable {
 	
 	
 	/**
+	 * Vérification de la validité des caractères
+	 * 
+	 * @param aVerfier
+	 * @throws IllegalArgumentException 
+	 */
+	private static void assurerCaracteres(String aVerifier) 
+			throws IllegalArgumentException {
+		
+		for (int i = 0; i < aVerifier.length(); i++) {
+			if (getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				throw new IllegalArgumentException("Le caractère n'est pas supporté par l'application");
+			}
+		}	
+	}
+
+
+	/**
 	 * Vérification puis initialisation des attributs pour 
 	 * les deux constructeurs.
 	 * 
@@ -184,6 +208,7 @@ public class Question implements Serializable {
 	 * @param feedback Le feedback.
 	 * @throws IllegalArgumentException si les attributs ne respectent 
 	 * pas les tailles demandées.
+	 * @throws UnsupportedEncodingException 
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte,
@@ -287,6 +312,7 @@ public class Question implements Serializable {
 		}
 		
 		for (int i = 0; i < reponsesFausses.length; i++) {
+			assurerCaracteres(reponsesFausses[i]);
 			if (i == 0) {
 				if (reponsesFausses[i] == null || reponsesFausses[i].isEmpty()) {
 					throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
@@ -527,7 +553,7 @@ public class Question implements Serializable {
 	 * point virgule ou un guillemet est présent.
 	 * 
 	 * @param texte Le texte à vérifier.
-	 * @return le texte formatté.
+	 * @return le texte formaté.
 	 */
 	public String formatterTexte(String texte) {
 		final String GUILLEMET = "\"";
@@ -579,7 +605,8 @@ public class Question implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(reponsesFausses);
-		result = prime * result + Objects.hash(categorie, difficulte, feedback, intitule, reponseJuste);
+		result = prime * result + Objects.hash(categorie, difficulte,
+											feedback, intitule, reponseJuste);
 		return result;
 	}
 	
