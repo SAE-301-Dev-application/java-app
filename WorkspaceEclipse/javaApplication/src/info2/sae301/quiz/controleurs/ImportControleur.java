@@ -11,6 +11,12 @@ import javafx.scene.control.TextField;
 
 public class ImportControleur {
 	
+	private final static String ERREUR_CHEMIN_INEXISTANT_TITRE
+	= "ERREUR AU CHARGEMENT D'UN FICHIER";
+	
+	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
+	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
+	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
 	
@@ -45,9 +51,9 @@ public class ImportControleur {
 	@FXML
 	private void actionBoutonParcourir() {
 		try {
-			this.importation.importation();
-		} catch (IOException e) {
-			AlerteControleur.autreAlerte("msg", "titre", AlertType.ERROR);  // TODO
+			this.importation.parcourirFichiers();
+		} catch (FileNotFoundException e) {
+			erreurCheminInexistant();
 		}
 	}
 	
@@ -64,14 +70,27 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		if (ImportLocal.getCheminFichier() != null
-			&& !ImportLocal.getCheminFichier().isBlank()) {
+		String cheminCourant;
+		cheminCourant = this.importation.getCheminFichier();
+		
+		if (cheminCourant != null
+			&& !cheminCourant.isBlank()) {
 			
-			ImportLocal.importation();
+			try {
+				this.importation.importer();
+			} catch (IOException e) {
+				erreurCheminInexistant();
+			}
 			
 			System.out.println("Question non ajoutées : "
-					+ Import.getQuestionNonAjoutes());
+					+ this.importation.getQuestionsNonAjoutees());
 			
 		}
+	}
+	
+	private static void erreurCheminInexistant() {
+		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
+									 ERREUR_CHEMIN_INEXISTANT_TITRE, 
+									 AlertType.ERROR);
 	}
 }
