@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
 /**
@@ -94,10 +95,10 @@ public class Import {
 			contenuFichier.close();
 			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
 		} else {
-			System.out.println(premiereLigne);
-			
+			OutilsCSV.initialiserFichierCSV();
 			while ((ligneCourante = contenuFichier.readLine()) != null) {
 				creationQuestion(ligneCourante);
+				OutilsCSV.ecrireLigneCSV(ligneCourante);
 			}
 		}
 		
