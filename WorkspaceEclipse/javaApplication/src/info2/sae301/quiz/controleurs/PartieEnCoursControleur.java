@@ -13,6 +13,7 @@ import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -125,7 +126,7 @@ public class PartieEnCoursControleur {
 	 * Liste de Radio qui contient toutes les réponses
 	 * de la question courante.
 	 */
-	private ArrayList<RadioButton> touteslesRadioReponses;
+	private ArrayList<CheckBox> touteslesRadioReponses;
 	
 	/**
 	 * Méthode d'initialisation de la vue.
@@ -193,7 +194,7 @@ public class PartieEnCoursControleur {
 		String reponseUtilisateur;
 		reponseUtilisateur = "";
 		
-		for (RadioButton reponse: this.touteslesRadioReponses) {
+		for (CheckBox reponse: this.touteslesRadioReponses) {
 			if (reponse.isSelected()) {
 				reponseUtilisateur = reponse.getText();
 			}
@@ -229,6 +230,15 @@ public class PartieEnCoursControleur {
 		
 		NavigationControleur.changerVue("ResultatsPartie.fxml");
 	}
+	
+	private void decocherCheckBox(CheckBox checkboxReponse) {
+		for (CheckBox autresCheckbox : touteslesRadioReponses) {
+			if (!autresCheckbox.equals(checkboxReponse)) {
+				autresCheckbox.setSelected(false);
+			}
+		}
+	}
+	
 	
 	/**
 	 * Initialisation de la vue qui affiche la
@@ -268,19 +278,22 @@ public class PartieEnCoursControleur {
 	 */
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
-		touteslesRadioReponses = new ArrayList<RadioButton>();
-		ToggleGroup radioGroupe = new ToggleGroup();
+		touteslesRadioReponses = new ArrayList<>();
+//		ToggleGroup radioGroupe = new ToggleGroup();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
 			if (!reponsesMelange.get(i).isBlank()) {
-				RadioButton afficherReponse = new RadioButton(reponsesMelange.get(i));
+				CheckBox afficherReponse = new CheckBox(reponsesMelange.get(i));
 				if (partieCourante.radioDejaSelectionne(reponsesMelange.get(i))) {
 					afficherReponse.setSelected(true);
 				}
 				afficherReponse.getStyleClass().add("reponse");
 				afficherReponse.setId("" + i);
-				afficherReponse.setToggleGroup(radioGroupe);
+//				afficherReponse.setToggleGroup(radioGroupe);
+				afficherReponse.setOnAction(event -> {
+					this.decocherCheckBox(afficherReponse);
+				});
 				
 				vBoxQuestionReponses.getChildren().add(afficherReponse);
 				touteslesRadioReponses.add(afficherReponse);

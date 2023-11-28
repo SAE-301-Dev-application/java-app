@@ -1,10 +1,8 @@
 package info2.sae301.quiz.controleurs;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import info2.sae301.quiz.reseau.Import;
-import info2.sae301.quiz.reseau.ImportLocal;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
@@ -64,14 +62,12 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		if (ImportLocal.getCheminFichier() != null
-			&& !ImportLocal.getCheminFichier().isBlank()) {
-			
-			ImportLocal.importation();
-			
-			System.out.println("Question non ajoutées : "
-					+ Import.getQuestionNonAjoutes());
-			
+		Import importation = new Import();
+		try {
+			importation.importation();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
