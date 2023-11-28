@@ -40,8 +40,14 @@ public class ImportControleur {
 	private final static String IMPORTATION_SUCCESS_MESSAGE
 	= "L'importation de %d questions s'est terminée avec succès.";
 	
+	private final static String ERREUR_AUCUN_CHEMIN_TITRE
+	= "AUCUN CHEMIN SPÉCIFIÉ";
+	
+	private final static String ERREUR_AUCUN_CHEMIN_MESSAGE
+	= "Importation impossible. Aucun chemin n'a été spécifié.";
+	
 	private final static String QUESTIONS_NON_IMPORTEES
-	= " Néanmoins, %d questions n'ont pas pu être importées :";
+	= "\n\nNéanmoins, %d questions n'ont pas pu être importées :";
 	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
@@ -143,7 +149,7 @@ public class ImportControleur {
 					 i++) {
 					
 					messageImportationSucces 
-					+= '\n' 
+					+= "\n— " 
 					   + this.importation.getQuestionsNonAjoutees().get(i);
 					
 				}
@@ -151,7 +157,10 @@ public class ImportControleur {
 				if (nombreQuestionsNonImporteesAAfficher 
 					< nombreQuestionsNonImportees) {
 					
-					messageImportationSucces += '\n' + "Et X autres questions...";
+					messageImportationSucces 
+					+= String.format("\nEt %d autres questions...", 
+									 nombreQuestionsNonImportees 
+									 - nombreQuestionsNonImporteesAAfficher);
 					
 				}
 			} else {
@@ -164,12 +173,18 @@ public class ImportControleur {
 										 IMPORTATION_SUCCESS_TITRE, 
 										 AlertType.INFORMATION);
 			
+			NavigationControleur.changerVue("Import.fxml");
+			
+		} else {
+			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+										 ERREUR_AUCUN_CHEMIN_TITRE, 
+										 AlertType.ERROR);
 		}
 	}
 	
 	private static void erreurCheminInexistant() {
 		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
-									 ERREUR_CHEMIN_INEXISTANT_TITRE, 
+									 ERREUR_CHEMIN_INEXISTANT_TITRE,
 									 AlertType.ERROR);
 	}
 }
