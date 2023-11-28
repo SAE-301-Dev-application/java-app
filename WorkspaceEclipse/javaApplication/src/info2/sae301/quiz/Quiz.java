@@ -9,8 +9,7 @@ import info2.sae301.quiz.controleurs.AlerteControleur;
 import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
-import info2.sae301.quiz.serialisation.Serialisation;
-
+import info2.sae301.quiz.modeles.Serialisation;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -80,7 +79,7 @@ public class Quiz extends Application {
 		= AlerteControleur.alerteConfirmation(QUITTER_TEXTE, QUITTER_TITRE);
 		
 		if (confirmationFermeture) {
-			Serialisation.serialiser(jeu, Serialisation.NOM_FICHIER_SAUVEGARDE);
+			Serialisation.serialiser(jeu, Serialisation.CHEMIN_DOSSIER,"sauvegardeDonneesQuiz.ser");
 			Platform.exit();
 		}
 		return confirmationFermeture;
@@ -120,7 +119,7 @@ public class Quiz extends Application {
 	 * @param args Paramètre inutilisé.
 	 */
 	public static void main(String[] args) {
-		jeu = Serialisation.deserialiser(Serialisation.NOM_FICHIER_SAUVEGARDE);
+		jeu = Serialisation.deserialiser(Serialisation.CHEMIN_DOSSIER,"sauvegardeDonneesQuiz.ser");
 		partieCourante = new PartieEnCours();
 		launch(args);
 	}
