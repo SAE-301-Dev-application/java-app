@@ -5,8 +5,6 @@
 
 package info2.sae301.quiz.modeles;
 
-import static info2.sae301.quiz.modeles.Dictionnaire.*;
-
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -68,6 +66,9 @@ public class Question implements Serializable {
 	 */
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
+    
+    private static final String ERREUR_CARACTERE_INTERDIT
+    = "Le caractère %s n'est pas supporté par l'application.";
 	
     
 	/** L'intitulé de la question (max 300 caractères) */
@@ -187,13 +188,24 @@ public class Question implements Serializable {
 	 * @throws IllegalArgumentException 
 	 */
 	private static void assurerCaracteres(String aVerifier) 
-			throws IllegalArgumentException {
+	throws IllegalArgumentException {
+		
+		String messageErreurCaractereInterdit;
 		
 		for (int i = 0; i < aVerifier.length(); i++) {
-			if (getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
-				throw new IllegalArgumentException("Le caractère n'est pas supporté par l'application");
+			if (Dictionnaire.getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				messageErreurCaractereInterdit
+				= String.format(ERREUR_CARACTERE_INTERDIT, 
+								aVerifier.charAt(i));
+				
+				System.out.println(messageErreurCaractereInterdit);
+				
+				throw new IllegalArgumentException(
+					messageErreurCaractereInterdit
+				);
 			}
 		}	
+		
 	}
 
 

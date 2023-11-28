@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import info2.sae301.quiz.reseau.Import;
-import info2.sae301.quiz.reseau.ImportLocal;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
@@ -16,6 +15,9 @@ public class ImportControleur {
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
 	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
+	
+	private final static String ERREUR_CARACTERE_INTERDIT_TITRE
+	= "CARACTÈRE INTERDIT DÉTECTÉ";
 	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
@@ -80,6 +82,10 @@ public class ImportControleur {
 				this.importation.importer();
 			} catch (IOException e) {
 				erreurCheminInexistant();
+			} catch (IllegalArgumentException e) {
+				AlerteControleur.autreAlerte(e.getMessage(), 
+											 ERREUR_CARACTERE_INTERDIT_TITRE, 
+											 AlertType.ERROR);
 			}
 			
 			System.out.println("Question non ajoutées : "
