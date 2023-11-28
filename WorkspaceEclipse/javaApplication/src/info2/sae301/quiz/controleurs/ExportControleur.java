@@ -1,18 +1,14 @@
 package info2.sae301.quiz.controleurs;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 
 /**

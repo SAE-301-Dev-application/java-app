@@ -7,17 +7,13 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Categorie;
-
+import info2.sae301.quiz.modeles.Jeu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**

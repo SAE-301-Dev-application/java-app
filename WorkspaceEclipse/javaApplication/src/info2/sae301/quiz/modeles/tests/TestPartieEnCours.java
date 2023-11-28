@@ -4,18 +4,7 @@
  */
 package info2.sae301.quiz.modeles.tests;
 
-import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.modeles.ParametresPartie;
-import info2.sae301.quiz.modeles.PartieEnCours;
-
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -24,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import info2.sae301.quiz.modeles.Categorie;
+import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 
@@ -44,8 +34,6 @@ class TestPartieEnCours {
 		};
 	
 	 private PartieEnCours partieTest;
-	 
-	 private ArrayList<Question> setDeQuestions1;
 	 
 	 private ParametresPartie parametres;
 	 

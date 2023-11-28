@@ -7,11 +7,9 @@ package info2.sae301.quiz.controleurs;
 
 import java.io.IOException;
 
-import info2.sae301.quiz.Quiz;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.LoadException;
-import javafx.scene.Scene;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 /**
  * Classe permettant la navigation entre les vues de l'application.
