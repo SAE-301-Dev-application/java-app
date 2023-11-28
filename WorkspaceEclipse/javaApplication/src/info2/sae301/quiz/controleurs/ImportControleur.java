@@ -95,9 +95,6 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonParcourir() {
-		final String LABEL_NOM_FICHIER_SELECTIONNE
-		= "Fichier sélectionné : %s";
-		
 		String nomFichierSelectionne;
 		
 		Path objetCheminCourant;
@@ -108,10 +105,7 @@ public class ImportControleur {
 			objetCheminCourant = Path.of(this.importation.getCheminFichier());
 			nomFichierSelectionne = objetCheminCourant.getFileName().toString();
 			
-			this.cheminCourant.setText(
-				String.format(LABEL_NOM_FICHIER_SELECTIONNE, 
-							  nomFichierSelectionne)
-			);
+			this.cheminCourant.setText(nomFichierSelectionne);
 		} catch (FileNotFoundException e) {
 			erreurCheminInexistant();
 		}
