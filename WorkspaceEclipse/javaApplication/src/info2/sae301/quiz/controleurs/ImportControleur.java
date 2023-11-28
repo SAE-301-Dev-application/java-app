@@ -5,10 +5,11 @@
 
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.modeles.reseau.Import;
+import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
+
 import java.io.FileNotFoundException; 
 import java.io.IOException;
-
-import info2.sae301.quiz.modeles.reseau.Import;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
@@ -30,6 +31,9 @@ public class ImportControleur {
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
 	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
+	
+	private final static String ERREUR_FORMAT_INVALIDE_TITRE
+	= "FORMAT DU CSV INVALIDE";
 	
 	private final static String ERREUR_CARACTERE_INTERDIT_TITRE
 	= "CARACTÈRE INTERDIT DÉTECTÉ";
@@ -106,22 +110,30 @@ public class ImportControleur {
 			nombreQuestionsNonImportees,
 			nombreQuestionsNonImporteesAAfficher;
 		
+		boolean importationReussie;
+		
 		String cheminCourant,
 			   messageImportationSucces;
 		
 		cheminCourant = this.importation.getCheminFichier();
+		importationReussie = false;
 		
 		if (cheminCourant != null
 			&& !cheminCourant.isBlank()) {
 			
 			try {
 				this.importation.importer();
+				importationReussie = true;
 			} catch (IOException e) {
 				erreurCheminInexistant();
 			} catch (IllegalArgumentException e) {
 				AlerteControleur.autreAlerte(e.getMessage(), 
 											 ERREUR_CARACTERE_INTERDIT_TITRE,
 											 AlertType.ERROR);
+			} catch (FormatCSVInvalideException e) {
+				AlerteControleur.autreAlerte(e.getMessage(),
+						                     ERREUR_FORMAT_INVALIDE_TITRE,
+						                     AlertType.ERROR);
 			}
 			
 			nombreQuestionsNonImportees 
