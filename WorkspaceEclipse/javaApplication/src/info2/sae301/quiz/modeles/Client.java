@@ -3,9 +3,10 @@
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
-package info2.sae301.quiz.reseau;
+package info2.sae301.quiz.modeles;
 
 import info2.sae301.quiz.cryptographie.Vigenere;
+import info2.sae301.quiz.reseau.Import;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
