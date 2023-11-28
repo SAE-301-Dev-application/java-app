@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
    <children>
@@ -33,11 +34,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleQuestion" text="intituleQuestion">
-                     <VBox.margin>
-                        <Insets bottom="60.0" />
-                     </VBox.margin>
-                  </Label>
+                  <Text fx:id="intituleQuestion" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="intituleQuestion" text="intituleQuestion" wrappingWidth="630.0" />
                </children>
                <opaqueInsets>
                   <Insets />

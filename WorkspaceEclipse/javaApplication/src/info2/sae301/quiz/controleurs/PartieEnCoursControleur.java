@@ -19,6 +19,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Text;
 
 /**
  * Contrôleur FXML de la vue PartieEnCours qui permet d'afficher 
@@ -65,7 +66,7 @@ public class PartieEnCoursControleur {
 	
 	/** Label de l'intitule de la question */
 	@FXML
-	private Label intituleQuestion;
+	private Text intituleQuestion;
 	
 	/** Label montrant la difficulté de la question
 	 * - facile
