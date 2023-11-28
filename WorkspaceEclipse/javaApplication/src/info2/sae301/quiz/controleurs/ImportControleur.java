@@ -1,3 +1,8 @@
+/*
+ * ImportControleur.java							                28 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.io.FileNotFoundException; 
@@ -8,6 +13,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
+/**
+ * Contrôleur FXML de la vue Import qui permet d'importer depuis un fichier
+ * CSV local ou depuis un ordinateur distant des questions et catégories.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class ImportControleur {
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_TITRE
