@@ -2,7 +2,7 @@
  * OutilsCSV.java									28 nov. 2023
  * IUT de Rodez, no copyright ni "copyleft"
  */
-package info2.sae301.quiz.reseau;
+package info2.sae301.quiz.modeles.fichiers;
 
 import java.io.FileWriter;
 import java.util.Iterator;

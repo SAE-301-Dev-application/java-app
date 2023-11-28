@@ -9,7 +9,7 @@ import info2.sae301.quiz.controleurs.AlerteControleur;
 import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
-import info2.sae301.quiz.modeles.Serialisation;
+import info2.sae301.quiz.modeles.fichiers.Serialisation;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

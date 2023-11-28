@@ -3,9 +3,9 @@
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
-package info2.sae301.quiz.modeles.tests;
+package info2.sae301.quiz.modeles.fichiers.tests;
 
-import static info2.sae301.quiz.modeles.Serialisation.*;
+import static info2.sae301.quiz.modeles.fichiers.Serialisation.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.modeles.Serialisation;
+import info2.sae301.quiz.modeles.fichiers.Serialisation;
 
 /**
  * Classe de test de "TestSerialisation.java"
@@ -30,7 +30,7 @@ class TestSerialisation {
 	
 	/** Chemin du dossier pour les sauvegardes */
     public static final String CHEMIN_DOSSIER_TEST
-	= "../javaApplication/src/info2/sae301/quiz/modeles/tests/";
+	= "../javaApplication/src/info2/sae301/quiz/modeles/fichiers/tests/";
 	
 	/** Nom du fichier de sauvegarde des données */
 	private static final String FICHIER_SAUVEGARDE = "testDonneesModifiees.ser";

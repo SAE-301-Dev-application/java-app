@@ -3,13 +3,15 @@
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
-package info2.sae301.quiz.modeles;
+package info2.sae301.quiz.modeles.fichiers;
 
 import java.io.FileInputStream; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import info2.sae301.quiz.modeles.Jeu;
 
 /**
  * Classe de sérialisation pour les objets de type "Jeu".

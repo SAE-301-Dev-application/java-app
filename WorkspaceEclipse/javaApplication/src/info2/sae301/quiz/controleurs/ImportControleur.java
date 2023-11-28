@@ -8,7 +8,7 @@ package info2.sae301.quiz.controleurs;
 import java.io.FileNotFoundException; 
 import java.io.IOException;
 
-import info2.sae301.quiz.reseau.Import;
+import info2.sae301.quiz.modeles.reseau.Import;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;

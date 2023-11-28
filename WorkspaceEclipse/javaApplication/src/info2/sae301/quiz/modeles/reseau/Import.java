@@ -3,7 +3,7 @@
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
-package info2.sae301.quiz.reseau;
+package info2.sae301.quiz.modeles.reseau;
 
 import java.io.BufferedReader;
 import java.io.File;

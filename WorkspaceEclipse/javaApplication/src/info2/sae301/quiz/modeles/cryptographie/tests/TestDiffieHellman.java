@@ -1,13 +1,14 @@
 /**
  * 
  */
-package info2.sae301.quiz.cryptographie.tests;
+package info2.sae301.quiz.modeles.cryptographie.tests;
 
-import info2.sae301.quiz.cryptographie.DiffieHellman;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 
 /**
  * 
@@ -24,7 +25,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getModulo()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#getModulo()}.
 	 */
 	@Test
 	void testGetModulo() {
@@ -34,7 +35,7 @@ class TestDiffieHellman {
 	
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getGenerateur()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#getGenerateur()}.
 	 */
 	@Test
 	void testGetGenerateur() {
@@ -44,7 +45,7 @@ class TestDiffieHellman {
 	
 	
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getPuissanceSecrete()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#getPuissanceSecrete()}.
 	 */
 	@Test
 	void testGetPuissanceSecrete() {
@@ -63,7 +64,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#getcleRecue()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#getcleRecue()}.
 	 */
 	@Test
 	void testGetCleRecue() {
@@ -81,7 +82,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#setPuissanceSecrete(int)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#setPuissanceSecrete(int)}.
 	 */
 	@Test
 	void testSetPuissanceSecrete() {
@@ -99,7 +100,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#setcleRecue(int)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#setcleRecue(int)}.
 	 */
 	@Test
 	void testSetCleRecue() {
@@ -117,7 +118,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#genererPuissance()}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#genererPuissance()}.
 	 */
 	@Test
 	void testGenererPuissance() {
@@ -130,7 +131,7 @@ class TestDiffieHellman {
 	}
 
 	/**
-	 * Test method for {@link info2.sae301.quiz.cryptographie.DiffieHellman#puissanceNR(int, int)}.
+	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#puissanceNR(int, int)}.
 	 */
 	@Test
 	void testPuissanceNR() {
