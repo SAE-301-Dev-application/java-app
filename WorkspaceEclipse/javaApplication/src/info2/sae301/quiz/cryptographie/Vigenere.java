@@ -5,7 +5,8 @@
 
 package info2.sae301.quiz.cryptographie;
 
-import java.util.HashMap;
+import static info2.sae301.quiz.modeles.Dictionnaire.*;
+
 import java.util.Random;
 
 /**
@@ -29,67 +30,7 @@ public class Vigenere {
 	final static String TAILLE_INVALIDE 
 			= "La taille doit être comprise entre %s et %s caractères";
 	
-	/** Tableau permettant de remplir les HashMap. */
-	public final static char[] dicoString = {
-		// Lettres et accents
-        'A', 'a', 'À', 'à', 'Â', 'â', 'Ä', 'ä', 'Ã', 'ã', 'Æ', 'æ',
-        'B', 'b',
-        'C', 'c', 'Ç', 'ç',
-        'D', 'd',
-        'E', 'e', 'É', 'é', 'È', 'è', 'Ê', 'ê', 'Ë', 'ë',
-        'F', 'f',
-        'G', 'g',
-        'H', 'h',
-        'I', 'i', 'Ì', 'ì', 'Î', 'î', 'Ï', 'ï',
-        'J', 'j',
-        'K', 'k',
-        'L', 'l',
-        'M', 'm',
-        'N', 'n', 'Ñ', 'ñ',
-        'O', 'o', 'Ò', 'ò', 'Ô', 'ô', 'Ö', 'ö', 'Õ', 'õ', 'Œ', 'œ',
-        'P', 'p',
-        'Q', 'q',
-        'R', 'r',
-        'S', 's',
-        'T', 't',
-        'U', 'u', 'Ù', 'ù', 'Û', 'û', 'Ü', 'ü',
-        'V', 'v',
-        'W', 'w',
-        'X', 'x',
-        'Y', 'y', 'Ÿ', 'ÿ',
-        'Z', 'z',
-        // Chiffres et opérateurs
-        '0', '⁰', '1', '¹', '2', '²', '3', '4', '⁴', '5', '⁵', '6', '⁶', '7', '⁷',
-        '8', '⁸', '9', '⁹', '+', '⁺', '-', '⁻', '%', '/', '*',
-        // Caractères spéciaux
-        ' ', '\n', '\t', '&', '~', '"', '#', '\'', '{', '(', '[', '|',
-        '`', '_', '\\', '@', ')', ']', '=', '}', '¨', '^', '£', '$',
-        '¤', '?', ',', '.', ';', ':', '§', '!', '<', '>'
-    };
-	
-	/**
-	 * Dictionnaire permettant de récupérer les lettres 
-	 * en fonction des indices
-	 */
-	public final static HashMap<Integer,Character> dictionnaire 
-								= new HashMap<>();
-	
-	/**
-	 * Dictionnaire permettant de récupérer les indices des lettres
-	 * en fonction de leur place dans la HashMap
-	 */
-	public final static HashMap<Character,Integer> dictionnaireReversed 
-								= new HashMap<>();
-	
-	/**
-	 * Initialise les HashMap pour le dictionnaire
-	 */
-	static {
-		for (int i = 0; i < dicoString.length;i++) {
-			dictionnaire.put(i,dicoString[i]);
-			dictionnaireReversed.put(dicoString[i],i);
-		};
-    }
+
 		
 	/** Clé pour Vigenère */
 	private static String cle = genererCle();
@@ -106,8 +47,8 @@ public class Vigenere {
 		int tailleCle = new Random().nextInt(TAILLE_MAX_CLE - TAILLE_MIN_CLE + 1)
 												+ TAILLE_MIN_CLE;
 		for(int i = 0; i < tailleCle; i++) {
-			int rnd = new Random().nextInt(dictionnaire.size());
-		    cleGeneree += dictionnaire.get(rnd);
+			int rnd = new Random().nextInt(getDictionnaire().size());
+		    cleGeneree += getDictionnaire().get(rnd);
 		}
 		return cleGeneree;
 	}
@@ -147,11 +88,11 @@ public class Vigenere {
 			int nbCaractere;
 			char caractereC;
 			
-			nbCaractere = (dictionnaireReversed.get(message.charAt(i))
-					+ dictionnaireReversed.get(cle.charAt(i%cle.length())))
-					% dictionnaire.size();
+			nbCaractere = (getDictionnaireReversed().get(message.charAt(i))
+					+ getDictionnaireReversed().get(cle.charAt(i%cle.length())))
+					% getDictionnaire().size();
 			
-			caractereC = dictionnaire.get(nbCaractere);
+			caractereC = getDictionnaire().get(nbCaractere);
 			messageC += caractereC;
 		}
 		return messageC;
@@ -170,13 +111,13 @@ public class Vigenere {
 			int nbCaractere;
 			char caractereD;
 			
-			nbCaractere = (dictionnaireReversed.get(messageC.charAt(i))
-					- dictionnaireReversed.get(cle.charAt(i%cle.length())))
-					% dictionnaire.size();
+			nbCaractere = (getDictionnaireReversed().get(messageC.charAt(i))
+					- getDictionnaireReversed().get(cle.charAt(i%cle.length())))
+					% getDictionnaire().size();
 			
 			caractereD = nbCaractere < 0 ? 
-					dictionnaire.get(nbCaractere + dictionnaire.size()) 
-							: dictionnaire.get(nbCaractere);
+					getDictionnaire().get(nbCaractere + getDictionnaire().size()) 
+							: getDictionnaire().get(nbCaractere);
 			messageD += caractereD;
 		}
 		return messageD;
