@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
 /**
  * Importation des données d'un fichier CSV et ajout aux données
@@ -57,22 +58,6 @@ public class Import {
 		this.nombreTotalQuestions = 0;
 		this.questionsNonAjoutees = new ArrayList<>();
 	}
-
-	
-	/**
-	 * Permet à l'utilisateur de sélectionner les fichiers 
-	 * à importer sur l'application.
-	 * 
-	 * @return Nombre de questions qui n'ont pas pu 
-	 * 		   être ajoutées
-	 */
-	public void parcourir()
-	throws FileNotFoundException, IOException {
-		
-		this.parcourirFichiers();
-		this.importer();
-		
-	}
 	
 	
 	/**
@@ -82,19 +67,38 @@ public class Import {
 	 * soient ajouter à l'application.
 	 */
 	public void importer()
-	throws IOException {
+	throws IOException, FormatCSVInvalideException {
 		
-		String ligne;
+		final String ENTETE_ATTENDUE
+		= "Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback";
+		
+		final String ERREUR_FORMAT_INVALIDE
+		= "Le format du fichier CSV sélectionné ne correspond pas au format "
+		  + "attendu.\nLa première ligne de votre fichier devrait être :\n"
+		  + ENTETE_ATTENDUE;
+		
+		String premiereLigne,
+		       ligneCourante;
 		
 		BufferedReader contenuFichier;
 		
 		contenuFichier = new BufferedReader(new FileReader(this.cheminFichier));
 		
-		// Ne pas affecter le contenu de la première ligne.
-		contenuFichier.readLine();
+		/*
+		 * Ne pas affecter le contenu de la première ligne et vérifier
+		 * s'il correspond bien au CSV attendu.
+		 */
+		premiereLigne = (String) contenuFichier.readLine();
 		
-		while ((ligne = contenuFichier.readLine()) != null) {
-			creationQuestion(ligne);
+		if (premiereLigne == null || !premiereLigne.equals(ENTETE_ATTENDUE)) {
+			contenuFichier.close();
+			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
+		} else {
+			System.out.println(premiereLigne);
+			
+			while ((ligneCourante = contenuFichier.readLine()) != null) {
+				creationQuestion(ligneCourante);
+			}
 		}
 		
 		contenuFichier.close();
@@ -185,8 +189,8 @@ public class Import {
         choixFichier.setTitle("Importer des données");
         
         // Filtre des extensions de fichier
-        choixFichier.getExtensionFilters().add(
-        		new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        choixFichier.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
         // Ouverture de l'explorateur de fichier à la racine
         choixFichier.setInitialDirectory(new File(System.getProperty("user.home")));
