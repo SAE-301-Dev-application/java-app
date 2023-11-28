@@ -5,7 +5,10 @@
 
 package info2.sae301.quiz.modeles;
 
+import static info2.sae301.quiz.modeles.Dictionnaire.*;
+
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -154,12 +157,14 @@ public class Question implements Serializable {
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @throws IllegalArgumentException si les attributs ne 
 	 * respectent pas les tailles demandées.
+	 * @throws UnsupportedEncodingException 
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
-	throws IllegalArgumentException {
+	throws IllegalArgumentException, UnsupportedEncodingException {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		asssurerCaracteres(intitule);
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
 		
 		// Vérification de la taille des réponses fausses
@@ -173,6 +178,23 @@ public class Question implements Serializable {
 	}
 	
 	
+	/**
+	 * Vérification de la validité des caractères
+	 * 
+	 * @param aVerfier
+	 * @throws UnsupportedEncodingException 
+	 */
+	private static void asssurerCaracteres(String aVerifier) 
+			throws UnsupportedEncodingException {
+		
+		for (int i = 0; i < aVerifier.length(); i++) {
+			if (getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				throw new UnsupportedEncodingException("Le caractère n'est pas supporté par l'application");
+			}
+		}	
+	}
+
+
 	/**
 	 * Vérification puis initialisation des attributs pour 
 	 * les deux constructeurs.
@@ -527,7 +549,7 @@ public class Question implements Serializable {
 	 * point virgule ou un guillemet est présent.
 	 * 
 	 * @param texte Le texte à vérifier.
-	 * @return le texte formatté.
+	 * @return le texte formaté.
 	 */
 	public String formatterTexte(String texte) {
 		final String GUILLEMET = "\"";
@@ -579,7 +601,8 @@ public class Question implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(reponsesFausses);
-		result = prime * result + Objects.hash(categorie, difficulte, feedback, intitule, reponseJuste);
+		result = prime * result + Objects.hash(categorie, difficulte,
+											feedback, intitule, reponseJuste);
 		return result;
 	}
 	
