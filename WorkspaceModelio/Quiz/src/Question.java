@@ -60,4 +60,8 @@ public class Question {
         return null;
     }
 
+    @objid ("05f349e1-f7ea-496e-8977-9807990aeaa0")
+    public Question(final String intitule, final String reponseJuste, final List<String> reponsesFausses, final int difficulte, final Categorie categorie) {
+    }
+
 }

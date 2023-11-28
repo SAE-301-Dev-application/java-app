@@ -1,16 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.MenuPrincipalControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
+      <Button layoutX="77.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonUtilisateur" stylesheets="@application.css">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="arrondi" />
+         </styleClass>
+      </Button>
+      <Button layoutX="740.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonFermer">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="arrondi" />
+         </styleClass>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <SVGPath content="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" layoutX="-124.0" layoutY="-213.0" onMouseClicked="#actionBoutonUtilisateur" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <Label fx:id="pseudo" layoutX="135.0" layoutY="32.0" styleClass="pseudo" text="Pseudonyme" />
+      <Label layoutX="331.0" layoutY="103.0" styleClass="titre" text="jeu de" />
+      <Label layoutX="324.0" layoutY="146.0" text="QUIZ">
+         <styleClass>
+            <String fx:value="titre" />
+            <String fx:value="titre-gras" />
+         </styleClass></Label>
+      <VBox layoutX="226.0" layoutY="233.0" prefHeight="323.0" prefWidth="354.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#actionBoutonJouer" text="     JOUER">
+               <styleClass>
+                  <String fx:value="bouton" />
+                  <String fx:value="bouton-important" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#actionBoutonCategories" styleClass="bouton" text="CATÉGORIES" />
+            <Button mnemonicParsing="false" onAction="#actionBoutonQuestions" styleClass="bouton" text="QUESTIONS" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#actionBoutonImportation" text="         IMPORTATION">
+                     <styleClass>
+                        <String fx:value="petit-bouton" />
+                        <String fx:value="bouton" />
+                     </styleClass></Button>
+                  <Button mnemonicParsing="false" onAction="#actionBoutonExportation" text="          EXPORTATION">
+                     <styleClass>
+                        <String fx:value="petit-bouton" />
+                        <String fx:value="bouton" />
+                     </styleClass></Button>
+               </children>
+               <styleClass>
+                  <String fx:value="conteneurHbox" />
+                  <String fx:value="conteneur-boutons" />
+               </styleClass>
+            </HBox>
+         </children>
+         <styleClass>
+            <String fx:value="conteneur-boutons" />
+            <String fx:value="centrer" />
+         </styleClass>
+      </VBox>
+      <SVGPath content="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" layoutX="-20.0" layoutY="9.0" onMouseClicked="#actionBoutonJouer" scaleX="0.05" scaleY="0.05" translateX="190.0" translateY="5.0">
+         <styleClass>
+            <String fx:value="user-solid" />
+            <String fx:value="icone-vert" />
+         </styleClass>
+      </SVGPath>
+      <SVGPath content="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" layoutX="-18.0" layoutY="214.0" onMouseClicked="#actionBoutonImportation" scaleX="0.04" scaleY="0.04" styleClass="user-solid" translateX="40.0" />
+      <SVGPath content="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" layoutX="-66.0" layoutY="214.0" onMouseClicked="#actionBoutonExportation" scaleX="0.04" scaleY="0.04" styleClass="user-solid" translateX="243.0" />
+      <SVGPath content="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" layoutX="571.0" layoutY="-212.0" onMouseClicked="#actionBoutonFermer" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
    </children>
+   <stylesheets>
+      <URL value="@application.css" />
+      <URL value="@menu-principal.css" />
+   </stylesheets>
 </Pane>

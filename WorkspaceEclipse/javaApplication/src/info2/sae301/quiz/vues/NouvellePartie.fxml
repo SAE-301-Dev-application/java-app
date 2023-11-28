@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.NouvellePartieControleur">
+   <children>
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" text="?">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="arrondi" />
+         </styleClass>
+	  </Button>
+      <Label layoutX="235.0" layoutY="40.0" styleClass="titre-long" text="NOUVELLE PARTIE" textAlignment="CENTER">
+         <stylesheets>
+            <URL value="@application.css" />
+         </stylesheets></Label>
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonRetour" text="      RETOUR">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="bouton" />
+         </styleClass>
+      </Button>
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonCreer" text="       CRÉER">
+         <styleClass>
+            <String fx:value="boutonArrondi" />
+            <String fx:value="bouton" />
+         </styleClass>
+      </Button>
+      <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
+         <children>
+            <HBox layoutX="6.0" prefHeight="359.0" prefWidth="733.0">
+               <children>
+                  <VBox prefHeight="359.0" prefWidth="275.0">
+                     <children>
+                        <VBox prefHeight="193.0" prefWidth="256.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="164.0" styleClass="label-champ" text="    Nombre de questions :" />
+                              <HBox prefHeight="41.0" prefWidth="252.0">
+                                 <children>
+                                    <CheckBox fx:id="checkBox5Questions" mnemonicParsing="false" styleClass="label-champ" text="5" />
+                                    <CheckBox fx:id="checkBox10Questions" mnemonicParsing="false" styleClass="label-champ" text="10" />
+                                    <CheckBox fx:id="checkBox20Questions" mnemonicParsing="false" styleClass="label-champ" text="20" />
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="hbox-nombre-questions" />
+                                    <String fx:value="centrer" />
+                                 </styleClass>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="258.0" prefWidth="256.0">
+                           <children>
+                              <Label styleClass="label-champ" text="    Difficulté :" />
+                              <VBox prefHeight="243.0" prefWidth="344.0">
+                                 <children>
+                                    <CheckBox fx:id="checkBoxDifficulteIndifferent" mnemonicParsing="false" styleClass="label-champ" text="Indifférent" />
+                                    <CheckBox fx:id="checkBoxDifficulteFacile" mnemonicParsing="false" text="Facile">
+                                       <styleClass>
+                                          <String fx:value="label-champ" />
+                                          <String fx:value="label-facile" />
+                                       </styleClass>
+                                    </CheckBox>
+                                    <CheckBox fx:id="checkBoxDifficulteMoyen" mnemonicParsing="false" text="Moyen">
+                                       <styleClass>
+                                          <String fx:value="label-champ" />
+                                          <String fx:value="label-moyen" />
+                                       </styleClass>
+                                    </CheckBox>
+                                    <CheckBox fx:id="checkBoxDifficulteDifficile" mnemonicParsing="false" text="Difficile">
+                                       <styleClass>
+                                          <String fx:value="label-champ" />
+                                          <String fx:value="label-difficile" />
+                                       </styleClass>
+                                    </CheckBox>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="vbox-liste" />
+                                    <String fx:value="vbox" />
+                                    <String fx:value="centrer-verticale" />
+                                 </styleClass>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <styleClass>
+                        <String fx:value="conteneur-boutons" />
+                        <String fx:value="vbox" />
+                     </styleClass>
+                  </VBox>
+                  <VBox prefHeight="359.0" prefWidth="453.0">
+                     <styleClass>
+                        <String fx:value="conteneur-boutons" />
+                        <String fx:value="vbox" />
+                        <String fx:value="partie-droite" />
+                     </styleClass>
+                     <children>
+                        <Label styleClass="label-champ" text="Catégories :" />
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="337.0" prefWidth="410.0" styleClass="choix-categories">
+                           <content>
+                              <VBox fx:id="listeCategories" prefHeight="265.0" prefWidth="389.0" styleClass="partie-droite" />
+                           </content>
+                        </ScrollPane>
+                        <Label fx:id="indicationNbQuestions" styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-116.0" layoutY="289.0" onMouseClicked="#actionBoutonRetour" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" layoutX="323.0" layoutY="289.0" onMouseClicked="#actionBoutonCreer" scaleX="0.05" scaleY="0.05" styleClass="user-solid" translateX="-4.0" />
+   </children>
+   <stylesheets>
+      <URL value="@application.css" />
+      <URL value="@creation-modificationQuestions.css" />
+      <URL value="@nouvelle-partie.css" />
+   </stylesheets>
+</Pane>

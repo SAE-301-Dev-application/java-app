@@ -1,0 +1,5 @@
+.texte-pseudo {
+	-fx-font-size: 15px;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
