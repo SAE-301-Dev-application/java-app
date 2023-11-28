@@ -66,11 +66,11 @@ public class Import {
 	 * @return Nombre de questions qui n'ont pas pu 
 	 * 		   être ajoutées
 	 */
-	public void importation()
+	public void parcourir()
 	throws FileNotFoundException, IOException {
 		
 		this.parcourirFichiers();
-		this.extraireDonnees();
+		this.importer();
 		
 	}
 	
@@ -81,7 +81,7 @@ public class Import {
 	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
 	 * soient ajouter à l'application.
 	 */
-	private void extraireDonnees()
+	public void importer()
 	throws IOException {
 		
 		String ligne;
@@ -272,6 +272,12 @@ public class Import {
 				jeu.creerCategorie(nomCategorie);
 			}
 		}		
+	}
+
+
+	/** @return Chemin du fichier courant. */
+	public String getCheminFichier() {
+		return this.cheminFichier;
 	}
 	
 }
