@@ -1,8 +1,12 @@
 package info2.sae301.quiz.controleurs;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import info2.sae301.quiz.reseau.Import;
 import info2.sae301.quiz.reseau.ImportLocal;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 public class ImportControleur {
@@ -21,6 +25,12 @@ public class ImportControleur {
 		return ip.matches(REGEX_IPV4);
 	}
 	
+	public void initialize() {
+		this.importation = new Import();
+	}
+	
+	private Import importation;
+	
 	/** 
 	 * Champ de saisie de l'adresse IPv4 pour 
 	 * l'importation en ligne. 
@@ -34,7 +44,11 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonParcourir() {
-		ImportLocal.parcourirFichier();
+		try {
+			this.importation.importation();
+		} catch (IOException e) {
+			AlerteControleur.autreAlerte("msg", "titre", AlertType.ERROR);  // TODO
+		}
 	}
 	
 	/**
