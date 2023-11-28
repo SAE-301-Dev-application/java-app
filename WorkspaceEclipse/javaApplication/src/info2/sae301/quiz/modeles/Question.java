@@ -523,10 +523,11 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * TODO JDoc
+	 * Formatte le texte en paramètre afin de doubler les guillemets si un
+	 * point virgule ou un guillemet est présent.
 	 * 
-	 * @param texte
-	 * @return
+	 * @param texte Le texte à vérifier.
+	 * @return le texte formatté.
 	 */
 	public String formatterTexte(String texte) {
 		final String GUILLEMET = "\"";
@@ -536,24 +537,23 @@ public class Question implements Serializable {
 		String texteFormatte;
 		
 		texteFormatte = "";
-			
-		if (texte.contains(GUILLEMET)) {
-			// Si un caractère est un guillemet on le double
-			for (char caractere: texte.toCharArray()) {
-				texteFormatte += "" + caractere
-						         + (caractere == GUILLEMET.charAt(0)
-						            ? GUILLEMET
-						            : "");
+		
+		if (texte.contains(GUILLEMET) || texte.contains(POINT_VIRGULE)) {
+			if (texte.contains(GUILLEMET)) {
+				// Si un caractère est un guillemet on le double
+				for (char caractere: texte.toCharArray()) {
+					texteFormatte += "" + caractere
+							+ (caractere == GUILLEMET.charAt(0)
+							? GUILLEMET
+									: "");
+				}
+			} else {
+				texteFormatte = texte;
 			}
-		} else {
-			texteFormatte = texte;
+			
+			texteFormatte = GUILLEMET + texteFormatte + GUILLEMET;
 		}
 		
-		if (texte.contains(POINT_VIRGULE)) {
-			texteFormatte = GUILLEMET
-					        + texteFormatte
-					        + GUILLEMET;
-		}
 		return texteFormatte + POINT_VIRGULE;
 	}
 	

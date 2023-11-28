@@ -37,11 +37,17 @@ public class ImportControleur {
 		ImportLocal.parcourirFichier();
 	}
 	
+	/**
+	 * Retour au menu principal.
+	 */
 	@FXML
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
+	/**
+	 * Importation 
+	 */
 	@FXML
 	private void actionBoutonImporter() {
 		if (ImportLocal.getCheminFichier() != null

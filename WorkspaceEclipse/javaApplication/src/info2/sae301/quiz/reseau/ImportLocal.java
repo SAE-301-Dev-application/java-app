@@ -33,7 +33,7 @@ public class ImportLocal {
 		final FileChooser choixFichier = new FileChooser();
 		
 		// Titre de l'explorateur de fichier
-        choixFichier.setTitle("Sélectionnez un fichier");
+        choixFichier.setTitle("Importer des données");
         
         // Filtre des extensions de fichier
         choixFichier.getExtensionFilters().add(
