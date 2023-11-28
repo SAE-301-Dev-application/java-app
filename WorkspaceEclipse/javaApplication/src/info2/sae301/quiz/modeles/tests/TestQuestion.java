@@ -544,6 +544,84 @@ class TestQuestion {
 		
 	}
 	
+	@Test
+	void testVerifierAttributs() {
+		assertDoesNotThrow(() -> {Question.verifierAttributs(questionAF.getIntitule(),
+								  questionAF.getReponseJuste(),
+								  questionAF.getReponsesFausses(), 
+								  questionAF.getDifficulte(), 
+								  questionAF.getFeedback());});
+		
+		assertDoesNotThrow(() -> {Question.verifierAttributs(questionAF2.getIntitule(),
+								  questionAF.getReponseJuste(),
+								  questionAF.getReponsesFausses(), 
+								  questionAF.getDifficulte(), 
+								  questionAF.getFeedback());});
+		
+		assertDoesNotThrow(() -> {Question.verifierAttributs(questionSF.getIntitule(),
+								  questionAF.getReponseJuste(),
+								  questionAF.getReponsesFausses(), 
+								  questionAF.getDifficulte(), 
+								  questionAF.getFeedback());});
+		
+		assertDoesNotThrow(() -> {Question.verifierAttributs(questionSF2.getIntitule(),
+								  questionAF.getReponseJuste(),
+								  questionAF.getReponsesFausses(), 
+								  questionAF.getDifficulte(), 
+								  questionAF.getFeedback());});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.verifierAttributs("",
+					  				   questionAF.getReponseJuste(),
+					  				   questionAF.getReponsesFausses(), 
+					  				   questionAF.getDifficulte(), 
+					  				   questionAF.getFeedback());
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.verifierAttributs(questionAF.getIntitule(),
+	  				   				   genererStringTailleX(201),
+	  				   				   questionAF.getReponsesFausses(), 
+	  				   				   questionAF.getDifficulte(), 
+	  				   				   questionAF.getFeedback());
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.verifierAttributs(questionAF.getIntitule(),
+	  				   				   questionAF.getReponseJuste(),
+	  				   				   questionAF.getReponsesFausses(), 
+	  				   				   4, 
+	  				   				   questionAF.getFeedback());
+		});
+		
+		assertThrows(IllegalArgumentException.class, () -> { 
+			Question.verifierAttributs(questionAF.getIntitule(),
+	  				   				   questionAF.getReponseJuste(),
+	  				   				   questionAF.getReponsesFausses(), 
+	  				   				   0, 
+	  				   				   questionAF.getFeedback());
+		});
+	}
+	
+	
+	@Test
+	void testAssurerCaracteres() {
+		String[] chainesValides = {"azertyu", "|\\:;.?!\n{}*/-+=\t^@,", "la chaîne est valide"};
+		String[] chainesInvalides = {"azer☺tyu", "|\\:;.└↓!\n{}*/-+=\t^@,", "la🤌🫵 ch😊aîne est invalide"};
+		
+		for (int i = 0; i < chainesValides.length; i++) {
+			final int INDICE = i;
+			assertDoesNotThrow(() -> {Question.assurerCaracteres(chainesValides[INDICE]);});
+		}
+		
+		for (int i = 0; i < chainesInvalides.length; i++) {
+			final int INDICE = i;
+			assertThrows(IllegalArgumentException.class,() -> {
+				Question.assurerCaracteres(chainesInvalides[INDICE]);
+			});
+		}
+
+	}
 	
 	/**
 	 * Test method for 

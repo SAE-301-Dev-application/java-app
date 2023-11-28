@@ -187,7 +187,7 @@ public class Question implements Serializable {
 	 * @param aVerfier
 	 * @throws IllegalArgumentException 
 	 */
-	private static void assurerCaracteres(String aVerifier) 
+	public static void assurerCaracteres(String aVerifier) 
 	throws IllegalArgumentException {
 		
 		String messageErreurCaractereInterdit;
@@ -591,11 +591,11 @@ public class Question implements Serializable {
 							? GUILLEMET
 									: "");
 				}
-			} else {
-				texteFormatte = texte;
-			}
+			} 
 			
 			texteFormatte = GUILLEMET + texteFormatte + GUILLEMET;
+		} else {
+			texteFormatte = texte;
 		}
 		
 		return texteFormatte + POINT_VIRGULE;
