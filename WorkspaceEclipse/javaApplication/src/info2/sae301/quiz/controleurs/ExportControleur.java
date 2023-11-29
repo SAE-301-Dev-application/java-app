@@ -12,6 +12,7 @@ import info2.sae301.quiz.modeles.reseau.Serveur;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,36 +65,48 @@ public class ExportControleur {
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
 	private static String ipPrivee() {
+		String osCourant;
+		
+		osCourant = System.getProperty("os.name");
+		
+		return switch (osCourant) {
+		case "Windows" -> ipPriveeWindows();
+		case "Linux" -> ipPriveeLinux();
+		case "Mac OS X" -> ipPriveeLinux(); 
+		default -> "127.0.0.1";
+		};
+	}
+	
+	private static String ipPriveeWindows() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			return "127.0.0.1";
+		}
+	}
+	
+	private static String ipPriveeLinux() {
 		String ip;
 		
-		Pattern patternIPV4;
-		Matcher matcherIPV4;
-		
-		ip = null;
-		
-		patternIPV4 = Pattern.compile(ImportControleur.REGEX_IPV4);
+		ip = "127.0.0.1";
 		
 		try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            Enumeration<NetworkInterface> interfaces 
+            = NetworkInterface.getNetworkInterfaces();
 
             while (interfaces.hasMoreElements()) {
                 NetworkInterface iface = interfaces.nextElement();
 
                 // Filtrer les interfaces loopback et les interfaces désactivées
-                if (iface.isLoopback() || !iface.isUp()) {
-                    continue;
-                }
-
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                
-                while (addresses.hasMoreElements() && ip == null) {
-                    InetAddress addr = addresses.nextElement();
+                if (!iface.isLoopback() && iface.isUp()) {
                     
-                    matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
-                    
-                    //if (matcherIPV4.find()) {
-                    if (!addr.isLinkLocalAddress() && !addr.isLoopbackAddress() && addr.isSiteLocalAddress()) {
-                    	ip = addr.getHostAddress();
+                    Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                    while (addresses.hasMoreElements()) {
+                        InetAddress addr = addresses.nextElement();
+                        // Filtrer les adresses IPv6
+                        if (!addr.getHostAddress().contains(":")) {
+                            ip = addr.getHostAddress();
+                        }
                     }
                 }
             }
