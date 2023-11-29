@@ -7,6 +7,7 @@ package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.reseau.Serveur;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
 
@@ -56,6 +58,19 @@ public class ExportControleur {
 	/** Affichage de l'adresse IP privée. */
 	private static final String MODELE_LABEL_IP_PRIVEE
 	= "Mon adresse IP : %s";
+	
+	
+	/** CheckBox "exportCategorie". */
+	@FXML
+	private CheckBox choixCategories;
+	
+	
+	/** CheckBox "10 questions". */
+	@FXML
+	private CheckBox choixQuestions;
+	
+	@FXML 
+	private GridPane grilleSelection;
 	
 	/**
 	 * Recherche et retourne l'adresse IP de la machine sur 
@@ -105,9 +120,11 @@ public class ExportControleur {
 		return ip;
 	}
 	
+	
 	/** Label d'affichage de l'IP privée. */
 	@FXML
 	private Label affichageIPPrivee;
+	
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -115,19 +132,34 @@ public class ExportControleur {
 	 */
 	private Jeu jeu;
 	
+	private int choixExport;
+	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
-		
+		this.choixExport = 0;
 		jeu = Quiz.jeu;
 		
+		/*
+		 * Choix pour export en sélectionnant des questions 
+		 * ou des catégories
+		 */
+		this.choixCategories.setOnAction(event -> {
+			this.choixExportQuestionCategories(0);
+		});
+		
+		this.choixQuestions.setOnAction(event -> {
+			this.choixExportQuestionCategories(1);
+		});
 	}
+	
 	
 	/** Affichage de la fenêtre d'aide liée à la vue. */
 	@FXML
 	private void actionBoutonAide() {
 		// TODO: dialogbox d'aide.
 	}
+	
 	
 	/** Affichage de l'IP privée de la machine courante. */
 	@FXML
@@ -150,11 +182,13 @@ public class ExportControleur {
 		}
 	}
 	
+	
 	/** Retour au menu principal de l'application. */
 	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
 	/** Export des données au destinataire indiqué. */
 	@FXML
@@ -167,6 +201,34 @@ public class ExportControleur {
 			// TODO afficher pop-up export impossible
 		} catch (ClassNotFoundException e) {
 			
+		}
+	}
+	
+	
+	/**
+	 * Affichage de l'erreur :
+	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
+	 */
+	private static void erreurNombreQuestions() {
+		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
+				 					 "Caca", 
+				 					 AlertType.ERROR);
+	}
+	
+	@FXML
+	/**
+	 * Choix du nombre de questions pour le quiz.
+	 * 
+	 * @param nombre
+	 */
+	private void choixExportQuestionCategories(int nombre) {
+		if (nombre != 0 && nombre != 1) {
+			erreurNombreQuestions();
+		} else {
+			this.choixExport = nombre;
+
+			this.choixCategories.setSelected(nombre == 0);
+			this.choixQuestions.setSelected(nombre == 1);
 		}
 	}
 }

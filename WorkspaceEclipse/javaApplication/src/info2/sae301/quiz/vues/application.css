@@ -207,3 +207,9 @@ VBox.centrer-verticale {
 HBox.alignement-bas {
 	-fx-alignment: baseline-left;
 }
+
+.pane-base {
+	-fx-background: transparent;
+	-fx-background-color: #272C58;
+	-fx-background-radius: 20px;
+}

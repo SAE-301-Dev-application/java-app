@@ -61,7 +61,7 @@ public class OutilsCSV {
 			writer.close();
 		} else {
 			// Si le fichier existe, le vider et écrire la première ligne ENTETE_FICHIER
-			// Le paramètre false indique de réécrire le fichier
+			// Le paramètre false indique de récrire le fichier
 			FileWriter writer = new FileWriter(fichierCSV, false);
 			writer.write(ENTETE_FICHIER);
 			writer.close();
