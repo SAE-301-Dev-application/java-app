@@ -57,7 +57,7 @@ public class AffichageCategoriesControleur {
 	private Button boutonSuivant;
 	
 	/** Indice de la première catégorie affichée sur la "page" courante. */
-	private int indiceCategorie = 0; 
+	static int indiceCategorie = 0; 
 	
 	/** Récupère la liste de toutes les catégories de l'instance jeu */
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
