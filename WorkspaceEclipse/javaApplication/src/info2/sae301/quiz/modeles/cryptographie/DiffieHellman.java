@@ -1,11 +1,8 @@
 /*
- * DiffieHellman.java									22 nov. 2023 
+ * DiffieHellman.java									            22 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 package info2.sae301.quiz.modeles.cryptographie;
-
-import static info2.sae301.quiz.modeles.Dictionnaire.getDictionnaire;
-import static info2.sae301.quiz.modeles.Dictionnaire.getDictionnaireReversed;
 
 import java.util.Random;
 
@@ -138,7 +135,5 @@ public class DiffieHellman {
 
         return resultat;
     }
-    
-    
     
 }

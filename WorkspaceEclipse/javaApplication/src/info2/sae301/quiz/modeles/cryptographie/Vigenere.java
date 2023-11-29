@@ -9,8 +9,6 @@ import static info2.sae301.quiz.modeles.Dictionnaire.*;
 
 import java.util.Random;
 
-import info2.sae301.quiz.modeles.Dictionnaire;
-
 /**
  * Cryptographie d'un fichier CSV avec la méthode de Vigenère.
  * 
@@ -31,7 +29,6 @@ public class Vigenere {
 	/** Texte d'erreur pour une taille invalide de la clé rentrée */
 	final static String TAILLE_INVALIDE 
 			= "La taille doit être comprise entre %s et %s caractères";
-	
 
 		
 	/** Clé pour Vigenère */
@@ -180,6 +177,8 @@ public class Vigenere {
 			
 			cleDechiffree += caractereDechiffre;
 		}
+		
 		return cleDechiffree;
 	}
+	
 }
