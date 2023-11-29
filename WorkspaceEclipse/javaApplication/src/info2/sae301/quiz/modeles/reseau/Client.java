@@ -241,11 +241,13 @@ public class Client {
 		String donneesCrypteesQuestion,
 	           donneesDecrypteesQuestion;
 	
-		String[] donneesQuestions = {""};
+		String[] donneesQuestions;
 		
 		boolean envoiFini;
 		
 		envoiFini = false;
+		
+		donneesQuestions = new String[0];
 		
 		this.adresseServeur = adresseServeur;
 		
@@ -277,8 +279,13 @@ public class Client {
 				System.out.println(donneesCrypteesQuestion + "\n-----\n"
 				                   + donneesDecrypteesQuestion + "\n");
 		        
-				donneesQuestions[donneesQuestions.length - 1]
-				= donneesDecrypteesQuestion;
+				String[] nouveauTableau = new String[donneesQuestions.length + 1];
+	            System.arraycopy(donneesQuestions, 0, nouveauTableau,
+	            		         0, donneesQuestions.length);
+	            
+	            nouveauTableau[donneesQuestions.length] = donneesDecrypteesQuestion;
+
+	            donneesQuestions = nouveauTableau;
 			}
 		}
 		
