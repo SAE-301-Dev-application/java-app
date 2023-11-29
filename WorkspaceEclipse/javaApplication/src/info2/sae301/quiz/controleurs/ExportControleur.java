@@ -65,13 +65,7 @@ public class ExportControleur {
 	 */
 	private static String ipPrivee() {
 		String ip;
-		
-		Pattern patternIPV4;
-		Matcher matcherIPV4;
-		
 		ip = null;
-		
-		patternIPV4 = Pattern.compile(ImportControleur.REGEX_IPV4);
 		
 		try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -87,13 +81,20 @@ public class ExportControleur {
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
                 
                 while (addresses.hasMoreElements() && ip == null) {
-                    InetAddress addr = addresses.nextElement();
+                    InetAddress addr;
                     
-                    matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
+                    String ipTrouvee;
                     
-                    //if (matcherIPV4.find()) {
-                    if (!addr.isLinkLocalAddress() && !addr.isLoopbackAddress() && addr.isSiteLocalAddress()) {
-                    	ip = addr.getHostAddress();
+                    addr = addresses.nextElement();
+                    ipTrouvee = addr.getHostAddress();
+                    
+                    if (!addr.isLinkLocalAddress() 
+                		&& !addr.isLoopbackAddress() 
+                		&& addr.isSiteLocalAddress()
+                		&& ipTrouvee.matches(ImportControleur.REGEX_IPV4)) {
+                    	
+                    	ip = ipTrouvee;
+                    	
                     }
                 }
             }

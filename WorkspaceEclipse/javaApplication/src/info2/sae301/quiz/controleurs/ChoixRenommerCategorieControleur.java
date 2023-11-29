@@ -65,6 +65,7 @@ public class ChoixRenommerCategorieControleur {
 	 */
 	@FXML
 	private void initialize() {
+		indiceCategorie = AffichageCategoriesControleur.indiceCategorie;
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -189,6 +190,10 @@ public class ChoixRenommerCategorieControleur {
 	 */
 	@FXML
 	private void actionBoutonAnnuler() {
+		if (indiceCategorie >= 5 && indiceCategorie %10 != 0) {
+			indiceCategorie -= 5;
+		}
+		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	

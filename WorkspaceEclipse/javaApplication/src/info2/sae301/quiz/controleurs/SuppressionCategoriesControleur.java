@@ -63,6 +63,7 @@ public class SuppressionCategoriesControleur {
 	 */
 	@FXML
 	private void initialize() {
+		indiceCategorie = AffichageCategoriesControleur.indiceCategorie;
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -186,6 +187,7 @@ public class SuppressionCategoriesControleur {
      */
 	@FXML
 	private void actionBoutonAnnuler() {
+		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
