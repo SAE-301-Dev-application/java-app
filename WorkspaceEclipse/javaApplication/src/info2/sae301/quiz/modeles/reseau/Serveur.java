@@ -139,32 +139,6 @@ public class Serveur {
 	
 	
 	/**
-	 * Envoi au client du type de données échangées.
-	 * 
-	 * @param type <ul>
-	 *     <li>1 - Catégories</li>
-	 *     <li>2 - Questions</li>
-	 * </ul>
-	 * @throws IOException si l'envoie échoue.
-	 */
-	private void envoyerTypeDonnees(int type)
-	throws IOException {
-		creerFluxSortie();
-		
-		System.out.println("Client connecté : "
-                		   + this.socketClient.getInetAddress().getHostAddress()
-                		   + "\n");
-		
-		System.out.println("Envoi au client du type de données : " + type + "\n");
-		
-		// Envoi au client de l'entier
-        this.fluxSortie.writeObject(type);
-		
-		fermerFluxSortie();
-	}
-	
-	
-	/**
 	 * Envoi de l'entier du serveur et réception de l'entier du client
 	 * afin de calculer l'entier secret de Diffie Hellman.
 	 * 
@@ -246,53 +220,25 @@ public class Serveur {
 	
 	
 	/**
-	 * Chiffre via la méthode
-	 * {@link info2.sae301.quiz.modeles.cryptographie.Vigenere#chiffrer(String)}
-	 * les noms des catégories en paramètre.
-	 * Envoie ensuite via fluxSortie chaque nom de catégorie crypté.
+	 * Sélectionne toutes les questions des catégories en paramètres et les
+	 * envoie ensuite de manière sécurisée.
 	 * 
 	 * @param categories Les catégories à envoyer.
 	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException si la réception des données échoue.
 	 */
 	public void envoyerCategories(ArrayList<Categorie> categories)
 	throws IOException, ClassNotFoundException {
 		
-        String nomCategorie,
-               nomCategorieCrypte;
+        ArrayList<Question> questions;
         
-        creerServeur();
-        
-        System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
-        
-        envoyerTypeDonnees(1);
-        
-        envoyerRecevoirEntier();
-        
-        envoyerCleVigenere();
-        
-        System.out.println("Envoi de noms de catégories :\n"
-        		           + "Nom initial\tNom crypté\n"
-        		           + "_____________________________");
-        
-        creerFluxSortie();
+        questions = new ArrayList<Question>();
         
         for (Categorie categorieCourante: categories) {
-        	nomCategorie = categorieCourante.getIntitule();
- 
-            nomCategorieCrypte = Vigenere.chiffrer(nomCategorie, this.cleVigenere);
-            
-            System.out.println(nomCategorie + "\t" + nomCategorieCrypte);
-			
-		    this.fluxSortie.writeObject(nomCategorieCrypte);
+        	questions.addAll(categorieCourante.getListeQuestions());
         }
         
-        System.out.println();
-        this.fluxSortie.writeObject("finCategories");
-        
-        fermerFluxSortie();
-        
-        fermerSockets();
+        envoyerQuestions(questions);
 	}
 	
 	
@@ -315,8 +261,6 @@ public class Serveur {
         creerServeur();
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
-        
-        envoyerTypeDonnees(2);
         
         envoyerRecevoirEntier();
         
