@@ -294,20 +294,30 @@ public class Client {
 	/**
 	 * Réception et déchiffrage des questions cryptées envoyées par le serveur.
 	 * 
+	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
 	 * @throws IOException si la lecture renvoie une erreur.
 	 * @return les noms des catégories reçues.
 	 * @throws ClassNotFoundException si le cast échoue.
 	 */
-	private String[] recevoirQuestions()
-	throws IOException, ClassNotFoundException {		
-		boolean envoiFini;
-		
+	public String[] recevoirQuestions(String adresseServeur)
+	throws IOException, ClassNotFoundException {
 		String donneesCrypteesQuestion,
-		       donneesDecrypteesQuestion;
-		
+	           donneesDecrypteesQuestion;
+	
 		String[] donneesQuestions = {""};
 		
+		boolean envoiFini;
+		
 		envoiFini = false;
+		
+		this.adresseServeur = adresseServeur;
+		
+		System.out.println(String.format(CONNEXION_OUVERTE,
+               			                 this.adresseServeur, PORT_SERVEUR));
+		
+		recevoirEnvoyerEntier();
+		
+		recevoirCleVigenere();
 		
 		System.out.println("Réception des données des questions :\n"
 				           + "Données cryptées\n-----\nDonnées décryptées\n"
@@ -350,36 +360,4 @@ public class Client {
         this.socket.close();
 	}
 	
-	
-	/**
-	 * Import des questions depuis un serveur.
-	 * 
-	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
-	 * @throws IOException si l'import échoue.
-	 * @throws ClassNotFoundException si le cast permettant de transformer
-	 *         l'objet reçu en string renvoie une erreur.
-	 */
-	public void importerQuestions(String adresseServeur)
-	throws IOException, ClassNotFoundException {
-		String[] questionsFormatStr;
-		
-		Import importation;
-
-		importation = new Import();
-		
-		this.adresseServeur = adresseServeur;
-		
-		System.out.println(String.format(CONNEXION_OUVERTE,
-               			                 this.adresseServeur, PORT_SERVEUR));
-		
-		recevoirEnvoyerEntier();
-		
-		recevoirCleVigenere();
-		
-		questionsFormatStr = this.recevoirQuestions();
-		
-		for (String questionCourante : questionsFormatStr) {
-			importation.creationQuestion(questionCourante);
-		}
-	}
 }
