@@ -230,6 +230,30 @@ public class Client {
 	
 	
 	/**
+	 * Réception du type de données envoyées par le serveur.
+	 * 
+	 * @return <ul>
+	 *     <li>1 - Catégories</li>
+	 *     <li>2 - Questions</li>
+	 * </ul>
+	 * @throws IOException si la lecture échoue.
+	 * @throws ClassNotFoundException si le cast échoue.
+	 */
+	public int recevoirTypeDonnees()
+	throws IOException, ClassNotFoundException {
+		int type;
+		
+		creerFluxEntree();
+		
+		type = (int) this.fluxEntree.readObject();
+		
+		fermerFluxEntree();
+		
+		return type;
+	}
+	
+	
+	/**
 	 * Réception et déchiffrage des catégories cryptées envoyées par le serveur.
 	 * 
 	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.

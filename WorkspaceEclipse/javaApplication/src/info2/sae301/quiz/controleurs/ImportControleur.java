@@ -253,8 +253,13 @@ public class ImportControleur {
 	 * Import via une connexion réseau client / serveur de questions.
 	 */
 	private void importerADistance() {
+		
+		Import importation;
+		
+		importation = new Import();
+		
 		try {
-			new Import().importerADistance(this.champIpServeur.getText(), 1);
+			importation.importerADistance(this.champIpServeur.getText());
 			// 1 = catégories 2 = questions
 		} catch (ClassNotFoundException e) {
 			erreurServeurInconnu();

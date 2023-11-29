@@ -121,20 +121,26 @@ public class Import {
 	 * de se connecter à un serveur et récupérer les questions proposées.
 	 * 
 	 * @param adresseServeur L'adresse du serveur qui envoie les données
-	 * @param typeDonnees 1 = catégories, 2 = questions
 	 * @throws ClassNotFoundException si le cast des données reçues échoue.
 	 * @throws IOException si la création de la socket échoue.
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	public void importerADistance(String adresseServeur, int typeDonnees)
+	public void importerADistance(String adresseServeur)
 	throws ClassNotFoundException, SocketTimeoutException, IOException {
+		final String TYPE_INVALIDE
+		= "Le type de données envoyées est incorrect.";
+		
 		String[] nomsCategories;
 		
 		String[] donneesQuestions;
 		
 		Client client;
 		
+		int typeDonnees;
+		
 		client = new Client();
+		
+		typeDonnees = client.recevoirTypeDonnees();
 		
 		if (typeDonnees == 1) {
 			nomsCategories = client.recevoirCategories(adresseServeur);
@@ -142,13 +148,15 @@ public class Import {
 			System.out.println("Catégories à créer : ");
 			
 			this.creationCategories(nomsCategories);			
-		} else {
+		} else if (typeDonnees == 2) {
 			donneesQuestions = client.recevoirQuestions(adresseServeur);
 		
 			System.out.println("Questions à créer : ");
 			
 			this.creationQuestions(donneesQuestions);
-		}		
+		} else {
+			throw new IllegalArgumentException(TYPE_INVALIDE);
+		}
 	}
 	
 	

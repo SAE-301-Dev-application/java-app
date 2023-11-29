@@ -139,6 +139,32 @@ public class Serveur {
 	
 	
 	/**
+	 * Envoi au client du type de données échangées.
+	 * 
+	 * @param type <ul>
+	 *     <li>1 - Catégories</li>
+	 *     <li>2 - Questions</li>
+	 * </ul>
+	 * @throws IOException si l'envoie échoue.
+	 */
+	private void envoyerTypeDonnees(int type)
+	throws IOException {
+		creerFluxSortie();
+		
+		System.out.println("Client connecté : "
+                		   + this.socketClient.getInetAddress().getHostAddress()
+                		   + "\n");
+		
+		System.out.println("Envoi au client du type de données : " + type + "\n");
+		
+		// Envoi au client de l'entier
+        this.fluxSortie.writeObject(type);
+		
+		fermerFluxSortie();
+	}
+	
+	
+	/**
 	 * Envoi de l'entier du serveur et réception de l'entier du client
 	 * afin de calculer l'entier secret de Diffie Hellman.
 	 * 
@@ -155,10 +181,6 @@ public class Serveur {
 				                                   this.puissanceSecrete);
 		
 		creerFluxSortie();
-		
-		System.out.println("Client connecté : "
-                           + this.socketClient.getInetAddress().getHostAddress()
-                           + "\n");
 		
 		System.out.println("Envoi de l'entier du serveur au client : "
 		                   + entierAEnvoyer);
@@ -243,6 +265,8 @@ public class Serveur {
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
         
+        envoyerTypeDonnees(1);
+        
         envoyerRecevoirEntier();
         
         envoyerCleVigenere();
@@ -291,6 +315,8 @@ public class Serveur {
         creerServeur();
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+        
+        envoyerTypeDonnees(2);
         
         envoyerRecevoirEntier();
         
