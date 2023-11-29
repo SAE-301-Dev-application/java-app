@@ -5,6 +5,7 @@
 
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.modeles.reseau.Client;
 import info2.sae301.quiz.modeles.reseau.Import;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
@@ -120,14 +121,38 @@ public class ImportControleur {
 	}
 	
 	/**
-	 * Importation 
+	 * Action du bouton "Importer".
+	 * Import local si un fichier a été sélectionné ou sinon import distant si
+	 * une adresse ip a été renseignée.
+	 * Sinon une pop-up d'erreur est affichée.
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		int nombreQuestionsImportees,
-			nombreQuestionsNonImportees,
-			nombreQuestionsNonImporteesAAfficher;
+		String cheminCourant;
 		
+		cheminCourant = this.importation.getCheminFichier();
+		
+		if (cheminCourant != null && !cheminCourant.isBlank()) {
+			this.importerLocalement();
+		} else if (this.champIpServeur.getText() != null
+				   && !this.champIpServeur.getText().isBlank()) {
+			this.importerADistance();
+		} else {
+			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+										 ERREUR_AUCUN_CHEMIN_TITRE, 
+										 AlertType.ERROR);
+		}
+	}
+	
+	
+	/**
+	 * Import local de questions depuis un fichier CSV à sélectionner.
+	 */
+	private void importerLocalement() {
+		int nombreQuestionsImportees,
+		nombreQuestionsNonImportees,
+		nombreQuestionsNonImporteesAAfficher;
+	
 		boolean importationReussie;
 		
 		String cheminCourant,
@@ -140,7 +165,7 @@ public class ImportControleur {
 			&& !cheminCourant.isBlank()) {
 			
 			try {
-				this.importation.importer();
+				this.importation.importerLocalement();
 				importationReussie = true;
 			} catch (IOException e) {
 				erreurCheminInexistant();
@@ -204,7 +229,7 @@ public class ImportControleur {
 				= String.format(IMPORTATION_SUCCESS_MESSAGE, 
 								nombreQuestionsImportees);
 			}
-
+	
 			AlerteControleur.autreAlerte(messageImportationSucces, 
 										 IMPORTATION_SUCCESS_TITRE, 
 										 AlertType.INFORMATION);
@@ -214,6 +239,19 @@ public class ImportControleur {
 		}
 	}
 	
+	
+	/**
+	 * Import via une connexion réseau client / serveur de questions.
+	 */
+	private void importerADistance() {
+		new Import().importerADistance(this.champIpServeur.getText());
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'erreur indiquant que le chemin spécifié
+	 * pour accéder au CSV est invalide.
+	 */
 	private static void erreurCheminInexistant() {
 		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
 									 ERREUR_CHEMIN_INEXISTANT_TITRE,

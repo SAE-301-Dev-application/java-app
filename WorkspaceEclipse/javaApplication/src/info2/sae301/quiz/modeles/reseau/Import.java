@@ -67,7 +67,7 @@ public class Import {
 	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
 	 * soient ajouter à l'application.
 	 */
-	public void importer()
+	public void importerLocalement()
 	throws IOException, FormatCSVInvalideException {
 		
 		final String ENTETE_ATTENDUE
@@ -93,9 +93,11 @@ public class Import {
 		
 		if (premiereLigne == null || !premiereLigne.equals(ENTETE_ATTENDUE)) {
 			contenuFichier.close();
+			
 			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
 		} else {
 			OutilsCSV.initialiserFichierCSV();
+			
 			while ((ligneCourante = contenuFichier.readLine()) != null) {
 				creationQuestion(ligneCourante);
 				OutilsCSV.ecrireLigneCSV(ligneCourante);
@@ -108,6 +110,43 @@ public class Import {
 	
 	
 	/**
+	 * Créé un client avec l'adresse IP renseignée dans la vue afin
+	 * de se connecter à un serveur et récupérer les questions proposées.
+	 */
+	public void importerADistance(String adresseServeur) {
+		try {
+			String[] nomsCategories;
+			
+			nomsCategories = new Client().recevoirCategories(adresseServeur);
+			
+			this.creationCategories(nomsCategories);
+		} catch (ClassNotFoundException e) {
+			// TODO afficher pop-up erreur
+		} catch (IOException e) {
+			// TODO afficher pop-up erreur
+		}
+	}
+	
+	
+	/**
+	 * Créé et ajoute à la liste des catégories en mémoire les catégories dont
+	 * les noms sont en paramètre.
+	 * 
+	 * @param nomsCategories Chaîne de caractères contenant tous les noms
+	 *        des catégories à créer.
+	 */
+	public void creationCategories(String[] nomsCategories) {
+		for (String nomCategorie: nomsCategories) {	
+			nomCategorie = nomCategorie.trim();
+			
+			if (jeu.indiceCategorie(nomCategorie) == -1) {
+				jeu.creerCategorie(nomCategorie);
+			}
+		}		
+	}
+	
+	
+	/**
 	 * Créé et ajoute à la liste des questions en mémoire la question dont
 	 * les données sont en paramètre sous forme d'une chaîne de caractères.
 	 * 
@@ -115,6 +154,8 @@ public class Import {
 	 *                        les données d'une question à créer.
 	 */
 	public void creationQuestion(String donneesQuestion) {
+		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+		
 		String intituleCategorie,
 		       intituleQuestion,
 		       reponseJuste,
@@ -126,7 +167,7 @@ public class Import {
 		int niveauDifficulte;
 		
 		donneesDecoupees
-		= donneesQuestion.split(";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+		= donneesQuestion.split(REGEX_DONNEE_ENTIERE, -1);
 		
 		
 		for (int i = 0; i < donneesDecoupees.length; i++) {
@@ -259,24 +300,6 @@ public class Import {
 		}
 		
 		return resultat;
-	}
-	
-	
-	/**
-	 * Créé et ajoute à la liste des catégories en mémoire les catégories dont
-	 * les noms sont en paramètre.
-	 * 
-	 * @param nomsCategories Chaîne de caractères contenant tous les noms
-	 *        des catégories à créer.
-	 */
-	public static void creationCategories(String[] nomsCategories) {
-		for (String nomCategorie: nomsCategories) {	
-			nomCategorie = nomCategorie.trim();
-			
-			if (jeu.indiceCategorie(nomCategorie) == -1) {
-				jeu.creerCategorie(nomCategorie);
-			}
-		}		
 	}
 
 
