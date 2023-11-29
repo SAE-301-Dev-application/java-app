@@ -35,39 +35,6 @@ public class OutilsCSV {
 	private static final String NOM_FICHIER_CSV = "donneesImportees.csv";
 
 	private static File fichierCSV;
-
-	/**
-	 * Initialise le fichier CSV en créant le dossier et le fichier 
-	 * s'ils n'existent pas.
-	 * Si le dossier existe déjà, il ne sera pas recréé.
-	 * Si le fichier existe déjà, aucune action n'est effectuée.
-	 * @throws IOException si la lecture du fichier échoue.
-	 */
-	public static void initialiserFichierCSV() throws IOException {
-		// Création du dossier s'il n'existe pas
-		File dossier = new File(CHEMIN_DOSSIER);
-		if (!dossier.exists()) {
-			dossier.mkdirs();
-		}
-
-		// Création du fichier s'il n'existe pas
-		fichierCSV = new File(CHEMIN_DOSSIER + NOM_FICHIER_CSV);
-		
-		if (!fichierCSV.exists()) {
-			fichierCSV.createNewFile();
-
-			// Écrire la première ligne ENTETE_FICHIER
-			FileWriter writer = new FileWriter(fichierCSV);
-			writer.write(ENTETE_FICHIER);
-			writer.close();
-		} else {
-			// Si le fichier existe, le vider et écrire la première ligne ENTETE_FICHIER
-			// Le paramètre false indique de récrire le fichier
-			FileWriter writer = new FileWriter(fichierCSV, false);
-			writer.write(ENTETE_FICHIER);
-			writer.close();
-		}
-	}
 	
 	/**
 	 * Initialise le fichier CSV en créant le dossier et le fichier 
@@ -77,7 +44,7 @@ public class OutilsCSV {
 	 * @param lignes Les lignes à écrire dans le fichier.
 	 * @throws IOException si la lecture du fichier échoue.
 	 */
-	public static void ecrireFichierCSV(ArrayList<String> lignes)
+	public static void ecrireFichierCSV(String[] lignes)
 	throws IOException {
 		
 		// Création du dossier s'il n'existe pas
@@ -100,8 +67,10 @@ public class OutilsCSV {
 		ecriture.write(ENTETE_FICHIER);
 		
 		// Pour chaque ligne l'écrire en dessous de la précédent
-		for (int indiceLigne = 0; indiceLigne < lignes.size(); indiceLigne++) {
-			ecriture.write("\n" + lignes.get(indiceLigne));
+		if (lignes != null) {
+			for (int indiceLigne = 0; indiceLigne < lignes.length; indiceLigne++) {
+				ecriture.write("\n" + lignes[indiceLigne]);
+			}			
 		}
 		
 		ecriture.close();

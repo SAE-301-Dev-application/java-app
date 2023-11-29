@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+
 import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
@@ -82,6 +83,8 @@ public class Import {
 		String premiereLigne,
 		       ligneCourante;
 		
+		String[] questionsCrees;
+		
 		ArrayList<String> lignesCSV;
 		
 		BufferedReader contenuFichier;
@@ -105,8 +108,10 @@ public class Import {
 				lignesCSV.add(ligneCourante);
 			}
 			
-			OutilsCSV.ecrireFichierCSV(lignesCSV);
-			creationQuestions(lignesCSV.toArray(new String[0]));
+			questionsCrees
+			= creationQuestions(lignesCSV.toArray(new String[0]));
+			
+			OutilsCSV.ecrireFichierCSV(questionsCrees);
 		}
 		
 		contenuFichier.close();
@@ -145,7 +150,7 @@ public class Import {
 			
 			System.out.println("Catégories à créer : ");
 			
-			this.creationCategories(nomsCategories);			
+			this.creationCategories(nomsCategories);
 		} else if (typeDonnees == 2) {
 			donneesQuestions = client.recevoirQuestions(adresseServeur);
 		
@@ -185,7 +190,7 @@ public class Import {
 	 * @param donneesQuestions Chaînes de caractères contenant
 	 *                         les données des question à créer.
 	 */
-	public void creationQuestions(String[] donneesQuestions) {
+	public String[] creationQuestions(String[] donneesQuestions) {
 		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 		
 		String intituleCategorie,
@@ -194,11 +199,14 @@ public class Import {
 		       feedback;
 		
 		String[] donneesDecoupees,
-		         reponsesFausses;
+		         reponsesFausses,
+		         lignesAjoutees;
 		
 		String donneesQuestionCourante;
 		
 		int niveauDifficulte;
+		
+		lignesAjoutees = new String[0];
 		
 		for (int indiceQuestion = 0;
 			 indiceQuestion < donneesQuestions.length;
@@ -216,7 +224,7 @@ public class Import {
 				donneesDecoupees[indiceDonnee]
 				= retirerGuillemetsInvalides(donneesDecoupees[indiceDonnee]);
 				
-				System.out.print(donneesDecoupees[indiceDonnee] + "\t");
+				//System.out.print(donneesDecoupees[indiceDonnee] + "\t");
 			}
 			
 			intituleCategorie = donneesDecoupees[0].trim();
@@ -254,12 +262,22 @@ public class Import {
 						          reponsesFausses, niveauDifficulte,
 						          feedback, intituleCategorie);
 				
+				String[] nouveauTableau = new String[lignesAjoutees.length + 1];
+	            System.arraycopy(lignesAjoutees, 0, nouveauTableau,
+	            		         0, lignesAjoutees.length);
+	            
+	            nouveauTableau[lignesAjoutees.length] = donneesQuestionCourante;
+
+	            lignesAjoutees = nouveauTableau;
+				
 			} else {
 				this.questionsNonAjoutees.add(intituleQuestion);
 			}
 			
 			System.out.println();
 		}
+		
+		return lignesAjoutees.length > 0 ? lignesAjoutees : null;
 	}
 	
 	
