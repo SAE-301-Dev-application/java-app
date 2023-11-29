@@ -256,13 +256,10 @@ public class ImportControleur {
 		try {
 			new Import().importerADistance(this.champIpServeur.getText());			
 		} catch (ClassNotFoundException e) {
-			// TODO afficher pop-up erreur
-			System.out.println("ClassNotFoundException: " + e.getMessage());
+			erreurServeurInconnu();
 		} catch (SocketTimeoutException e) {
-			System.out.println("SocketTimeoutException: " + e.getMessage());
 			erreurServeurInconnu();
 		} catch (IOException e) {
-			System.out.println("IOException: " + e.getMessage());
 			erreurServeurIndisponible();
 		}
 	}

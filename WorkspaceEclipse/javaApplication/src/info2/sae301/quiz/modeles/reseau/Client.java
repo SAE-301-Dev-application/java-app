@@ -47,7 +47,7 @@ public class Client {
 	= "\nClé de vigenère déchiffrée :\n";
 	
 	private static final String INDICATION_CONFIRMATION_CLE
-	= "Envoi confirmation réception clé vigenère\n";
+	= "Envoi confirmation réception clé vigenère.";
 	
 	/** Socket permettant la connexion au serveur. */
 	private Socket socket;
