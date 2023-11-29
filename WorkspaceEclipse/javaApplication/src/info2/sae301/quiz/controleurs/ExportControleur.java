@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 
 /**
@@ -60,15 +61,16 @@ public class ExportControleur {
 	= "Mon adresse IP : %s";
 	
 	
-	/** CheckBox "exportCategorie". */
+	/** Choix : sélectionner des catégories. */
 	@FXML
 	private CheckBox choixCategories;
 	
 	
-	/** CheckBox "10 questions". */
+	/** Choix : sélectionner des questions. */
 	@FXML
 	private CheckBox choixQuestions;
 	
+	/** Grille d'affichage des catégories/questions. */
 	@FXML 
 	private GridPane grilleSelection;
 	
@@ -132,25 +134,19 @@ public class ExportControleur {
 	 */
 	private Jeu jeu;
 	
-	private int choixExport;
+	/**
+	 * Caractère représentant le mode de sélection :
+	 * - C => Catégories
+	 * - Q => Questions
+	 */
+	private char choixSelection;
 	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
-		this.choixExport = 0;
 		jeu = Quiz.jeu;
 		
-		/*
-		 * Choix pour export en sélectionnant des questions 
-		 * ou des catégories
-		 */
-		this.choixCategories.setOnAction(event -> {
-			this.choixExportQuestionCategories(0);
-		});
-		
-		this.choixQuestions.setOnAction(event -> {
-			this.choixExportQuestionCategories(1);
-		});
+		this.choixSelectionnerCategories();
 	}
 	
 	
@@ -183,6 +179,32 @@ public class ExportControleur {
 	}
 	
 	
+	/** Sélectionner des catégories. */
+	@FXML
+	private void choixSelectionnerCategories() {
+		this.choixCategories.setSelected(true);
+		this.choixQuestions.setSelected(false);
+		
+		if (this.choixSelection != 'C') {
+			this.choixSelection = 'C';
+			System.out.println("CHARGEMENT DES CATÉGORIES !");
+		}
+	}
+	
+	
+	/** Sélectionner des questions. */
+	@FXML
+	private void choixSelectionnerQuestions() {
+		this.choixQuestions.setSelected(true);
+		this.choixCategories.setSelected(false);
+		
+		if (this.choixSelection != 'Q') {
+			this.choixSelection = 'Q';
+			System.out.println("CHARGEMENT DES QUESTIONS !");
+		}
+	}
+	
+	
 	/** Retour au menu principal de l'application. */
 	@FXML
 	private void actionBoutonRetour() {
@@ -201,34 +223,6 @@ public class ExportControleur {
 			// TODO afficher pop-up export impossible
 		} catch (ClassNotFoundException e) {
 			
-		}
-	}
-	
-	
-	/**
-	 * Affichage de l'erreur :
-	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
-	 */
-	private static void erreurNombreQuestions() {
-		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
-				 					 "Caca", 
-				 					 AlertType.ERROR);
-	}
-	
-	/**
-	 * Choix du nombre de questions pour le quiz.
-	 * 
-	 * @param nombre
-	 */
-	@FXML
-	private void choixExportQuestionCategories(int nombre) {
-		if (nombre != 0 && nombre != 1) {
-			erreurNombreQuestions();
-		} else {
-			this.choixExport = nombre;
-
-			this.choixCategories.setSelected(nombre == 0);
-			this.choixQuestions.setSelected(nombre == 1);
 		}
 	}
 }
