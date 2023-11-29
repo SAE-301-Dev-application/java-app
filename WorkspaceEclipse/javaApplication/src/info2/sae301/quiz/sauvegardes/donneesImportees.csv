@@ -1,3 +1,1 @@
 Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback
-Commentaire;1;Quel est le délimiteur de début d'un commentaire Javadoc ?;le délimiteur /**;le délimiteur /*;le délimiteur //;le délimiteur (*;;
-Commentaire;1;Laquelle des propositions suivantes n'est pas un commentaire dans la syntaxe du langage Java ?;<*  commentaire *>; /* commentaire */; // commentaire;;;

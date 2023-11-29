@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.modeles.Categorie;
@@ -28,6 +29,9 @@ import info2.sae301.quiz.modeles.cryptographie.Vigenere;
  * @author Samuel Lacam
  */
 public class Serveur {
+	
+	/** Timeout mettant fin à la tentative de connexion après 10s. */
+	private final static int TIMEOUT_CONNEXION = 10000;
 	
 	private static final String CONNEXION_OUVERTE
 	= "Le serveur est connecté sur le port %d.\nEn attente de la"
@@ -79,16 +83,23 @@ public class Serveur {
 	 */
 	public void creerServeur() throws IOException {
 		this.socketServeur = new ServerSocket(this.portServeur);
+		this.socketServeur.setSoTimeout(TIMEOUT_CONNEXION);
 	}
 	
 	
 	/**
 	 * Accepte la connexion d'un éventuel client.
 	 * 
-	 * @throws IOException si la connexion ne peut être établie.
+	 * @throws IOException Si la connexion ne peut être établie.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
-	public void accepterConnexion() throws IOException {
-        this.socketClient = this.socketServeur.accept();
+	public void accepterConnexion() throws IOException, SocketTimeoutException {
+		try {
+			this.socketClient = this.socketServeur.accept();			
+		} catch (IOException e) {
+			fermerSockets();
+			throw new SocketTimeoutException();
+		}
 	}
 	
 	
@@ -96,9 +107,10 @@ public class Serveur {
 	 * Création d'un flux d'entrée pour recevoir les objets (String)
 	 * envoyés par le client.
 	 * 
-	 * @throws IOException si le flux ne peut être créé.
+	 * @throws IOException Si la création du flux d'entrée échoue.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
-	private void creerFluxEntree() throws IOException {
+	private void creerFluxEntree() throws IOException, SocketTimeoutException {
 		accepterConnexion();
 		this.fluxEntree = new ObjectInputStream(this.socketClient.getInputStream());
 	}
@@ -119,9 +131,10 @@ public class Serveur {
 	 * Création d'un flux de sortie pour envoyer des objets (String)
 	 * au client.
 	 * 
-	 * @throws IOException si le flux ne peut être créé.
+	 * @throws IOException Si la création du flux de sortie échoue.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
-	private void creerFluxSortie() throws IOException {
+	private void creerFluxSortie() throws IOException, SocketTimeoutException {
 		accepterConnexion();
 		this.fluxSortie = new ObjectOutputStream(this.socketClient.getOutputStream());
 	}
@@ -142,11 +155,12 @@ public class Serveur {
 	 * Envoi de l'entier du serveur et réception de l'entier du client
 	 * afin de calculer l'entier secret de Diffie Hellman.
 	 * 
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
+	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
 	private void envoyerRecevoirEntier()
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		int entierAEnvoyer;
 		
 		this.puissanceSecrete = DiffieHellman.genererPuissance();
@@ -181,11 +195,12 @@ public class Serveur {
 	/**
 	 * Envoie au client la clé gérénée par Vigenère.
 	 * 
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si le cast de la réponse échoue.
+	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
 	private void envoyerCleVigenere()
-	throws IOException, ClassNotFoundException {	
+	throws IOException, ClassNotFoundException, SocketTimeoutException {	
 		String reponseClient;
 		
 		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
@@ -224,11 +239,12 @@ public class Serveur {
 	 * envoie ensuite de manière sécurisée.
 	 * 
 	 * @param categories Les catégories à envoyer.
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si la réception des données échoue.
+	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
 	public void envoyerCategories(ArrayList<Categorie> categories)
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		
         ArrayList<Question> questions;
         
@@ -249,11 +265,12 @@ public class Serveur {
 	 * Envoie ensuite via fluxSortie les données cryptées des questions.
 	 * 
 	 * @param questions Les questions à envoyer.
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException 
+	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
 	 */
 	public void envoyerQuestions(ArrayList<Question> questions)
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		
         String donneesQuestion,
                donneesCrypteesQuestion;
@@ -300,9 +317,13 @@ public class Serveur {
 	 */
 	public void fermerSockets() throws IOException {
         // Fermeture de la socket du client
-        this.socketClient.close();
+		if (this.socketClient != null) {
+			this.socketClient.close();			
+		}
         
         // Fermeture de la socket du serveur
-        this.socketServeur.close();
+		if (this.socketServeur != null) {
+			this.socketServeur.close();			
+		}
 	}
 }
