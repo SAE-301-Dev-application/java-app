@@ -91,7 +91,8 @@ public class ExportControleur {
                     
                     matcherIPV4 = patternIPV4.matcher(addr.getHostAddress());
                     
-                    if (matcherIPV4.find()) {
+                    //if (matcherIPV4.find()) {
+                    if (!addr.isLinkLocalAddress() && !addr.isLoopbackAddress() && addr.isSiteLocalAddress()) {
                     	ip = addr.getHostAddress();
                     }
                 }
