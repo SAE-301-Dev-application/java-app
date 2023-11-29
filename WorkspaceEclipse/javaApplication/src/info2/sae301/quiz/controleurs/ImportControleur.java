@@ -5,12 +5,12 @@
 
 package info2.sae301.quiz.controleurs;
 
-import info2.sae301.quiz.modeles.reseau.Client;
 import info2.sae301.quiz.modeles.reseau.Import;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
 import java.io.FileNotFoundException; 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.file.Path;
 
 import javafx.fxml.FXML;
@@ -35,6 +35,12 @@ public class ImportControleur {
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
 	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
+	
+	private final static String ERREUR_SERVEUR_INCONNU_TITRE
+	= "ERREUR DE CONNEXION AU SERVEUR";
+	
+	private final static String ERREUR_SERVEUR_INCONNU_MESSAGE
+	= "Aucun serveur n'est connu avec l'adresse IP spécifiée.";
 	
 	private final static String ERREUR_FORMAT_INVALIDE_TITRE
 	= "FORMAT DU CSV INVALIDE";
@@ -244,7 +250,19 @@ public class ImportControleur {
 	 * Import via une connexion réseau client / serveur de questions.
 	 */
 	private void importerADistance() {
-		new Import().importerADistance(this.champIpServeur.getText());
+		try {
+			new Import().importerADistance(this.champIpServeur.getText());			
+		} catch (ClassNotFoundException e) {
+			// TODO afficher pop-up erreur
+			System.out.println("ClassNotFoundException: " + e.getMessage());
+		} catch (SocketTimeoutException e) {
+			// TODO afficher pop-up erreur
+			System.out.println("SocketTimeoutException: " + e.getMessage());
+		} catch (IOException e) {
+			// TODO afficher pop-up erreur
+			System.out.println("IOException: " + e.getMessage());
+			erreurServeurInconnu();
+		}
 	}
 	
 	
@@ -255,6 +273,17 @@ public class ImportControleur {
 	private static void erreurCheminInexistant() {
 		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
 									 ERREUR_CHEMIN_INEXISTANT_TITRE,
+									 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'erreur indiquant que le serveur dont l'adresse
+	 * IP a été spécifiée n'est pas sur le réseau.
+	 */
+	private static void erreurServeurInconnu() {
+		AlerteControleur.autreAlerte(ERREUR_SERVEUR_INCONNU_MESSAGE,
+									 ERREUR_SERVEUR_INCONNU_TITRE,
 									 AlertType.ERROR);
 	}
 }

@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -62,8 +63,9 @@ public class Client {
 	 * et le port sont spécifiés dans les paramètres d'instanciation.
 	 * 
 	 * @throws IOException si la création de la socket échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	private void creerSocket() throws IOException {
+	private void creerSocket() throws IOException, SocketTimeoutException {
         this.socket = new Socket();
         
         InetSocketAddress adresse
@@ -78,8 +80,9 @@ public class Client {
 	 * envoyés par le serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	private void creerFluxEntree() throws IOException {
+	private void creerFluxEntree() throws IOException, SocketTimeoutException {
 		creerSocket();
 		
         this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
@@ -104,8 +107,9 @@ public class Client {
 	 * au serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	private void creerFluxSortie() throws IOException {
+	private void creerFluxSortie() throws IOException, SocketTimeoutException {
 		creerSocket();
 		
         this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
@@ -131,9 +135,10 @@ public class Client {
 	 * 
 	 * @throws IOException si la lecture ou la réponse échoue.
 	 * @throws ClassNotFoundException si le cast de la clé échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
 	public void recevoirCleVigenere()
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		
 		this.cleVigenere = "";
 		
@@ -165,10 +170,11 @@ public class Client {
 	 * @throws IOException si l'import échoue.
 	 * @throws ClassNotFoundException si le cast permettant de transformer
 	 *         l'objet reçu en string renvoie une erreur.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 * @return les noms des catégories reçues.
 	 */
 	public String[] recevoirCategories(String adresseServeur)
-	throws IOException, ClassNotFoundException {		
+	throws IOException, ClassNotFoundException, SocketTimeoutException {		
 		boolean envoiFini;
 		
 		String nomCategorieCrypte,
@@ -177,6 +183,8 @@ public class Client {
 		String[] nomsCategories = {""};
 		
 		this.adresseServeur = adresseServeur;
+		
+		System.out.println("Tentative de connexion au serveur en cours.\n");
 		
 		recevoirCleVigenere();
 		

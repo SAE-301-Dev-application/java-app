@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import javafx.stage.FileChooser;
 
@@ -112,19 +113,24 @@ public class Import {
 	/**
 	 * Créé un client avec l'adresse IP renseignée dans la vue afin
 	 * de se connecter à un serveur et récupérer les questions proposées.
+	 * 
+	 * @throws ClassNotFoundException si le cast des données reçues échoue.
+	 * @throws IOException si la création de la socket échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	public void importerADistance(String adresseServeur) {
-		try {
-			String[] nomsCategories;
-			
-			nomsCategories = new Client().recevoirCategories(adresseServeur);
-			
-			this.creationCategories(nomsCategories);
-		} catch (ClassNotFoundException e) {
-			// TODO afficher pop-up erreur
-		} catch (IOException e) {
-			// TODO afficher pop-up erreur
+	public void importerADistance(String adresseServeur)
+	throws ClassNotFoundException, SocketTimeoutException, IOException {
+		String[] nomsCategories;
+		
+		nomsCategories = new Client().recevoirCategories(adresseServeur);
+		
+		System.out.println("Catégories à créer : ");
+		
+		for (int i = 0; i < nomsCategories.length; i++) {
+			System.out.println(nomsCategories[i]);
 		}
+		
+		this.creationCategories(nomsCategories);
 	}
 	
 	
