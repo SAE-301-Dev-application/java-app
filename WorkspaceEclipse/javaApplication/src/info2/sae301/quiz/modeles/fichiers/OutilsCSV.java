@@ -1,5 +1,5 @@
 /*
- * OutilsCSV.java									                    28 nov. 2023
+ * OutilsCSV.java									                29 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -9,7 +9,6 @@ package info2.sae301.quiz.modeles.fichiers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Outils et méthodes pouvant être utiles pour des actions sur 
@@ -85,10 +84,10 @@ public class OutilsCSV {
 	 *        Par exemple :
 	 *        "Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback"
 	 */
-	public static void ecrireLigneCSV(String ligneRecue)
-			throws IOException {
-		FileWriter writer = new FileWriter(fichierCSV, true);
-		writer.write("\n" + ligneRecue);
-		writer.close();
-	}
+//	public static void ecrireLigneCSV(String ligneRecue)
+//			throws IOException {
+//		FileWriter writer = new FileWriter(fichierCSV, true);
+//		writer.write("\n" + ligneRecue);
+//		writer.close();
+//	}
 }
