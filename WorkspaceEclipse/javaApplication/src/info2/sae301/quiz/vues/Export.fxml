@@ -3,9 +3,13 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.SVGPath?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.ExportControleur">
@@ -35,19 +39,35 @@
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
             <Label layoutX="26.0" layoutY="31.0" styleClass="sous-titre" text="En ligne :" />
-            <VBox layoutX="26.0" layoutY="81.0" prefHeight="60.0" prefWidth="348.0" />
-            <Button layoutX="26.0" layoutY="100.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMonIP" prefWidth="213.0" text="AFFICHER MON ADRESSE IP">
+            <Button layoutX="26.0" layoutY="78.0" mnemonicParsing="false" onAction="#actionBoutonAfficherMonIP" prefWidth="213.0" text="AFFICHER MON ADRESSE IP">
                <styleClass>
                   <String fx:value="bouton" />
                   <String fx:value="bouton-formulaire" />
                </styleClass>
             </Button>
-            <Label fx:id="affichageIPPrivee" layoutX="24.0" layoutY="141.0" prefHeight="17.0" prefWidth="315.0">
+            <Label fx:id="affichageIPPrivee" layoutX="24.0" layoutY="113.0" prefHeight="17.0" prefWidth="315.0">
                <styleClass>
                   <String fx:value="label-champ" />
                   <String fx:value="centrer" />
                </styleClass>
             </Label>
+            <CheckBox fx:id="choixCategories" layoutX="457.0" layoutY="84.0" mnemonicParsing="false" styleClass="label-champ" text="Catégories" />
+            <CheckBox fx:id="choixQuestions" layoutX="578.0" layoutY="84.0" mnemonicParsing="false" styleClass="label-champ" text="Questions" />
+            <Label layoutX="367.0" layoutY="85.0" styleClass="label-champ" text="Exporter :" />
+            <ScrollPane hbarPolicy="NEVER" layoutX="26.0" layoutY="137.0" styleClass="pane-base">
+               <content>
+                  <GridPane fx:id="grilleSelection" prefHeight="203.0" prefWidth="682.0" styleClass="centrer-verticale">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
          </children>
       </Pane>
       <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-116.0" layoutY="289.0" onMouseClicked="#actionBoutonRetour" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
