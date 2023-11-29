@@ -51,8 +51,8 @@
                   <String fx:value="centrer" />
                </styleClass>
             </Label>
-            <CheckBox fx:id="choixCategories" layoutX="457.0" layoutY="84.0" mnemonicParsing="false" styleClass="label-champ" text="Catégories" />
-            <CheckBox fx:id="choixQuestions" layoutX="578.0" layoutY="84.0" mnemonicParsing="false" styleClass="label-champ" text="Questions" />
+            <CheckBox fx:id="choixCategories" layoutX="457.0" layoutY="84.0" mnemonicParsing="false" onAction="#choixSelectionnerCategories" styleClass="label-champ" text="Catégories" />
+            <CheckBox fx:id="choixQuestions" layoutX="578.0" layoutY="84.0" mnemonicParsing="false" onAction="#choixSelectionnerQuestions" styleClass="label-champ" text="Questions" />
             <Label layoutX="367.0" layoutY="85.0" styleClass="label-champ" text="Exporter :" />
             <ScrollPane hbarPolicy="NEVER" layoutX="26.0" layoutY="137.0" styleClass="pane-base">
                <content>
