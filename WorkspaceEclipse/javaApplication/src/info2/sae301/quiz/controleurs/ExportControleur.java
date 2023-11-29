@@ -141,6 +141,12 @@ public class ExportControleur {
 	 */
 	private char choixSelection;
 	
+	/** Coordonnée X du prochain élément de la grille. */
+	private int prochainXGrilleSelection;
+	
+	/** Coordonnée Y du prochain élément de la grille. */
+	private int prochainYGrilleSelection;
+	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
@@ -202,6 +208,21 @@ public class ExportControleur {
 			this.choixSelection = 'Q';
 			System.out.println("CHARGEMENT DES QUESTIONS !");
 		}
+	}
+	
+	
+	/** 
+	 * Charge les différents choix sélectionnables (catégories ou questions). 
+	 */
+	private void chargementSelection() {
+		this.prochainXGrilleSelection = 0;
+		this.prochainYGrilleSelection = 0;
+		
+		// TODO: add(el, x, y)
+		this.grilleSelection.add(affichageIPPrivee, prochainXGrilleSelection, prochainYGrilleSelection);
+		
+		prochainXGrilleSelection++;
+		prochainYGrilleSelection++;
 	}
 	
 	
