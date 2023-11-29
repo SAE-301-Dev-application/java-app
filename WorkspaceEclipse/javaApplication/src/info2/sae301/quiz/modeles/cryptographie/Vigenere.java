@@ -9,6 +9,8 @@ import static info2.sae301.quiz.modeles.Dictionnaire.*;
 
 import java.util.Random;
 
+import info2.sae301.quiz.modeles.Dictionnaire;
+
 /**
  * Cryptographie d'un fichier CSV avec la méthode de Vigenère.
  * 
@@ -85,18 +87,45 @@ public class Vigenere {
 	public static String chiffrer(String message, String cle) {
 		String messageC = "";
 		for (int i = 0; i < message.length(); i++) {
-			int nbCaractere;
+			int indiceCaractere;
 			char caractereC;
 			
-			nbCaractere = (getDictionnaireReversed().get(message.charAt(i))
+			indiceCaractere = (getDictionnaireReversed().get(message.charAt(i))
 					+ getDictionnaireReversed().get(cle.charAt(i%cle.length())))
 					% getDictionnaire().size();
 			
-			caractereC = getDictionnaire().get(nbCaractere);
+			caractereC = getDictionnaire().get(indiceCaractere);
 			messageC += caractereC;
 		}
 		return messageC;
 	}
+	
+	
+	/**
+	 * Chiffre la cle par Diffie-Hellman
+	 * 
+	 * @param entierSecret la clé de chiffrement
+	 * @return la clé de Vigenère chiffrée
+	 */
+	public static String chiffrerCle(int entierSecret) {
+    	String cleChiffree = "";
+    	
+    	int tailleDictionnaire = getDictionnaire().size();
+    	
+		for (int i = 0; i < cle.length(); i++) {
+			int indiceCaractere;
+			char caractereC;
+			
+			indiceCaractere
+			= (getDictionnaireReversed().get(cle.charAt(i))
+			   + getDictionnaire().get((entierSecret) % tailleDictionnaire))
+			  % tailleDictionnaire;
+			
+			caractereC = getDictionnaire().get(indiceCaractere);
+			cleChiffree += caractereC;
+		}
+		return cleChiffree;
+    }
 	
 	
 	/**
@@ -108,18 +137,49 @@ public class Vigenere {
 	public static String dechiffrer(String messageC, String cle) {
 		String messageD = "";
 		for (int i = 0; i < messageC.length(); i++) {
-			int nbCaractere;
+			int indiceCaractere;
 			char caractereD;
 			
-			nbCaractere = (getDictionnaireReversed().get(messageC.charAt(i))
+			indiceCaractere = (getDictionnaireReversed().get(messageC.charAt(i))
 					- getDictionnaireReversed().get(cle.charAt(i%cle.length())))
 					% getDictionnaire().size();
 			
-			caractereD = nbCaractere < 0 ? 
-					getDictionnaire().get(nbCaractere + getDictionnaire().size()) 
-							: getDictionnaire().get(nbCaractere);
+			caractereD = indiceCaractere < 0 ? 
+					getDictionnaire().get(indiceCaractere + getDictionnaire().size()) 
+							: getDictionnaire().get(indiceCaractere);
 			messageD += caractereD;
 		}
 		return messageD;
+	}
+	
+	
+	/**
+	 * Déchiffre une cle chiffrée par Diffie-Hellman
+	 * 
+	 * @param entierSecret la clé de déchiffrement
+	 * @return la cle de Vigenère décryptée
+	 */
+	public static String dechiffrerCle(int entierSecret) {
+		String cleDechiffree = "";
+		
+		int tailleDictionnaire = getDictionnaire().size();
+		
+		for (int i = 0; i < cle.length(); i++) {
+			int indiceCaractere;
+			char caractereDechiffre;
+			
+			indiceCaractere 
+			= (getDictionnaireReversed().get(cle.charAt(i))
+			   - getDictionnaire().get((entierSecret) % tailleDictionnaire))
+			  % tailleDictionnaire;
+			
+			caractereDechiffre
+			= indiceCaractere < 0
+			  ? getDictionnaire().get(indiceCaractere + tailleDictionnaire) 
+			  : getDictionnaire().get(indiceCaractere);
+			
+			cleDechiffree += caractereDechiffre;
+		}
+		return cleDechiffree;
 	}
 }
