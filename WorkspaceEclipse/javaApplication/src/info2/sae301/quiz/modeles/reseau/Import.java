@@ -120,11 +120,13 @@ public class Import {
 	 * Créé un client avec l'adresse IP renseignée dans la vue afin
 	 * de se connecter à un serveur et récupérer les questions proposées.
 	 * 
+	 * @param adresseServeur L'adresse du serveur qui envoie les données
+	 * @param typeDonnees 1 = catégories, 2 = questions
 	 * @throws ClassNotFoundException si le cast des données reçues échoue.
 	 * @throws IOException si la création de la socket échoue.
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
-	public void importerADistance(String adresseServeur)
+	public void importerADistance(String adresseServeur, int typeDonnees)
 	throws ClassNotFoundException, SocketTimeoutException, IOException {
 		String[] nomsCategories;
 		
@@ -134,17 +136,19 @@ public class Import {
 		
 		client = new Client();
 		
-		nomsCategories = client.recevoirCategories(adresseServeur);
-				
-		System.out.println("Catégories à créer : ");
+		if (typeDonnees == 1) {
+			nomsCategories = client.recevoirCategories(adresseServeur);
+			
+			System.out.println("Catégories à créer : ");
+			
+			this.creationCategories(nomsCategories);			
+		} else {
+			donneesQuestions = client.recevoirQuestions(adresseServeur);
 		
-		this.creationCategories(nomsCategories);
-		
-		donneesQuestions = client.recevoirQuestions(adresseServeur);
-		
-		System.out.println("\nQuestions à créer : ");
-		
-		this.creationQuestions(donneesQuestions);
+			System.out.println("Questions à créer : ");
+			
+			this.creationQuestions(donneesQuestions);
+		}		
 	}
 	
 	
