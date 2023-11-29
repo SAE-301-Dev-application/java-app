@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -180,7 +181,9 @@ public class Client {
 		String nomCategorieCrypte,
 		       nomCategorieDecrypte;
 		
-		String[] nomsCategories = {""};
+		ArrayList<String> nomsCategories;
+		
+		nomsCategories = new ArrayList<String>();
 		
 		this.adresseServeur = adresseServeur;
 		
@@ -211,13 +214,13 @@ public class Client {
 				
 				System.out.println(nomCategorieCrypte + "\t" + nomCategorieDecrypte);
 		        
-		        nomsCategories[nomsCategories.length - 1] = nomCategorieDecrypte;	
+				nomsCategories.add(nomCategorieDecrypte);
 			}
 		}
 		
 		fermerFluxEntree();
 		
-		return nomsCategories;
+		return nomsCategories.toArray(new String[0]);
 	}
 	
 	
