@@ -34,23 +34,11 @@ public class Client {
 	private static final String CONNEXION_OUVERTE
 	= "Socket créée à l'adresse %s et sur le port %d.\n";
 	
-	private static final String CREATION_FLUX_ENTREE
-	= "Création d'un flux d'entrée (réception objets du serveur).\n";
+	private static final String INDICATION_RECEPTION_CLIENT
+	= "Le client a reçu : ";
 	
-	private static final String FERMETURE_FLUX_ENTREE
-	= "Fermeture d'un flux d'entrée.\n";
-	
-	private static final String CREATION_FLUX_SORTIE
-	= "Création d'un flux de sortie (envoi objets au serveur).\n";
-	
-	private static final String FERMETURE_FLUX_SORTIE
-	= "Fermeture d'un flux de sortie.\n";
-	
-	private final static String INDICATION_REPONSE
-	= "Réponse du serveur : ";
-	
-	private final static String MESSAGE_FERMETURE_SOCKET
-	= "Fermeture de la socket.";
+	private static final String INDICATION_CLE_VIGENERE
+	= "Clé de vigenère reçue :\n";
 	
 	/** Socket permettant la connexion au serveur. */
 	private Socket socket;
@@ -75,16 +63,13 @@ public class Client {
 	 * 
 	 * @throws IOException si la création de la socket échoue.
 	 */
-	private void creerSocket(String adresseServeur) throws IOException {
+	private void creerSocket() throws IOException {
         this.socket = new Socket();
         
         InetSocketAddress adresse
         = new InetSocketAddress(this.adresseServeur, PORT_SERVEUR);
         
         this.socket.connect(adresse, TIMEOUT_CONNEXION);
-        
-        System.out.println(String.format(CONNEXION_OUVERTE,
-        		                         this.adresseServeur, PORT_SERVEUR));
 	}
 	
 	
@@ -95,7 +80,7 @@ public class Client {
 	 * @throws IOException si le flux ne peut être créé.
 	 */
 	private void creerFluxEntree() throws IOException {
-		System.out.println(CREATION_FLUX_ENTREE);
+		creerSocket();
 		
         this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
 	}
@@ -108,9 +93,9 @@ public class Client {
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
 	private void fermerFluxEntree() throws IOException {
-		System.out.println(FERMETURE_FLUX_ENTREE);
-		
 		this.fluxEntree.close();
+		
+		fermerSocket();
 	}
 	
 	
@@ -121,7 +106,7 @@ public class Client {
 	 * @throws IOException si le flux ne peut être créé.
 	 */
 	private void creerFluxSortie() throws IOException {
-		System.out.println(CREATION_FLUX_SORTIE);
+		creerSocket();
 		
         this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
 	}
@@ -134,51 +119,55 @@ public class Client {
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
 	private void fermerFluxSortie() throws IOException {
-		System.out.println(FERMETURE_FLUX_SORTIE);
-		
 		this.fluxSortie.close();
+		
+		fermerSocket();
 	}
 	
 	
 	/**
-	 * Envoie au serveur la clé gérénée par Vigenère.
+	 * Lecture de la clé de vigenère envoyée par le client
+	 * et affichage sur console texte.
 	 * 
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si le cast de la réponse échoue.
+	 * @throws IOException si la lecture ou la réponse échoue.
+	 * @throws ClassNotFoundException si le cast de la clé échoue.
 	 */
-	private void envoyerCleVigenere()
-	throws IOException, ClassNotFoundException {	
-		String reponseServeur;
+	public void recevoirCleVigenere()
+	throws IOException, ClassNotFoundException {
 		
-		this.cleVigenere = Vigenere.genererCle();
+		this.cleVigenere = "";
 		
-		creerFluxSortie();
+		creerFluxEntree();
 		
-		System.out.println("Envoi de la clé de vigenère générée :\n"
-		                   + this.cleVigenere + "\n");
+		System.out.println(String.format(CONNEXION_OUVERTE,
+	                       this.adresseServeur, PORT_SERVEUR));
 		
-		// Envoi au serveur de la clé de chiffrement
-        this.fluxSortie.writeObject("CLE = " + this.cleVigenere);
+		this.cleVigenere = ((String) this.fluxEntree.readObject()).substring(6);
+		
+		System.out.println(INDICATION_CLE_VIGENERE + this.cleVigenere + "\n");
+		
+		fermerFluxEntree();
+		
+		System.out.println("Envoi confirmation réception clé vigenère");
+
+        creerFluxSortie();
         
-        creerFluxEntree();
+        this.fluxSortie.writeObject(INDICATION_RECEPTION_CLIENT + this.cleVigenere);
         
-        /*
-         * Lecture de la réponse du serveur
-         */
-		reponseServeur = (String) this.fluxEntree.readObject();
-		
-		System.out.println(INDICATION_REPONSE + reponseServeur + "\n");
+        fermerFluxSortie();
 	}
 	
 	
 	/**
 	 * Réception et déchiffrage des catégories cryptées envoyées par le serveur.
 	 * 
-	 * @throws IOException si la lecture renvoie une erreur.
-	 * @throws ClassNotFoundException si le cast échoue.
+	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
+	 * @throws IOException si l'import échoue.
+	 * @throws ClassNotFoundException si le cast permettant de transformer
+	 *         l'objet reçu en string renvoie une erreur.
 	 * @return les noms des catégories reçues.
 	 */
-	private String[] recevoirCategories()
+	public String[] recevoirCategories(String adresseServeur)
 	throws IOException, ClassNotFoundException {		
 		boolean envoiFini;
 		
@@ -187,11 +176,17 @@ public class Client {
 		
 		String[] nomsCategories = {""};
 		
+		this.adresseServeur = adresseServeur;
+		
+		recevoirCleVigenere();
+		
 		envoiFini = false;
 		
-		System.out.println("Réception des noms des catégories :\n"
+		System.out.println("\nRéception des noms des catégories :\n"
 				           + "Nom crypté\tNom décrypté\n"
 				           + "_____________________________");
+		
+		creerFluxEntree();
         
         // Lecture du nom de catégorie crypté envoyé par le serveur
 		while (!envoiFini
@@ -211,6 +206,8 @@ public class Client {
 		        nomsCategories[nomsCategories.length - 1] = nomCategorieDecrypte;	
 			}
 		}
+		
+		fermerFluxEntree();
 		
 		return nomsCategories;
 	}
@@ -237,6 +234,8 @@ public class Client {
 		System.out.println("Réception des données des questions :\n"
 				           + "Données cryptées\n-----\nDonnées décryptées\n"
 				           + "_________________________________");
+		
+		creerFluxEntree();
         
         // Lecture des données cryptées des questions envoyées par le serveur
 		while (!envoiFini
@@ -255,44 +254,24 @@ public class Client {
 		        
 				donneesQuestions[donneesQuestions.length - 1]
 				= donneesDecrypteesQuestion;
-				
-				
 			}
 		}
+		
+		fermerFluxEntree();
+		
 		return donneesQuestions;
 	}
 	
 	
 	/**
-	 * Fermeture des flux et de la socket précédemment créée.
+	 * Fermeture de la socket précédemment créée.
 	 * 
-	 * @throws IOException si la fermeture de la socket ou des flux échoue.
+	 * @throws IOException si la fermeture de la socket échoue.
 	 */
-	private void fermerSockets() throws IOException {
-		fermerFluxEntree();
-		fermerFluxSortie();
-		
-		System.out.println(MESSAGE_FERMETURE_SOCKET);
+	private void fermerSocket() throws IOException {
         this.socket.close();
 	}
 	
-	/**
-	 * Import des catégories depuis un serveur.
-	 * 
-	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
-	 * @throws IOException si l'import échoue.
-	 * @throws ClassNotFoundException si le cast permettant de transformer
-	 *         l'objet reçu en string renvoie une erreur.
-	 */
-	public void importerCategories(String adresseServeur)
-	throws IOException, ClassNotFoundException {
-		creerSocket(adresseServeur);
-		envoyerCleVigenere();
-		
-		Import.creationCategories(recevoirCategories());
-		
-		fermerSockets();
-	}
 	
 	/**
 	 * Import des questions depuis un serveur.
@@ -310,15 +289,17 @@ public class Client {
 
 		importation = new Import();
 		
-		creerSocket(adresseServeur);
-		envoyerCleVigenere();
+		this.adresseServeur = adresseServeur;
 		
-		questionsFormatStr = recevoirQuestions();
+		System.out.println(String.format(CONNEXION_OUVERTE,
+               			                 this.adresseServeur, PORT_SERVEUR));
+		
+		recevoirCleVigenere();
+		
+		questionsFormatStr = this.recevoirQuestions();
 		
 		for (String questionCourante : questionsFormatStr) {
 			importation.creationQuestion(questionCourante);
 		}
-		
-		fermerSockets();
 	}
 }

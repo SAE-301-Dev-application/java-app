@@ -29,28 +29,11 @@ import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 public class Serveur {
 	
 	private static final String CONNEXION_OUVERTE
-	= "Le serveur est connecté sur le port %d.\n";
+	= "Le serveur est connecté sur le port %d.\nEn attente de la"
+	  + " connexion d'un client.\n";
 	
-	private static final String CREATION_FLUX_ENTREE
-	= "Création d'un flux d'entrée (réception objets du client).\n";
-	
-	private static final String FERMETURE_FLUX_ENTREE
-	= "Fermeture d'un flux d'entrée.\n";
-	
-	private static final String CREATION_FLUX_SORTIE
-	= "Création d'un flux de sortie (envoi objets au client).\n";
-	
-	private static final String FERMETURE_FLUX_SORTIE
-	= "Fermeture d'un flux de sortie.\n";
-	
-	private static final String INDICATION_CLE_VIGENERE
-	= "Clé de vigenère reçue :\n";
-	
-	private static final String INDICATION_RECEPTION_SERVEUR
-	= "Le serveur a reçu : ";
-	
-	private final static String MESSAGE_FERMETURE_SOCKETS
-	= "Fermeture des sockets client et serveur.";
+	private final static String INDICATION_REPONSE
+	= "Réponse du client : ";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private ServerSocket socketServeur;
@@ -86,8 +69,6 @@ public class Serveur {
 	 */
 	public void creerServeur() throws IOException {
 		this.socketServeur = new ServerSocket(this.portServeur);
-		
-        System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
 	}
 	
 	
@@ -112,9 +93,8 @@ public class Serveur {
 	 * @throws IOException si le flux ne peut être créé.
 	 */
 	private void creerFluxEntree() throws IOException {
-		System.out.println(CREATION_FLUX_ENTREE);
-		
-        this.fluxEntree = new ObjectInputStream(this.socketClient.getInputStream());
+		accepterConnexion();
+		this.fluxEntree = new ObjectInputStream(this.socketClient.getInputStream());
 	}
 	
 	
@@ -125,8 +105,6 @@ public class Serveur {
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
 	private void fermerFluxEntree() throws IOException {
-		System.out.println(FERMETURE_FLUX_ENTREE);
-		
 		this.fluxEntree.close();
 	}
 	
@@ -138,9 +116,8 @@ public class Serveur {
 	 * @throws IOException si le flux ne peut être créé.
 	 */
 	private void creerFluxSortie() throws IOException {
-		System.out.println(CREATION_FLUX_SORTIE);
-		
-        this.fluxSortie = new ObjectOutputStream(this.socketClient.getOutputStream());
+		accepterConnexion();
+		this.fluxSortie = new ObjectOutputStream(this.socketClient.getOutputStream());
 	}
 	
 	
@@ -151,34 +128,42 @@ public class Serveur {
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
 	private void fermerFluxSortie() throws IOException {
-		System.out.println(FERMETURE_FLUX_SORTIE);
-		
 		this.fluxSortie.close();
 	}
-
+	
 	
 	/**
-	 * Lecture de la clé de vigenère envoyée par le client
-	 * et affichage sur console texte.
+	 * Envoie au client la clé gérénée par Vigenère.
 	 * 
-	 * @throws IOException si la lecture ou la réponse échoue.
-	 * @throws ClassNotFoundException si le cast de la clé échoue.
+	 * @throws IOException si l'envoi échoue.
+	 * @throws ClassNotFoundException si le cast de la réponse échoue.
 	 */
-	public void receptionCleVigenere()
+	private void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException {	
-		this.cleVigenere = "";
+		String reponseClient;
 		
-		creerFluxEntree();
+		this.cleVigenere = Vigenere.genererCle();
 		
-		this.cleVigenere = ((String) this.fluxEntree.readObject()).substring(6);
+		creerFluxSortie();
 		
-		System.out.println(INDICATION_CLE_VIGENERE + this.cleVigenere + "\n");
-
-        creerFluxSortie();
+		System.out.println("Envoi de la clé de vigenère générée :\n"
+		                   + this.cleVigenere);
+		
+		// Envoi au client de la clé de chiffrement
+        this.fluxSortie.writeObject("CLE = " + this.cleVigenere);
         
-        this.fluxSortie.writeObject(INDICATION_RECEPTION_SERVEUR + this.cleVigenere);
+        fermerFluxSortie();
         
-        System.out.println(INDICATION_RECEPTION_SERVEUR + this.cleVigenere + "\n");
+        creerFluxEntree();
+        
+        /*
+         * Lecture de la réponse du client
+         */
+		reponseClient = (String) this.fluxEntree.readObject();
+		
+		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
+		
+		fermerFluxEntree();
 	}
 	
 	
@@ -190,16 +175,25 @@ public class Serveur {
 	 * 
 	 * @param categories Les catégories à envoyer.
 	 * @throws IOException si l'envoi échoue.
+	 * @throws ClassNotFoundException 
 	 */
 	public void envoyerCategories(ArrayList<Categorie> categories)
-	throws IOException {
+	throws IOException, ClassNotFoundException {
 		
         String nomCategorie,
                nomCategorieCrypte;
         
+        creerServeur();
+        
+        System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+        
+        envoyerCleVigenere();
+        
         System.out.println("Envoi de noms de catégories :\n"
         		           + "Nom initial\tNom crypté\n"
         		           + "_____________________________");
+        
+        creerFluxSortie();
         
         for (Categorie categorieCourante: categories) {
         	nomCategorie = categorieCourante.getIntitule();
@@ -213,6 +207,10 @@ public class Serveur {
         
         System.out.println();
         this.fluxSortie.writeObject("finCategories");
+        
+        fermerFluxSortie();
+        
+        fermerSockets();
 	}
 	
 	
@@ -224,16 +222,26 @@ public class Serveur {
 	 * 
 	 * @param questions Les questions à envoyer.
 	 * @throws IOException si l'envoi échoue.
+	 * @throws ClassNotFoundException 
 	 */
 	public void envoyerQuestions(ArrayList<Question> questions)
-	throws IOException {
+	throws IOException, ClassNotFoundException {
 		
         String donneesQuestion,
                donneesCrypteesQuestion;
         
+        creerServeur();
+        
+        System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+        
+        envoyerCleVigenere();
+        
+        creerFluxSortie();
+        
         System.out.println("Envoi de données de questions :\n"
         		           + "Données initiales\n-----\nDonnées cryptées\n"
         		           + "_____________________");
+        
         
         for (Question questionCourante: questions) {
         	donneesQuestion = questionCourante.donneesToString();
@@ -248,6 +256,10 @@ public class Serveur {
         }
         
         this.fluxSortie.writeObject("finQuestions");
+        
+        fermerFluxSortie();
+        
+        fermerSockets();
 	}
 	
 	
@@ -257,44 +269,10 @@ public class Serveur {
 	 * @throws IOException si la fermeture des flux et sockets échoue.
 	 */
 	public void fermerSockets() throws IOException {
-		fermerFluxEntree();
-		fermerFluxSortie();
-		
         // Fermeture de la socket du client
         this.socketClient.close();
         
         // Fermeture de la socket du serveur
         this.socketServeur.close();
-        
-		System.out.println(MESSAGE_FERMETURE_SOCKETS);
 	}
-	
-    	
-//    	ArrayList<Categorie> listeCategoriesTemp;
-//    	
-//    	ArrayList<Question> listeQuestionsTemp;
-//    	
-//    	listeCategoriesTemp = new ArrayList<Categorie>();
-//    	
-//    	listeQuestionsTemp = new ArrayList<Question>();
-//    	
-//    	listeCategoriesTemp.add(new Categorie("Test"));
-//    	listeCategoriesTemp.add(new Categorie("Test2"));
-//    	listeCategoriesTemp.add(new Categorie("Test3"));
-//    	listeCategoriesTemp.add(new Categorie("Test4"));
-//    	listeCategoriesTemp.add(new Categorie("Test5"));
-//    	
-//    	for (int i = 1; i <= 4; i++) {
-//    		listeQuestionsTemp.add(new Question("intituléQ" + i,
-//    				                            "réponse juste Q" + i,
-//    				                            new String[] {
-//    				                            	"Réponse fausse 1 Q" + i,
-//    				                            	"Réponse fausse 2 Q" + i,
-//    				                            	"Réponse fausse 3 Q" + i,
-//    				                            	"Réponse fausse 4 Q" + i,
-//    				                            },
-//    				                            2,
-//    				                            "feedback Q" + i,
-//    				                            listeCategoriesTemp.get(i)));    		
-//    	}
 }
