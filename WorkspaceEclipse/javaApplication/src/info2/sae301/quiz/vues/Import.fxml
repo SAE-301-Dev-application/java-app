@@ -34,7 +34,7 @@
             <VBox layoutX="26.0" layoutY="199.0" prefHeight="60.0" prefWidth="348.0">
                <children>
                   <Label styleClass="label-champ" text="    Adresse IP du serveur :" />
-                  <TextField fx:id="champIpServeur" prefHeight="36.0" prefWidth="344.0" promptText="127.0.0.1 pour un serveur sur le même réseau" styleClass="textfield" />
+                  <TextField fx:id="champIpServeur" prefHeight="36.0" prefWidth="344.0" promptText="127.0.0.1 pour un serveur sur le même ordinateur" styleClass="textfield" />
                </children>
             </VBox>
             <Label layoutX="26.0" layoutY="154.0" styleClass="sous-titre" text="En ligne :" />
