@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 /**
@@ -33,7 +34,7 @@ public class Serveur {
 	  + " connexion d'un client.\n";
 	
 	private final static String INDICATION_REPONSE
-	= "Réponse du client : ";
+	= "\nRéponse du client : ";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private ServerSocket socketServeur;
@@ -52,6 +53,15 @@ public class Serveur {
 	
 	/** Port utilisé par le serveur sur le réseau local. */
 	private int portServeur;
+	
+	/** Puissance utilisée pour la méthode de Diffie Hellman */
+	private int puissanceSecrete;
+	
+	/** Entier secret utilisé pour déchiffrer la clé de vigenère. */
+	private int entierClient;
+	
+	/** Entier utilisé pour chiffrer et déchiffrer la clé de vigenère. */
+	private int entierSecret;
 	
 	
 	/**
@@ -79,10 +89,6 @@ public class Serveur {
 	 */
 	public void accepterConnexion() throws IOException {
         this.socketClient = this.socketServeur.accept();
-        
-        System.out.println("Client connecté : "
-                           + this.socketClient.getInetAddress().getHostAddress()
-                           + "\n");
 	}
 	
 	
@@ -133,6 +139,50 @@ public class Serveur {
 	
 	
 	/**
+	 * Envoi de l'entier du serveur et réception de l'entier du client
+	 * afin de calculer l'entier secret de Diffie Hellman.
+	 * 
+	 * @throws IOException si l'envoi échoue.
+	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
+	 */
+	private void envoyerRecevoirEntier()
+	throws IOException, ClassNotFoundException {
+		int entierAEnvoyer;
+		
+		this.puissanceSecrete = DiffieHellman.genererPuissance();
+		
+		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
+				                                   this.puissanceSecrete);
+		
+		creerFluxSortie();
+		
+		System.out.println("Client connecté : "
+                           + this.socketClient.getInetAddress().getHostAddress()
+                           + "\n");
+		
+		System.out.println("Envoi de l'entier du serveur au client : "
+		                   + entierAEnvoyer);
+		
+		// Envoi au client de l'entier
+        this.fluxSortie.writeObject(entierAEnvoyer);
+        
+        fermerFluxSortie();
+        
+        creerFluxEntree();
+        
+        this.entierClient = (int) this.fluxEntree.readObject();
+        
+        System.out.println("\nRéception de l'entier du client : "
+                           + this.entierClient);
+        
+        fermerFluxEntree();
+        
+        this.entierSecret
+        = DiffieHellman.puissanceNR(this.entierClient, puissanceSecrete);
+	}
+	
+	
+	/**
 	 * Envoie au client la clé gérénée par Vigenère.
 	 * 
 	 * @throws IOException si l'envoi échoue.
@@ -142,11 +192,15 @@ public class Serveur {
 	throws IOException, ClassNotFoundException {	
 		String reponseClient;
 		
-		this.cleVigenere = Vigenere.genererCle();
+		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
+		
+		this.cleVigenere = Vigenere.chiffrerCle(this.entierSecret);
 		
 		creerFluxSortie();
 		
-		System.out.println("Envoi de la clé de vigenère générée :\n"
+		System.out.println("\nClé de vigenère créée :\n" + Vigenere.getCle());
+		
+		System.out.println("\nEnvoi de la clé de vigenère générée :\n"
 		                   + this.cleVigenere);
 		
 		// Envoi au client de la clé de chiffrement
@@ -164,6 +218,8 @@ public class Serveur {
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
 		
 		fermerFluxEntree();
+		
+		this.cleVigenere = Vigenere.getCle();
 	}
 	
 	
@@ -186,6 +242,8 @@ public class Serveur {
         creerServeur();
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+        
+        envoyerRecevoirEntier();
         
         envoyerCleVigenere();
         
@@ -233,6 +291,8 @@ public class Serveur {
         creerServeur();
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+        
+        envoyerRecevoirEntier();
         
         envoyerCleVigenere();
         
