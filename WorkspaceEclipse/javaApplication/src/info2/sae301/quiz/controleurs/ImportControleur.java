@@ -71,18 +71,6 @@ public class ImportControleur {
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
 	
-	/**
-	 * Retourne si l'adresse IP fournie respecte
-	 * l'expression régulière IPv4 définie.
-	 * 
-	 * @param ip Adresse IP à vérifier
-	 * @return Si l'adresse IP est une IPv4 valide
-	 */
-	protected static boolean isIpValide(String ip) {
-		return ip.matches(REGEX_IPV4);
-	}
-	
-	
 	private Import importation;
 	
 	/** 
@@ -98,6 +86,18 @@ public class ImportControleur {
 	@FXML
 	private void initialize() {
 		this.importation = new Import();
+	}
+	
+	
+	/**
+	 * Retourne si l'adresse IP fournie respecte
+	 * l'expression régulière IPv4 définie.
+	 * 
+	 * @param ip Adresse IP à vérifier
+	 * @return Si l'adresse IP est une IPv4 valide
+	 */
+	protected static boolean isIpValide(String ip) {
+		return ip.matches(REGEX_IPV4);
 	}
 	
 	
@@ -123,6 +123,7 @@ public class ImportControleur {
 		}
 	}
 	
+	
 	/**
 	 * Retour au menu principal.
 	 */
@@ -130,6 +131,7 @@ public class ImportControleur {
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
 	/**
 	 * Action du bouton "Importer".
@@ -153,10 +155,11 @@ public class ImportControleur {
 				this.importation.importerLocalement();
 				indicationStatutImportation();
 				
+			}
 			/*
 			 * Import distant
 			 */
-			} else if (this.champIpServeur.getText() != null
+			else if (this.champIpServeur.getText() != null
 					   && !this.champIpServeur.getText().isBlank()) {
 				
 				this.importation.importerADistance(this.champIpServeur.getText());
@@ -176,9 +179,9 @@ public class ImportControleur {
 		} catch (ClassNotFoundException e) {
 			erreurServeurInconnu();
 		} catch (SocketTimeoutException e) {
-			erreurServeurInconnu();
-		} catch (IOException e) {
 			erreurServeurIndisponible();
+		} catch (IOException e) {
+			erreurServeurInconnu();
 		}
 	}
 	

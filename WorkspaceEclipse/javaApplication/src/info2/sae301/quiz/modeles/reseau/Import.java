@@ -72,6 +72,9 @@ public class Import {
 	public void importerLocalement()
 	throws IOException, FormatCSVInvalideException {
 		
+		final String REGEX_8_POINTS_VIRGULES
+		= "^(?:[^;]*;){8,}[^;]*$";
+		
 		final String ENTETE_ATTENDUE
 		= "Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback";
 		
@@ -80,6 +83,10 @@ public class Import {
 		  + "attendu.\nLa première ligne de votre fichier devrait être :\n"
 		  + ENTETE_ATTENDUE;
 		
+		final String ERREUR_LIGNE_INVALIDE
+		= "Le format du fichier CSV sélectionné ne correspond pas au format "
+		  + "attendu.\nLa ligne numéro %d ne contient pas assez de données.";
+		
 		String premiereLigne,
 		       ligneCourante;
 		
@@ -87,9 +94,13 @@ public class Import {
 		
 		ArrayList<String> lignesCSV;
 		
+		int numeroLigneCourante;
+		
 		BufferedReader contenuFichier;
 		
 		lignesCSV = new ArrayList<String>();
+		
+		numeroLigneCourante = 1;
 		
 		contenuFichier = new BufferedReader(new FileReader(this.cheminFichier));
 		
@@ -105,7 +116,16 @@ public class Import {
 			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
 		} else {
 			while ((ligneCourante = contenuFichier.readLine()) != null) {
-				lignesCSV.add(ligneCourante);
+				numeroLigneCourante++;
+				
+				if (!ligneCourante.matches(REGEX_8_POINTS_VIRGULES)) {
+					contenuFichier.close();
+					throw new FormatCSVInvalideException(
+						String.format(ERREUR_LIGNE_INVALIDE, numeroLigneCourante)
+					);
+				} else {
+					lignesCSV.add(ligneCourante);					
+				}
 			}
 			
 			questionsCrees
@@ -239,9 +259,9 @@ public class Import {
 			} else {
 				this.questionsNonAjoutees.add(intituleQuestion);
 			}
-			
-			System.out.println();
 		}
+		
+		System.out.println();
 		
 		return lignesAjoutees.length > 0 ? lignesAjoutees : null;
 	}
