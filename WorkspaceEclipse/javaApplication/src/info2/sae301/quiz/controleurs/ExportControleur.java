@@ -1,11 +1,20 @@
+/*
+ * ExportControleur.java					                        28 nov. 2023
+ * IUT de Rodez, pas de copyright ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
+import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Jeu;
+import info2.sae301.quiz.modeles.reseau.Serveur;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -98,11 +107,17 @@ public class ExportControleur {
 	@FXML
 	private Label affichageIPPrivee;
 	
+	/**
+	 * Récupération de l'instance du jeu créée dans la classe Quiz.
+	 * Cette instance permet la gestion des questions et catégories.
+	 */
+	private Jeu jeu;
+	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
 		
-		//
+		jeu = Quiz.jeu;
 		
 	}
 	
@@ -142,6 +157,14 @@ public class ExportControleur {
 	/** Export des données au destinataire indiqué. */
 	@FXML
 	private void actionBoutonExporter() {
-		// TODO: script méthode export.
+		try {
+			// TODO exporter soit des catégories soit des
+			// questions (préalablement sélectionnées)
+			new Serveur().envoyerCategories(jeu.getToutesLesCategories());			
+		} catch (IOException e) {
+			// TODO afficher pop-up export impossible
+		} catch (ClassNotFoundException e) {
+			
+		}
 	}
 }
