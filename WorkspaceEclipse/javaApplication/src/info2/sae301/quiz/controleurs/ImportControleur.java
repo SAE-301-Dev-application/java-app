@@ -260,7 +260,6 @@ public class ImportControleur {
 		
 		try {
 			importation.importerADistance(this.champIpServeur.getText());
-			// 1 = catégories 2 = questions
 		} catch (ClassNotFoundException e) {
 			erreurServeurInconnu();
 		} catch (SocketTimeoutException e) {

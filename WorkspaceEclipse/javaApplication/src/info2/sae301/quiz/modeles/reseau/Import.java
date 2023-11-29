@@ -101,13 +101,11 @@ public class Import {
 			
 			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
 		} else {
-			OutilsCSV.initialiserFichierCSV();
-			
 			while ((ligneCourante = contenuFichier.readLine()) != null) {
 				lignesCSV.add(ligneCourante);
-				OutilsCSV.ecrireLigneCSV(ligneCourante);
 			}
 			
+			OutilsCSV.ecrireFichierCSV(lignesCSV);
 			creationQuestions(lignesCSV.toArray(new String[0]));
 		}
 		

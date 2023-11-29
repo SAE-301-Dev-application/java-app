@@ -215,12 +215,12 @@ public class ExportControleur {
 				 					 AlertType.ERROR);
 	}
 	
-	@FXML
 	/**
 	 * Choix du nombre de questions pour le quiz.
 	 * 
 	 * @param nombre
 	 */
+	@FXML
 	private void choixExportQuestionCategories(int nombre) {
 		if (nombre != 0 && nombre != 1) {
 			erreurNombreQuestions();

@@ -9,6 +9,7 @@ package info2.sae301.quiz.modeles.fichiers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Outils et méthodes pouvant être utiles pour des actions sur 
@@ -40,7 +41,7 @@ public class OutilsCSV {
 	 * s'ils n'existent pas.
 	 * Si le dossier existe déjà, il ne sera pas recréé.
 	 * Si le fichier existe déjà, aucune action n'est effectuée.
-	 * @throws IOException 
+	 * @throws IOException si la lecture du fichier échoue.
 	 */
 	public static void initialiserFichierCSV() throws IOException {
 		// Création du dossier s'il n'existe pas
@@ -66,6 +67,44 @@ public class OutilsCSV {
 			writer.write(ENTETE_FICHIER);
 			writer.close();
 		}
+	}
+	
+	/**
+	 * Initialise le fichier CSV en créant le dossier et le fichier 
+	 * s'ils n'existent pas.
+	 * Si le dossier existe déjà, il ne sera pas recréé.
+	 * 
+	 * @param lignes Les lignes à écrire dans le fichier.
+	 * @throws IOException si la lecture du fichier échoue.
+	 */
+	public static void ecrireFichierCSV(ArrayList<String> lignes)
+	throws IOException {
+		
+		// Création du dossier s'il n'existe pas
+		File dossier = new File(CHEMIN_DOSSIER);
+		if (!dossier.exists()) {
+			dossier.mkdirs();
+		}
+
+		// Création du fichier s'il n'existe pas
+		fichierCSV = new File(CHEMIN_DOSSIER + NOM_FICHIER_CSV);
+		
+		if (!fichierCSV.exists()) {
+			fichierCSV.createNewFile();
+		}
+		
+		// Ecriture au début du fichier
+		FileWriter ecriture = new FileWriter(fichierCSV, false);
+		
+		// Ecriture de l'entête au début du fichier
+		ecriture.write(ENTETE_FICHIER);
+		
+		// Pour chaque ligne l'écrire en dessous de la précédent
+		for (int indiceLigne = 0; indiceLigne < lignes.size(); indiceLigne++) {
+			ecriture.write("\n" + lignes.get(indiceLigne));
+		}
+		
+		ecriture.close();
 	}
 
 	/**
