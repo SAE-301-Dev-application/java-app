@@ -1,5 +1,5 @@
 /*
- * DiffieHellman.java									22 nov. 2023 
+ * DiffieHellman.java									            22 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 package info2.sae301.quiz.modeles.cryptographie;
@@ -108,19 +108,18 @@ public class DiffieHellman {
      * @return la puissance générée
      */
     public static int genererPuissance() {
-    	return new Random().nextInt((10000007-100000)+1)+100000;
-    }
-    
+    	return new Random().nextInt((10000007 - 100000) + 1) + 100000;
+    } 
     
    
     /**
      * Calcule la puissance d'une valeur selon l'exposant en 
-     * paramètre, le tout modulo P
+     * paramètre, le tout modulo P.
      * 
-     * @param valeur
-     * @param exposant
-     * @return le résultat de la valeur 
-     * 		   à la puissance exposant modulo P
+     * @param valeur La valeur dont la puissance doit être calculée.
+     * @param exposant Exposant auquel élever la valeur.
+     * @return le résultat de la valeur
+     * 		   à la puissance exposant modulo P.
      */
     public static int puissanceNR(int valeur, int exposant) {
         int resultat = 1;
@@ -136,4 +135,5 @@ public class DiffieHellman {
 
         return resultat;
     }
+    
 }
