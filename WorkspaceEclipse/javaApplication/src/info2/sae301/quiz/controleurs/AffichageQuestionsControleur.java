@@ -62,13 +62,13 @@ public class AffichageQuestionsControleur {
 	@FXML
 	private Button boutonSuivant;
 	
+	private Label questionCourante;
+	
 	/** Indice de la première question affichée sur la "page" courante. */
-	private int indiceQuestion = 0; 
+	static int indiceQuestion = 0; 
 	
 	/** Nom de la première catégorie affichée sur la "page" courante. */
-	private String categorieCourante = "Toutes les catégories";
-	
-	private Label questionCourante;
+	static String categorieCourante = "Toutes les catégories";
 	
 	
 	/**
@@ -77,6 +77,9 @@ public class AffichageQuestionsControleur {
 	 */
 	@FXML
 	private void initialize() {
+		System.out.println("Affichage : " + indiceQuestion);
+		menuFiltre.setValue(categorieCourante);
+		
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -86,8 +89,6 @@ public class AffichageQuestionsControleur {
 		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
 			menuFiltre.getItems().add(categorieCourante.getIntitule());
 		}
-		// Toutes les catégories par défaut
-		menuFiltre.setValue("Toutes les catégories");
 		
 		afficherQuestions();
 	}
@@ -114,7 +115,7 @@ public class AffichageQuestionsControleur {
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
-		= jeu.questionsCategorie(menuFiltre.getValue());
+		= jeu.questionsCategorie(categorieCourante);
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
@@ -148,6 +149,7 @@ public class AffichageQuestionsControleur {
 		// On recule de 10 questions
 		indiceQuestion -= 10;
 	    afficherQuestions();
+	    System.out.println("Affichage : " + indiceQuestion);
 	}
 	
 	
@@ -160,6 +162,7 @@ public class AffichageQuestionsControleur {
 		// On avance de 10 catégories
 		indiceQuestion += 10;
 		afficherQuestions();
+		System.out.println("Affichage : " + indiceQuestion);
 	}
 	
 	

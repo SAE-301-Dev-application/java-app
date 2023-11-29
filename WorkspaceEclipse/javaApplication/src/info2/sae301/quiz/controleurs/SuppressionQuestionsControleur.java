@@ -52,7 +52,7 @@ public class SuppressionQuestionsControleur {
 	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
 	
 	/** Indice de la première question affichée sur la "page" courante. */
-	private int indiceQuestion = 0; 
+	private int indiceQuestion; 
 	
 	/** Nom de la première catégorie affichée sur la "page" courante. */
 	private String categorieCourante = "Toutes les catégories";
@@ -65,6 +65,10 @@ public class SuppressionQuestionsControleur {
 	 */
 	@FXML
 	private void initialize() {
+		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
+		categorieCourante = AffichageQuestionsControleur.categorieCourante;		
+		menuFiltre.setValue(categorieCourante);
+		
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -74,8 +78,6 @@ public class SuppressionQuestionsControleur {
 		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
 			menuFiltre.getItems().add(categorieCourante.getIntitule());
 		}
-		// Toutes les catégories par défaut
-		menuFiltre.setValue("Toutes les catégories");	
 		
 		afficherQuestions();
 	}
@@ -100,7 +102,7 @@ public class SuppressionQuestionsControleur {
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
-		= jeu.questionsCategorie(menuFiltre.getValue());
+		= jeu.questionsCategorie(categorieCourante);
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
@@ -177,6 +179,7 @@ public class SuppressionQuestionsControleur {
 		// On recule de 10 questions
 		indiceQuestion -= 10;
 	    afficherQuestions();
+	    System.out.println("Suppression : " + indiceQuestion);
 	}
 	
 	/**
@@ -188,6 +191,7 @@ public class SuppressionQuestionsControleur {
 		// On avance de 10 catégories
 		indiceQuestion += 10;
 		afficherQuestions();
+		System.out.println("Suppression : " + indiceQuestion);
 	}
 	
 	/**
@@ -238,10 +242,12 @@ public class SuppressionQuestionsControleur {
 	}
 	
     /**
-	 * Redirection vers la vue MenuPrincipal.
+	 * Redirection vers la vue AffichageQuestions.
      */
 	@FXML
 	private void actionBoutonAnnuler() {
+		AffichageQuestionsControleur.categorieCourante = categorieCourante;
+		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	

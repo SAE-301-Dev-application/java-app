@@ -66,6 +66,12 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	private void initialize() {
+		
+		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
+		System.out.println("Choix : " + indiceQuestion);
+		categorieCourante = AffichageQuestionsControleur.categorieCourante;		
+		menuFiltre.setValue(categorieCourante);
+		
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -75,8 +81,6 @@ public class ChoixEditionQuestionControleur {
 		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
 			menuFiltre.getItems().add(categorieCourante.getIntitule());
 		}
-		// Toutes les catégories par défaut
-		menuFiltre.setValue("Toutes les catégories");
 		
 		afficherQuestions();
 	}
@@ -110,7 +114,7 @@ public class ChoixEditionQuestionControleur {
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
-		= jeu.questionsCategorie(menuFiltre.getValue());
+		= jeu.questionsCategorie(categorieCourante);
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
@@ -177,6 +181,7 @@ public class ChoixEditionQuestionControleur {
 		// On recule de 5 questions
 		indiceQuestion -= 5;
 		afficherQuestions();
+		System.out.println("Choix : " + indiceQuestion);
 	}
 	
 	
@@ -189,6 +194,7 @@ public class ChoixEditionQuestionControleur {
 		// On avance de 5 questions
 		indiceQuestion += 5;
 	    afficherQuestions();
+	    System.out.println("Choix : " + indiceQuestion);
 	}
 	
 	
@@ -208,6 +214,11 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	private void actionBoutonAnnuler() {
+		if (indiceQuestion >= 5 && indiceQuestion %10 != 0) {
+			indiceQuestion -= 5;
+		}
+		AffichageQuestionsControleur.categorieCourante = categorieCourante;
+		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 }
