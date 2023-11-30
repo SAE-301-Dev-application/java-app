@@ -33,6 +33,10 @@ import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
  */
 public class Import {
 	
+	/** Message d'erreur en cas de serveur inconnu. */
+	private final static String ERREUR_SERVEUR_INCONNU_MESSAGE
+	= "Aucun serveur n'est connu avec l'adresse IP spécifiée.";
+	
 	/** Message d'erreur en cas de chemin inexistant à la sélection. */
 	private final static String ERREUR_CHEMIN_INEXISTANT
 	= "Ce chemin n'existe pas ou plus.";
@@ -69,9 +73,14 @@ public class Import {
 	 * Pour chaque lignes, les données sont extraites
 	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
 	 * soient ajouter à l'application.
+	 * 
+	 * @throws FormatCSVInvalideException si le format du CSV à importer
+	 *         ne correspond pas à un fichier contenant des questions de quiz.
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws Exception si la lecture du CSV échoue.
 	 */
 	public void importerLocalement()
-	throws IOException, FormatCSVInvalideException {
+	throws FormatCSVInvalideException, IllegalArgumentException, Exception {
 		
 		final String REGEX_8_POINTS_VIRGULES
 		= "^(?:[^;]*;){8,}[^;]*$";
@@ -141,24 +150,37 @@ public class Import {
 	
 	
 	/**
+	 * Vérification que l'addresse IPV4 en paramètre respecte bien le format
+	 * conventionnel d'une IPV4.
+	 * 
+	 * @param adresseIPV4 L'adresse IPV4 à vérifier.
+	 * @throws AdresseIPInvalideException si l'adresse est invalide.
+	 */
+	public void verifierAdresseIPV4Valide(String adresseIPV4)
+	throws AdresseIPInvalideException {
+		final String REGEX_IPV4 = "^(\\d{1,3}.){3}\\d{1,3}$";
+		
+		final String ERREUR_IP_INVALIDE
+		= "L'adresse IP " + adresseIPV4 + " ne correspond pas au format d'une"
+	      + " adresse IPV4.\nExemple d'adresse IPV4 valide : 10.11.12.13";
+		
+		if (!adresseIPV4.matches(REGEX_IPV4)) {
+			throw new AdresseIPInvalideException(ERREUR_IP_INVALIDE);
+		}
+	}
+	
+	
+	/**
 	 * Créé un client avec l'adresse IP renseignée dans la vue afin
 	 * de se connecter à un serveur et récupérer les questions proposées.
 	 * 
 	 * @param adresseServeur L'adresse du serveur qui envoie les données
-	 * @throws ClassNotFoundException si le cast des données reçues échoue.
-	 * @throws IOException si la création de la socket échoue.
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
-	 * @throws AdresseIPInvalideException si l'adresse IP ne respecte pas le format IPV4.
+	 * @throws IllegalArgumentException si 
+	 * @throws Exception si la création de la socket échoue.
 	 */
 	public void importerADistance(String adresseServeur)
-	throws ClassNotFoundException, SocketTimeoutException,
-	       IOException, AdresseIPInvalideException {
-		
-		final String REGEX_IPV4 = "^(\\d{1,3}.){3}\\d{1,3}$";
-		
-		final String ERREUR_IP_INVALIDE
-		= "L'adresse IP " + adresseServeur + " ne correspond pas au format d'une"
-	      + " adresse IPV4.\nExemple d'adresse IPV4 valide : 10.11.12.13";
+	throws SocketTimeoutException, IllegalArgumentException, Exception {
 	
 		String[] toutesLesQuestions,
 		         questionsCrees;
@@ -167,18 +189,22 @@ public class Import {
 		
 		client = new Client();
 		
-		if (!adresseServeur.matches(REGEX_IPV4)) {
-			throw new AdresseIPInvalideException(ERREUR_IP_INVALIDE);
+		try {
+			toutesLesQuestions = client.recevoirQuestions(adresseServeur);
+			
+			System.out.println("Questions à créer : ");
+			
+			questionsCrees
+			= creationQuestions(toutesLesQuestions);
+			
+			OutilsCSV.ecrireFichierCSV(questionsCrees);
+		} catch (SocketTimeoutException e) {
+			throw e;
+		} catch (IllegalArgumentException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new IOException(ERREUR_SERVEUR_INCONNU_MESSAGE);
 		}
-		
-		toutesLesQuestions = client.recevoirQuestions(adresseServeur);
-		
-		System.out.println("Questions à créer : ");
-		
-		questionsCrees
-		= creationQuestions(toutesLesQuestions);
-		
-		OutilsCSV.ecrireFichierCSV(questionsCrees);
 	}
 	
 	
@@ -188,8 +214,10 @@ public class Import {
 	 * 
 	 * @param questions Chaînes de caractères contenant
 	 *                  les données des question à créer.
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
 	 */
-	public String[] creationQuestions(String[] questions) {
+	public String[] creationQuestions(String[] questions)
+	throws IllegalArgumentException {
 		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 		
 		String questionCourante,

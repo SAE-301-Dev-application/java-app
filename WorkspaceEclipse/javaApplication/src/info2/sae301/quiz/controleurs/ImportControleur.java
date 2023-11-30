@@ -11,11 +11,11 @@ import info2.sae301.quiz.modeles.reseau.Import;
 import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
-import java.io.FileNotFoundException; 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -33,29 +33,20 @@ import javafx.scene.control.TextField;
  */
 public class ImportControleur {
 	
+	private final static String ERREUR_IMPORT_TITRE
+	= "IMPORT IMPOSSIBLE";
+	
+	private final static String ERREUR_INATTENDUE
+	= "Une erreur inattendue s'est produite. Veuillez réessayer.";
+	
 	private final static String ERREUR_CHEMIN_INEXISTANT_TITRE
 	= "ERREUR AU CHARGEMENT D'UN FICHIER";
 	
 	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
 	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
 	
-	private final static String ERREUR_ADRESSE_IP_INVALIDE
-	= "ADRESSE IP INVALIDE";
-	
-	private final static String ERREUR_SERVEUR_TITRE
-	= "ERREUR DE CONNEXION AU SERVEUR";
-	
-	private final static String ERREUR_SERVEUR_INCONNU_MESSAGE
-	= "Aucun serveur n'est connu avec l'adresse IP spécifiée.";
-	
-	private final static String ERREUR_SERVEUR_INDISPONIBLE_MESSAGE
-	= "Le serveur dont l'adresse IP a été renseignée ne répond pas.";
-	
 	private final static String ERREUR_FORMAT_INVALIDE_TITRE
 	= "FORMAT DU CSV INVALIDE";
-	
-	private final static String ERREUR_CARACTERE_INTERDIT_TITRE
-	= "CARACTÈRE INTERDIT DÉTECTÉ";
 	
 	private final static String IMPORTATION_SUCCESS_TITRE
 	= "IMPORTATION TERMINÉE";
@@ -155,60 +146,81 @@ public class ImportControleur {
 		
 		ipEntree = this.champIpServeur.getText();
 		
+		if (cheminCourant != null
+			&& !cheminCourant.isBlank()) {
+			
+			demarrerImportLocal();
+			
+		} else if (ipEntree != null && !ipEntree.isBlank()) {
+			
+			demarrerImportDistant(ipEntree);
+			
+		} else {
+			autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+						ERREUR_AUCUN_CHEMIN_TITRE, AlertType.ERROR);
+		}
+	}
+	
+	
+	/**
+	 * Choix d'un import local à partir des données d'un fichier CSV
+	 * qui vont être lues et analysées afin de déterminer les erreurs.
+	 */
+	private void demarrerImportLocal() {
 		try {
-			/*
-			 * Import local
-			 */
-			if (cheminCourant != null
-				&& !cheminCourant.isBlank()) {
-				
-				texteEnAttente.setVisible(false);
-				this.importation.importerLocalement();
-				indicationStatutImportation();
-				
-			}
-			/*
-			 * Import distant
-			 */
-			else if (ipEntree != null && !ipEntree.isBlank()) {
-				
-				texteEnAttente.setVisible(true);
-				// TODO faire texteEnAttente.setVisible(true); avant ligne 178
-				
-				this.importation.importerADistance(this.champIpServeur.getText());
-				
-				texteEnAttente.setVisible(false);
-				
-				indicationStatutImportation();
-				
-			} else {
-				
-				autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
-							ERREUR_AUCUN_CHEMIN_TITRE, AlertType.ERROR);
-			}
+			this.importation.importerLocalement();
+			indicationStatutImportation();
 		} catch (FormatCSVInvalideException e) {
 			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
-                    AlertType.ERROR);
-	    } catch (AdresseIPInvalideException e) {
-			texteEnAttente.setVisible(false);
-			autreAlerte(e.getMessage(), ERREUR_ADRESSE_IP_INVALIDE,
-						AlertType.ERROR);
+                        AlertType.ERROR);
 		} catch (IllegalArgumentException e) {
-			texteEnAttente.setVisible(false);
-		    autreAlerte(e.getMessage(), ERREUR_CARACTERE_INTERDIT_TITRE,
-						AlertType.ERROR);
-		} catch (ClassNotFoundException e) {
-			texteEnAttente.setVisible(false);
-			erreurServeurInconnu();
-		} catch (SocketTimeoutException e) {
-			texteEnAttente.setVisible(false);
-			erreurServeurIndisponible();
-		} catch (IOException e) {
-			texteEnAttente.setVisible(false);
-			erreurServeurInconnu();
-		}
+			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
+                        AlertType.ERROR);
+	    } catch (Exception e) {
+			autreAlerte(ERREUR_INATTENDUE, ERREUR_IMPORT_TITRE,
+                        AlertType.ERROR);
+	    }
 		
-		texteEnAttente.setVisible(false);
+		NavigationControleur.changerVue("Import.fxml");
+	}
+	
+	
+	/**
+	 * Choix d'un import distant à partir des données envoyées par le serveur
+	 * dont l'adresse IPV4 est en paramètre.
+	 * 
+	 * @param ipEntree Adresse IPV4 du serveur distant devant envoyer
+	 *                 les questions à importer.
+	 */
+	private void demarrerImportDistant(String ipEntree) {
+		try {
+			importation.verifierAdresseIPV4Valide(ipEntree);				
+			
+			texteEnAttente.setVisible(true);
+
+	        CompletableFuture.supplyAsync(() -> {
+	            try {
+	                importation.importerADistance(ipEntree);
+	                return "Succes";
+	            } catch (Exception e) {
+	                return e.getMessage();
+	            }
+	        }).thenAccept(result -> {
+	            Platform.runLater(() -> {
+	                texteEnAttente.setVisible(false);
+
+	                if (result.equals("Succes")) {
+	                	indicationStatutImportation();		                	
+	                } else {
+	                	autreAlerte(result, ERREUR_IMPORT_TITRE,
+	                			    AlertType.ERROR);
+	                }
+	            });
+	        });	
+		} catch (AdresseIPInvalideException e) {
+			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
+                        AlertType.ERROR);
+	    }
 	}
 	
 	
@@ -273,7 +285,7 @@ public class ImportControleur {
 		
 		NavigationControleur.changerVue("Import.fxml");
 	}
-	
+
 	
 	/**
 	 * Affichage d'une pop-up d'erreur indiquant que le chemin spécifié
@@ -282,26 +294,6 @@ public class ImportControleur {
 	private static void erreurCheminInexistant() {
 		autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
 				    ERREUR_CHEMIN_INEXISTANT_TITRE,
-					AlertType.ERROR);
-	}
-	
-	
-	/**
-	 * Affichage d'une pop-up d'erreur indiquant que le serveur dont l'adresse
-	 * IP a été spécifiée n'est pas sur le réseau.
-	 */
-	private static void erreurServeurInconnu() {
-		autreAlerte(ERREUR_SERVEUR_INCONNU_MESSAGE, ERREUR_SERVEUR_TITRE,
-				    AlertType.ERROR);
-	}
-	
-	
-	/**
-	 * Affichage d'une pop-up d'erreur indiquant que le serveur dont l'adresse
-	 * IP a été spécifiée ne répond pas.
-	 */
-	private static void erreurServeurIndisponible() {
-		autreAlerte(ERREUR_SERVEUR_INDISPONIBLE_MESSAGE, ERREUR_SERVEUR_TITRE,
 					AlertType.ERROR);
 	}
 	

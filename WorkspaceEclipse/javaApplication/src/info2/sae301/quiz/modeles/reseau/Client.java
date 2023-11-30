@@ -33,6 +33,9 @@ public class Client {
 	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
+	private final static String ERREUR_SERVEUR_INDISPONIBLE_MESSAGE
+	= "Le serveur dont l'adresse IP a été renseignée ne répond pas.";
+	
 	private static final String CONNEXION_OUVERTE
 	= "Socket créée à l'adresse %s et sur le port %d.\n";
 	
@@ -87,7 +90,11 @@ public class Client {
         InetSocketAddress adresse
         = new InetSocketAddress(this.adresseServeur, PORT_SERVEUR);
         
-        this.socket.connect(adresse, TIMEOUT_CONNEXION);
+        try {
+        	this.socket.connect(adresse, TIMEOUT_CONNEXION);        	
+        } catch (SocketTimeoutException e) {
+        	throw new SocketTimeoutException(ERREUR_SERVEUR_INDISPONIBLE_MESSAGE);
+        }
 	}
 	
 	
@@ -151,9 +158,10 @@ public class Client {
 	 * 
 	 * @throws IOException si l'envoi échoue.
 	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
 	private void recevoirEnvoyerEntier()
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		int entierAEnvoyer;
 		
 		this.puissanceSecrete = DiffieHellman.genererPuissance();
@@ -235,9 +243,10 @@ public class Client {
 	 * @return La liste des questions reçues.
 	 * @throws IOException Si la lecture renvoie une erreur.
 	 * @throws ClassNotFoundException si le cast des données échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
 	public String[] recevoirQuestions(String adresseServeur)
-	throws IOException, ClassNotFoundException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		String donneesCrypteesQuestion,
 	           donneesDecrypteesQuestion;
 	

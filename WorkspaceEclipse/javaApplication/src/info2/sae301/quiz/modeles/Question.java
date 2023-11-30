@@ -105,13 +105,14 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param categorie La catégorie contenant la question.
-	 * @throws IllegalArgumentException si la question existe déjà.
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, Categorie categorie)
 	                throws IllegalArgumentException {
 		
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
+		
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
 		this.reponsesFausses = reponsesFausses;
@@ -132,8 +133,7 @@ public class Question implements Serializable {
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback à afficher pour corriger la réponse.
 	 * @param categorie La catégorie contenant la question.
-	 * @throws  
-	 * @throws IllegalArgumentException 
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, String feedback,
@@ -141,12 +141,13 @@ public class Question implements Serializable {
 
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte,
 				          feedback);
+		assurerCaracteres(feedback);
+		
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
 		this.reponsesFausses = reponsesFausses;
 		this.difficulte = difficulte;
 		this.categorie = categorie;
-		assurerCaracteres(feedback);
 		this.feedback = feedback;
 	}
 	
@@ -160,7 +161,7 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @throws IllegalArgumentException si les attributs ne 
-	 * respectent pas les tailles demandées.
+	 * respectent pas les tailles demandées ou si la difficulté est invalide.
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
@@ -168,8 +169,10 @@ public class Question implements Serializable {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
 		assurerCaracteres(intitule);
+		
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
 		assurerCaracteres(reponseJuste);
+		
 		// Vérification de la taille des réponses fausses
 		assurerValiditeReponsesFausses(reponsesFausses);
 		// Vérification de l'unicité des réponses
@@ -182,10 +185,10 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Vérification de la validité des caractères
+	 * Vérification que les caractères soient chiffrables.
 	 * 
-	 * @param aVerfier
-	 * @throws IllegalArgumentException 
+	 * @param aVerifier Chaîne à vérifier.
+	 * @throws IllegalArgumentException si un caractère est interdit.
 	 */
 	public static void assurerCaracteres(String aVerifier) 
 	throws IllegalArgumentException {
