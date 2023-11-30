@@ -205,14 +205,14 @@ public class ImportControleur {
 	            } catch (Exception e) {
 	                return e.getMessage();
 	            }
-	        }).thenAccept(result -> {
+	        }).thenAccept(resultat -> {
 	            Platform.runLater(() -> {
 	                texteEnAttente.setVisible(false);
 
-	                if (result.equals("Succes")) {
+	                if (resultat.equals("Succes")) {
 	                	indicationStatutImportation();		                	
 	                } else {
-	                	autreAlerte(result, ERREUR_IMPORT_TITRE,
+	                	autreAlerte(resultat, ERREUR_IMPORT_TITRE,
 	                			    AlertType.ERROR);
 	                }
 	            });
