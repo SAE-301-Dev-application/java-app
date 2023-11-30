@@ -12,8 +12,10 @@ import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.reseau.Serveur;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Enumeration;
 import javafx.fxml.FXML;
@@ -69,8 +71,9 @@ public class ExportControleur {
 	 */
 	private static final String ERREUR_IP_PRIVEE_MESSAGE
 	= """
-	  Il est impossible au programme de trouver votre adresse IP sur le réseau.
-	  Veuillez vérifier que vous êtes connecté à un réseau.
+	  Il est impossible de trouver votre adresse IP sur le réseau.
+	  Veuillez vérifier que vous êtes connecté à un réseau ou vous connecter
+	  à internet si possible.
 	  """;
 	
 	/** Affichage de l'adresse IP privée. */
@@ -91,49 +94,77 @@ public class ExportControleur {
 	@FXML 
 	private GridPane grilleSelection;
 	
+	
+	/**
+     * Récupération de l'adresse IP locale de la machine en créant un socket UDP
+     * temporaire. Le socket choisit l'interface réseau nécessaire à la la sortie
+     * en se connectant à un serveur DNS externe.
+     * On choisit l'adresse IP 8.8.8.8 de Google afin d'être presque sûr
+     * d'avoir une réponse si l'ordinateur a bien une connexion internet.
+     * Si uine erreur est renvoyée (ex: aucune connexion internet) on tente
+     * d'accéder à l'adresse IP locale avec la méthode ipPrivee().
+     * 
+     * @return Une chaîne de caractères représentant l'adresse IP locale.
+	 * @throws  
+     */
+    public static String adresseIpLocale() /*throws SocketException*/ {
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+
+            String ip = socket.getLocalAddress().getHostAddress();
+
+            socket.close();
+            
+            return ip;
+        } catch (Exception e) {
+            //return ipPrivee();
+        	return "";
+        }
+    }
+	
+    
 	/**
 	 * Recherche et retourne l'adresse IP de la machine sur 
 	 * le réseau.
 	 * 
 	 * @return Adresse IP de la machine sur le réseau (IP privée)
 	 */
-	private static String ipPrivee() {
+	private static String ipPrivee() throws SocketException {
 		String ip;
+		
 		ip = null;
 		
-		try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        Enumeration<NetworkInterface> interfaces
+        = NetworkInterface.getNetworkInterfaces();
 
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface iface = interfaces.nextElement();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
 
-                // Filtrer les interfaces loopback et les interfaces désactivées
-                if (iface.isLoopback() || !iface.isUp()) {
-                    continue;
-                }
+            // Filtrer les interfaces loopback et les interfaces désactivées
+            if (iface.isLoopback() || !iface.isUp()) {
+                continue;
+            }
 
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            Enumeration<InetAddress> adresses = iface.getInetAddresses();
+            
+            while (adresses.hasMoreElements() && ip == null) {
+                InetAddress adresse;
                 
-                while (addresses.hasMoreElements() && ip == null) {
-                    InetAddress addr;
-                    
-                    String ipTrouvee;
-                    
-                    addr = addresses.nextElement();
-                    ipTrouvee = addr.getHostAddress();
-                    
-                    if (!addr.isLinkLocalAddress() 
-                		&& !addr.isLoopbackAddress() 
-                		&& addr.isSiteLocalAddress()
-                		&& ipTrouvee.matches(ImportControleur.REGEX_IPV4)) {
-                    	
-                    	ip = ipTrouvee;
-                    	
-                    }
+                String ipTrouvee;
+                
+                adresse = adresses.nextElement();
+                ipTrouvee = adresse.getHostAddress();
+                
+                if (!adresse.isLinkLocalAddress() 
+            		&& !adresse.isLoopbackAddress() 
+            		&& adresse.isSiteLocalAddress()
+            		&& ipTrouvee.matches(ImportControleur.REGEX_IPV4)) {
+                	
+                	ip = ipTrouvee;
+                	
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 		
 		return ip;
@@ -186,8 +217,14 @@ public class ExportControleur {
 		String adresseIPPrivee,
 			   messageAdresseIPPrivee;
 		
-		adresseIPPrivee = ipPrivee();
-		System.out.println("IP privée = " + adresseIPPrivee);
+		adresseIPPrivee = null;
+		
+//		try {
+			adresseIPPrivee = adresseIpLocale();			
+			System.out.println("\nIP privée = " + adresseIPPrivee);
+//		} catch (SocketException e) {
+//			erreurAccesIpLocale();
+//		}
 		
 		if (adresseIPPrivee != null) {
 			messageAdresseIPPrivee = String.format(MODELE_LABEL_IP_PRIVEE, 
@@ -195,9 +232,7 @@ public class ExportControleur {
 			
 			this.affichageIPPrivee.setText(messageAdresseIPPrivee);
 		} else {
-			AlerteControleur.autreAlerte(ERREUR_IP_PRIVEE_MESSAGE,
-										 ERREUR_IP_PRIVEE_TITRE, 
-										 AlertType.ERROR);
+			erreurAccesIpLocale();
 		}
 	}
 	
@@ -355,5 +390,16 @@ public class ExportControleur {
 		AlerteControleur.autreAlerte(ERREUR_TIMEOUT_MESSAGE,
 				                     ERREUR_EXPORT_TITRE,
 					                 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'erreur indiquant que l'affichage de l'ip locale
+	 * a échoué.
+	 */
+	private static void erreurAccesIpLocale() {
+		AlerteControleur.autreAlerte(ERREUR_IP_PRIVEE_MESSAGE,
+                                     ERREUR_IP_PRIVEE_TITRE, 
+                                     AlertType.ERROR);
 	}
 }
