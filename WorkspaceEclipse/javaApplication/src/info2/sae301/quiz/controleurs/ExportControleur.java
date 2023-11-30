@@ -6,13 +6,16 @@
 package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.ParametresPartie;
+import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.reseau.Serveur;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -194,6 +197,7 @@ public class ExportControleur {
 		if (this.choixSelection != 'C') {
 			this.choixSelection = 'C';
 			System.out.println("CHARGEMENT DES CATÉGORIES !");
+			this.chargementSelectionCategories();
 		}
 	}
 	
@@ -207,22 +211,63 @@ public class ExportControleur {
 		if (this.choixSelection != 'Q') {
 			this.choixSelection = 'Q';
 			System.out.println("CHARGEMENT DES QUESTIONS !");
+			this.chargementSelectionQuestions();
 		}
 	}
 	
 	
 	/** 
-	 * Charge les différents choix sélectionnables (catégories ou questions). 
+	 * Charge les différentes catégories sélectionnables. 
+	 * 
+	 * @param listeCategories
 	 */
-	private void chargementSelection() {
+	private void chargementSelectionCategories() {
+		CheckBox choixCourant;
+		
 		this.prochainXGrilleSelection = 0;
 		this.prochainYGrilleSelection = 0;
 		
-		// TODO: add(el, x, y)
-		this.grilleSelection.add(affichageIPPrivee, prochainXGrilleSelection, prochainYGrilleSelection);
+		for (Categorie categorieCourante: this.jeu.getToutesLesCategories()) {
+			choixCourant = new CheckBox();
+			choixCourant.setText(categorieCourante.getIntitule());
+			
+			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
+			
+			if (prochainXGrilleSelection == 2) {
+				prochainYGrilleSelection++;
+				prochainXGrilleSelection = 0;
+			} else {
+				prochainXGrilleSelection++;
+			}
+		}
+	}
+	
+	
+	/** 
+	 * Charge les différentes catégories sélectionnables. 
+	 * 
+	 * @param listeCategories
+	 */
+	private void chargementSelectionQuestions() {
+		CheckBox choixCourant;
 		
-		prochainXGrilleSelection++;
-		prochainYGrilleSelection++;
+		this.prochainXGrilleSelection = 0;
+		this.prochainYGrilleSelection = 0;
+		
+		for (Question questionCourante: this.jeu.getToutesLesQuestions()) {
+			choixCourant = new CheckBox();
+			choixCourant.setText(questionCourante.getIntitule());
+			
+			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
+			
+			if (prochainXGrilleSelection == 2) {
+				prochainYGrilleSelection++;
+				prochainXGrilleSelection = 0;
+			} else {
+				prochainXGrilleSelection++;
+			}
+
+		}
 	}
 	
 	
