@@ -33,6 +33,15 @@ public class Client {
 	/** Timeout mettant fin à la tentative de connexion après 5s. */
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
+	/**
+	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
+	 * Le délimiteur contient volontairement le caractère … non chiffrable
+	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
+	 * question contenant ce délimiteur dans un intitulé et qu'un problème
+	 * d'import apparaisse.
+	 */
+	private final static String DELIMITEUR = "/delimiteur…/";
+	
 	private final static String ERREUR_SERVEUR_INDISPONIBLE_MESSAGE
 	= "Le serveur dont l'adresse IP a été renseignée ne répond pas.";
 	
@@ -247,16 +256,10 @@ public class Client {
 	 */
 	public String[] recevoirQuestions(String adresseServeur)
 	throws IOException, ClassNotFoundException, SocketTimeoutException {
-		String donneesCrypteesQuestion,
-	           donneesDecrypteesQuestion;
+		String questionsCryptees,
+		       questionsDecryptees;
 	
 		String[] donneesQuestions;
-		
-		boolean envoiFini;
-		
-		envoiFini = false;
-		
-		donneesQuestions = new String[0];
 		
 		this.adresseServeur = adresseServeur;
 		
@@ -267,38 +270,24 @@ public class Client {
 		
 		recevoirCleVigenere();
 		
-		System.out.println("Réception des données des questions :\n"
-				           + "Données cryptées\n-----\nDonnées décryptées\n"
-				           + "_________________________________");
+		System.out.println("Réception des données des questions :");
 		
 		creerFluxEntree();
-        
-        // Lecture des données cryptées des questions envoyées par le serveur
-		while (!envoiFini
-			   && (donneesCrypteesQuestion = (String) this.fluxEntree.readObject())
-			      != null) {
-			
-			if (donneesCrypteesQuestion.equals("finQuestions")) {
-				envoiFini = true;
-			} else {
-				// Décryptage des données cryptées reçues
-				donneesDecrypteesQuestion
-				= Vigenere.dechiffrer(donneesCrypteesQuestion, this.cleVigenere);
-				
-				System.out.println(donneesCrypteesQuestion + "\n-----\n"
-				                   + donneesDecrypteesQuestion + "\n");
-		        
-				String[] nouveauTableau = new String[donneesQuestions.length + 1];
-	            System.arraycopy(donneesQuestions, 0, nouveauTableau,
-	            		         0, donneesQuestions.length);
-	            
-	            nouveauTableau[donneesQuestions.length] = donneesDecrypteesQuestion;
-
-	            donneesQuestions = nouveauTableau;
-			}
-		}
 		
-		fermerFluxEntree();
+		// Lecture de l'unique objet envoyé par le serveur
+		questionsCryptees = (String) this.fluxEntree.readObject();
+
+	    fermerFluxEntree();
+
+	    // Décryptage des données cryptées reçues
+	    questionsDecryptees
+	    = Vigenere.dechiffrer(questionsCryptees, this.cleVigenere);
+		
+		System.out.println(questionsDecryptees + "\n");
+		
+		// Utilisation du délimiteur pour diviser les questions,
+		// en excluant la dernière entrée qui est vide (cf envoi serveur)
+	    donneesQuestions = questionsDecryptees.split(DELIMITEUR, -1);
 		
 		return donneesQuestions;
 	}

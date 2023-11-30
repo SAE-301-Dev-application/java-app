@@ -40,6 +40,15 @@ public class Serveur {
 	private final static String INDICATION_REPONSE
 	= "\nRéponse du client : ";
 	
+	/**
+	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
+	 * Le délimiteur contient volontairement le caractère … non chiffrable
+	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
+	 * question contenant ce délimiteur dans un intitulé et qu'un problème
+	 * d'import apparaisse.
+	 */
+	private final static String DELIMITEUR = "/delimiteur…/";
+	
 	/** Socket pour créer le serveur sur le réseau. */
 	private ServerSocket socketServeur;
 	
@@ -273,7 +282,9 @@ public class Serveur {
 	throws IOException, ClassNotFoundException, SocketTimeoutException {
 		
         String donneesQuestion,
-               donneesCrypteesQuestion;
+               toutesLesQuestionsCryptees;
+        
+        StringBuilder toutesLesQuestions;
         
         creerServeur();
         
@@ -285,24 +296,24 @@ public class Serveur {
         
         creerFluxSortie();
         
-        System.out.println("Envoi de données de questions :\n"
-        		           + "Données initiales\n-----\nDonnées cryptées\n"
-        		           + "_____________________");
+        System.out.println("Envoi des données des questions :");
         
-        
-        for (Question questionCourante: questions) {
-        	donneesQuestion = questionCourante.donneesToString();
- 
-        	donneesCrypteesQuestion = Vigenere.chiffrer(donneesQuestion,
-        			                                    this.cleVigenere);
+        toutesLesQuestions = new StringBuilder();
+
+        for (Question questionCourante : questions) {
+            donneesQuestion = questionCourante.donneesToString();
             
-            System.out.println(donneesQuestion + "\n-----\n"
-                               + donneesCrypteesQuestion + "\n");
-			
-		    this.fluxSortie.writeObject(donneesCrypteesQuestion);
+            System.out.println(donneesQuestion);
+
+            toutesLesQuestions.append(donneesQuestion).append(DELIMITEUR);
         }
         
-        this.fluxSortie.writeObject("finQuestions");
+        System.out.println();
+        
+        toutesLesQuestionsCryptees
+        = Vigenere.chiffrer(toutesLesQuestions.toString(), this.cleVigenere);
+        
+        this.fluxSortie.writeObject(toutesLesQuestionsCryptees);
         
         fermerFluxSortie();
         
