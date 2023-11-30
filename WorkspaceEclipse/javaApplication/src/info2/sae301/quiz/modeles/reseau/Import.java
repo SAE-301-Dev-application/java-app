@@ -19,6 +19,7 @@ import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
+import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
 
 /**
  * Importation des données d'un fichier CSV et ajout aux données
@@ -147,9 +148,17 @@ public class Import {
 	 * @throws ClassNotFoundException si le cast des données reçues échoue.
 	 * @throws IOException si la création de la socket échoue.
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws AdresseIPInvalideException si l'adresse IP ne respecte pas le format IPV4.
 	 */
 	public void importerADistance(String adresseServeur)
-	throws ClassNotFoundException, SocketTimeoutException, IOException {
+	throws ClassNotFoundException, SocketTimeoutException,
+	       IOException, AdresseIPInvalideException {
+		
+		final String REGEX_IPV4 = "^(\\d{1,3}.){3}\\d{1,3}$";
+		
+		final String ERREUR_IP_INVALIDE
+		= "L'adresse IP " + adresseServeur + " ne correspond pas au format d'une"
+	      + " adresse IPV4.\nExemple d'adresse IPV4 valide : 10.11.12.13";
 	
 		String[] toutesLesQuestions,
 		         questionsCrees;
@@ -157,6 +166,10 @@ public class Import {
 		Client client;
 		
 		client = new Client();
+		
+		if (!adresseServeur.matches(REGEX_IPV4)) {
+			throw new AdresseIPInvalideException(ERREUR_IP_INVALIDE);
+		}
 		
 		toutesLesQuestions = client.recevoirQuestions(adresseServeur);
 		

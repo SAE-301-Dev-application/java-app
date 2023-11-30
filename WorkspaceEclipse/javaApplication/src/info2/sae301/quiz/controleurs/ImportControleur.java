@@ -8,6 +8,7 @@ package info2.sae301.quiz.controleurs;
 import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
 
 import info2.sae301.quiz.modeles.reseau.Import;
+import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
 import java.io.FileNotFoundException; 
@@ -38,6 +39,9 @@ public class ImportControleur {
 	private final static String ERREUR_CHEMIN_INEXISTANT_MESSAGE
 	= "Le chemin spécifié n'existe pas ou plus. Veuillez réessayer.";
 	
+	private final static String ERREUR_ADRESSE_IP_INVALIDE
+	= "ADRESSE IP INVALIDE";
+	
 	private final static String ERREUR_SERVEUR_TITRE
 	= "ERREUR DE CONNEXION AU SERVEUR";
 	
@@ -60,10 +64,10 @@ public class ImportControleur {
 	= "L'importation de %d questions s'est terminée avec succès.";
 	
 	private final static String ERREUR_AUCUN_CHEMIN_TITRE
-	= "AUCUN CHEMIN SPÉCIFIÉ";
+	= "AUCUN CHEMIN NI ADRESSE IP SPÉCIFIÉ";
 	
 	private final static String ERREUR_AUCUN_CHEMIN_MESSAGE
-	= "Importation impossible. Aucun chemin n'a été spécifié.";
+	= "Importation impossible. Aucun chemin ni aucune adresse IP n'a été spécifié.";
 	
 	private final static String QUESTIONS_NON_IMPORTEES
 	= "\n\nNéanmoins, %d questions n'ont pas pu être importées :";
@@ -82,6 +86,9 @@ public class ImportControleur {
 	
 	@FXML
 	private Label cheminCourant;
+	
+	@FXML
+	private Label texteEnAttente;
 
 	@FXML
 	private void initialize() {
@@ -141,9 +148,12 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonImporter() {
-		String cheminCourant;
+		String cheminCourant,
+		       ipEntree;
 		
 		cheminCourant = this.importation.getCheminFichier();
+		
+		ipEntree = this.champIpServeur.getText();
 		
 		try {
 			/*
@@ -152,6 +162,7 @@ public class ImportControleur {
 			if (cheminCourant != null
 				&& !cheminCourant.isBlank()) {
 				
+				texteEnAttente.setVisible(false);
 				this.importation.importerLocalement();
 				indicationStatutImportation();
 				
@@ -159,30 +170,45 @@ public class ImportControleur {
 			/*
 			 * Import distant
 			 */
-			else if (this.champIpServeur.getText() != null
-					   && !this.champIpServeur.getText().isBlank()) {
+			else if (ipEntree != null && !ipEntree.isBlank()) {
+				
+				texteEnAttente.setVisible(true);
+				// TODO faire texteEnAttente.setVisible(true); avant ligne 178
 				
 				this.importation.importerADistance(this.champIpServeur.getText());
+				
+				texteEnAttente.setVisible(false);
+				
 				indicationStatutImportation();
 				
 			} else {
 				
 				autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
 							ERREUR_AUCUN_CHEMIN_TITRE, AlertType.ERROR);
-			}	
-		} catch (IllegalArgumentException e) {
-		    autreAlerte(e.getMessage(), ERREUR_CARACTERE_INTERDIT_TITRE,
-						AlertType.ERROR);
+			}
 		} catch (FormatCSVInvalideException e) {
 			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
-                        AlertType.ERROR);
+                    AlertType.ERROR);
+	    } catch (AdresseIPInvalideException e) {
+			texteEnAttente.setVisible(false);
+			autreAlerte(e.getMessage(), ERREUR_ADRESSE_IP_INVALIDE,
+						AlertType.ERROR);
+		} catch (IllegalArgumentException e) {
+			texteEnAttente.setVisible(false);
+		    autreAlerte(e.getMessage(), ERREUR_CARACTERE_INTERDIT_TITRE,
+						AlertType.ERROR);
 		} catch (ClassNotFoundException e) {
+			texteEnAttente.setVisible(false);
 			erreurServeurInconnu();
 		} catch (SocketTimeoutException e) {
+			texteEnAttente.setVisible(false);
 			erreurServeurIndisponible();
 		} catch (IOException e) {
+			texteEnAttente.setVisible(false);
 			erreurServeurInconnu();
 		}
+		
+		texteEnAttente.setVisible(false);
 	}
 	
 	
