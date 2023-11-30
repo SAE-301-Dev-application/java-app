@@ -308,6 +308,10 @@ public class Serveur {
             toutesLesQuestions.append(donneesQuestion).append(DELIMITEUR);
         }
         
+        // Supprimer le délimiteur à la fin de toutes les questions
+        toutesLesQuestions
+        .setLength(toutesLesQuestions.length() - DELIMITEUR.length());
+        
         System.out.println();
         
         toutesLesQuestionsCryptees

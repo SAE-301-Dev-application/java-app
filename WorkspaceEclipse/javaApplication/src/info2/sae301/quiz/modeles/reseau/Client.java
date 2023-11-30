@@ -287,7 +287,7 @@ public class Client {
 		
 		// Utilisation du délimiteur pour diviser les questions,
 		// en excluant la dernière entrée qui est vide (cf envoi serveur)
-	    donneesQuestions = questionsDecryptees.split(DELIMITEUR, -1);
+	    donneesQuestions = questionsDecryptees.split(DELIMITEUR);
 		
 		return donneesQuestions;
 	}

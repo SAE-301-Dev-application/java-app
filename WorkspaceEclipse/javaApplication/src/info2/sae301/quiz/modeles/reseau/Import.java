@@ -197,6 +197,8 @@ public class Import {
 			questionsCrees
 			= creationQuestions(toutesLesQuestions);
 			
+			System.out.println();
+			
 			OutilsCSV.ecrireFichierCSV(questionsCrees);
 		} catch (SocketTimeoutException e) {
 			throw e;
