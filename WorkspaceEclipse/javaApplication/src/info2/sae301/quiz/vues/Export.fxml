@@ -67,7 +67,7 @@
                     </rowConstraints>
                      <styleClass>
                         <String fx:value="centrer-verticale" />
-                        <String fx:value="vbox-liste" />
+                        <String fx:value="grille-espacement" />
                      </styleClass>
                   </GridPane>
                </content>
