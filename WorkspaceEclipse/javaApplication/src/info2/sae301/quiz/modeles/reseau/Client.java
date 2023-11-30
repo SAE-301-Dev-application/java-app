@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 
 /**
  * Client permettant de se connecter à un serveur afin d'importer les données
@@ -230,109 +229,25 @@ public class Client {
 	
 	
 	/**
-	 * Réception du type de données envoyées par le serveur.
-	 * 
-	 * @return <ul>
-	 *     <li>1 - Catégories</li>
-	 *     <li>2 - Questions</li>
-	 * </ul>
-	 * @throws IOException si la lecture échoue.
-	 * @throws ClassNotFoundException si le cast échoue.
-	 */
-	public int recevoirTypeDonnees()
-	throws IOException, ClassNotFoundException {
-		int type;
-		
-		creerFluxEntree();
-		
-		type = (int) this.fluxEntree.readObject();
-		
-		fermerFluxEntree();
-		
-		return type;
-	}
-	
-	
-	/**
-	 * Réception et déchiffrage des catégories cryptées envoyées par le serveur.
-	 * 
-	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
-	 * @throws IOException si l'import échoue.
-	 * @throws ClassNotFoundException si le cast permettant de transformer
-	 *         l'objet reçu en string renvoie une erreur.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
-	 * @return les noms des catégories reçues.
-	 */
-	public String[] recevoirCategories(String adresseServeur)
-	throws IOException, ClassNotFoundException, SocketTimeoutException {		
-		boolean envoiFini;
-		
-		String nomCategorieCrypte,
-		       nomCategorieDecrypte;
-		
-		ArrayList<String> nomsCategories;
-		
-		nomsCategories = new ArrayList<String>();
-		
-		this.adresseServeur = adresseServeur;
-		
-		System.out.println("Tentative de connexion au serveur en cours.\n");
-		
-		recevoirEnvoyerEntier();
-		
-		recevoirCleVigenere();
-		
-		envoiFini = false;
-		
-		System.out.println("Réception des noms des catégories :\n"
-				           + "Nom crypté\tNom décrypté\n"
-				           + "_____________________________");
-		
-		creerFluxEntree();
-        
-        // Lecture du nom de catégorie crypté envoyé par le serveur
-		while (!envoiFini
-			   && (nomCategorieCrypte = (String) this.fluxEntree.readObject())
-			      != null) {
-			
-			if (nomCategorieCrypte.equals("finCategories")) {
-				System.out.println();
-				envoiFini = true;
-			} else {
-				// Décryptage du nom de catégorie crypté reçu
-				nomCategorieDecrypte = Vigenere.dechiffrer(nomCategorieCrypte,
-						                                   this.cleVigenere);
-				
-				System.out.println(nomCategorieCrypte + "\t" + nomCategorieDecrypte);
-		        
-				nomsCategories.add(nomCategorieDecrypte);
-			}
-		}
-		
-		fermerFluxEntree();
-		
-		return nomsCategories.toArray(new String[0]);
-	}
-	
-	
-	/**
 	 * Réception et déchiffrage des questions cryptées envoyées par le serveur.
 	 * 
 	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
-	 * @throws IOException si la lecture renvoie une erreur.
-	 * @return les noms des catégories reçues.
-	 * @throws ClassNotFoundException si le cast échoue.
+	 * @return La liste des questions reçues.
+	 * @throws IOException Si la lecture renvoie une erreur.
+	 * @throws ClassNotFoundException si le cast des données échoue.
 	 */
 	public String[] recevoirQuestions(String adresseServeur)
 	throws IOException, ClassNotFoundException {
 		String donneesCrypteesQuestion,
 	           donneesDecrypteesQuestion;
 	
-		String[] donneesQuestions = {""};
+		String[] donneesQuestions;
 		
 		boolean envoiFini;
 		
 		envoiFini = false;
+		
+		donneesQuestions = new String[0];
 		
 		this.adresseServeur = adresseServeur;
 		
@@ -364,8 +279,13 @@ public class Client {
 				System.out.println(donneesCrypteesQuestion + "\n-----\n"
 				                   + donneesDecrypteesQuestion + "\n");
 		        
-				donneesQuestions[donneesQuestions.length - 1]
-				= donneesDecrypteesQuestion;
+				String[] nouveauTableau = new String[donneesQuestions.length + 1];
+	            System.arraycopy(donneesQuestions, 0, nouveauTableau,
+	            		         0, donneesQuestions.length);
+	            
+	            nouveauTableau[donneesQuestions.length] = donneesDecrypteesQuestion;
+
+	            donneesQuestions = nouveauTableau;
 			}
 		}
 		

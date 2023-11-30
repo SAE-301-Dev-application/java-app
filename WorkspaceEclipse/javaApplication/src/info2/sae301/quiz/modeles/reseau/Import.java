@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+
 import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
@@ -71,6 +72,9 @@ public class Import {
 	public void importerLocalement()
 	throws IOException, FormatCSVInvalideException {
 		
+		final String REGEX_8_POINTS_VIRGULES
+		= "^(?:[^;]*;){8,}[^;]*$";
+		
 		final String ENTETE_ATTENDUE
 		= "Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback";
 		
@@ -79,14 +83,24 @@ public class Import {
 		  + "attendu.\nLa première ligne de votre fichier devrait être :\n"
 		  + ENTETE_ATTENDUE;
 		
+		final String ERREUR_LIGNE_INVALIDE
+		= "Le format du fichier CSV sélectionné ne correspond pas au format "
+		  + "attendu.\nLa ligne numéro %d ne contient pas assez de données.";
+		
 		String premiereLigne,
 		       ligneCourante;
 		
+		String[] questionsCrees;
+		
 		ArrayList<String> lignesCSV;
+		
+		int numeroLigneCourante;
 		
 		BufferedReader contenuFichier;
 		
 		lignesCSV = new ArrayList<String>();
+		
+		numeroLigneCourante = 1;
 		
 		contenuFichier = new BufferedReader(new FileReader(this.cheminFichier));
 		
@@ -102,11 +116,22 @@ public class Import {
 			throw new FormatCSVInvalideException(ERREUR_FORMAT_INVALIDE);
 		} else {
 			while ((ligneCourante = contenuFichier.readLine()) != null) {
-				lignesCSV.add(ligneCourante);
+				numeroLigneCourante++;
+				
+				if (!ligneCourante.matches(REGEX_8_POINTS_VIRGULES)) {
+					contenuFichier.close();
+					throw new FormatCSVInvalideException(
+						String.format(ERREUR_LIGNE_INVALIDE, numeroLigneCourante)
+					);
+				} else {
+					lignesCSV.add(ligneCourante);					
+				}
 			}
 			
-			OutilsCSV.ecrireFichierCSV(lignesCSV);
-			creationQuestions(lignesCSV.toArray(new String[0]));
+			questionsCrees
+			= creationQuestions(lignesCSV.toArray(new String[0]));
+			
+			OutilsCSV.ecrireFichierCSV(questionsCrees);
 		}
 		
 		contenuFichier.close();
@@ -125,56 +150,22 @@ public class Import {
 	 */
 	public void importerADistance(String adresseServeur)
 	throws ClassNotFoundException, SocketTimeoutException, IOException {
-		final String TYPE_INVALIDE
-		= "Le type de données envoyées est incorrect.";
-		
-		String[] nomsCategories;
-		
-		String[] donneesQuestions;
+	
+		String[] toutesLesQuestions,
+		         questionsCrees;
 		
 		Client client;
 		
-		int typeDonnees;
-		
 		client = new Client();
 		
-		typeDonnees = client.recevoirTypeDonnees();
+		toutesLesQuestions = client.recevoirQuestions(adresseServeur);
 		
-		if (typeDonnees == 1) {
-			nomsCategories = client.recevoirCategories(adresseServeur);
-			
-			System.out.println("Catégories à créer : ");
-			
-			this.creationCategories(nomsCategories);			
-		} else if (typeDonnees == 2) {
-			donneesQuestions = client.recevoirQuestions(adresseServeur);
+		System.out.println("Questions à créer : ");
 		
-			System.out.println("Questions à créer : ");
-			
-			this.creationQuestions(donneesQuestions);
-		} else {
-			throw new IllegalArgumentException(TYPE_INVALIDE);
-		}
-	}
-	
-	
-	/**
-	 * Créé et ajoute à la liste des catégories en mémoire les catégories dont
-	 * les noms sont en paramètre.
-	 * 
-	 * @param nomsCategories Chaîne de caractères contenant tous les noms
-	 *        des catégories à créer.
-	 */
-	public void creationCategories(String[] nomsCategories) {
-		for (String nomCategorie: nomsCategories) {
-			nomCategorie = nomCategorie.trim();
-			
-			System.out.println(nomCategorie);
-			
-			if (jeu.indiceCategorie(nomCategorie) == -1) {
-				jeu.creerCategorie(nomCategorie);
-			}
-		}		
+		questionsCrees
+		= creationQuestions(toutesLesQuestions);
+		
+		OutilsCSV.ecrireFichierCSV(questionsCrees);
 	}
 	
 	
@@ -182,62 +173,65 @@ public class Import {
 	 * Créé et ajoute à la liste des questions en mémoire les questions dont
 	 * les données sont en paramètre sous forme de chaînes de caractères.
 	 * 
-	 * @param donneesQuestions Chaînes de caractères contenant
-	 *                         les données des question à créer.
+	 * @param questions Chaînes de caractères contenant
+	 *                  les données des question à créer.
 	 */
-	public void creationQuestions(String[] donneesQuestions) {
+	public String[] creationQuestions(String[] questions) {
 		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 		
-		String intituleCategorie,
+		String questionCourante,
+		       intituleCategorie,
 		       intituleQuestion,
 		       reponseJuste,
 		       feedback;
 		
-		String[] donneesDecoupees,
-		         reponsesFausses;
-		
-		String donneesQuestionCourante;
+		String[] donneesQuestionCourante,
+		         reponsesFausses,
+		         lignesAjoutees;
 		
 		int niveauDifficulte;
 		
+		lignesAjoutees = new String[0];
+		
 		for (int indiceQuestion = 0;
-			 indiceQuestion < donneesQuestions.length;
+			 indiceQuestion < questions.length;
 			 indiceQuestion++) {
 			
-			donneesQuestionCourante = donneesQuestions[indiceQuestion];
+			questionCourante = questions[indiceQuestion];
 		
-			donneesDecoupees
-			= donneesQuestionCourante.split(REGEX_DONNEE_ENTIERE, -1);
+			donneesQuestionCourante
+			= questionCourante.split(REGEX_DONNEE_ENTIERE, -1);
 			
 			for (int indiceDonnee = 0;
-				 indiceDonnee < donneesDecoupees.length;
+				 indiceDonnee < donneesQuestionCourante.length;
 				 indiceDonnee++) {
 				
-				donneesDecoupees[indiceDonnee]
-				= retirerGuillemetsInvalides(donneesDecoupees[indiceDonnee]);
+				donneesQuestionCourante[indiceDonnee]
+				= retirerGuillemetsInvalides(donneesQuestionCourante[indiceDonnee]);
 				
-				System.out.print(donneesDecoupees[indiceDonnee] + "\t");
+				//System.out.print(donneesDecoupees[indiceDonnee] + "\t");
 			}
 			
-			intituleCategorie = donneesDecoupees[0].trim();
+			intituleCategorie = donneesQuestionCourante[0].trim();
 			
 			try {
-				niveauDifficulte = Integer.parseInt(donneesDecoupees[1].trim());
+				niveauDifficulte
+				= Integer.parseInt(donneesQuestionCourante[1].trim());
 			} catch (NumberFormatException e) {
 				niveauDifficulte = 1;
 			}
 			
-			intituleQuestion = donneesDecoupees[2].trim();
-			reponseJuste = donneesDecoupees[3].trim();
+			intituleQuestion = donneesQuestionCourante[2].trim();
+			reponseJuste = donneesQuestionCourante[3].trim();
 			
 			reponsesFausses = new String[] {
-				donneesDecoupees[4].trim(), 
-				donneesDecoupees[5].trim(),
-				donneesDecoupees[6].trim(), 
-				donneesDecoupees[7].trim()
+				donneesQuestionCourante[4].trim(), 
+				donneesQuestionCourante[5].trim(),
+				donneesQuestionCourante[6].trim(), 
+				donneesQuestionCourante[7].trim()
 			};
 			
-			feedback = donneesDecoupees[8].trim();
+			feedback = donneesQuestionCourante[8].trim();
 			
 			if (jeu.indiceCategorie(intituleCategorie) == -1) {
 				jeu.creerCategorie(intituleCategorie);
@@ -254,12 +248,22 @@ public class Import {
 						          reponsesFausses, niveauDifficulte,
 						          feedback, intituleCategorie);
 				
+				String[] nouveauTableau = new String[lignesAjoutees.length + 1];
+	            System.arraycopy(lignesAjoutees, 0, nouveauTableau,
+	            		         0, lignesAjoutees.length);
+	            
+	            nouveauTableau[lignesAjoutees.length] = questionCourante;
+
+	            lignesAjoutees = nouveauTableau;
+				
 			} else {
 				this.questionsNonAjoutees.add(intituleQuestion);
 			}
-			
-			System.out.println();
 		}
+		
+		System.out.println();
+		
+		return lignesAjoutees.length > 0 ? lignesAjoutees : null;
 	}
 	
 	

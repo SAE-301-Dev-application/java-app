@@ -8,17 +8,14 @@ package info2.sae301.quiz.controleurs;
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.modeles.ParametresPartie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.reseau.Serveur;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.ArrayList;
+import java.net.SocketTimeoutException;
 import java.util.Enumeration;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -41,6 +38,23 @@ import javafx.scene.layout.GridPane;
  * @author Samuel LACAM
  */
 public class ExportControleur {
+	
+	private final static String EXPORT_REUSSI_TITRE
+	= "CONFIRMATION EXPORT QUESTIONS";
+	
+	private final static String EXPORT_REUSSI_MESSAGE
+	= "Votre export de %d questions a été effectué avec succès.";
+	
+	private final static String ERREUR_EXPORT_TITRE
+	= "ERREUR EXPORT QUESTIONS";
+	
+	private final static String ERREUR_EXPORT_MESSAGE
+	= "La création d'une connexion sur le réseau local afin d'exporter vos "
+	  + "questions a échoué.\nVeuillez vérifier que vous êtes connecté à un réseau.";
+	
+	private final static String ERREUR_TIMEOUT_MESSAGE
+	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
+	  + " réessayer l'export.";
 	
 	/** 
 	 * Titre du message d'erreur de recherche de 
@@ -281,14 +295,65 @@ public class ExportControleur {
 	/** Export des données au destinataire indiqué. */
 	@FXML
 	private void actionBoutonExporter() {
+		int nombreQuestionsExportees;
+		
+		Serveur serveur;
+		
+		nombreQuestionsExportees = 0;
+		
+		serveur = new Serveur();
+		
 		try {
 			// TODO exporter soit des catégories soit des
 			// questions (préalablement sélectionnées)
-			new Serveur().envoyerCategories(jeu.getToutesLesCategories());			
-		} catch (IOException e) {
-			// TODO afficher pop-up export impossible
-		} catch (ClassNotFoundException e) {
+			nombreQuestionsExportees = jeu.getToutesLesQuestions().size(); // STUB
 			
+			serveur.envoyerCategories(jeu.getToutesLesCategories());
+			
+//			nombreQuestionsExportees
+//			= serveur.envoyerQuestions(jeu.getToutesLesQuestions());
+			
+			afficherConfirmationExport(nombreQuestionsExportees);
+		} catch (ClassNotFoundException e) {
+			erreurExport();
+		} catch (SocketTimeoutException e) {
+			erreurAucuneConnexion();
+		} catch (IOException e) {
+			erreurExport();
 		}
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up de confirmation indiquant que l'export
+	 * a été effectué correctement.
+	 */
+	private static void afficherConfirmationExport(int nombreQuestionsExportees) {
+		AlerteControleur.autreAlerte(String.format(EXPORT_REUSSI_MESSAGE,
+				                                   nombreQuestionsExportees),
+				                     EXPORT_REUSSI_TITRE,
+					                 AlertType.INFORMATION);
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'erreur indiquant une erreur déclenchée
+	 * lors de l'export.
+	 */
+	private static void erreurExport() {
+		AlerteControleur.autreAlerte(ERREUR_EXPORT_MESSAGE,
+				                     ERREUR_EXPORT_TITRE,
+					                 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'erreur indiquant une erreur déclenchée
+	 * lorsque aucun client ne se connecte au serveur.
+	 */
+	private static void erreurAucuneConnexion() {
+		AlerteControleur.autreAlerte(ERREUR_TIMEOUT_MESSAGE,
+				                     ERREUR_EXPORT_TITRE,
+					                 AlertType.ERROR);
 	}
 }

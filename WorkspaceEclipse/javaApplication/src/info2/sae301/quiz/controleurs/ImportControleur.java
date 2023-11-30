@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.controleurs;
 
+import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
+
 import info2.sae301.quiz.modeles.reseau.Import;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 
@@ -69,18 +71,6 @@ public class ImportControleur {
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
 	
-	/**
-	 * Retourne si l'adresse IP fournie respecte
-	 * l'expression régulière IPv4 définie.
-	 * 
-	 * @param ip Adresse IP à vérifier
-	 * @return Si l'adresse IP est une IPv4 valide
-	 */
-	protected static boolean isIpValide(String ip) {
-		return ip.matches(REGEX_IPV4);
-	}
-	
-	
 	private Import importation;
 	
 	/** 
@@ -96,6 +86,18 @@ public class ImportControleur {
 	@FXML
 	private void initialize() {
 		this.importation = new Import();
+	}
+	
+	
+	/**
+	 * Retourne si l'adresse IP fournie respecte
+	 * l'expression régulière IPv4 définie.
+	 * 
+	 * @param ip Adresse IP à vérifier
+	 * @return Si l'adresse IP est une IPv4 valide
+	 */
+	protected static boolean isIpValide(String ip) {
+		return ip.matches(REGEX_IPV4);
 	}
 	
 	
@@ -121,6 +123,7 @@ public class ImportControleur {
 		}
 	}
 	
+	
 	/**
 	 * Retour au menu principal.
 	 */
@@ -128,6 +131,7 @@ public class ImportControleur {
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
 	/**
 	 * Action du bouton "Importer".
@@ -141,132 +145,107 @@ public class ImportControleur {
 		
 		cheminCourant = this.importation.getCheminFichier();
 		
-		if (cheminCourant != null && !cheminCourant.isBlank()) {
-			this.importerLocalement();
-		} else if (this.champIpServeur.getText() != null
-				   && !this.champIpServeur.getText().isBlank()) {
-			this.importerADistance();
-		} else {
-			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
-										 ERREUR_AUCUN_CHEMIN_TITRE, 
-										 AlertType.ERROR);
-		}
-	}
-	
-	
-	/**
-	 * Import local de questions depuis un fichier CSV à sélectionner.
-	 */
-	private void importerLocalement() {
-		int nombreQuestionsImportees,
-		nombreQuestionsNonImportees,
-		nombreQuestionsNonImporteesAAfficher;
-	
-		boolean importationReussie;
-		
-		String cheminCourant,
-			   messageImportationSucces;
-		
-		cheminCourant = this.importation.getCheminFichier();
-		importationReussie = false;
-		
-		if (cheminCourant != null
-			&& !cheminCourant.isBlank()) {
-			
-			try {
-				this.importation.importerLocalement();
-				importationReussie = true;
-			} catch (IOException e) {
-				erreurCheminInexistant();
-			} catch (IllegalArgumentException e) {
-				AlerteControleur.autreAlerte(e.getMessage(), 
-											 ERREUR_CARACTERE_INTERDIT_TITRE,
-											 AlertType.ERROR);
-			} catch (FormatCSVInvalideException e) {
-				AlerteControleur.autreAlerte(e.getMessage(),
-						                     ERREUR_FORMAT_INVALIDE_TITRE,
-						                     AlertType.ERROR);
-			}
-		} else {
-			AlerteControleur.autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
-					 ERREUR_AUCUN_CHEMIN_TITRE, 
-					 AlertType.ERROR);
-		}
-		
-		if (importationReussie) {
-			nombreQuestionsNonImportees 
-			= this.importation.getQuestionsNonAjoutees().size();
-			
-			nombreQuestionsImportees 
-			= this.importation.getNombreTotalQuestions() 
-			  - nombreQuestionsNonImportees;
-			
-			if (nombreQuestionsImportees == 0) {
-				messageImportationSucces
-				= "Aucune question n'a été importée.";
-			} else if (nombreQuestionsNonImportees > 0) {
-				messageImportationSucces 
-				= String.format(IMPORTATION_SUCCESS_MESSAGE 
-								+ QUESTIONS_NON_IMPORTEES, 
-								nombreQuestionsImportees, 
-								nombreQuestionsNonImportees);
-				
-				nombreQuestionsNonImporteesAAfficher
-				= Math.min(10, nombreQuestionsNonImportees);
-				
-				for (int i = 0; 
-					 i < nombreQuestionsNonImporteesAAfficher; 
-					 i++) {
-					
-					messageImportationSucces 
-					+= "\n— " 
-					   + this.importation.getQuestionsNonAjoutees().get(i);
-					
-				}
-				
-				if (nombreQuestionsNonImporteesAAfficher 
-					< nombreQuestionsNonImportees) {
-					
-					messageImportationSucces 
-					+= String.format("\nEt %d autres questions...", 
-									 nombreQuestionsNonImportees 
-									 - nombreQuestionsNonImporteesAAfficher);
-					
-				}
-			} else {
-				messageImportationSucces 
-				= String.format(IMPORTATION_SUCCESS_MESSAGE, 
-								nombreQuestionsImportees);
-			}
-	
-			AlerteControleur.autreAlerte(messageImportationSucces, 
-										 IMPORTATION_SUCCESS_TITRE, 
-										 AlertType.INFORMATION);
-			
-			NavigationControleur.changerVue("Import.fxml");
-			
-		}
-	}
-	
-	
-	/**
-	 * Import via une connexion réseau client / serveur de questions.
-	 */
-	private void importerADistance() {
-		
-		Import importation;
-		
-		importation = new Import();
-		
 		try {
-			importation.importerADistance(this.champIpServeur.getText());
+			/*
+			 * Import local
+			 */
+			if (cheminCourant != null
+				&& !cheminCourant.isBlank()) {
+				
+				this.importation.importerLocalement();
+				indicationStatutImportation();
+				
+			}
+			/*
+			 * Import distant
+			 */
+			else if (this.champIpServeur.getText() != null
+					   && !this.champIpServeur.getText().isBlank()) {
+				
+				this.importation.importerADistance(this.champIpServeur.getText());
+				indicationStatutImportation();
+				
+			} else {
+				
+				autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+							ERREUR_AUCUN_CHEMIN_TITRE, AlertType.ERROR);
+			}	
+		} catch (IllegalArgumentException e) {
+		    autreAlerte(e.getMessage(), ERREUR_CARACTERE_INTERDIT_TITRE,
+						AlertType.ERROR);
+		} catch (FormatCSVInvalideException e) {
+			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
+                        AlertType.ERROR);
 		} catch (ClassNotFoundException e) {
 			erreurServeurInconnu();
 		} catch (SocketTimeoutException e) {
-			erreurServeurInconnu();
-		} catch (IOException e) {
 			erreurServeurIndisponible();
+		} catch (IOException e) {
+			erreurServeurInconnu();
 		}
+	}
+	
+	
+	/**
+	 * Indication via une pop-up du nombre de questions importées
+	 * après la réussite de l'import.
+	 */
+	private void indicationStatutImportation() {
+		int nombreQuestionsImportees,
+		    nombreQuestionsNonImportees,
+		    nombreQuestionsNonImporteesAAfficher;
+		
+		String messageImportationSucces;
+		
+		nombreQuestionsNonImportees 
+		= this.importation.getQuestionsNonAjoutees().size();
+		
+		nombreQuestionsImportees 
+		= this.importation.getNombreTotalQuestions() 
+		  - nombreQuestionsNonImportees;
+		
+		if (nombreQuestionsImportees == 0) {
+			messageImportationSucces
+			= "Aucune question n'a été importée.";
+			
+		} else if (nombreQuestionsNonImportees > 0) {
+			messageImportationSucces 
+			= String.format(IMPORTATION_SUCCESS_MESSAGE 
+							+ QUESTIONS_NON_IMPORTEES, 
+							nombreQuestionsImportees, 
+							nombreQuestionsNonImportees);
+			
+			nombreQuestionsNonImporteesAAfficher
+			= Math.min(10, nombreQuestionsNonImportees);
+			
+			for (int i = 0; 
+				 i < nombreQuestionsNonImporteesAAfficher; 
+				 i++) {
+				
+				messageImportationSucces 
+				+= "\n— " 
+				   + this.importation.getQuestionsNonAjoutees().get(i);
+				
+			}
+			
+			if (nombreQuestionsNonImporteesAAfficher 
+				< nombreQuestionsNonImportees) {
+				
+				messageImportationSucces 
+				+= String.format("\nEt %d autres questions...", 
+								 nombreQuestionsNonImportees 
+								 - nombreQuestionsNonImporteesAAfficher);
+			}
+		} else {
+			messageImportationSucces 
+			= String.format(IMPORTATION_SUCCESS_MESSAGE, 
+							nombreQuestionsImportees);
+		}
+
+		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
+					AlertType.INFORMATION);
+		
+		NavigationControleur.changerVue("Import.fxml");
 	}
 	
 	
@@ -275,9 +254,9 @@ public class ImportControleur {
 	 * pour accéder au CSV est invalide.
 	 */
 	private static void erreurCheminInexistant() {
-		AlerteControleur.autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
-									 ERREUR_CHEMIN_INEXISTANT_TITRE,
-									 AlertType.ERROR);
+		autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
+				    ERREUR_CHEMIN_INEXISTANT_TITRE,
+					AlertType.ERROR);
 	}
 	
 	
@@ -286,9 +265,8 @@ public class ImportControleur {
 	 * IP a été spécifiée n'est pas sur le réseau.
 	 */
 	private static void erreurServeurInconnu() {
-		AlerteControleur.autreAlerte(ERREUR_SERVEUR_INCONNU_MESSAGE,
-									 ERREUR_SERVEUR_TITRE,
-									 AlertType.ERROR);
+		autreAlerte(ERREUR_SERVEUR_INCONNU_MESSAGE, ERREUR_SERVEUR_TITRE,
+				    AlertType.ERROR);
 	}
 	
 	
@@ -297,9 +275,8 @@ public class ImportControleur {
 	 * IP a été spécifiée ne répond pas.
 	 */
 	private static void erreurServeurIndisponible() {
-		AlerteControleur.autreAlerte(ERREUR_SERVEUR_INDISPONIBLE_MESSAGE,
-									 ERREUR_SERVEUR_TITRE,
-									 AlertType.ERROR);
+		autreAlerte(ERREUR_SERVEUR_INDISPONIBLE_MESSAGE, ERREUR_SERVEUR_TITRE,
+					AlertType.ERROR);
 	}
 	
 }
