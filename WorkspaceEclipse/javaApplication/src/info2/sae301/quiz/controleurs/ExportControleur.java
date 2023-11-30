@@ -14,10 +14,9 @@ import info2.sae301.quiz.modeles.reseau.Serveur;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.Enumeration;
+import java.net.UnknownHostException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -105,71 +104,23 @@ public class ExportControleur {
      * d'accéder à l'adresse IP locale avec la méthode ipPrivee().
      * 
      * @return Une chaîne de caractères représentant l'adresse IP locale.
+	 * @throws UnknownHostException 
+	 * @throws SocketException 
 	 * @throws  
      */
-    public static String adresseIpLocale() /*throws SocketException*/ {
-        try {
-            DatagramSocket socket = new DatagramSocket();
-            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+    public static String adresseIpLocale()
+    throws UnknownHostException, SocketException {
 
-            String ip = socket.getLocalAddress().getHostAddress();
+        DatagramSocket socket = new DatagramSocket();
+        socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
 
-            socket.close();
-            
-            return ip;
-        } catch (Exception e) {
-            //return ipPrivee();
-        	return "";
-        }
+        String ip = socket.getLocalAddress().getHostAddress();
+
+        socket.close();
+        
+        return ip;
     }
-	
     
-	/**
-	 * Recherche et retourne l'adresse IP de la machine sur 
-	 * le réseau.
-	 * 
-	 * @return Adresse IP de la machine sur le réseau (IP privée)
-	 */
-	private static String ipPrivee() throws SocketException {
-		String ip;
-		
-		ip = null;
-		
-        Enumeration<NetworkInterface> interfaces
-        = NetworkInterface.getNetworkInterfaces();
-
-        while (interfaces.hasMoreElements()) {
-            NetworkInterface iface = interfaces.nextElement();
-
-            // Filtrer les interfaces loopback et les interfaces désactivées
-            if (iface.isLoopback() || !iface.isUp()) {
-                continue;
-            }
-
-            Enumeration<InetAddress> adresses = iface.getInetAddresses();
-            
-            while (adresses.hasMoreElements() && ip == null) {
-                InetAddress adresse;
-                
-                String ipTrouvee;
-                
-                adresse = adresses.nextElement();
-                ipTrouvee = adresse.getHostAddress();
-                
-                if (!adresse.isLinkLocalAddress() 
-            		&& !adresse.isLoopbackAddress() 
-            		&& adresse.isSiteLocalAddress()
-            		&& ipTrouvee.matches(ImportControleur.REGEX_IPV4)) {
-                	
-                	ip = ipTrouvee;
-                	
-                }
-            }
-        }
-		
-		return ip;
-	}
-	
 	
 	/** Label d'affichage de l'IP privée. */
 	@FXML
@@ -219,12 +170,12 @@ public class ExportControleur {
 		
 		adresseIPPrivee = null;
 		
-//		try {
+		try {
 			adresseIPPrivee = adresseIpLocale();			
 			System.out.println("\nIP privée = " + adresseIPPrivee);
-//		} catch (SocketException e) {
-//			erreurAccesIpLocale();
-//		}
+		} catch (Exception e) {
+			erreurAccesIpLocale();
+		}
 		
 		if (adresseIPPrivee != null) {
 			messageAdresseIPPrivee = String.format(MODELE_LABEL_IP_PRIVEE, 
