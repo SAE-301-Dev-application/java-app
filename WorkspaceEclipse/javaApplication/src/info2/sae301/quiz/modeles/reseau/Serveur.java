@@ -241,8 +241,6 @@ public class Serveur {
          */
 		reponseClient = (String) this.fluxEntree.readObject();
 		
-		fermerFluxEntree();
-		
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
 		
 		this.cleVigenere = Vigenere.getCle();
@@ -303,6 +301,11 @@ public class Serveur {
         
         this.fluxSortie.writeObject(toutesLesQuestionsCryptees);
         
+        // Attente réception questions
+        this.fluxEntree.readObject();
+        
+        fermerFluxEntree();
+        
         fermerFluxSortie();
         
         fermerSockets();
@@ -315,7 +318,7 @@ public class Serveur {
 	 * @throws IOException si la fermeture des flux et sockets échoue.
 	 */
 	public void fermerSockets() throws IOException {
-        // Fermeture de la socket du client
+		// Fermeture de la socket du client
 		if (this.socketClient != null) {
 			this.socketClient.close();			
 		}

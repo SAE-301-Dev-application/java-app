@@ -212,8 +212,6 @@ public class Client {
         
         this.fluxSortie.writeObject(INDICATION_RECEPTION_CLIENT + this.cleVigenere);
         
-        fermerFluxSortie();
-        
         System.out.println("\nEntier secret du client : " + this.entierSecret);
         
         Vigenere.setCle(this.cleVigenere);
@@ -266,7 +264,11 @@ public class Client {
 		// en excluant la dernière entrée qui est vide (cf envoi serveur)
 	    donneesQuestions = questionsDecryptees.split(DELIMITEUR);
 	    
+	    this.fluxSortie.writeObject("Questions reçues");
+	    
 	    fermerFluxEntree();
+	    
+	    fermerFluxSortie();
 	    
 	    fermerSocket();
 		
