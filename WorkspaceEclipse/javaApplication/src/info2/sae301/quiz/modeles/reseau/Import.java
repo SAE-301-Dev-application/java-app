@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
@@ -44,6 +45,7 @@ public class Import {
 	/** Instance de jeu courante. */
 	private static Jeu jeu;
 	
+	private String[] questionsImportees;
 	
 	private int nombreTotalQuestions;
 	
@@ -181,25 +183,15 @@ public class Import {
 	 */
 	public void importerADistance(String adresseServeur)
 	throws SocketTimeoutException, IllegalArgumentException, Exception {
-	
-		String[] toutesLesQuestions,
-		         questionsCrees;
-		
+
 		Client client;
-		
 		client = new Client();
 		
 		try {
-			toutesLesQuestions = client.recevoirQuestions(adresseServeur);
+			questionsImportees = client.recevoirQuestions(adresseServeur);
 			
-			System.out.println("Questions à créer : ");
-			
-			questionsCrees
-			= creationQuestions(toutesLesQuestions);
-			
-			System.out.println();
-			
-			OutilsCSV.ecrireFichierCSV(questionsCrees);
+			NavigationControleur
+			.changerVue("SelectionQuestionsImportees.fxml");
 		} catch (SocketTimeoutException e) {
 			throw e;
 		} catch (IllegalArgumentException e) {
@@ -217,9 +209,10 @@ public class Import {
 	 * @param questions Chaînes de caractères contenant
 	 *                  les données des question à créer.
 	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws IOException si l'écriture du CSV échoue.
 	 */
 	public String[] creationQuestions(String[] questions)
-	throws IllegalArgumentException {
+	throws IllegalArgumentException, IOException {
 		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 		
 		String questionCourante,
@@ -235,6 +228,8 @@ public class Import {
 		int niveauDifficulte;
 		
 		lignesAjoutees = new String[0];
+		
+		System.out.println("Questions à créer : ");
 		
 		for (int indiceQuestion = 0;
 			 indiceQuestion < questions.length;
@@ -305,6 +300,8 @@ public class Import {
 		}
 		
 		System.out.println();
+		
+		OutilsCSV.ecrireFichierCSV(lignesAjoutees);
 		
 		return lignesAjoutees.length > 0 ? lignesAjoutees : null;
 	}
