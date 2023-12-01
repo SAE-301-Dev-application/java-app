@@ -1,5 +1,5 @@
 /*
- * Serveur.java								                        27 nov. 2023
+ * ServeurVigenere.java								                 1 dec. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -14,9 +14,7 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
-import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
-//import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 /**
@@ -163,45 +161,6 @@ public class ServeurVigenere {
 	}
 	
 	
-//	/**
-//	 * Envoi de l'entier du serveur et réception de l'entier du client
-//	 * afin de calculer l'entier secret de Diffie Hellman.
-//	 * 
-//	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-//	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-//	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-//	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
-//	 */
-//	private void envoyerRecevoirEntier()
-//	throws IOException, ClassNotFoundException, SocketTimeoutException,
-//	       ClientDejaConnecteException {
-//		int entierAEnvoyer;
-//		
-//		this.puissanceSecrete = DiffieHellman.genererPuissance();
-//		
-//		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
-//				                                   this.puissanceSecrete);
-//		
-//		System.out.println("Envoi de l'entier du serveur au client : "
-//		                   + entierAEnvoyer);
-//		
-//		creerFluxSortie();
-//		
-//		// Envoi au client de l'entier
-//        this.fluxSortie.writeObject(entierAEnvoyer);
-//        
-//        creerFluxEntree();
-//        
-//        this.entierClient = (int) this.fluxEntree.readObject();
-//        
-//        System.out.println("\nRéception de l'entier du client : "
-//                           + this.entierClient);
-//        
-//        this.entierSecret
-//        = DiffieHellman.puissanceNR(this.entierClient, puissanceSecrete);
-//	}
-	
-	
 	/**
 	 * Envoie au client la clé gérénée par Vigenère.
 	 * 
@@ -214,14 +173,10 @@ public class ServeurVigenere {
 	throws IOException, ClassNotFoundException, SocketTimeoutException,
 	       ClientDejaConnecteException {	
 		String reponseClient;
+			
+		this.cleVigenere = Vigenere.getCle();
 		
-//		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
-//		
-		this.cleVigenere = Vigenere.getCle();//Vigenere.chiffrerCle(this.entierSecret);
-		
-		System.out.println("\nClé de vigenère créée :\n" + Vigenere.getCle());
-		
-		System.out.println("\nEnvoi de la clé de vigenère générée :\n"
+		System.out.println("Envoi de la clé de vigenère générée :\n"
 		                   + this.cleVigenere);
 		
 		creerFluxSortie();
@@ -237,8 +192,6 @@ public class ServeurVigenere {
 		reponseClient = (String) this.fluxEntree.readObject();
 		
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
-		
-		//this.cleVigenere = Vigenere.getCle();
 	}
 	
 	
@@ -268,8 +221,6 @@ public class ServeurVigenere {
     	accepterConnexion();
     	
     	System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
-        
-//        envoyerRecevoirEntier();
         
         envoyerCleVigenere();
         
