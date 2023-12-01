@@ -100,7 +100,7 @@ public class Client {
         = new InetSocketAddress(this.adresseServeur, PORT_SERVEUR);
         
         try {
-        	this.socket.connect(adresse, TIMEOUT_CONNEXION);        	
+        	this.socket.connect(adresse, TIMEOUT_CONNEXION);
         } catch (SocketTimeoutException e) {
         	throw new SocketTimeoutException(ERREUR_SERVEUR_INDISPONIBLE_MESSAGE);
         }
@@ -115,9 +115,7 @@ public class Client {
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
 	private void creerFluxEntree() throws IOException, SocketTimeoutException {
-		creerSocket();
-		
-        this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
+		this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
 	}
 	
 	
@@ -129,8 +127,6 @@ public class Client {
 	 */
 	private void fermerFluxEntree() throws IOException {
 		this.fluxEntree.close();
-		
-		fermerSocket();
 	}
 	
 	
@@ -142,9 +138,7 @@ public class Client {
 	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
 	 */
 	private void creerFluxSortie() throws IOException, SocketTimeoutException {
-		creerSocket();
-		
-        this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
+		this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
 	}
 	
 	
@@ -156,8 +150,6 @@ public class Client {
 	 */
 	private void fermerFluxSortie() throws IOException {
 		this.fluxSortie.close();
-		
-		fermerSocket();
 	}
 	
 	
@@ -178,27 +170,20 @@ public class Client {
 		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
 				                                   this.puissanceSecrete);
         
-        creerFluxEntree();
-        
-		System.out.println(String.format(CONNEXION_OUVERTE,
-                           this.adresseServeur, PORT_SERVEUR));
-        
+		creerFluxEntree();
+		
         this.entierServeur = (int) this.fluxEntree.readObject();
         
         System.out.println("Réception de l'entier du serveur : "
                            + this.entierServeur);
-        
-        fermerFluxEntree();
-        
-		creerFluxSortie();
 		
 		System.out.println("\nEnvoi de l'entier du client au serveur : "
 		                   + entierAEnvoyer);
 		
+		creerFluxSortie();
+		
 		// Envoi au client de l'entier
         this.fluxSortie.writeObject(entierAEnvoyer);
-        
-        fermerFluxSortie();
         
         this.entierSecret
         = DiffieHellman.puissanceNR(this.entierServeur, puissanceSecrete);
@@ -218,18 +203,12 @@ public class Client {
 		
 		this.cleVigenere = "";
 		
-		creerFluxEntree();
-		
 		this.cleVigenere = ((String) this.fluxEntree.readObject()).substring(6);
 
 		System.out.println(INDICATION_CLE_VIGENERE_CHIFFREE
 				           + this.cleVigenere + "\n");
 		
-		fermerFluxEntree();
-		
 		System.out.println(INDICATION_CONFIRMATION_CLE);
-
-        creerFluxSortie();
         
         this.fluxSortie.writeObject(INDICATION_RECEPTION_CLIENT + this.cleVigenere);
         
@@ -263,8 +242,10 @@ public class Client {
 		
 		this.adresseServeur = adresseServeur;
 		
+		creerSocket();
+        
 		System.out.println(String.format(CONNEXION_OUVERTE,
-               			                 this.adresseServeur, PORT_SERVEUR));
+                           				 this.adresseServeur, PORT_SERVEUR));
 		
 		recevoirEnvoyerEntier();
 		
@@ -272,12 +253,8 @@ public class Client {
 		
 		System.out.println("Réception des données des questions :");
 		
-		creerFluxEntree();
-		
 		// Lecture de l'unique objet envoyé par le serveur
 		questionsCryptees = (String) this.fluxEntree.readObject();
-
-	    fermerFluxEntree();
 
 	    // Décryptage des données cryptées reçues
 	    questionsDecryptees
@@ -288,6 +265,10 @@ public class Client {
 		// Utilisation du délimiteur pour diviser les questions,
 		// en excluant la dernière entrée qui est vide (cf envoi serveur)
 	    donneesQuestions = questionsDecryptees.split(DELIMITEUR);
+	    
+	    fermerFluxEntree();
+	    
+	    fermerSocket();
 		
 		return donneesQuestions;
 	}

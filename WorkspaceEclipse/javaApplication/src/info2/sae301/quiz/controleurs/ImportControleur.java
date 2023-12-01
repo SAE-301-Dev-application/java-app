@@ -68,6 +68,8 @@ public class ImportControleur {
 	
 	private Import importation;
 	
+	private boolean importEnCours;
+	
 	/** 
 	 * Champ de saisie de l'adresse IPv4 pour 
 	 * l'importation en ligne. 
@@ -83,6 +85,7 @@ public class ImportControleur {
 
 	@FXML
 	private void initialize() {
+		this.importEnCours = false;
 		this.importation = new Import();
 	}
 	
@@ -109,15 +112,17 @@ public class ImportControleur {
 		
 		Path objetCheminCourant;
 		
-		try {
-			this.importation.parcourirFichiers();
-			
-			objetCheminCourant = Path.of(this.importation.getCheminFichier());
-			nomFichierSelectionne = objetCheminCourant.getFileName().toString();
-			
-			this.cheminCourant.setText(nomFichierSelectionne);
-		} catch (FileNotFoundException e) {
-			erreurCheminInexistant();
+		if (!this.importEnCours) {
+			try {
+				this.importation.parcourirFichiers();
+				
+				objetCheminCourant = Path.of(this.importation.getCheminFichier());
+				nomFichierSelectionne = objetCheminCourant.getFileName().toString();
+				
+				this.cheminCourant.setText(nomFichierSelectionne);
+			} catch (FileNotFoundException e) {
+				erreurCheminInexistant();
+			}			
 		}
 	}
 	
@@ -127,7 +132,9 @@ public class ImportControleur {
 	 */
 	@FXML
 	private void actionBoutonAnnuler() {
-		NavigationControleur.changerVue("MenuPrincipal.fxml");
+		if (!this.importEnCours) {
+			NavigationControleur.changerVue("MenuPrincipal.fxml");			
+		}
 	}
 	
 	
@@ -146,18 +153,20 @@ public class ImportControleur {
 		
 		ipEntree = this.champIpServeur.getText();
 		
-		if (cheminCourant != null
-			&& !cheminCourant.isBlank()) {
-			
-			demarrerImportLocal();
-			
-		} else if (ipEntree != null && !ipEntree.isBlank()) {
-			
-			demarrerImportDistant(ipEntree);
-			
-		} else {
-			autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
+		if (!this.importEnCours) {
+			if (cheminCourant != null
+					&& !cheminCourant.isBlank()) {
+				
+				demarrerImportLocal();
+				
+			} else if (ipEntree != null && !ipEntree.isBlank()) {
+				
+				demarrerImportDistant(ipEntree);
+				
+			} else {
+				autreAlerte(ERREUR_AUCUN_CHEMIN_MESSAGE, 
 						ERREUR_AUCUN_CHEMIN_TITRE, AlertType.ERROR);
+			}			
 		}
 	}
 	

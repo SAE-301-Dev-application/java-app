@@ -6,6 +6,7 @@
 package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
@@ -57,6 +58,9 @@ public class ExportControleur {
 	private final static String ERREUR_TIMEOUT_MESSAGE
 	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
 	  + " réessayer l'export.";
+	
+	private final static String ERREUR_CLIENT_CONNECTE
+	= "Un client est déjà connecté au serveur.";
 	
 	/** 
 	 * Titre du message d'erreur de recherche de 
@@ -153,10 +157,14 @@ public class ExportControleur {
 	/** Coordonnée Y du prochain élément de la grille. */
 	private int prochainYGrilleSelection;
 	
+	private boolean exportEnCours;
+	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
 		jeu = Quiz.jeu;
+		
+		this.exportEnCours = false;
 		
 		this.choixSelectionnerCategories();
 	}
@@ -285,7 +293,9 @@ public class ExportControleur {
 	/** Retour au menu principal de l'application. */
 	@FXML
 	private void actionBoutonRetour() {
-		NavigationControleur.changerVue("MenuPrincipal.fxml");
+		if (!this.exportEnCours) {
+			NavigationControleur.changerVue("MenuPrincipal.fxml");			
+		}
 	}
 	
 	
@@ -310,32 +320,41 @@ public class ExportControleur {
 		
 		nombreQuestionsExportees = questionsAExporter.size();
 		
-		titre.setText("EXPORTATION EN COURS...");
-		
-		CompletableFuture.supplyAsync(() -> {
-            try {
-            	serveur.envoyerQuestions(questionsAExporter);
-                return "Succes";
-            } catch (SocketTimeoutException e) {
-            	return ERREUR_TIMEOUT_MESSAGE;
-            } catch (ClassNotFoundException e) {
-            	return ERREUR_TIMEOUT_MESSAGE;
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-        }).thenAccept(resultat -> {
-            Platform.runLater(() -> {
-            	gestionResultatExport(resultat, nombreQuestionsExportees);
-                
-        		CompletableFuture.supplyAsync(() -> {
-                    return null;
-                }).thenAccept(result -> {
-                    Platform.runLater(() -> {
-                    	titre.setText("EXPORTATION");
-                    });
-                });
-            });
-        });
+		// Si aucun export n'est en cours
+		if (!this.exportEnCours) {
+			this.exportEnCours = true;
+			
+			titre.setText("EXPORTATION EN COURS...");
+			
+			CompletableFuture.supplyAsync(() -> {
+				try {
+					serveur.envoyerQuestions(questionsAExporter);
+					return "Succes";
+				} catch (SocketTimeoutException e) {
+					return ERREUR_TIMEOUT_MESSAGE;
+				} catch (ClientDejaConnecteException e) {
+					return ERREUR_CLIENT_CONNECTE;
+				} catch (ClassNotFoundException e) {
+					return ERREUR_TIMEOUT_MESSAGE;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return e.getMessage();
+				}
+			}).thenAccept(resultat -> {
+				Platform.runLater(() -> {
+					gestionResultatExport(resultat, nombreQuestionsExportees);
+					
+					CompletableFuture.supplyAsync(() -> {
+						return null;
+					}).thenAccept(result -> {
+						Platform.runLater(() -> {
+							titre.setText("EXPORTATION");
+						});
+						this.exportEnCours = false;
+					});
+				});
+			});
+		}
 	}
 	
 	
