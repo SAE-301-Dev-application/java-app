@@ -10,7 +10,7 @@ import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.reseau.ServeurVigenere;
+import info2.sae301.quiz.modeles.reseau.Serveur;
 
 import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
 
@@ -373,11 +373,22 @@ public class ExportControleur {
 	private void actionBoutonExporter() {
 		int nombreQuestionsExportees;
 		
-		ServeurVigenere serveur;
-		
 		ArrayList<Question> questionsAExporter;
+		/*
+		 * ___________________________
+		 * Version sans Diffie Hellman
+		 * ---------------------------
+		 * ServeurVigenere serveur;
+		 * serveur = new ServeurVigenere();
+		 */
 		
-		serveur = new ServeurVigenere();
+		/*
+		 * ___________________________
+		 * Version avec Diffie Hellman
+		 * ---------------------------
+		 */
+		Serveur serveur;
+		serveur = new Serveur();
 		
 		questionsAExporter = this.selectionQuestions; 
 		

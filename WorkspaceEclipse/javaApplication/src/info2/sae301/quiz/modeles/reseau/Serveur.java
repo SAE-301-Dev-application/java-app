@@ -113,7 +113,6 @@ public class Serveur {
 		
 		try {
 			this.socketClient = this.socketServeur.accept();
-			System.out.println("serv connexion ok");
 		} catch (IOException e) {
 			fermerSockets();
 			throw new SocketTimeoutException();
@@ -131,7 +130,6 @@ public class Serveur {
 	 */
 	private void creerFluxEntree()
 	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
-		System.out.println("serv créer flux entrée");
 		this.fluxEntree = new ObjectInputStream(this.socketClient.getInputStream());
 	}
 	
