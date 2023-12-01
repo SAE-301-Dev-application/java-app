@@ -232,6 +232,7 @@ public class Question implements Serializable {
 		
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
 		assurerTaille(feedback, "d'un feedback", 1, 500);
+		assurerCaracteres(feedback);
 		
 	}
 	
