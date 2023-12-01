@@ -31,7 +31,7 @@ public class Vigenere {
 			= "La taille doit être comprise entre %s et %s caractères";
 
 		
-	/** Clé pour Vigenère */
+	/** Clé de chiffrement de Vigenère */
 	private static String cle = genererCle();
 	
 	
@@ -76,7 +76,7 @@ public class Vigenere {
 
 
 	/**
-	 * Chiffre un message selon la clé générée plus tôt
+	 * Chiffre un message selon la clé en parametre
 	 * 
 	 * @param message message à crypter
 	 * @return le message crypté
@@ -99,9 +99,11 @@ public class Vigenere {
 	
 	
 	/**
-	 * Chiffre la cle par Diffie-Hellman
+	 * Chiffre la cle de Vigenere à l'aide d'un entier
+	 * Utilisé pour chiffrer la clé de Vigenère avec le nombre de
+	 * Diffie-Hellman lors de l'échange réseau.
 	 * 
-	 * @param entierSecret la clé de chiffrement
+	 * @param entierSecret l'entier de chiffrement
 	 * @return la clé de Vigenère chiffrée
 	 */
 	public static String chiffrerCle(int entierSecret) {
@@ -126,7 +128,7 @@ public class Vigenere {
 	
 	
 	/**
-	 * Déchiffre un message selon la clé générée plus tôt
+	 * Déchiffre un message selon la clé en parametre
 	 * 
 	 * @param message messageC à décrypter
 	 * @return le message décrypté
