@@ -65,6 +65,7 @@ public class SuppressionQuestionsControleur {
 	
 	/** Association de toutes les questions à leur checkbox */
 	private HashMap<Question, CheckBox> toutesLesQuestions = new HashMap<>();
+	
 	/**
 	 * Initialisation de la vue avec le style css correspondant et 
 	 * l'affichage des questions et du bouton suivant.
