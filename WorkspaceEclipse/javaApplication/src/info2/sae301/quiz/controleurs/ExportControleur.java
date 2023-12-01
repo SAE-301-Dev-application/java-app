@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -85,7 +87,7 @@ public class ExportControleur {
 	= "Mon adresse IP : %s";
 	
 	/** Dernier indice d'une ligne complète de la grille de sélection. */
-	private static final int INDICE_MAX_LIGNE_GRILLE = 2;
+	private static final int INDICE_MAX_LIGNE_GRILLE = 1;
 	
 	
 	/** Choix : sélectionner des catégories. */
@@ -158,6 +160,12 @@ public class ExportControleur {
 	private int prochainYGrilleSelection;
 	
 	private boolean exportEnCours;
+    
+	/** Sélection, de l'utilisateur, des questions à exporter. */
+	private ArrayList<Question> selectionQuestions;
+	
+	/** Sélection, de l'utilisateur, des catégories à exporter. */
+	private ArrayList<Categorie> selectionCategories;
 	
 	/** Initialisation du contrôleur. */
 	@FXML
@@ -165,6 +173,8 @@ public class ExportControleur {
 		jeu = Quiz.jeu;
 		
 		this.exportEnCours = false;
+		this.selectionQuestions = new ArrayList<Question>();
+		this.selectionCategories = new ArrayList<Categorie>();
 		
 		this.choixSelectionnerCategories();
 	}
@@ -248,6 +258,27 @@ public class ExportControleur {
 			choixCourant = new CheckBox();
 			choixCourant.setText(categorieCourante.getIntitule());
 			
+			choixCourant.setSelected(
+				this.categorieEstSelectionnee(categorieCourante)
+			);
+			
+			choixCourant.setOnAction(e -> {
+				ArrayList<Question> listeQuestionsCategorie;
+				
+				listeQuestionsCategorie 
+				= categorieCourante.getListeQuestions();
+				
+				if (this.categorieEstSelectionnee(categorieCourante)) {
+					this.selectionQuestions.removeAll(listeQuestionsCategorie);
+					this.selectionCategories.remove(categorieCourante);
+				} else {
+					this.selectionQuestions.addAll(listeQuestionsCategorie);
+					this.selectionCategories.add(categorieCourante);
+				}
+				
+				System.out.println(this.selectionQuestions);
+			});
+			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
 			
 			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
@@ -257,6 +288,15 @@ public class ExportControleur {
 				prochainXGrilleSelection++;
 			}
 		}
+	}
+	
+	
+	/**
+	 * @param categorieCourante
+	 * @return Si la catégorie donnée figure parmi celles sélectionnées
+	 */
+	private boolean categorieEstSelectionnee(Categorie categorieCourante) {
+		return this.selectionCategories.contains(categorieCourante);
 	}
 	
 	
@@ -277,9 +317,25 @@ public class ExportControleur {
 			choixCourant = new CheckBox();
 			choixCourant.setText(questionCourante.getIntitule());
 			
+			for (Categorie categorieCourante: this.selectionCategories) {
+				if (categorieCourante
+						.getListeQuestions()
+						.contains(questionCourante)) {
+					
+					choixCourant.setSelected(true);
+					choixCourant.setDisable(true);
+					
+				} else {
+					choixCourant.setOnAction(e -> {
+						this.selectionQuestions.add(questionCourante);
+						System.out.println(this.selectionQuestions);
+					});
+				}
+			}
+			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
 			
-			if (prochainXGrilleSelection == 2) {
+			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
 				prochainYGrilleSelection++;
 				prochainXGrilleSelection = 0;
 			} else {
