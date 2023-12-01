@@ -185,9 +185,9 @@ public class Import {
 		String[] toutesLesQuestions,
 		         questionsCrees;
 		
-		Client client;
+		ClientVigenere client;
 		
-		client = new Client();
+		client = new ClientVigenere();
 		
 		try {
 			toutesLesQuestions = client.recevoirQuestions(adresseServeur);

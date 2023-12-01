@@ -5,7 +5,7 @@
 
 package info2.sae301.quiz.modeles.reseau;
 
-import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
+import info2.sae301.quiz.modeles.cryptographie.DiffieHellman; 
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 import java.io.IOException;

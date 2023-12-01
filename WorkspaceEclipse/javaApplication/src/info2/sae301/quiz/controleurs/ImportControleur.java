@@ -5,7 +5,7 @@
 
 package info2.sae301.quiz.controleurs;
 
-import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
+import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte; 
 
 import info2.sae301.quiz.modeles.reseau.Import;
 import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
