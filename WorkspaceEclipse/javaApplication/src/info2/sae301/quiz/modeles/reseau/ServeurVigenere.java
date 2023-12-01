@@ -224,6 +224,8 @@ public class ServeurVigenere {
 		System.out.println("\nEnvoi de la clé de vigenère générée :\n"
 		                   + this.cleVigenere);
 		
+		creerFluxEntree();
+		
 		// Envoi au client de la clé de chiffrement
         this.fluxSortie.writeObject("CLE = " + this.cleVigenere);
         
