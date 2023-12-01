@@ -6,6 +6,7 @@
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Categorie;
@@ -36,6 +37,7 @@ public class SuppressionQuestionsControleur {
 	 */
 	private Jeu jeu = Quiz.jeu;
 	
+	
 	@FXML
 	private VBox vBoxQuestions;
 	
@@ -48,6 +50,7 @@ public class SuppressionQuestionsControleur {
 	@FXML
 	private Button boutonSuivant;
 	
+	
 	/** Toutes les questions dont la checkbox a été sélectionnée. */
 	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
 	
@@ -55,10 +58,13 @@ public class SuppressionQuestionsControleur {
 	private int indiceQuestion; 
 	
 	/** Nom de la première catégorie affichée sur la "page" courante. */
-	private String categorieCourante = "Toutes les catégories";
+	private String categorieCourante;
 	
-	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
+	/** Les questions de la catégorie courante à afficher */
+	private ArrayList<Question> questionsCategorie = new ArrayList<>();
 	
+	/** Association de toutes les questions à leur checkbox */
+	private HashMap<Question, CheckBox> toutesLesQuestions = new HashMap<>();
 	/**
 	 * Initialisation de la vue avec le style css correspondant et 
 	 * l'affichage des questions et du bouton suivant.
@@ -66,8 +72,7 @@ public class SuppressionQuestionsControleur {
 	@FXML
 	private void initialize() {
 		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
-		categorieCourante = AffichageQuestionsControleur.categorieCourante;		
-		menuFiltre.setValue(categorieCourante);
+		categorieCourante = AffichageQuestionsControleur.categorieCourante;
 		
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
@@ -79,7 +84,10 @@ public class SuppressionQuestionsControleur {
 			menuFiltre.getItems().add(categorieCourante.getIntitule());
 		}
 		
-		afficherQuestions();
+		initialiserToutesLesQuestions();
+		/* l'apelle à cette méthode apelle
+		implicitement selectionFiltre */
+		menuFiltre.setValue(categorieCourante);
 	}
 	
 	/**
@@ -92,7 +100,41 @@ public class SuppressionQuestionsControleur {
 			indiceQuestion = 0;
 			categorieCourante = menuFiltre.getValue();
 		}
+		initialiserQuestionsCategorie();
 		afficherQuestions();
+	}
+	
+	/**
+	 * initialisation de toutes les checkboxs représentent
+	 * les questions selon le filtre de catégorie.
+	 */
+	private void initialiserToutesLesQuestions() {
+		toutesLesQuestions.clear();
+		for (int i = 0; i < jeu.getToutesLesQuestions().size(); i++) {
+			Question questionCourante = jeu.getToutesLesQuestions().get(i);
+			CheckBox checkBoxQuestion = new CheckBox();
+			toutesLesQuestions.put(questionCourante, checkBoxQuestion);
+	    	checkBoxQuestion.setId("" + i);
+	    	checkBoxQuestion.setText(questionCourante.getIntitule().replaceAll("\n", " "));
+	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
+			checkBoxQuestion.getStyleClass().add("intituleCategorieQuestion");
+			checkBoxQuestion.getStyleClass().add("intitule-padding-left");
+			checkBoxQuestion.setOnMouseClicked(event -> {
+				selectionnerQuestion(questionCourante, checkBoxQuestion);
+			});
+		}
+	}
+	/**
+	 * Initialisation de questionCategorie en fonction du
+	 * filtre de catégorie actuelle.
+	 */
+	private void initialiserQuestionsCategorie() {
+		questionsCategorie = new ArrayList<Question>();
+		if (categorieCourante.equals("Toutes les catégories")) {
+			questionsCategorie = jeu.getToutesLesQuestions();	
+		} else {
+			questionsCategorie = jeu.questionsCategorie(categorieCourante);
+		}
 	}
 	
 	/**
@@ -101,71 +143,44 @@ public class SuppressionQuestionsControleur {
 	 * précédentes et suivantes.
 	 */
 	private void afficherQuestions() {
-		ArrayList<Question> questionsAAfficher
-		= jeu.questionsCategorie(categorieCourante);
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
-	    int indiceFin = Math.min(indiceDebut + 10, questionsAAfficher.size());
+	    int indiceFin = Math.min(indiceDebut + 10, questionsCategorie.size());
 	    
 	    // Effacer le contenu actuel du VBox
 	    vBoxQuestions.getChildren().clear();
 		
-	    // Afficher les (indiceFin - indiceDebut) catégories
+	    // Afficher les (indiceFin - indiceDebut) questions
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	CheckBox checkBoxQuestion;
-	    	
-	    	checkBoxQuestion = new CheckBox();
-	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
-//	    	checkBoxQuestion.setId("" + i);
-	    	
-	    	if (i >= toutesLesCheckBox.size()) {
-	    		toutesLesCheckBox.add(checkBoxQuestion);
-	    	} else {
-	    		checkBoxQuestion = toutesLesCheckBox.get(i);
-	    	}
-	    	
-	    	checkBoxQuestion.setText(questionsAAfficher.get(i)
-	    			                     .getIntitule().replaceAll("\n", " "));
-	    	checkBoxQuestion.getStyleClass().add("intituleCategorieQuestion");
-	    	checkBoxQuestion.getStyleClass().add("intitule-padding-left");
-	        
-	        final int INDICE = i;
-	        
-	        checkBoxQuestion.setOnMouseClicked(event -> {
-	        	selectionnerQuestion(INDICE);
-	        });
-	        
-	        vBoxQuestions.getChildren().add(checkBoxQuestion);
+	        vBoxQuestions.getChildren().add(
+	        				toutesLesQuestions.get(questionsCategorie.get(i)));
 	    }
 	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
-	    boutonSuivant.setVisible(questionsAAfficher.size() > 10
-	    		                 && indiceFin < questionsAAfficher.size());
+	    boutonSuivant.setVisible(questionsCategorie.size() > 10
+	    		                 && indiceFin < questionsCategorie.size());
 	}
 	
 	/**
 	 * Clic sur la checkbox afin de sélectionner une question.
 	 * 
-	 * @param indice Indice de la question sélectionnée.
+	 * @param indiceQestion Indice de la question sélectionnée.
 	 */
-	private void selectionnerQuestion(int indice) {
-		final Question QUESTION 
-		= jeu.getToutesLesQuestions().get(indice); 
-		
-		if (toutesLesCheckBox.get(indice).isSelected()) {
-			this.questionsSelectionnees.add(QUESTION);
+	private void selectionnerQuestion(Question question, CheckBox checkBox) {
+		if (checkBox.isSelected()) {
+			this.questionsSelectionnees.add(question);
 		} else {
-			this.questionsSelectionnees.remove(QUESTION);
+			this.questionsSelectionnees.remove(question);
 		}
 		
 		System.out.println("Questions sélectionnées : ");
 		
-		for (Question question: this.questionsSelectionnees) {
-			System.out.println("- " + question.getIntitule());
+		for (Question qSelectCourante : this.questionsSelectionnees) {
+			System.out.println("- " + qSelectCourante.getIntitule());
 		}
 		System.out.println();
 	}
@@ -231,11 +246,12 @@ public class SuppressionQuestionsControleur {
 			
 			if (confirmerSuppression) {
 				jeu.supprimer(this.questionsSelectionnees.toArray(new Question[this.questionsSelectionnees.size()]));
-				
 				for (Question questionASupprimer: this.questionsSelectionnees) {
 					questionASupprimer.getCategorie().supprimerQuestion(questionASupprimer);
 				}
 				
+				AffichageQuestionsControleur.categorieCourante = categorieCourante;
+				indiceQuestionApresSuppression();
 				NavigationControleur.changerVue("AffichageQuestions.fxml");
 			}
 		}
@@ -251,4 +267,13 @@ public class SuppressionQuestionsControleur {
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
 	
+	/**
+	 * Adapte indiceQuestion en fonction du nombre de
+	 * suppression de question et de la page courante.
+	 */
+	private void indiceQuestionApresSuppression() {
+		for (;indiceQuestion >= questionsCategorie.size(); indiceQuestion-=10);
+		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
+		
+	}
 }

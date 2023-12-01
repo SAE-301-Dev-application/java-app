@@ -201,7 +201,7 @@ public class Categorie implements Serializable {
  	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(intitule, listeQuestions);
+		return Objects.hash(intitule);
 	}
 	
 

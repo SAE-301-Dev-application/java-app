@@ -55,7 +55,7 @@ public class SuppressionCategoriesControleur {
 	private ArrayList<String> categoriesSelectionnees = new ArrayList<>();
 	
 	/** Les checkbox ajoutées devant les catégories. */
-	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
+	private ArrayList<CheckBox> toutesLesCheckBoxs = new ArrayList<>();
 	
 	/**
 	 * Initialisation de la vue avec le style css correspondant 
@@ -67,8 +67,34 @@ public class SuppressionCategoriesControleur {
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
-		
+		initialiserToutesLesCheckboxs();
 		afficherCategories();
+	}
+	/**
+	 * Initialisation de toutes les checkboxs représentent
+	 * les catégories.
+	 */
+	private void initialiserToutesLesCheckboxs() {
+		toutesLesCheckBoxs.clear();
+		for (int i = 0; i < toutesLesCategories.size(); i++) {
+			CheckBox checkBoxCategorie = new CheckBox();
+	    	checkBoxCategorie.setId("" + i);
+	    	checkBoxCategorie.setText(toutesLesCategories.get(i).getIntitule());
+	    	checkBoxCategorie.getStyleClass().add("checkbox-margin");
+			checkBoxCategorie.getStyleClass().add("intituleCategorieQuestion");
+			checkBoxCategorie.getStyleClass().add("intitule-padding-left");
+//			checkBoxQuestion.setVisible(false);
+			this.toutesLesCheckBoxs.add(checkBoxCategorie);
+			if (!checkBoxCategorie.getText().equals("Général")) {
+	        	final int INDICE = i;
+				
+	        	checkBoxCategorie.setOnMouseClicked(event -> {
+					selectionnerCategorie(INDICE);
+				});
+			} else {
+				checkBoxCategorie.setDisable(true);
+			}
+		}
 	}
 
 	/**
@@ -87,36 +113,7 @@ public class SuppressionCategoriesControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-	    	CheckBox checkBoxCategorie;
-			
-			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
-			
-			checkBoxCategorie = new CheckBox();
-			checkBoxCategorie.getStyleClass().add("checkbox-margin");
-//			checkBoxCategorie.setId("" + i);
-			
-			// Si la checkbox n'a pas déjà été ajoutée
-			if (i >= toutesLesCheckBox.size()) {
-				toutesLesCheckBox.add(checkBoxCategorie);
-			} else {
-				checkBoxCategorie = toutesLesCheckBox.get(i);
-			}
-			
-	        checkBoxCategorie.setText(intituleCategorie);
-	        checkBoxCategorie.getStyleClass().add("intituleCategorieQuestion");
-	        checkBoxCategorie.getStyleClass().add("intitule-padding-left");
-	        
-	        vBoxCategories.getChildren().add(checkBoxCategorie);
-	        
-	        if (!intituleCategorie.equals("Général")) {
-	        	final int INDICE = i;
-				
-				checkBoxCategorie.setOnMouseClicked(event -> {
-					selectionnerCategorie(INDICE);
-				});
-			} else {
-				checkBoxCategorie.setDisable(true);
-			}
+	        vBoxCategories.getChildren().add(toutesLesCheckBoxs.get(i));
 	        
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
@@ -137,7 +134,7 @@ public class SuppressionCategoriesControleur {
 		final String INTITULE_CATEGORIE
 		= jeu.getToutesLesCategories().get(indice).getIntitule();
 		
-		if (toutesLesCheckBox.get(indice).isSelected()) {
+		if (toutesLesCheckBoxs.get(indice).isSelected()) {
 			categoriesSelectionnees.add(INTITULE_CATEGORIE);	
 		} else {
 			categoriesSelectionnees.remove(INTITULE_CATEGORIE);	
@@ -216,9 +213,21 @@ public class SuppressionCategoriesControleur {
 			
 			if (confirmerSuppression) {
 				jeu.supprimer(jeu.getCategoriesParIntitules(categoriesSelectionnees));
+				indiceCategorieApresSuppression();
 				NavigationControleur.changerVue("AffichageCategories.fxml");
 			}	
 		}
+	}
+	
+	/**
+	 * Adapte indiceCategorie en fonction du nombre de
+	 * suppression de catégorie et de la page courante.
+	 */
+	private void indiceCategorieApresSuppression() {
+		for (;indiceCategorie >= toutesLesCheckBoxs.size()
+				- categoriesSelectionnees.size(); indiceCategorie-=10);
+		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
+		
 	}
 	
 }
