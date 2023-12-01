@@ -370,9 +370,7 @@ public class ExportControleur {
 		
 		serveur = new Serveur();
 		
-		// TODO remplacer jeu.getToutesLesQuestions() par les questions
-		// sélectionnées
-		questionsAExporter = jeu.getToutesLesQuestions(); // STUB
+		questionsAExporter = this.selectionQuestions; 
 		
 		nombreQuestionsExportees = questionsAExporter.size();
 		
@@ -383,18 +381,22 @@ public class ExportControleur {
 			titre.setText("EXPORTATION EN COURS...");
 			
 			CompletableFuture.supplyAsync(() -> {
+				String reponse;
+				
 				try {
 					serveur.envoyerQuestions(questionsAExporter);
-					return "Succes";
+					reponse = "Succes";
 				} catch (SocketTimeoutException e) {
-					return ERREUR_TIMEOUT_MESSAGE;
+					reponse = ERREUR_TIMEOUT_MESSAGE;
 				} catch (ClientDejaConnecteException e) {
-					return ERREUR_CLIENT_CONNECTE;
+					reponse = ERREUR_CLIENT_CONNECTE;
 				} catch (ClassNotFoundException e) {
-					return ERREUR_TIMEOUT_MESSAGE;
+					reponse = ERREUR_TIMEOUT_MESSAGE;
 				} catch (Exception e) {
-					return e.getMessage();
+					reponse = e.getMessage();
 				}
+				
+				return reponse;
 			}).thenAccept(resultat -> {
 				Platform.runLater(() -> {
 					gestionResultatExport(resultat, nombreQuestionsExportees);
