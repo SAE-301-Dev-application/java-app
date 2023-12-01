@@ -170,7 +170,9 @@ public class EditionQuestionControleur {
 		reponsesFausses.add(reponseFausse4.getText().trim());
 			
 		intituleQuestionEntre = this.intituleQuestion.getText().trim();
-		feedbackEntre = this.feedback.getText().trim();
+		
+		feedbackEntre = this.feedback.getText() != null ?
+									this.feedback.getText().trim() : null;
 		
 		reponseJusteEntree = this.reponseJuste.getText().trim();
 		
