@@ -234,7 +234,7 @@ public class ServeurVigenere {
 		
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
 		
-		this.cleVigenere = Vigenere.getCle();
+		//this.cleVigenere = Vigenere.getCle();
 	}
 	
 	
@@ -265,7 +265,7 @@ public class ServeurVigenere {
     	
     	System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
         
-        envoyerRecevoirEntier();
+//        envoyerRecevoirEntier();
         
         envoyerCleVigenere();
         
