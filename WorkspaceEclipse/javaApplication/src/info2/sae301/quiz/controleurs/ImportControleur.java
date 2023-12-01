@@ -292,7 +292,7 @@ public class ImportControleur {
 		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
 					AlertType.INFORMATION);
 		
-		NavigationControleur.changerVue("Import.fxml");
+		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
 	}
 
 	

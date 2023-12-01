@@ -43,12 +43,12 @@ public class Serveur {
 	
 	/**
 	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
-	 * Le délimiteur contient volontairement le caractère … non chiffrable
+	 * Le délimiteur contient volontairement le caractère ◄ non chiffrable
 	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
 	 * question contenant ce délimiteur dans un intitulé et qu'un problème
 	 * d'import apparaisse.
 	 */
-	private final static String DELIMITEUR = "/delimiteur…/";
+	private final static String DELIMITEUR = "/delimiteur◄/";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private ServerSocket socketServeur;
