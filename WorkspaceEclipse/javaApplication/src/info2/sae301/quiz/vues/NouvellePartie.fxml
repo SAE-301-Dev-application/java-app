@@ -104,10 +104,14 @@
                      </styleClass>
                      <children>
                         <Label styleClass="label-champ" text="Catégories :" />
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="337.0" prefWidth="410.0" styleClass="choix-categories">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="337.0" prefWidth="410.0">
                            <content>
                               <VBox fx:id="listeCategories" prefHeight="265.0" prefWidth="389.0" styleClass="partie-droite" />
                            </content>
+                           <styleClass>
+                              <String fx:value="choix-categories" />
+                              <String fx:value="pane-base" />
+                           </styleClass>
                         </ScrollPane>
                         <Label fx:id="indicationNbQuestions" styleClass="label-champ" text="Total de questions [difficulté] dans les catégories sélectionnées  : X" />
                      </children>
