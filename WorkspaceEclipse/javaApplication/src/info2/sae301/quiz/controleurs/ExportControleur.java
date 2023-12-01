@@ -80,6 +80,9 @@ public class ExportControleur {
 	private static final String MODELE_LABEL_IP_PRIVEE
 	= "Mon adresse IP : %s";
 	
+	/** Dernier indice d'une ligne complète de la grille de sélection. */
+	private static final int INDICE_MAX_LIGNE_GRILLE = 2;
+	
 	
 	/** Choix : sélectionner des catégories. */
 	@FXML
@@ -231,13 +234,15 @@ public class ExportControleur {
 		this.prochainXGrilleSelection = 0;
 		this.prochainYGrilleSelection = 0;
 		
+		this.grilleSelection.getChildren().clear();
+		
 		for (Categorie categorieCourante: this.jeu.getToutesLesCategories()) {
 			choixCourant = new CheckBox();
 			choixCourant.setText(categorieCourante.getIntitule());
 			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
 			
-			if (prochainXGrilleSelection == 2) {
+			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
 				prochainYGrilleSelection++;
 				prochainXGrilleSelection = 0;
 			} else {
@@ -257,6 +262,8 @@ public class ExportControleur {
 		
 		this.prochainXGrilleSelection = 0;
 		this.prochainYGrilleSelection = 0;
+		
+		this.grilleSelection.getChildren().clear();
 		
 		for (Question questionCourante: this.jeu.getToutesLesQuestions()) {
 			choixCourant = new CheckBox();
