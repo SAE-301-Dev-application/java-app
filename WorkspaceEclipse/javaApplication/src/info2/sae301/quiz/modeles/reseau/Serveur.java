@@ -37,6 +37,10 @@ public class Serveur {
 	= "Le serveur est connecté sur le port %d.\nEn attente de la"
 	  + " connexion d'un client.\n";
 	
+	private final static String ERREUR_TIMEOUT_MESSAGE
+	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
+	  + " réessayer l'export.";
+	
 	private final static String INDICATION_REPONSE
 	= "\nRéponse du client : ";
 	
@@ -107,7 +111,7 @@ public class Serveur {
 			this.socketClient = this.socketServeur.accept();			
 		} catch (IOException e) {
 			fermerSockets();
-			throw new SocketTimeoutException();
+			throw new SocketTimeoutException(ERREUR_TIMEOUT_MESSAGE);
 		}
 	}
 	
@@ -244,30 +248,6 @@ public class Serveur {
 	
 	
 	/**
-	 * Sélectionne toutes les questions des catégories en paramètres et les
-	 * envoie ensuite de manière sécurisée.
-	 * 
-	 * @param categories Les catégories à envoyer.
-	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 */
-	public void envoyerCategories(ArrayList<Categorie> categories)
-	throws IOException, ClassNotFoundException, SocketTimeoutException {
-		
-        ArrayList<Question> questions;
-        
-        questions = new ArrayList<Question>();
-        
-        for (Categorie categorieCourante: categories) {
-        	questions.addAll(categorieCourante.getListeQuestions());
-        }
-        
-        envoyerQuestions(questions);
-	}
-	
-	
-	/**
 	 * Chiffre via la méthode
 	 * {@link info2.sae301.quiz.modeles.cryptographie.Vigenere#chiffrer(String)}
 	 * les données des questions en paramètre.
@@ -286,7 +266,7 @@ public class Serveur {
         
         StringBuilder toutesLesQuestions;
         
-        creerServeur();
+    	creerServeur();
         
         System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
         

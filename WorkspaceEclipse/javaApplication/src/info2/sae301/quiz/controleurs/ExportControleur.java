@@ -11,12 +11,17 @@ import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.reseau.Serveur;
 
-import java.io.IOException;
+import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
+
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -48,10 +53,6 @@ public class ExportControleur {
 	
 	private final static String ERREUR_EXPORT_TITRE
 	= "ERREUR EXPORT QUESTIONS";
-	
-	private final static String ERREUR_EXPORT_MESSAGE
-	= "La création d'une connexion sur le réseau local afin d'exporter vos "
-	  + "questions a échoué.\nVeuillez vérifier que vous êtes connecté à un réseau.";
 	
 	private final static String ERREUR_TIMEOUT_MESSAGE
 	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
@@ -125,6 +126,9 @@ public class ExportControleur {
 	/** Label d'affichage de l'IP privée. */
 	@FXML
 	private Label affichageIPPrivee;
+	
+	@FXML
+	private Label titre;
 	
 	
 	/**
@@ -278,35 +282,73 @@ public class ExportControleur {
 	}
 	
 	
-	/** Export des données au destinataire indiqué. */
+	/**
+	 * Export des données à travers un serveur auquel le client doit se connecter.
+	 * Modification du titre de la vue en fonction de l'état de l'export
+	 * pour indiquer à l'utilisateur l'action en cours.
+	 */
 	@FXML
 	private void actionBoutonExporter() {
 		int nombreQuestionsExportees;
 		
 		Serveur serveur;
 		
-		nombreQuestionsExportees = 0;
+		ArrayList<Question> questionsAExporter;
 		
 		serveur = new Serveur();
 		
-		try {
-			// TODO exporter soit des catégories soit des
-			// questions (préalablement sélectionnées)
-			nombreQuestionsExportees = jeu.getToutesLesQuestions().size(); // STUB
-			
-			serveur.envoyerCategories(jeu.getToutesLesCategories());
-			
-//			nombreQuestionsExportees
-//			= serveur.envoyerQuestions(jeu.getToutesLesQuestions());
-			
-			afficherConfirmationExport(nombreQuestionsExportees);
-		} catch (ClassNotFoundException e) {
-			erreurExport();
-		} catch (SocketTimeoutException e) {
-			erreurAucuneConnexion();
-		} catch (IOException e) {
-			erreurExport();
-		}
+		// TODO remplacer jeu.getToutesLesQuestions() par les questions
+		// sélectionnées
+		questionsAExporter = jeu.getToutesLesQuestions(); // STUB
+		
+		nombreQuestionsExportees = questionsAExporter.size();
+		
+		titre.setText("EXPORTATION EN COURS...");
+		
+		CompletableFuture.supplyAsync(() -> {
+            try {
+            	serveur.envoyerQuestions(questionsAExporter);
+                return "Succes";
+            } catch (SocketTimeoutException e) {
+            	return ERREUR_TIMEOUT_MESSAGE;
+            } catch (ClassNotFoundException e) {
+            	return ERREUR_TIMEOUT_MESSAGE;
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }).thenAccept(resultat -> {
+            Platform.runLater(() -> {
+            	gestionResultatExport(resultat, nombreQuestionsExportees);
+                
+        		CompletableFuture.supplyAsync(() -> {
+                    return null;
+                }).thenAccept(result -> {
+                    Platform.runLater(() -> {
+                    	titre.setText("EXPORTATION");
+                    });
+                });
+            });
+        });
+	}
+	
+	
+	/**
+	 * Après avoir terminé l'export, le titre est modifié et une pop-up
+	 * de confirmation ou d'erreur est affichée.
+	 * En cas d'erreur le message diffusé est le contenu du paramètre resultat.
+	 * 
+	 * @param resultat Le résulat de l'export.
+	 * @param nombreQuestions Le nombre de questions exportées.
+	 */
+	private void gestionResultatExport(String resultat, int nombreQuestions) {
+		titre.setText("EXPORTATION TERMINEE");
+
+        if (resultat.equals("Succes")) {
+        	afficherConfirmationExport(nombreQuestions);
+        } else {
+        	autreAlerte(resultat, ERREUR_EXPORT_TITRE,
+        			    AlertType.ERROR);
+        }
 	}
 	
 	
@@ -319,28 +361,6 @@ public class ExportControleur {
 				                                   nombreQuestionsExportees),
 				                     EXPORT_REUSSI_TITRE,
 					                 AlertType.INFORMATION);
-	}
-	
-	
-	/**
-	 * Affichage d'une pop-up d'erreur indiquant une erreur déclenchée
-	 * lors de l'export.
-	 */
-	private static void erreurExport() {
-		AlerteControleur.autreAlerte(ERREUR_EXPORT_MESSAGE,
-				                     ERREUR_EXPORT_TITRE,
-					                 AlertType.ERROR);
-	}
-	
-	
-	/**
-	 * Affichage d'une pop-up d'erreur indiquant une erreur déclenchée
-	 * lorsque aucun client ne se connecte au serveur.
-	 */
-	private static void erreurAucuneConnexion() {
-		AlerteControleur.autreAlerte(ERREUR_TIMEOUT_MESSAGE,
-				                     ERREUR_EXPORT_TITRE,
-					                 AlertType.ERROR);
 	}
 	
 	

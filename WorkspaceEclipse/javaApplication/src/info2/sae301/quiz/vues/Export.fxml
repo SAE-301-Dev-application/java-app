@@ -20,7 +20,7 @@
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="269.0" layoutY="40.0" styleClass="titre-long" text="EXPORTATION" textAlignment="CENTER">
+      <Label fx:id="titre" layoutX="69.0" layoutY="43.0" prefHeight="58.0" prefWidth="664.0" styleClass="titre-long" text="EXPORTATION" textAlignment="CENTER">
          <stylesheets>
             <URL value="@application.css" />
          </stylesheets></Label>
