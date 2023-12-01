@@ -272,7 +272,8 @@ public class SuppressionQuestionsControleur {
 	 * suppression de question et de la page courante.
 	 */
 	private void indiceQuestionApresSuppression() {
-		for (;indiceQuestion >= questionsCategorie.size(); indiceQuestion-=10);
+		for (;indiceQuestion >= questionsCategorie.size()
+				&& indiceQuestion >= 10; indiceQuestion-=10);
 		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		
 	}
