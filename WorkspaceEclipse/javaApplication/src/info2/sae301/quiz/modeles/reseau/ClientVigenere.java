@@ -51,9 +51,6 @@ public class ClientVigenere {
 	private static final String INDICATION_RECEPTION_CLIENT
 	= "Le client a reçu : ";
 	
-	private static final String INDICATION_CLE_VIGENERE_CHIFFREE
-	= "\nClé de vigenère reçue :\n";
-	
 	private static final String INDICATION_CLE_VIGENERE_CLAIRE
 	= "\nClé de vigenère déchiffrée :\n";
 	
@@ -76,15 +73,6 @@ public class ClientVigenere {
 	 * 127.0.0.1 signifie que le serveur est sûr le réseau courant.
 	 */
 	private String adresseServeur;
-	
-	/** Puissance utilisée pour la méthode de Diffie Hellman */
-	private int puissanceSecrete;
-	
-	/** Entier secret utilisé pour déchiffrer la clé de vigenère. */
-	private int entierServeur;
-	
-	/** Entier utilisé pour chiffrer et déchiffrer la clé de vigenère. */
-	private int entierSecret;
 	
 	/**
 	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
@@ -153,41 +141,41 @@ public class ClientVigenere {
 	}
 	
 	
-	/**
-	 * Envoi de l'entier du serveur et réception de l'entier du client
-	 * afin de calculer l'entier secret de Diffie Hellman.
-	 * 
-	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
-	 */
-	private void recevoirEnvoyerEntier()
-	throws IOException, ClassNotFoundException, SocketTimeoutException {
-		int entierAEnvoyer;
-		
-		this.puissanceSecrete = DiffieHellman.genererPuissance();
-		
-		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
-				                                   this.puissanceSecrete);
-        
-		creerFluxEntree();
-		
-        this.entierServeur = (int) this.fluxEntree.readObject();
-        
-        System.out.println("Réception de l'entier du serveur : "
-                           + this.entierServeur);
-		
-		System.out.println("\nEnvoi de l'entier du client au serveur : "
-		                   + entierAEnvoyer);
-		
-		creerFluxSortie();
-		
-		// Envoi au client de l'entier
-        this.fluxSortie.writeObject(entierAEnvoyer);
-        
-        this.entierSecret
-        = DiffieHellman.puissanceNR(this.entierServeur, puissanceSecrete);
-	}
+//	/**
+//	 * Envoi de l'entier du serveur et réception de l'entier du client
+//	 * afin de calculer l'entier secret de Diffie Hellman.
+//	 * 
+//	 * @throws IOException si l'envoi échoue.
+//	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
+//	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+//	 */
+//	private void recevoirEnvoyerEntier()
+//	throws IOException, ClassNotFoundException, SocketTimeoutException {
+//		int entierAEnvoyer;
+//		
+//		this.puissanceSecrete = DiffieHellman.genererPuissance();
+//		
+//		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
+//				                                   this.puissanceSecrete);
+//        
+//		creerFluxEntree();
+//		
+//        this.entierServeur = (int) this.fluxEntree.readObject();
+//        
+//        System.out.println("Réception de l'entier du serveur : "
+//                           + this.entierServeur);
+//		
+//		System.out.println("\nEnvoi de l'entier du client au serveur : "
+//		                   + entierAEnvoyer);
+//		
+//		creerFluxSortie();
+//		
+//		// Envoi au client de l'entier
+//        this.fluxSortie.writeObject(entierAEnvoyer);
+//        
+//        this.entierSecret
+//        = DiffieHellman.puissanceNR(this.entierServeur, puissanceSecrete);
+//	}
 	
 	
 	/**
@@ -204,18 +192,12 @@ public class ClientVigenere {
 		this.cleVigenere = "";
 		
 		this.cleVigenere = ((String) this.fluxEntree.readObject()).substring(6);
-
-		System.out.println(INDICATION_CLE_VIGENERE_CHIFFREE
-				           + this.cleVigenere + "\n");
-		
+	
 		System.out.println(INDICATION_CONFIRMATION_CLE);
         
         this.fluxSortie.writeObject(INDICATION_RECEPTION_CLIENT + this.cleVigenere);
         
-        System.out.println("\nEntier secret du client : " + this.entierSecret);
-        
         Vigenere.setCle(this.cleVigenere);
-		this.cleVigenere = Vigenere.dechiffrerCle(this.entierSecret);
 		
         System.out.println(INDICATION_CLE_VIGENERE_CLAIRE
                            + this.cleVigenere + "\n");
@@ -244,8 +226,6 @@ public class ClientVigenere {
         
 		System.out.println(String.format(CONNEXION_OUVERTE,
                            				 this.adresseServeur, PORT_SERVEUR));
-		
-		recevoirEnvoyerEntier();
 		
 		recevoirCleVigenere();
 		
