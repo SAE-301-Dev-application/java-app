@@ -80,28 +80,6 @@ public class DiffieHellman {
 	}
 	
 	
-	/**
-	 * Calcule le plus grand commun diviseur entre deux entiers
-	 * 
-	 * @param dividende
-	 * @param diviseur
-	 * @return Le PGCD sachant les deux entiers donnés en argument
-	 */
-	/*private static int pgcd(int dividende, int diviseur) {
-		int reste;
-
-		reste = 0;
-		
-		while (diviseur > 0) {
-			reste = dividende % diviseur;
-			dividende = diviseur;
-			diviseur = reste;
-		}
-		
-		return dividende;
-	}*/
-	
-	
     /**
      * Génère une puissance aléatoire dans l'intervalle [100000;P]
      * 

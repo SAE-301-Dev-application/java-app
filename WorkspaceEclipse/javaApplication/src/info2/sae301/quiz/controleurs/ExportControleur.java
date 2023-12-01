@@ -6,6 +6,7 @@
 package info2.sae301.quiz.controleurs;
 
 import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -58,6 +61,9 @@ public class ExportControleur {
 	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
 	  + " réessayer l'export.";
 	
+	private final static String ERREUR_CLIENT_CONNECTE
+	= "Un client est déjà connecté au serveur.";
+	
 	/** 
 	 * Titre du message d'erreur de recherche de 
 	 * l'adresse IP privée. 
@@ -81,7 +87,7 @@ public class ExportControleur {
 	= "Mon adresse IP : %s";
 	
 	/** Dernier indice d'une ligne complète de la grille de sélection. */
-	private static final int INDICE_MAX_LIGNE_GRILLE = 2;
+	private static final int INDICE_MAX_LIGNE_GRILLE = 1;
 	
 	
 	/** Choix : sélectionner des catégories. */
@@ -153,10 +159,22 @@ public class ExportControleur {
 	/** Coordonnée Y du prochain élément de la grille. */
 	private int prochainYGrilleSelection;
 	
+	private boolean exportEnCours;
+    
+	/** Sélection, de l'utilisateur, des questions à exporter. */
+	private ArrayList<Question> selectionQuestions;
+	
+	/** Sélection, de l'utilisateur, des catégories à exporter. */
+	private ArrayList<Categorie> selectionCategories;
+	
 	/** Initialisation du contrôleur. */
 	@FXML
 	private void initialize() {
 		jeu = Quiz.jeu;
+		
+		this.exportEnCours = false;
+		this.selectionQuestions = new ArrayList<Question>();
+		this.selectionCategories = new ArrayList<Categorie>();
 		
 		this.choixSelectionnerCategories();
 	}
@@ -240,6 +258,27 @@ public class ExportControleur {
 			choixCourant = new CheckBox();
 			choixCourant.setText(categorieCourante.getIntitule());
 			
+			choixCourant.setSelected(
+				this.categorieEstSelectionnee(categorieCourante)
+			);
+			
+			choixCourant.setOnAction(e -> {
+				ArrayList<Question> listeQuestionsCategorie;
+				
+				listeQuestionsCategorie 
+				= categorieCourante.getListeQuestions();
+				
+				if (this.categorieEstSelectionnee(categorieCourante)) {
+					this.selectionQuestions.removeAll(listeQuestionsCategorie);
+					this.selectionCategories.remove(categorieCourante);
+				} else {
+					this.selectionQuestions.addAll(listeQuestionsCategorie);
+					this.selectionCategories.add(categorieCourante);
+				}
+				
+				System.out.println(this.selectionQuestions);
+			});
+			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
 			
 			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
@@ -249,6 +288,15 @@ public class ExportControleur {
 				prochainXGrilleSelection++;
 			}
 		}
+	}
+	
+	
+	/**
+	 * @param categorieCourante
+	 * @return Si la catégorie donnée figure parmi celles sélectionnées
+	 */
+	private boolean categorieEstSelectionnee(Categorie categorieCourante) {
+		return this.selectionCategories.contains(categorieCourante);
 	}
 	
 	
@@ -269,9 +317,25 @@ public class ExportControleur {
 			choixCourant = new CheckBox();
 			choixCourant.setText(questionCourante.getIntitule());
 			
+			for (Categorie categorieCourante: this.selectionCategories) {
+				if (categorieCourante
+						.getListeQuestions()
+						.contains(questionCourante)) {
+					
+					choixCourant.setSelected(true);
+					choixCourant.setDisable(true);
+					
+				} else {
+					choixCourant.setOnAction(e -> {
+						this.selectionQuestions.add(questionCourante);
+						System.out.println(this.selectionQuestions);
+					});
+				}
+			}
+			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
 			
-			if (prochainXGrilleSelection == 2) {
+			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
 				prochainYGrilleSelection++;
 				prochainXGrilleSelection = 0;
 			} else {
@@ -285,7 +349,9 @@ public class ExportControleur {
 	/** Retour au menu principal de l'application. */
 	@FXML
 	private void actionBoutonRetour() {
-		NavigationControleur.changerVue("MenuPrincipal.fxml");
+		if (!this.exportEnCours) {
+			NavigationControleur.changerVue("MenuPrincipal.fxml");			
+		}
 	}
 	
 	
@@ -304,38 +370,48 @@ public class ExportControleur {
 		
 		serveur = new Serveur();
 		
-		// TODO remplacer jeu.getToutesLesQuestions() par les questions
-		// sélectionnées
-		questionsAExporter = jeu.getToutesLesQuestions(); // STUB
+		questionsAExporter = this.selectionQuestions; 
 		
 		nombreQuestionsExportees = questionsAExporter.size();
 		
-		titre.setText("EXPORTATION EN COURS...");
-		
-		CompletableFuture.supplyAsync(() -> {
-            try {
-            	serveur.envoyerQuestions(questionsAExporter);
-                return "Succes";
-            } catch (SocketTimeoutException e) {
-            	return ERREUR_TIMEOUT_MESSAGE;
-            } catch (ClassNotFoundException e) {
-            	return ERREUR_TIMEOUT_MESSAGE;
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-        }).thenAccept(resultat -> {
-            Platform.runLater(() -> {
-            	gestionResultatExport(resultat, nombreQuestionsExportees);
-                
-        		CompletableFuture.supplyAsync(() -> {
-                    return null;
-                }).thenAccept(result -> {
-                    Platform.runLater(() -> {
-                    	titre.setText("EXPORTATION");
-                    });
-                });
-            });
-        });
+		// Si aucun export n'est en cours
+		if (!this.exportEnCours) {
+			this.exportEnCours = true;
+			
+			titre.setText("EXPORTATION EN COURS...");
+			
+			CompletableFuture.supplyAsync(() -> {
+				String reponse;
+				
+				try {
+					serveur.envoyerQuestions(questionsAExporter);
+					reponse = "Succes";
+				} catch (SocketTimeoutException e) {
+					reponse = ERREUR_TIMEOUT_MESSAGE;
+				} catch (ClientDejaConnecteException e) {
+					reponse = ERREUR_CLIENT_CONNECTE;
+				} catch (ClassNotFoundException e) {
+					reponse = ERREUR_TIMEOUT_MESSAGE;
+				} catch (Exception e) {
+					reponse = e.getMessage();
+				}
+				
+				return reponse;
+			}).thenAccept(resultat -> {
+				Platform.runLater(() -> {
+					gestionResultatExport(resultat, nombreQuestionsExportees);
+					
+					CompletableFuture.supplyAsync(() -> {
+						return null;
+					}).thenAccept(result -> {
+						Platform.runLater(() -> {
+							titre.setText("EXPORTATION");
+						});
+						this.exportEnCours = false;
+					});
+				});
+			});
+		}
 	}
 	
 	
