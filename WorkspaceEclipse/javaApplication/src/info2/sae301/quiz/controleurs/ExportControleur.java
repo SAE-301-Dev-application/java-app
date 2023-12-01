@@ -5,12 +5,12 @@
 
 package info2.sae301.quiz.controleurs;
 
-import info2.sae301.quiz.Quiz;
+import info2.sae301.quiz.Quiz; 
 import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.reseau.Serveur;
+import info2.sae301.quiz.modeles.reseau.ServeurVigenere;
 
 import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
 
@@ -373,11 +373,11 @@ public class ExportControleur {
 	private void actionBoutonExporter() {
 		int nombreQuestionsExportees;
 		
-		Serveur serveur;
+		ServeurVigenere serveur;
 		
 		ArrayList<Question> questionsAExporter;
 		
-		serveur = new Serveur();
+		serveur = new ServeurVigenere();
 		
 		questionsAExporter = this.selectionQuestions; 
 		

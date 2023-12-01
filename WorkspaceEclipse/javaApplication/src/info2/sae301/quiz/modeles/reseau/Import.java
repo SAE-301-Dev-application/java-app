@@ -184,9 +184,21 @@ public class Import {
 	public void importerADistance(String adresseServeur)
 	throws SocketTimeoutException, IllegalArgumentException, Exception {
 
+		// Echange réseau avec Diffie Hellman
 		Client client;
+
 		client = new Client();
-		
+	
+	    /*
+		 * ___________________________________________________
+		 * Echange réseau sans Diffie Hellman (juste Vigenère)
+		 * ---------------------------------------------------
+		 *
+		 * ClientVigenere client;
+		 *
+		 * client = new ClientVigenere();
+		 */
+
 		try {
 			questionsImportees = client.recevoirQuestions(adresseServeur);
 			
