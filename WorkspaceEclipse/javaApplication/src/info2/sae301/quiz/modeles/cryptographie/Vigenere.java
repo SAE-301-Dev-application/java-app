@@ -30,7 +30,9 @@ public class Vigenere {
 	final static String TAILLE_INVALIDE 
 			= "La taille doit être comprise entre %s et %s caractères";
 
-		
+	/** Délimiteur non chiffrable dans le CSV */	
+	final static char DELIMITEUR = '◄';
+	
 	/** Clé de chiffrement de Vigenère */
 	private static String cle = genererCle();
 	
@@ -87,12 +89,17 @@ public class Vigenere {
 			int indiceCaractere;
 			char caractereC;
 			
-			indiceCaractere = (getDictionnaireReversed().get(message.charAt(i))
-					+ getDictionnaireReversed().get(cle.charAt(i%cle.length())))
-					% getDictionnaire().size();
+			if (message.charAt(i) == DELIMITEUR) {
+				messageC += message.charAt(i);
+			} else {
+				indiceCaractere = (getDictionnaireReversed().get(message.charAt(i))
+						+ getDictionnaireReversed().get(cle.charAt(i%cle.length())))
+						% getDictionnaire().size();
+				
+				caractereC = getDictionnaire().get(indiceCaractere);
+				messageC += caractereC;
+			}
 			
-			caractereC = getDictionnaire().get(indiceCaractere);
-			messageC += caractereC;
 		}
 		return messageC;
 	}
@@ -139,14 +146,19 @@ public class Vigenere {
 			int indiceCaractere;
 			char caractereD;
 			
-			indiceCaractere = (getDictionnaireReversed().get(messageC.charAt(i))
-					- getDictionnaireReversed().get(cle.charAt(i%cle.length())))
-					% getDictionnaire().size();
+			if (messageC.charAt(i) == DELIMITEUR) {
+				messageD += messageC.charAt(i);
+			} else {
+				indiceCaractere = (getDictionnaireReversed().get(messageC.charAt(i))
+						- getDictionnaireReversed().get(cle.charAt(i%cle.length())))
+						% getDictionnaire().size();
+				
+				caractereD = indiceCaractere < 0 ? 
+						getDictionnaire().get(indiceCaractere + getDictionnaire().size()) 
+								: getDictionnaire().get(indiceCaractere);
+				messageD += caractereD;
+			}
 			
-			caractereD = indiceCaractere < 0 ? 
-					getDictionnaire().get(indiceCaractere + getDictionnaire().size()) 
-							: getDictionnaire().get(indiceCaractere);
-			messageD += caractereD;
 		}
 		return messageD;
 	}

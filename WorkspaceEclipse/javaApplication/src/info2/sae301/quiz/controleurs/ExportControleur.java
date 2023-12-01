@@ -393,6 +393,7 @@ public class ExportControleur {
 				} catch (ClassNotFoundException e) {
 					reponse = ERREUR_TIMEOUT_MESSAGE;
 				} catch (Exception e) {
+					e.printStackTrace();
 					reponse = e.getMessage();
 				}
 				
