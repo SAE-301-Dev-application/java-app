@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
+import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
@@ -28,7 +29,7 @@ import info2.sae301.quiz.modeles.cryptographie.Vigenere;
  * @author Simon Guiraud
  * @author Samuel Lacam
  */
-public class ServeurVigenere {
+public class Serveur {
 	
 	/** Timeout mettant fin à la tentative de connexion après 10s. */
 	private final static int TIMEOUT_CONNEXION = 10000;
@@ -36,10 +37,6 @@ public class ServeurVigenere {
 	private static final String CONNEXION_OUVERTE
 	= "Le serveur est connecté sur le port %d.\nEn attente de la"
 	  + " connexion d'un client.\n";
-	
-	private final static String ERREUR_TIMEOUT_MESSAGE
-	= "Aucun client ne s'est connecté après 10 secondes d'attente.\nVeuillez"
-	  + " réessayer l'export.";
 	
 	private final static String INDICATION_REPONSE
 	= "\nRéponse du client : ";
@@ -84,7 +81,7 @@ public class ServeurVigenere {
 	/**
 	 * Initialisation d'un serveur dont le port vaut par défaut 55432.
 	 */
-	public ServeurVigenere() {
+	public Serveur() {
 		this.portServeur = 55432;
 	}
 	
@@ -105,13 +102,21 @@ public class ServeurVigenere {
 	 * 
 	 * @throws IOException Si la connexion ne peut être établie.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
-	public void accepterConnexion() throws IOException, SocketTimeoutException {
+	public void accepterConnexion()
+	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
+		if (this.socketClient != null && !this.socketClient.isClosed()) {
+			fermerSockets();
+			throw new ClientDejaConnecteException();
+		}
+		
 		try {
-			this.socketClient = this.socketServeur.accept();			
+			this.socketClient = this.socketServeur.accept();
+			System.out.println("serv connexion ok");
 		} catch (IOException e) {
 			fermerSockets();
-			throw new SocketTimeoutException(ERREUR_TIMEOUT_MESSAGE);
+			throw new SocketTimeoutException();
 		}
 	}
 	
@@ -122,9 +127,11 @@ public class ServeurVigenere {
 	 * 
 	 * @throws IOException Si la création du flux d'entrée échoue.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
-	private void creerFluxEntree() throws IOException, SocketTimeoutException {
-		accepterConnexion();
+	private void creerFluxEntree()
+	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
+		System.out.println("serv créer flux entrée");
 		this.fluxEntree = new ObjectInputStream(this.socketClient.getInputStream());
 	}
 	
@@ -146,9 +153,10 @@ public class ServeurVigenere {
 	 * 
 	 * @throws IOException Si la création du flux de sortie échoue.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
-	private void creerFluxSortie() throws IOException, SocketTimeoutException {
-		accepterConnexion();
+	private void creerFluxSortie()
+	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
 		this.fluxSortie = new ObjectOutputStream(this.socketClient.getOutputStream());
 	}
 	
@@ -171,9 +179,11 @@ public class ServeurVigenere {
 	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
 	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
 	private void envoyerRecevoirEntier()
-	throws IOException, ClassNotFoundException, SocketTimeoutException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException,
+	       ClientDejaConnecteException {
 		int entierAEnvoyer;
 		
 		this.puissanceSecrete = DiffieHellman.genererPuissance();
@@ -181,15 +191,13 @@ public class ServeurVigenere {
 		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
 				                                   this.puissanceSecrete);
 		
-		creerFluxSortie();
-		
 		System.out.println("Envoi de l'entier du serveur au client : "
 		                   + entierAEnvoyer);
 		
+		creerFluxSortie();
+		
 		// Envoi au client de l'entier
         this.fluxSortie.writeObject(entierAEnvoyer);
-        
-        fermerFluxSortie();
         
         creerFluxEntree();
         
@@ -197,8 +205,6 @@ public class ServeurVigenere {
         
         System.out.println("\nRéception de l'entier du client : "
                            + this.entierClient);
-        
-        fermerFluxEntree();
         
         this.entierSecret
         = DiffieHellman.puissanceNR(this.entierClient, puissanceSecrete);
@@ -211,16 +217,16 @@ public class ServeurVigenere {
 	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
 	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
 	private void envoyerCleVigenere()
-	throws IOException, ClassNotFoundException, SocketTimeoutException {	
+	throws IOException, ClassNotFoundException, SocketTimeoutException,
+	       ClientDejaConnecteException {	
 		String reponseClient;
 		
 		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
 		
 		this.cleVigenere = Vigenere.chiffrerCle(this.entierSecret);
-		
-		creerFluxSortie();
 		
 		System.out.println("\nClé de vigenère créée :\n" + Vigenere.getCle());
 		
@@ -230,18 +236,12 @@ public class ServeurVigenere {
 		// Envoi au client de la clé de chiffrement
         this.fluxSortie.writeObject("CLE = " + this.cleVigenere);
         
-        fermerFluxSortie();
-        
-        creerFluxEntree();
-        
         /*
          * Lecture de la réponse du client
          */
 		reponseClient = (String) this.fluxEntree.readObject();
 		
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");
-		
-		fermerFluxEntree();
 		
 		this.cleVigenere = Vigenere.getCle();
 	}
@@ -257,9 +257,11 @@ public class ServeurVigenere {
 	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
 	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
 	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
 	 */
 	public void envoyerQuestions(ArrayList<Question> questions)
-	throws IOException, ClassNotFoundException, SocketTimeoutException {
+	throws IOException, ClassNotFoundException, SocketTimeoutException,
+	       ClientDejaConnecteException {
 		
         String donneesQuestion,
                toutesLesQuestionsCryptees;
@@ -267,14 +269,14 @@ public class ServeurVigenere {
         StringBuilder toutesLesQuestions;
         
     	creerServeur();
-        
-        System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
+    	
+    	accepterConnexion();
+    	
+    	System.out.println(String.format(CONNEXION_OUVERTE, this.portServeur));
         
         envoyerRecevoirEntier();
         
         envoyerCleVigenere();
-        
-        creerFluxSortie();
         
         System.out.println("Envoi des données des questions :");
         
@@ -299,6 +301,11 @@ public class ServeurVigenere {
         
         this.fluxSortie.writeObject(toutesLesQuestionsCryptees);
         
+        // Attente réception questions
+        this.fluxEntree.readObject();
+        
+        fermerFluxEntree();
+        
         fermerFluxSortie();
         
         fermerSockets();
@@ -311,7 +318,7 @@ public class ServeurVigenere {
 	 * @throws IOException si la fermeture des flux et sockets échoue.
 	 */
 	public void fermerSockets() throws IOException {
-        // Fermeture de la socket du client
+		// Fermeture de la socket du client
 		if (this.socketClient != null) {
 			this.socketClient.close();			
 		}
