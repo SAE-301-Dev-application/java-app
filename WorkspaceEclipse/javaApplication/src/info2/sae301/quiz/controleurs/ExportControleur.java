@@ -82,6 +82,15 @@ public class ExportControleur {
 	  à internet si possible.
 	  """;
 	
+	private static final String ERREUR_AUCUNE_SELECTION_TITRE
+	= "AUCUNE QUESTION SÉLECTIONNÉE";
+	
+	private static final String ERREUR_AUCUNE_SELECTION_MESSAGE
+	= """
+	  Vous n'avez sélectionné aucune question parmi les choix proposés.
+	  Vous ne pouvez pas exporter sans sélection.
+	  """;
+	
 	/** Affichage de l'adresse IP privée. */
 	private static final String MODELE_LABEL_IP_PRIVEE
 	= "Mon adresse IP : %s";
@@ -376,41 +385,48 @@ public class ExportControleur {
 		
 		// Si aucun export n'est en cours
 		if (!this.exportEnCours) {
-			this.exportEnCours = true;
-			
-			titre.setText("EXPORTATION EN COURS...");
-			
-			CompletableFuture.supplyAsync(() -> {
-				String reponse;
+			if (questionsAExporter.size() > 0) {
+				this.exportEnCours = true;
 				
-				try {
-					serveur.envoyerQuestions(questionsAExporter);
-					reponse = "Succes";
-				} catch (SocketTimeoutException e) {
-					reponse = ERREUR_TIMEOUT_MESSAGE;
-				} catch (ClientDejaConnecteException e) {
-					reponse = ERREUR_CLIENT_CONNECTE;
-				} catch (ClassNotFoundException e) {
-					reponse = ERREUR_TIMEOUT_MESSAGE;
-				} catch (Exception e) {
-					reponse = e.getMessage();
-				}
+				titre.setText("EXPORTATION EN COURS...");
 				
-				return reponse;
-			}).thenAccept(resultat -> {
-				Platform.runLater(() -> {
-					gestionResultatExport(resultat, nombreQuestionsExportees);
+				CompletableFuture.supplyAsync(() -> {
+					String reponse;
 					
-					CompletableFuture.supplyAsync(() -> {
-						return null;
-					}).thenAccept(result -> {
-						Platform.runLater(() -> {
-							titre.setText("EXPORTATION");
+					try {
+						serveur.envoyerQuestions(questionsAExporter);
+						reponse = "Succes";
+					} catch (SocketTimeoutException e) {
+						reponse = ERREUR_TIMEOUT_MESSAGE;
+					} catch (ClientDejaConnecteException e) {
+						reponse = ERREUR_CLIENT_CONNECTE;
+					} catch (ClassNotFoundException e) {
+						reponse = ERREUR_TIMEOUT_MESSAGE;
+					} catch (Exception e) {
+						reponse = e.getMessage();
+					}
+					
+					return reponse;
+				}).thenAccept(resultat -> {
+					Platform.runLater(() -> {
+						gestionResultatExport(resultat, 
+											  nombreQuestionsExportees);
+						
+						CompletableFuture.supplyAsync(() -> {
+							return null;
+						}).thenAccept(result -> {
+							Platform.runLater(() -> {
+								titre.setText("EXPORTATION");
+							});
+							this.exportEnCours = false;
 						});
-						this.exportEnCours = false;
 					});
 				});
-			});
+			} else {
+				AlerteControleur.autreAlerte(ERREUR_AUCUNE_SELECTION_MESSAGE, 
+											 ERREUR_AUCUNE_SELECTION_TITRE, 
+											 AlertType.ERROR);
+			}
 		}
 	}
 	
