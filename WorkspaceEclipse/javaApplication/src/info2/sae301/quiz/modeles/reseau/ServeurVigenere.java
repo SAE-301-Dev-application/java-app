@@ -189,6 +189,8 @@ public class ServeurVigenere {
         /*
          * Lecture de la réponse du client
          */
+        creerFluxEntree();
+        
 		reponseClient = (String) this.fluxEntree.readObject();
 		
 		System.out.println(INDICATION_REPONSE + reponseClient + "\n");

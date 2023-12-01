@@ -1,11 +1,10 @@
 /*
- * Client.java								                        27 nov. 2023
+ * ClientVigenere.java								               01 dec. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
 package info2.sae301.quiz.modeles.reseau;
 
-import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 import java.io.IOException;
@@ -139,44 +138,7 @@ public class ClientVigenere {
 	private void fermerFluxSortie() throws IOException {
 		this.fluxSortie.close();
 	}
-	
-	
-//	/**
-//	 * Envoi de l'entier du serveur et réception de l'entier du client
-//	 * afin de calculer l'entier secret de Diffie Hellman.
-//	 * 
-//	 * @throws IOException si l'envoi échoue.
-//	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
-//	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
-//	 */
-//	private void recevoirEnvoyerEntier()
-//	throws IOException, ClassNotFoundException, SocketTimeoutException {
-//		int entierAEnvoyer;
-//		
-//		this.puissanceSecrete = DiffieHellman.genererPuissance();
-//		
-//		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
-//				                                   this.puissanceSecrete);
-//        
-//		creerFluxEntree();
-//		
-//        this.entierServeur = (int) this.fluxEntree.readObject();
-//        
-//        System.out.println("Réception de l'entier du serveur : "
-//                           + this.entierServeur);
-//		
-//		System.out.println("\nEnvoi de l'entier du client au serveur : "
-//		                   + entierAEnvoyer);
-//		
-//		creerFluxSortie();
-//		
-//		// Envoi au client de l'entier
-//        this.fluxSortie.writeObject(entierAEnvoyer);
-//        
-//        this.entierSecret
-//        = DiffieHellman.puissanceNR(this.entierServeur, puissanceSecrete);
-//	}
-	
+		
 	
 	/**
 	 * Lecture de la clé de vigenère envoyée par le client
@@ -191,9 +153,13 @@ public class ClientVigenere {
 		
 		this.cleVigenere = "";
 		
+		creerFluxEntree();
+		
 		this.cleVigenere = ((String) this.fluxEntree.readObject()).substring(6);
 	
 		System.out.println(INDICATION_CONFIRMATION_CLE);
+		
+		creerFluxSortie();
         
         this.fluxSortie.writeObject(INDICATION_RECEPTION_CLIENT + this.cleVigenere);
         
