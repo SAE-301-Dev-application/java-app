@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
+//import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 /**
@@ -29,7 +29,7 @@ import info2.sae301.quiz.modeles.cryptographie.Vigenere;
  * @author Simon Guiraud
  * @author Samuel Lacam
  */
-public class Serveur {
+public class ServeurVigenere {
 	
 	/** Timeout mettant fin à la tentative de connexion après 10s. */
 	private final static int TIMEOUT_CONNEXION = 10000;
@@ -43,12 +43,12 @@ public class Serveur {
 	
 	/**
 	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
-	 * Le délimiteur contient volontairement le caractère … non chiffrable
+	 * Le délimiteur contient volontairement le caractère ◄ non chiffrable
 	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
 	 * question contenant ce délimiteur dans un intitulé et qu'un problème
 	 * d'import apparaisse.
 	 */
-	private final static String DELIMITEUR = "/delimiteur…/";
+	private final static String DELIMITEUR = "/delimiteur◄/";
 	
 	/** Socket pour créer le serveur sur le réseau. */
 	private ServerSocket socketServeur;
@@ -67,21 +67,12 @@ public class Serveur {
 	
 	/** Port utilisé par le serveur sur le réseau local. */
 	private int portServeur;
-	
-	/** Puissance utilisée pour la méthode de Diffie Hellman */
-	private int puissanceSecrete;
-	
-	/** Entier secret utilisé pour déchiffrer la clé de vigenère. */
-	private int entierClient;
-	
-	/** Entier utilisé pour chiffrer et déchiffrer la clé de vigenère. */
-	private int entierSecret;
-	
+
 	
 	/**
 	 * Initialisation d'un serveur dont le port vaut par défaut 55432.
 	 */
-	public Serveur() {
+	public ServeurVigenere() {
 		this.portServeur = 55432;
 	}
 	
@@ -172,43 +163,43 @@ public class Serveur {
 	}
 	
 	
-	/**
-	 * Envoi de l'entier du serveur et réception de l'entier du client
-	 * afin de calculer l'entier secret de Diffie Hellman.
-	 * 
-	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
-	 */
-	private void envoyerRecevoirEntier()
-	throws IOException, ClassNotFoundException, SocketTimeoutException,
-	       ClientDejaConnecteException {
-		int entierAEnvoyer;
-		
-		this.puissanceSecrete = DiffieHellman.genererPuissance();
-		
-		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
-				                                   this.puissanceSecrete);
-		
-		System.out.println("Envoi de l'entier du serveur au client : "
-		                   + entierAEnvoyer);
-		
-		creerFluxSortie();
-		
-		// Envoi au client de l'entier
-        this.fluxSortie.writeObject(entierAEnvoyer);
-        
-        creerFluxEntree();
-        
-        this.entierClient = (int) this.fluxEntree.readObject();
-        
-        System.out.println("\nRéception de l'entier du client : "
-                           + this.entierClient);
-        
-        this.entierSecret
-        = DiffieHellman.puissanceNR(this.entierClient, puissanceSecrete);
-	}
+//	/**
+//	 * Envoi de l'entier du serveur et réception de l'entier du client
+//	 * afin de calculer l'entier secret de Diffie Hellman.
+//	 * 
+//	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
+//	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
+//	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
+//	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+//	 */
+//	private void envoyerRecevoirEntier()
+//	throws IOException, ClassNotFoundException, SocketTimeoutException,
+//	       ClientDejaConnecteException {
+//		int entierAEnvoyer;
+//		
+//		this.puissanceSecrete = DiffieHellman.genererPuissance();
+//		
+//		entierAEnvoyer = DiffieHellman.puissanceNR(DiffieHellman.getGenerateur(),
+//				                                   this.puissanceSecrete);
+//		
+//		System.out.println("Envoi de l'entier du serveur au client : "
+//		                   + entierAEnvoyer);
+//		
+//		creerFluxSortie();
+//		
+//		// Envoi au client de l'entier
+//        this.fluxSortie.writeObject(entierAEnvoyer);
+//        
+//        creerFluxEntree();
+//        
+//        this.entierClient = (int) this.fluxEntree.readObject();
+//        
+//        System.out.println("\nRéception de l'entier du client : "
+//                           + this.entierClient);
+//        
+//        this.entierSecret
+//        = DiffieHellman.puissanceNR(this.entierClient, puissanceSecrete);
+//	}
 	
 	
 	/**
@@ -224,9 +215,9 @@ public class Serveur {
 	       ClientDejaConnecteException {	
 		String reponseClient;
 		
-		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
-		
-		this.cleVigenere = Vigenere.chiffrerCle(this.entierSecret);
+//		System.out.println("\nEntier secret du serveur : " + this.entierSecret);
+//		
+		this.cleVigenere = Vigenere.getCle();//Vigenere.chiffrerCle(this.entierSecret);
 		
 		System.out.println("\nClé de vigenère créée :\n" + Vigenere.getCle());
 		
