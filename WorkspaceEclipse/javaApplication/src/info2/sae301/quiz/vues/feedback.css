@@ -1,0 +1,37 @@
+.conteneur-feedback {
+	-fx-pref-width: 696px;
+}
+
+.longueur-majeure {
+	-fx-pref-width: 512px;
+}
+
+.intitule-question {
+	-fx-text-fill: white;
+	-fx-font-weight: 700;
+	-fx-font-size: 22px;
+}
+
+.question-statut {
+	-fx-padding: 2px;
+	
+	-fx-background-radius: 999px;
+	
+	-fx-text-fill: white;
+	
+	-fx-pref-width: 152px;
+}
+.question-statut.statut-rate {
+	-fx-background-color: #FF5353;
+}
+.question-statut.statut-reussi {
+	-fx-background-color: #6AC83E;
+}
+
+.reponse-fausse {
+	-fx-text-fill: #FF5353;
+}
+
+.reponse-vraie {
+	-fx-text-fill: #6AC83E;
+}
