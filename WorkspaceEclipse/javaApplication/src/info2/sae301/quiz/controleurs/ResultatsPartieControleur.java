@@ -29,18 +29,7 @@ import javafx.scene.text.Text;
  * @author Samuel Lacam
  */
 public class ResultatsPartieControleur {
-	
-	/** Titre de la pop-up lors du clic sur "FEEDBACK" */
-	private static final String FEEDBACK_TITRE = "LE FEEDBACK";
 
-	
-	/** Texte de l'aide */
-	private static final String FEEDBACK_TEXTE
-	= """
-	  La fonctionnalité Feedback est encore en cours de développement.
-	  Merci de patienter jusqu'à la prochaine version de l'application.
-	  """;
-	
 	/** Titre de la pop-up d'aide concernant les résultats */
 	private static final String AIDE_TITRE = "LES RÉSULTATS";
 
@@ -307,8 +296,7 @@ public class ResultatsPartieControleur {
 	 */
 	@FXML
 	private void actionBoutonFeedback() {
-		AlerteControleur.autreAlerte(FEEDBACK_TEXTE, FEEDBACK_TITRE,
-				                     AlertType.WARNING);
+		NavigationControleur.changerVue("Feedback.fxml");
 	}
 	
 	
