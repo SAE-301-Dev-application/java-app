@@ -5,14 +5,10 @@
 
 package info2.sae301.quiz.controleurs;
 
-import java.util.ArrayList;
-
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -71,10 +67,9 @@ public class FeedbackControleur {
 		
 		for (int indiceQuestion = 0; 
 			 indiceQuestion 
-			 	< this.partieCourante.getQuestionsProposees().size(); 
+			 	< partieCourante.getQuestionsProposees().size(); 
 			 indiceQuestion++) {
 			
-			System.out.println(this.partieCourante.getQuestionsProposees().get(indiceQuestion).getIntitule());
 			this.genererFeedback(indiceQuestion);
 			
 		}
@@ -82,6 +77,12 @@ public class FeedbackControleur {
 	}
 	
 	
+	/**
+	 * Génération du feedback d'une question.
+	 * 
+	 * @param indiceQuestionCourante L'indice de la question pour laquelle
+	 * générer le feedback.
+	 */
 	private void genererFeedback(int indiceQuestionCourante) {
 		final String STATUT_QUESTION_REUSSIE
 		= "Réussite";
@@ -229,7 +230,10 @@ public class FeedbackControleur {
 		
 		feedbackConteneur.getChildren().add(conteneurReponseVraie);
 		
-		if (!questionReussie) {
+		if (!questionReussie
+			&& questionCourante.getFeedback() != null
+			&& !questionCourante.getFeedback().isBlank()) {
+			
 			messageFeedback = new Text();
 			messageFeedback.setWrappingWidth(512.);
 			messageFeedback.getStyleClass().add("message-feedback");

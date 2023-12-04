@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.controleurs.NavigationControleur;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
@@ -200,10 +199,7 @@ public class Import {
 				questionsImportees.add(questionCourante);
 			}
 			
-			if (questionsImportees.size() > 0) {
-				NavigationControleur
-				.changerVue("SelectionQuestionsImportees.fxml");				
-			} else {
+			if (questionsImportees.size() <= 0) {
 				throw new IllegalArgumentException(ERREUR_AUCUNE_QUESTION_IMPORTEE);
 			}
 			

@@ -199,13 +199,6 @@ public class ExportControleur {
 	}
 	
 	
-	/** Affichage de la fenêtre d'aide liée à la vue. */
-	@FXML
-	private void actionBoutonAide() {
-		// TODO: dialogbox d'aide.
-	}
-	
-	
 	/** Affichage de l'IP privée de la machine courante. */
 	@FXML
 	private void actionBoutonAfficherMonIP() {
@@ -301,8 +294,6 @@ public class ExportControleur {
 					this.selectionQuestions.addAll(listeQuestionsCategorie);
 					this.selectionCategories.add(categorieCourante);
 				}
-				
-				System.out.println(this.selectionQuestions);
 			});
 			
 			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
@@ -345,8 +336,7 @@ public class ExportControleur {
 			
 			for (Categorie categorieCourante: this.selectionCategories) {
 				if (categorieCourante
-						.getListeQuestions()
-						.contains(questionCourante)) {
+					.getListeQuestions().contains(questionCourante)) {
 					
 					choixCourant.setSelected(true);
 					choixCourant.setDisable(true);
@@ -354,12 +344,12 @@ public class ExportControleur {
 				} else {
 					choixCourant.setOnAction(e -> {
 						this.selectionQuestions.add(questionCourante);
-						System.out.println(this.selectionQuestions);
 					});
 				}
 			}
 			
-			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
+			this.grilleSelection.add(choixCourant, prochainXGrilleSelection,
+					                 prochainYGrilleSelection);
 			
 			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
 				prochainYGrilleSelection++;

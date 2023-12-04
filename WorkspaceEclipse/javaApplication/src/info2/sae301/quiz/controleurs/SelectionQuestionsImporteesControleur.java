@@ -8,6 +8,7 @@ package info2.sae301.quiz.controleurs;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
@@ -46,6 +47,9 @@ public class SelectionQuestionsImporteesControleur {
 	private final static String ERREUR_QUESTIONS_EXISTANTES_MESSAGE
 	= "Toutes les questions importées ont déjà été créées ou importées.";
 	
+	private final static String ERREUR_AUCUNE_SELECTION
+	= "Aucune question n'a été importée.";
+	
 	private final static String AIDE_TITRE = "SELECTION DE QUESTIONS";
 	
 	private final static String AIDE_TEXTE
@@ -67,6 +71,8 @@ public class SelectionQuestionsImporteesControleur {
 	
 	private ArrayList<String> listeQuestionsImportees;
 	
+	private ArrayList<String> donneesToutesQuestions;
+	
 	private int nombreQuestionsDejaExistantes;
 	
 	@FXML
@@ -77,6 +83,9 @@ public class SelectionQuestionsImporteesControleur {
 	
 	@FXML
 	private Button boutonSuivant;
+	
+	@FXML
+	private CheckBox boutonToutesQuestions;
 	
 	
 	/**
@@ -90,6 +99,8 @@ public class SelectionQuestionsImporteesControleur {
 		this.nombreQuestionsDejaExistantes = 0;
 		
 		indiceQuestion = 0;
+		
+		donneesToutesQuestions = new ArrayList<String>();
 		
 		CompletableFuture.supplyAsync(() -> {
 			initialiserToutesLesQuestions();
@@ -160,13 +171,15 @@ public class SelectionQuestionsImporteesControleur {
 				
 				checkBoxQuestion.setOnMouseClicked(event -> {
 					selectionnerQuestion(DONNEES_QUESTION, checkBoxQuestion);
-				});	
+				});
+				
+				donneesToutesQuestions.add(DONNEES_QUESTION);
 			}			
 		}
 	}
 	
 	/**
-	 * Affiche 10 questions au maximum et gère l'affichage des boutons
+	 * Affiche 9 questions au maximum et gère l'affichage des boutons
 	 * précédent et suivant en fonction du nombre de questions 
 	 * précédentes et suivantes.
 	 */
@@ -174,7 +187,7 @@ public class SelectionQuestionsImporteesControleur {
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
-	    int indiceFin = Math.min(indiceDebut + 10, this.toutesLesQuestions.size());
+	    int indiceFin = Math.min(indiceDebut + 9, this.toutesLesQuestions.size());
 	    
 	    // Effacer le contenu actuel du VBox
 	    vBoxQuestions.getChildren().clear();
@@ -189,47 +202,68 @@ public class SelectionQuestionsImporteesControleur {
 	    }
 	    
 	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
-	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
+	    boutonPrecedent.setVisible(!(indiceQuestion < 9));
 	    
 	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
-	    boutonSuivant.setVisible(this.toutesLesQuestions.size() > 10
+	    boutonSuivant.setVisible(this.toutesLesQuestions.size() > 9
 	    		                 && indiceFin < this.toutesLesQuestions.size());
 	}
 	
 	/**
 	 * Clic sur la checkbox afin de sélectionner une question.
 	 * 
-	 * @param indiceQestion Indice de la question sélectionnée.
+	 * @param donneesQuestion Données de la question à sélectionner.
 	 */
-	private void selectionnerQuestion(String intituleQuestion, CheckBox checkBox) {
+	private void selectionnerQuestion(String donneesQuestion, CheckBox checkBox) {
 		if (checkBox.isSelected()) {
-			this.questionsSelectionnees.add(intituleQuestion);
+			this.questionsSelectionnees.add(donneesQuestion);
 		} else {
-			this.questionsSelectionnees.remove(intituleQuestion);
+			this.questionsSelectionnees.remove(donneesQuestion);
 		}
 	}
 	
 	/**
-	 * Retrait de 10 questions à l'indice de la première question 
-	 * à afficher et affichage des 10 questions précédentes.
+	 * Retrait de 9 questions à l'indice de la première question 
+	 * à afficher et affichage des 9 questions précédentes.
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
-		// On recule de 10 questions
-		indiceQuestion -= 10;
+		// On recule de 9 questions
+		indiceQuestion -= 9;
 	    afficherQuestions();
 	}
 	
 	/**
-	 * Ajout de 10 questions à l'indice de la première question à 
-	 * afficher et affichage des 10 questions suivantes. 
+	 * Ajout de 9 questions à l'indice de la première question à 
+	 * afficher et affichage des 9 questions suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
-		// On avance de 10 questions
-		indiceQuestion += 10;
+		// On avance de 9 questions
+		indiceQuestion += 9;
 		afficherQuestions();
 	}
+	
+	
+	/**
+	 * Sélection de toutes les questions.
+	 */
+	@FXML
+	private void actionSelectionnerToutesQuestions() {
+	
+		this.questionsSelectionnees = new ArrayList<>();
+				
+		for (Map.Entry<String, CheckBox> paire : this.toutesLesQuestions.entrySet()) {
+			paire.getValue().setSelected(this.boutonToutesQuestions.isSelected());
+			paire.getValue().setDisable(this.boutonToutesQuestions.isSelected());
+		}
+		
+		if (this.boutonToutesQuestions.isSelected()) {
+			this.questionsSelectionnees = this.donneesToutesQuestions;
+		}
+		
+	}
+	
 	
 	/**
 	 * Affichage d'une pop-up d'aide concernant la sélection des questions
@@ -280,11 +314,19 @@ public class SelectionQuestionsImporteesControleur {
 	private void indicationStatutImportation(int nombreQuestionsCrees) {
 		String messageImportationSucces;
 		
-		messageImportationSucces 
-		= String.format(IMPORTATION_SUCCESS_MESSAGE, nombreQuestionsCrees);
-
-		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
-					AlertType.INFORMATION);
+		if (this.questionsSelectionnees.size() <= 0) {
+			messageImportationSucces
+			= ERREUR_AUCUNE_SELECTION;
+			
+			autreAlerte(messageImportationSucces, ERREUR_QUESTIONS_EXISTANTES_TITRE, 
+				        AlertType.INFORMATION);
+		} else {
+			messageImportationSucces 
+			= String.format(IMPORTATION_SUCCESS_MESSAGE, nombreQuestionsCrees);	
+			
+			autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
+					    AlertType.INFORMATION);
+		}
 	}
 	
 	
