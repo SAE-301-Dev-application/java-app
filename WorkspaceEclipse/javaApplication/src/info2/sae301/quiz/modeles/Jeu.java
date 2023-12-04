@@ -474,11 +474,4 @@ public class Jeu implements Serializable {
 		return Objects.equals(toutesLesCategories, aComparer.toutesLesCategories)
 				&& Objects.equals(toutesLesQuestions, aComparer.toutesLesQuestions);
 	}
-	
-	
-	/** non javadoc - @see {@link java.util.Objects#toString()}. */
-	@Override
-	public String toString() {
-		return ""; //TODO faire le toString
-	}
 }

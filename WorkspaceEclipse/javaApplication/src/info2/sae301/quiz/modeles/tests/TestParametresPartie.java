@@ -6,10 +6,12 @@
 package info2.sae301.quiz.modeles.tests;
 
 import info2.sae301.quiz.modeles.ParametresPartie;
+import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
+import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +40,8 @@ class TestParametresPartie {
 		"catégorie1", "caté2", "caté3", "caté4", "caté5"
 	};
 	
+	private ParametresPartie parametresAvecParam;
+	
 	private ParametresPartie parametresTest;
 	
 	private ArrayList<Categorie> categorie1;
@@ -48,6 +52,7 @@ class TestParametresPartie {
 	
 	@BeforeEach
 	void init() {
+		
 		parametresTest = new ParametresPartie();
 		categorie1 = new ArrayList<Categorie>();
 		categorie2 = new ArrayList<Categorie>();
@@ -343,8 +348,6 @@ class TestParametresPartie {
 		    			     parametresTest.getNombreQuestions(),
 		    			     parametresTest.getCategoriesSelectionnees());
 		});
-		
-		
 	}
 	
 	
