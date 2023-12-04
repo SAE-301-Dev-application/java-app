@@ -1,0 +1,13 @@
+Catégorie;Niveau;Libellé;juste;faux1;faux2;faux3;faux4;feedback
+Général;1;La panne est dûe à la vétusté de l'appareil.;incorrect;correct;;;;due
+Général;1;Ces neuf cent euros suffiront pour l'achat de cette voiture.;incorrect;correct;;;;cents
+Général;1;Il faut que tu rapelles le client.;incorrect;correct;;;;rappelles
+Général;1;Ce travail est-il bien rénuméré ?;incorrect;correct;;;;rémunéré
+Général;1;Et vous me dites que les soucoupes volantes étaient marrons ?;incorrect;correct;;;;marron
+Général;1;En dépassant la limitation de vitesse, j'ai attrapé une amande.;incorrect;correct;;;;amende
+Général;1;Les fêtards sont arrivés sans crier garde.;incorrect;correct;;;;gare
+Général;1;L'aigle royal a rejoint son repaire.;correct;incorrect;;;;
+Général;1;Mon grand-père est né il y a quelque cent ans.;correct;incorrect;;;;
+Général;1;Claude a pensé à amener le dessert.;incorrect;correct;;;;apporter
+Général;1;Ce tuteur à tomates garantit un bon maitient.;incorrect;correct;;;;maintien
+Général;1;Mon chien a renversés les quilles que j'avais si bien alignées.;incorrect;correct;;;;renversé

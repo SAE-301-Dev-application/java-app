@@ -14,7 +14,6 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import info2.sae301.quiz.exceptions.ClientDejaConnecteException;
-import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;

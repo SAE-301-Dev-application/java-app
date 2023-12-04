@@ -206,16 +206,17 @@ public class Jeu implements Serializable {
 	 * @param feedback Le feedback.
 	 * @param categorie La catégorie contenant la question.
 	 */
-	public void creerQuestion(String intitule, String reponseJuste,
+	public Question creerQuestion(String intitule, String reponseJuste,
 			                  String[] reponsesFausses, int difficulte,
 			                  String feedback, String intituleCategorie) {
+		
+		Question questionCreee;
 		
 		Categorie categorie = getCategorieParIntitule(intituleCategorie);
 		
 		if (indiceQuestion(intitule, intituleCategorie,
 						      reponseJuste, reponsesFausses) == -1) {
 			
-			Question questionCreee;
 			if (feedback == null || feedback.isEmpty()) {
 				questionCreee = new Question(intitule, reponseJuste,
 						                     reponsesFausses, difficulte, categorie);
@@ -224,11 +225,14 @@ public class Jeu implements Serializable {
 						                     reponsesFausses, difficulte,
 						                     feedback, categorie);
 			}
+			
 			toutesLesQuestions.add(questionCreee);
 			categorie.ajouterQuestion(questionCreee);
 		} else {
 			throw new IllegalArgumentException("Cette question existe déjà.");
 		}
+		
+		return questionCreee;
 	}
 	
 	
@@ -418,8 +422,10 @@ public class Jeu implements Serializable {
 		
 		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
 	
-		Question aComparer = new Question(intituleQuestion,reponseJuste,reponsesFausses,1,
-				new Categorie(intituleCategorie));
+		Question aComparer
+		= new Question(intituleQuestion, reponseJuste, reponsesFausses, 1,
+				       new Categorie(intituleCategorie));
+		
 		for (int i = 0;
 		     i < questionsCategorie.size()
 			 && resultat == -1;

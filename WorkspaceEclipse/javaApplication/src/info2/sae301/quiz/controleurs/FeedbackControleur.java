@@ -5,14 +5,10 @@
 
 package info2.sae301.quiz.controleurs;
 
-import java.util.ArrayList;
-
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -71,10 +67,9 @@ public class FeedbackControleur {
 		
 		for (int indiceQuestion = 0; 
 			 indiceQuestion 
-			 	< this.partieCourante.getQuestionsProposees().size(); 
+			 	< partieCourante.getQuestionsProposees().size(); 
 			 indiceQuestion++) {
 			
-			System.out.println(this.partieCourante.getQuestionsProposees().get(indiceQuestion).getIntitule());
 			this.genererFeedback(indiceQuestion);
 			
 		}
@@ -82,12 +77,18 @@ public class FeedbackControleur {
 	}
 	
 	
+	/**
+	 * Génération du feedback d'une question.
+	 * 
+	 * @param indiceQuestionCourante L'indice de la question pour laquelle
+	 * générer le feedback.
+	 */
 	private void genererFeedback(int indiceQuestionCourante) {
 		final String STATUT_QUESTION_REUSSIE
-		= "Réussie";
+		= "Réussite";
 		
 		final String STATUT_QUESTION_RATEE
-		= "Ratée";
+		= "Échec";
 		
 		final String STATUT_QUESTION_REUSSIE_CLASSE
 		= "statut-reussi";
@@ -107,6 +108,9 @@ public class FeedbackControleur {
 		final String REPONSE_UTILISATEUR_VIDE_REMPLACEMENT
 		= "[ Question passée ]";
 		
+		final String DEBUT_MESSAGE_FEEDBACK
+		= "Feedback : ";
+		
 		Question questionCourante;
 		
 		VBox feedbackConteneur;
@@ -115,8 +119,10 @@ public class FeedbackControleur {
 			 conteneurReponseFausse,
 			 conteneurReponseVraie;
 		
-		Label intituleQuestion,
-			  statutQuestion,
+		Text intituleQuestion,
+			 messageFeedback;
+		
+		Label statutQuestion,
 			  reponseFausse,
 			  reponseVraie;
 		
@@ -167,7 +173,8 @@ public class FeedbackControleur {
 						.getResource(CHEMIN_RELATIF_IMAGES 
 								     + NOM_FICHIER_COCHE).toString());
 		
-		intituleQuestion = new Label();
+		intituleQuestion = new Text();
+		intituleQuestion.setWrappingWidth(512.);
 		intituleQuestion.getStyleClass().add("intitule-question");
 		intituleQuestion.getStyleClass().add("longueur-majeure");
 		intituleQuestion.setText(questionCourante.getIntitule());
@@ -181,6 +188,7 @@ public class FeedbackControleur {
 		intituleStatutConteneur = new HBox();
 		intituleStatutConteneur.getStyleClass().add("feedback-conteneur");
 		intituleStatutConteneur.getStyleClass().add("centrer");
+		intituleStatutConteneur.getStyleClass().add("vbox-liste");
 		intituleStatutConteneur.getChildren().add(intituleQuestion);
 		intituleStatutConteneur.getChildren().add(statutQuestion);
 		
@@ -221,6 +229,19 @@ public class FeedbackControleur {
 		conteneurReponseVraie.getChildren().add(reponseVraie);
 		
 		feedbackConteneur.getChildren().add(conteneurReponseVraie);
+		
+		if (!questionReussie
+			&& questionCourante.getFeedback() != null
+			&& !questionCourante.getFeedback().isBlank()) {
+			
+			messageFeedback = new Text();
+			messageFeedback.setWrappingWidth(512.);
+			messageFeedback.getStyleClass().add("message-feedback");
+			messageFeedback.setText(DEBUT_MESSAGE_FEEDBACK 
+									+ questionCourante.getFeedback());
+			
+			feedbackConteneur.getChildren().add(messageFeedback);
+		}
 		
 		this.affichageFeedback.getChildren().add(feedbackConteneur);
 	}

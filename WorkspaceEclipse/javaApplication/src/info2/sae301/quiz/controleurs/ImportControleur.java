@@ -48,20 +48,24 @@ public class ImportControleur {
 	private final static String ERREUR_FORMAT_INVALIDE_TITRE
 	= "FORMAT DU CSV INVALIDE";
 	
-	private final static String IMPORTATION_SUCCESS_TITRE
-	= "IMPORTATION TERMINÉE";
-	
-	private final static String IMPORTATION_SUCCESS_MESSAGE
-	= "L'importation de %d questions s'est terminée avec succès.";
-	
 	private final static String ERREUR_AUCUN_CHEMIN_TITRE
 	= "AUCUN CHEMIN NI ADRESSE IP SPÉCIFIÉ";
 	
 	private final static String ERREUR_AUCUN_CHEMIN_MESSAGE
 	= "Importation impossible. Aucun chemin ni aucune adresse IP n'a été spécifié.";
 	
-	private final static String QUESTIONS_NON_IMPORTEES
-	= "\n\nNéanmoins, %d questions n'ont pas pu être importées :";
+	private final static String AIDE_TITRE = "IMPORTATION DE QUESTIONS";
+	
+	private final static String AIDE_TEXTE
+	= """
+	  Il est possible d’importer des questions sur le jeu
+	  de deux manières différentes :
+	  - localement (en sélectionnant le fichier de données csv au format UTF-8)
+	  - en ligne (via un ordinateur émetteur sur le même réseau).
+	  
+	  Une fois l’importation effectuée les ajouts sont directement
+	  utilisables sur le jeu, en créant une nouvelle partie, par exemple.
+	  """;
 	
 	/** Expression régulière d'une adresse IPv4. */
 	protected static final String REGEX_IPV4 = "^([0-9.]+)$";
@@ -112,6 +116,8 @@ public class ImportControleur {
 		
 		Path objetCheminCourant;
 		
+		this.cheminCourant.setText("Aucun");
+		
 		if (!this.importEnCours) {
 			try {
 				this.importation.parcourirFichiers();
@@ -124,6 +130,15 @@ public class ImportControleur {
 				erreurCheminInexistant();
 			}			
 		}
+	}
+	
+	
+	/**
+	 * Affichage d'une pop-up d'aide concernant l'import de questions.
+	 */
+	@FXML
+	private void actionBoutonAider() {
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	
@@ -178,7 +193,7 @@ public class ImportControleur {
 	private void demarrerImportLocal() {
 		try {
 			this.importation.importerLocalement();
-			indicationStatutImportation();
+			redirectionEnregistrementImports();
 		} catch (FormatCSVInvalideException e) {
 			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
                         AlertType.ERROR);
@@ -189,8 +204,6 @@ public class ImportControleur {
 			autreAlerte(ERREUR_INATTENDUE, ERREUR_IMPORT_TITRE,
                         AlertType.ERROR);
 	    }
-		
-		NavigationControleur.changerVue("Import.fxml");
 	}
 	
 	
@@ -209,7 +222,8 @@ public class ImportControleur {
 
 	        CompletableFuture.supplyAsync(() -> {
 	            try {
-	                importation.importerADistance(ipEntree);
+	                this.importation.importerADistance(ipEntree);
+	                
 	                return "Succes";
 	            } catch (Exception e) {
 	                return e.getMessage();
@@ -219,82 +233,19 @@ public class ImportControleur {
 	                texteEnAttente.setVisible(false);
 
 	                if (resultat.equals("Succes")) {
-	                	indicationStatutImportation();		                	
+	                	redirectionEnregistrementImports();
 	                } else {
 	                	autreAlerte(resultat, ERREUR_IMPORT_TITRE,
 	                			    AlertType.ERROR);
 	                }
 	            });
-	        });	
+	        });
 		} catch (AdresseIPInvalideException e) {
 			autreAlerte(e.getMessage(), ERREUR_FORMAT_INVALIDE_TITRE,
                         AlertType.ERROR);
 	    }
 	}
 	
-	
-	/**
-	 * Indication via une pop-up du nombre de questions importées
-	 * après la réussite de l'import.
-	 */
-	private void indicationStatutImportation() {
-		int nombreQuestionsImportees,
-		    nombreQuestionsNonImportees,
-		    nombreQuestionsNonImporteesAAfficher;
-		
-		String messageImportationSucces;
-		
-		nombreQuestionsNonImportees 
-		= this.importation.getQuestionsNonAjoutees().size();
-		
-		nombreQuestionsImportees 
-		= this.importation.getNombreTotalQuestions() 
-		  - nombreQuestionsNonImportees;
-		
-		if (nombreQuestionsImportees == 0) {
-			messageImportationSucces
-			= "Aucune question n'a été importée.";
-			
-		} else if (nombreQuestionsNonImportees > 0) {
-			messageImportationSucces 
-			= String.format(IMPORTATION_SUCCESS_MESSAGE 
-							+ QUESTIONS_NON_IMPORTEES, 
-							nombreQuestionsImportees, 
-							nombreQuestionsNonImportees);
-			
-			nombreQuestionsNonImporteesAAfficher
-			= Math.min(10, nombreQuestionsNonImportees);
-			
-			for (int i = 0; 
-				 i < nombreQuestionsNonImporteesAAfficher; 
-				 i++) {
-				
-				messageImportationSucces 
-				+= "\n— " 
-				   + this.importation.getQuestionsNonAjoutees().get(i);
-				
-			}
-			
-			if (nombreQuestionsNonImporteesAAfficher 
-				< nombreQuestionsNonImportees) {
-				
-				messageImportationSucces 
-				+= String.format("\nEt %d autres questions...", 
-								 nombreQuestionsNonImportees 
-								 - nombreQuestionsNonImporteesAAfficher);
-			}
-		} else {
-			messageImportationSucces 
-			= String.format(IMPORTATION_SUCCESS_MESSAGE, 
-							nombreQuestionsImportees);
-		}
-
-		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
-					AlertType.INFORMATION);
-		
-		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
-	}
-
 	
 	/**
 	 * Affichage d'une pop-up d'erreur indiquant que le chemin spécifié
@@ -304,6 +255,15 @@ public class ImportControleur {
 		autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
 				    ERREUR_CHEMIN_INEXISTANT_TITRE,
 					AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Redirection vers la vue de sélection des éléments 
+	 * importés à enregistrer.
+	 */
+	private static void redirectionEnregistrementImports() {
+		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
 	}
 	
 }
