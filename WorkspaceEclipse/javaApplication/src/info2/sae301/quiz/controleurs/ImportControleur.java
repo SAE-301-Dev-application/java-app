@@ -190,7 +190,7 @@ public class ImportControleur {
                         AlertType.ERROR);
 	    }
 		
-		NavigationControleur.changerVue("Import.fxml");
+		redirectionEnregistrementImports();
 	}
 	
 	
@@ -209,7 +209,8 @@ public class ImportControleur {
 
 	        CompletableFuture.supplyAsync(() -> {
 	            try {
-	                importation.importerADistance(ipEntree);
+	                this.importation.importerADistance(ipEntree);
+	                
 	                return "Succes";
 	            } catch (Exception e) {
 	                return e.getMessage();
@@ -219,7 +220,7 @@ public class ImportControleur {
 	                texteEnAttente.setVisible(false);
 
 	                if (resultat.equals("Succes")) {
-	                	indicationStatutImportation();		                	
+	                	indicationStatutImportation();
 	                } else {
 	                	autreAlerte(resultat, ERREUR_IMPORT_TITRE,
 	                			    AlertType.ERROR);
@@ -292,7 +293,7 @@ public class ImportControleur {
 		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
 					AlertType.INFORMATION);
 		
-		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
+		redirectionEnregistrementImports();
 	}
 
 	
@@ -304,6 +305,15 @@ public class ImportControleur {
 		autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
 				    ERREUR_CHEMIN_INEXISTANT_TITRE,
 					AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Redirection vers la vue de sélection des éléments 
+	 * importés à enregistrer.
+	 */
+	private static void redirectionEnregistrementImports() {
+		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
 	}
 	
 }

@@ -39,6 +39,6 @@
          </children>
       </Pane>
       <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonImporter" styleClass="bouton" text="IMPORTER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonEnregistrer" styleClass="bouton" text="ENREGISTRER" />
    </children>
 </Pane>

@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.reseau.Import;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -38,7 +37,6 @@ public class SelectionQuestionsImporteesControleur {
 	 */
 	private Jeu jeu = Quiz.jeu;
 	
-	
 	@FXML
 	private VBox vBoxQuestions;
 	
@@ -58,15 +56,22 @@ public class SelectionQuestionsImporteesControleur {
 	/** Association de toutes les questions à leur checkbox */
 	private HashMap<Question, CheckBox> toutesLesQuestions = new HashMap<>();
 	
+	private ArrayList<Question> listeQuestionsImportees;
+	
 	/**
 	 * Initialisation de la vue avec le style css correspondant et 
 	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
+		listeQuestionsImportees = Import.getQuestionsImportees();
+		
 		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
+
+		System.out.println(this.listeQuestionsImportees);
 		
 		initialiserToutesLesQuestions();
+		afficherQuestions();
 	}
 	
 	/**
@@ -75,10 +80,14 @@ public class SelectionQuestionsImporteesControleur {
 	 */
 	private void initialiserToutesLesQuestions() {
 		toutesLesQuestions.clear();
-		for (int i = 0; i < jeu.getToutesLesQuestions().size(); i++) {
-			Question questionCourante = jeu.getToutesLesQuestions().get(i);
+
+		for (int i = 0; i < this.listeQuestionsImportees.size(); i++) {
+			
+			Question questionCourante = this.listeQuestionsImportees.get(i);
 			CheckBox checkBoxQuestion = new CheckBox();
+			
 			toutesLesQuestions.put(questionCourante, checkBoxQuestion);
+			
 	    	checkBoxQuestion.setId("" + i);
 	    	checkBoxQuestion.setText(questionCourante.getIntitule().replaceAll("\n", " "));
 	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
@@ -181,5 +190,15 @@ public class SelectionQuestionsImporteesControleur {
 	private void actionBoutonAnnuler() {
 		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
+	}
+	
+	@FXML
+	private void actionBoutonEnregistrer() {
+		System.out.println("ENREGISTREMENT...");
+		
+		for (Question questionCourante: this.questionsSelectionnees) {
+			//
+			// OutilsCSV.ecrireFichierCSV(lignesAjoutees);
+		}
 	}
 }

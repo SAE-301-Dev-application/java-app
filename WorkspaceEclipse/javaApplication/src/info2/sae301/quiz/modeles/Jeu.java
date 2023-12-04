@@ -216,6 +216,7 @@ public class Jeu implements Serializable {
 						      reponseJuste, reponsesFausses) == -1) {
 			
 			Question questionCreee;
+			
 			if (feedback == null || feedback.isEmpty()) {
 				questionCreee = new Question(intitule, reponseJuste,
 						                     reponsesFausses, difficulte, categorie);
@@ -224,6 +225,7 @@ public class Jeu implements Serializable {
 						                     reponsesFausses, difficulte,
 						                     feedback, categorie);
 			}
+			
 			toutesLesQuestions.add(questionCreee);
 			categorie.ajouterQuestion(questionCreee);
 		} else {
