@@ -281,9 +281,9 @@ public class Serveur {
 
         for (Question questionCourante : questions) {
             donneesQuestion = questionCourante.donneesToString();
-            
-            System.out.println(donneesQuestion);
 
+            System.out.println(donneesQuestion);
+            
             toutesLesQuestions.append(donneesQuestion).append(DELIMITEUR);
         }
         

@@ -16,7 +16,7 @@ import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-// import javafx.scene.image.Image;
+import javafx.scene.image.Image;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
@@ -100,7 +100,7 @@ public class Quiz extends Application {
 			NavigationControleur.setSceneCourante(scene);
 			
 			primaryStage.setTitle("Jeu de Quiz");
-			// primaryStage.getIcons().add(new Image("info2/sae301/quiz/vues/JeuDeQuiz.png"));
+			primaryStage.getIcons().add(new Image("info2/sae301/quiz/images/quiz.png"));
 			
 			processusFermetureApp(primaryStage);
 			

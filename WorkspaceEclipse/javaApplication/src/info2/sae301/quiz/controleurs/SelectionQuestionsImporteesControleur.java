@@ -107,20 +107,21 @@ public class SelectionQuestionsImporteesControleur {
 			return "ok";
         }).thenAccept(result -> {
         	
-            Platform.runLater(() -> {
-        		if (this.nombreQuestionsDejaExistantes
-    			    == this.listeQuestionsImportees.size()) {
-    				
-    				this.listeQuestionsImportees = null;
-    				
-    				erreurQuestionsDejaExistantes();
-    				
-    				NavigationControleur.changerVue("Import.fxml");
-    				
-    			} else {
-    				afficherQuestions();
-    			}
-            });
+    		if (this.nombreQuestionsDejaExistantes
+			    == this.listeQuestionsImportees.size()) {
+				
+				this.listeQuestionsImportees = null;
+				
+				Platform.runLater(() -> {
+					erreurQuestionsDejaExistantes();
+					
+					NavigationControleur.changerVue("Import.fxml");
+				});
+			} else {
+				Platform.runLater(() -> {
+					afficherQuestions();
+				});	
+			}
         });
 	}
 	
@@ -156,9 +157,17 @@ public class SelectionQuestionsImporteesControleur {
 			
 			intituleQuestionC = donneesQuestionCourante[2];
 			
+			System.out.println("---------------------");
+			for (String s : donneesQuestionCourante) {
+				System.out.println(s);
+			}
+			System.out.println("---------------------");
+			
 			if (Import.verificationQuestionExiste(donneesQuestionCourante)) {
+				System.out.println("question existe déjà");
 				nombreQuestionsDejaExistantes++;
 			} else {
+				System.out.println("question n'existe pas encore");
 				CheckBox checkBoxQuestion = new CheckBox();
 				
 				toutesLesQuestions.put(intituleQuestionC, checkBoxQuestion);
@@ -274,6 +283,7 @@ public class SelectionQuestionsImporteesControleur {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
+	
     /**
 	 * Redirection vers la vue AffichageQuestions.
      */
@@ -283,6 +293,12 @@ public class SelectionQuestionsImporteesControleur {
 		NavigationControleur.changerVue("Import.fxml");
 	}
 	
+	
+	/**
+	 * Enregistre en mémoire les questions sélectionnées.
+	 * 
+	 * @throws IOException si l'écriture du CSV échoue.
+	 */
 	@FXML
 	private void actionBoutonEnregistrer() throws IOException {
 		int nombreQuestionsCrees;
@@ -294,7 +310,9 @@ public class SelectionQuestionsImporteesControleur {
 		System.out.println("\nQuestions à créer :");
 		
 		for (String questionCourante: questionsSelectionnees) {
-			Import.creerQuestion(questionCourante);
+			//try {
+				Import.creerQuestion(questionCourante);				
+			//} catch (Exception e) {}
 			nombreQuestionsCrees++;
 		}
 		

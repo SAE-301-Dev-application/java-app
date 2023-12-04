@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
 
 /**
@@ -31,11 +33,18 @@ public class AlerteControleur {
 	 */
 	public static boolean alerteConfirmation(String messageAlerte, String titreFenetre) {
 		Alert boiteDialogue;
+		
 		Optional<ButtonType> option;
+		
+		Stage stage;
 		
 		boiteDialogue = new Alert(AlertType.CONFIRMATION);
 		boiteDialogue.setTitle(titreFenetre);
 		boiteDialogue.setHeaderText(messageAlerte);
+		
+		stage = (Stage) boiteDialogue.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image("info2/sae301/quiz/images/quiz.png"));
+		
 		option = boiteDialogue.showAndWait();
 		
 		return option.get() == ButtonType.OK;
@@ -52,9 +61,15 @@ public class AlerteControleur {
 	public static void autreAlerte(String messageAlerte, String titreFenetre, AlertType typeAlerte) {
 		Alert boiteDialogue;
 		
+		Stage stage;
+		
 		boiteDialogue = new Alert(typeAlerte);
 		boiteDialogue.setTitle(titreFenetre);
 		boiteDialogue.setHeaderText(messageAlerte);
+		
+		stage = (Stage) boiteDialogue.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image("info2/sae301/quiz/images/quiz.png"));
+		
 		boiteDialogue.showAndWait();
 	}
 	
@@ -68,9 +83,15 @@ public class AlerteControleur {
 	public static void aide(String titre, String texte) {
 		Alert boiteDialogue;
 		
+		Stage stage;
+		
 		boiteDialogue = new Alert(AlertType.INFORMATION);
 		boiteDialogue.setTitle(titre);
 		boiteDialogue.setHeaderText(texte);
+		
+		stage = (Stage) boiteDialogue.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image("info2/sae301/quiz/images/quiz.png"));
+		
 		boiteDialogue.showAndWait();
 	}
 }
