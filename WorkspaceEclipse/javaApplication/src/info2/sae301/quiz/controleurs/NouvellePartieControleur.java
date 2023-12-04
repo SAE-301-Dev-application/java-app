@@ -1,5 +1,5 @@
 /*
- * NouvellePartie.java							            10 nov. 2023
+ * NouvellePartie.java							                    17 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -24,8 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue MenuPrincipal lancée par défaut lors du
- * démarrage de l'application.
+ * Contrôleur FXML de la vue ParametresPartie.fxml permettant de 
+ * paramétrer une partie de jeu.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -35,8 +35,10 @@ import javafx.scene.layout.VBox;
  */
 public class NouvellePartieControleur {
 	
+	/** Titre d'erreur pour l'alerte de la création partie */
 	private static final String AIDE_TITRE = "CRÉER UNE PARTIE";
 
+	/** Texte de l'aide */
 	private static final String AIDE_TEXTE
 	= """
 	  Trois paramètres sont à renseigner afin de créer une partie :
@@ -44,25 +46,33 @@ public class NouvellePartieControleur {
 	  - le nombre de questions,
 	  - le ou les niveaux de difficultés acceptés.
 
-      Le choix du niveau de difficulté est optionel
+      Le choix du niveau de difficulté est optionnel
       puisque le choix indifférent sélectionné par défaut.
       
       Afin de personnaliser davantage la partie, il est possible
       de choisir une ou plusieurs difficultés entre facile, moyenne et difficile.
 	  """;
 	
+	/** Texte d'erreur pour un nombre de questions incorrect */
 	private static final String ERREUR_NOMBRE_QUESTIONS_TITRE 
 	= "Nombre de questions incorrect";
 	
+	/** Texte d'erreur pour une difficulté invalide */
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
 	
+	/** Texte indiquant le nombre de questions disponibles dans 
+	 * les catégories sélectionnées
+	 */
 	private static final String INDICATION_NB_QUESTIONS
 	= "Total de questions%s dans les catégories sélectionnées : %d";
 	
+	
+	/** Texte d'erreur pour indiquer qu'il y a aucune question */
 	private static final String ERREUR_AUCUNE_QUESTION_TITRE
 	= "Aucune question";
 	
+	/** Texte d'erreur pour dire qu'il n'y a pas assez de questions */
 	private static final String ERREUR_MOINS_QUESTIONS_TITRE
 	= "Pas assez de questions";
 	
@@ -81,29 +91,9 @@ public class NouvellePartieControleur {
 	/** Instance du jeu. */
 	private static Jeu jeu = Quiz.jeu;
 	
-	/**
-	 * Affichage de l'erreur :
-	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
-	 */
-	private static void erreurNombreQuestions() {
-		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
-				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
-				 					 AlertType.ERROR);
-	}
-	
-	/**
-	 * Affichage de l'erreur :
-	 * La difficulté est invalide, inexistante.
-	 */
-	private static void erreurDifficulte() {
-		AlerteControleur.autreAlerte(ParametresPartie.DIFFICULTE_INVALIDE,
-				 					 ERREUR_DIFFICULTE_TITRE, 
-				 					 AlertType.ERROR);
-	}
-	
 	/** Nombre de questions du futur quiz. */
 	private int nombreQuestions;
-	
+		
 	/**
 	 * Niveau de difficulté du quiz :
 	 * - 0 = indifférent
@@ -116,31 +106,33 @@ public class NouvellePartieControleur {
 	/** Catégories sélectionnées pour le futur quiz. */
 	private ArrayList<Categorie> categoriesSelectionnees;
 	
-	/** Checkbox "5 questions". */
+	
+	/** CheckBox "5 questions". */
 	@FXML
 	private CheckBox checkBox5Questions;
 	
-	/** Checkbox "10 questions". */
+	
+	/** CheckBox "10 questions". */
 	@FXML
 	private CheckBox checkBox10Questions;
 	
-	/** Checkbox "20 questions". */
+	/** CheckBox "20 questions". */
 	@FXML
 	private CheckBox checkBox20Questions;
 	
-	/** Checkbox de difficulté "indifférent". */
+	/** CheckBox de difficulté "indifférent". */
 	@FXML
 	private CheckBox checkBoxDifficulteIndifferent;
 	
-	/** Checkbox de difficulté "facile". */
+	/** CheckBox de difficulté "facile". */
 	@FXML
 	private CheckBox checkBoxDifficulteFacile;
 	
-	/** Checkbox de difficulté "moyen". */
+	/** CheckBox de difficulté "moyen". */
 	@FXML
 	private CheckBox checkBoxDifficulteMoyen;
 	
-	/** Checkbox de difficulté "difficile". */
+	/** CheckBox de difficulté "difficile". */
 	@FXML
 	private CheckBox checkBoxDifficulteDifficile;
 	
@@ -151,6 +143,33 @@ public class NouvellePartieControleur {
 	@FXML
 	private Label indicationNbQuestions;
 	
+	
+	/**
+	 * Affichage de l'erreur :
+	 * Le nombre de questions sélectionné ne vaut ni 5, 10 et 20.
+	 */
+	private static void erreurNombreQuestions() {
+		AlerteControleur.autreAlerte(ParametresPartie.NOMBRE_INVALIDE, 
+				 					 ERREUR_NOMBRE_QUESTIONS_TITRE, 
+				 					 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affichage de l'erreur :
+	 * La difficulté est invalide, inexistante.
+	 */
+	private static void erreurDifficulte() {
+		AlerteControleur.autreAlerte(ParametresPartie.DIFFICULTE_INVALIDE,
+				 					 ERREUR_DIFFICULTE_TITRE, 
+				 					 AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Initialisation du nombre de questions, de la difficulté et 
+	 * des catégories existantes à sélectionner.
+	 */
 	@FXML
 	private void initialize() {
 		
@@ -215,9 +234,9 @@ public class NouvellePartieControleur {
 		/*
 		 * Chargement des catégories de question.
 		 */
-		
 		CheckBox checkBoxCategorie;
 		
+		/* Affichage des catégories */
 		for (Categorie categorieCourante: jeu.getToutesLesCategories()) {
 			checkBoxCategorie = new CheckBox();
 			checkBoxCategorie.setText(categorieCourante.getIntitule());
@@ -252,11 +271,13 @@ public class NouvellePartieControleur {
   		                .size());
 		
 		indicationNbQuestions.setText(texteFinal);
-}
+	}
 	
 	
 	/**
 	 * Choix du nombre de questions pour le quiz.
+	 * 
+	 * @param nombre
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
@@ -272,7 +293,8 @@ public class NouvellePartieControleur {
 
 	
 	/**
-	 * Choix du niveau de difficilté "Indifférent" pour le quiz.
+	 * Choix du niveau de difficulté "Indifférent" pour le quiz.
+	 * @param difficulte difficulté choisie
 	 */
 	private void choixDifficulte(int difficulte) {
 		if (difficulte < 0 || difficulte > 3) {
@@ -298,6 +320,13 @@ public class NouvellePartieControleur {
 	}
 	
 	
+	/**
+	 * Clic sur une CheckBox permettant d'ajouter une catégorie
+	 * à la liste des catégories sélectionnées.
+	 * 
+	 * @param categorieConcernee La catégorie dont la CheckBox
+	 * 							a été sélectionnée.
+	 */
 	private void selectionCategorie(Categorie categorieConcernee) {
 		if (categoriesSelectionnees.contains(categorieConcernee)) {
 			this.categoriesSelectionnees.remove(categorieConcernee);
@@ -308,26 +337,40 @@ public class NouvellePartieControleur {
 	}
 	
 	
+	/**
+	 * Affichage d'une pop-up d'aide concernant le paramétrage de 
+	 * la partie.
+	 */
 	@FXML
 	private void actionBoutonAide() {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
 	
+	/**
+	 * Retour vers la vue MenuPrincipal.
+	 */
 	@FXML
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
 	
 	
+	/**
+	 * Vérification que les paramètres soient valides et lancement 
+	 * d'une partie avec ces paramètres.
+	 */
 	@FXML
 	private void actionBoutonCreer() {
-		boolean lancerPartie = true;
+		boolean lancerPartie;
+		lancerPartie = false;
 		
 		try {
 			ParametresPartie.aAssezQuestions(this.difficulte,
 											 this.nombreQuestions,
 					                         this.categoriesSelectionnees);
+			
+			lancerPartie = true;
 		} catch (AucuneQuestionCorrespondanteException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),
 										 ERREUR_AUCUNE_QUESTION_TITRE,
@@ -336,25 +379,28 @@ public class NouvellePartieControleur {
 			lancerPartie
 			= AlerteControleur.alerteConfirmation(e.getMessage(), 
 					   							  ERREUR_MOINS_QUESTIONS_TITRE);
+		} catch (DifficulteInvalideException e) {
+			erreurDifficulte();
+			
+		} catch (NombreQuestionsInvalideException e) {
+			erreurNombreQuestions();
 		}
 		
 		if (lancerPartie) {
-			try {
-				ParametresPartie nouveauxParametres
-				= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
-						               this.nombreQuestions);
-				
-				Quiz.partieCourante.setParametresPartie(nouveauxParametres);
-				NavigationControleur.changerVue("PartieEnCours.fxml");
-				
-			} catch (DifficulteInvalideException e) {
-				erreurDifficulte();
-				
-			} catch (NombreQuestionsInvalideException e) {
-				erreurNombreQuestions();
-			}
-			
+			this.lancerPartie();
 		}
 	}
 	
+	/**
+	 * Lance la partie configurée.
+	 */
+	private void lancerPartie() {
+		ParametresPartie nouveauxParametres
+		= new ParametresPartie(this.categoriesSelectionnees, this.difficulte,
+				               this.nombreQuestions);
+		
+		Quiz.partieCourante.setParametresPartie(nouveauxParametres);
+		Quiz.partieCourante.setIndiceDerniereQuestionVue(0);
+		NavigationControleur.changerVue("PartieEnCours.fxml");
+	}
 }

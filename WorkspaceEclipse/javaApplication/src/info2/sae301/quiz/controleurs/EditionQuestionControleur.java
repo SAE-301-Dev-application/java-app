@@ -18,7 +18,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
 /**
- * Contrôleur FXML de la vue EditionQuestion qui permet l'édition d'une question.
+ * Contrôleur FXML de la vue EditionQuestion qui permet l'édition 
+ * d'une question.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -28,6 +29,7 @@ import javafx.scene.control.TextArea;
  */
 public class EditionQuestionControleur {
 	
+	/** Titre d'erreur pour l'alerte d'édition question */
 	private static final String TITRE_ALERTE = "Erreur d'édition de question";
 	
 	/**
@@ -63,9 +65,10 @@ public class EditionQuestionControleur {
 	@FXML
 	private TextArea reponseFausse4;
 	
+	
 	/**
-	 * Initialisation de la fenêtre d'édition en ajoutant les catégories
-	 * et difficultés dans les ChoiceBox.
+	 * Initialisation de la fenêtre d'édition en ajoutant les 
+	 * catégories et difficultés dans les ChoiceBox.
 	 */
 	@FXML
 	private void initialize() {
@@ -101,14 +104,16 @@ public class EditionQuestionControleur {
 				                		        reponseFausse4});
 	}
 	
+	
 	/**
-	 * Affichage des réponses fausses de la question sélectionnée en fonction
-	 * de leur validité.
+	 * Affichage des réponses fausses de la question sélectionnée 
+	 * en fonction de leur validité.
 	 * 
 	 * @param question La question contenant les réponses fausses.
 	 * @param reponsesFausses Les TextArea de réponses fausses.
 	 */
-	private void afficherReponsesFausses(Question question, TextArea[] reponsesFausses) {
+	private void afficherReponsesFausses(Question question,
+										TextArea[] reponsesFausses) {
 		for (int i = 0; i < reponsesFausses.length; i++) {
 			String reponse = question.getReponsesFausses().length > 1
 					         && !question.getReponsesFausses()[i + 1].isBlank()
@@ -118,12 +123,15 @@ public class EditionQuestionControleur {
 		}
 	}
 	
+	
 	/**
-	 * TODO aide
+	 * Permet d'afficher une pop up d'aide concernant l'édition
+	 * des questions
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE, AffichageQuestionsControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
+							  AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
 	/**
@@ -135,8 +143,8 @@ public class EditionQuestionControleur {
 	}
 	
 	/**
-	 * Enregistre les modifications de la questions ou affiche une pop-up
-	 * d'erreur éventuellement.
+	 * Enregistre les modifications de la questions ou affiche 
+	 * une pop-up d'erreur éventuellement.
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
@@ -152,20 +160,24 @@ public class EditionQuestionControleur {
 		
 		Categorie categorie;
 		
-		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie.getValue().toString());
+		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie
+											.getValue().toString());
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
-		reponsesFausses.add(reponseFausse1.getText());
-		reponsesFausses.add(reponseFausse2.getText());
-		reponsesFausses.add(reponseFausse3.getText());
-		reponsesFausses.add(reponseFausse4.getText());
+		reponsesFausses.add(reponseFausse1.getText().trim());
+		reponsesFausses.add(reponseFausse2.getText().trim());
+		reponsesFausses.add(reponseFausse3.getText().trim());
+		reponsesFausses.add(reponseFausse4.getText().trim());
 			
-		intituleQuestionEntre = this.intituleQuestion.getText();
-		feedbackEntre = this.feedback.getText();
+		intituleQuestionEntre = this.intituleQuestion.getText().trim();
 		
-		reponseJusteEntree = this.reponseJuste.getText();
+		feedbackEntre = this.feedback.getText() != null ?
+									this.feedback.getText().trim() : null;
 		
-		difficulteEntree = Integer.parseInt("" + this.difficulte.getValue().charAt(0));
+		reponseJusteEntree = this.reponseJuste.getText().trim();
+		
+		difficulteEntree = Integer.parseInt("" + this.difficulte
+											.getValue().charAt(0));
 		
 		try {
 			jeu.editerQuestion(ChoixEditionQuestionControleur.getIndiceQuestionSelectionnee(),
@@ -179,5 +191,4 @@ public class EditionQuestionControleur {
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}
-	
 }

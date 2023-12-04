@@ -39,6 +39,10 @@ public class ParametresPartie {
 	  3. Difficile
 	  """;
 	
+	/**
+	 * Message pour signaler à l'utilisateur qu'il a selectionné
+	 * un nombre de questions invalide
+	 */
 	public static final String NOMBRE_INVALIDE
 	= """
 	  Le nombre de questions sélectionné est incorrect.
@@ -46,13 +50,22 @@ public class ParametresPartie {
 	  Le nombre de questions à proposer doit être 5, 10 ou 20.";
 	  """;
 	
+	/** 
+	 * Message pour signaler à l'utilisateru que les paramètres
+	 * qu'il a choisit ne correspondent à aucune question
+	 */
 	private static final String AUCUNE_QUESTION
 	= "Il n'y a aucune question%s dans les catégories sélectionnées.\n"
 	  + "Veuillez entrer d'autres paramètres ou créer des questions.";
 	
+	/** 
+	 * Message pour signaler à l'utilisateru que les paramètres
+	 * qu'il a choisit ne correspondent qu'à un nombre de questions
+	 * inférieur au nombre de questions demandées
+	 */
 	private static final String PAS_ASSEZ_QUESTIONS
-	= "Seulement %d question(s) correspondent à vos "
-	  + "critères. Souhaitez-vous tout de même jouer ?";
+	= "Seulement %d question(s) correspondent à vos critères."
+	  + "\nSouhaitez-vous tout de même jouer ?";
 	
 	/** Les catégories de questions sélectionnées. */
 	private ArrayList<Categorie> categoriesSelectionnees;

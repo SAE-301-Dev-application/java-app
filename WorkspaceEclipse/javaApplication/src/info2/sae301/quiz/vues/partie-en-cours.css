@@ -23,3 +23,26 @@
 .questionIndifferente {
 	-fx-background-color: rgb(128, 128, 128);
 }
+
+.intituleQuestion {
+	-fx-text-fill: white;
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+	-fx-text-alignment: center;
+	
+	-fx-max-width: 630px;
+	-fx-pref-width: 630px;
+}
+
+.reponse {
+	-fx-text-fill: white;
+	-fx-font-size: 16px;
+	-fx-font-weight: bold;
+}
+
+.labelNumeroQuestion {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+

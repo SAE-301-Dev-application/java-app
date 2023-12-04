@@ -41,6 +41,7 @@ public class AlerteControleur {
 		return option.get() == ButtonType.OK;
 	}
 	
+	
 	/**
 	 * Fenêtre d'alerte avec un message et un titre à afficher.
 	 * 
@@ -57,6 +58,13 @@ public class AlerteControleur {
 		boiteDialogue.showAndWait();
 	}
 	
+	
+	/**
+	 * Fenêtre d'alerte afin d'afficher une fenêtre d'aide
+	 * 
+	 * @param titre Le titre de la fenêtre.
+	 * @param texte le texte d'aide à mettre dans la fenêtre
+	 */
 	public static void aide(String titre, String texte) {
 		Alert boiteDialogue;
 		

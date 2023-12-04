@@ -46,22 +46,22 @@ public class Jeu implements Serializable {
 		this.toutesLesCategories
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 		
-		for (int i = 2; i <= 30; i++) {
-			creerCategorie("" + i + "ème catégorie");
-		}
+//		for (int i = 2; i <= 30; i++) {
+//			creerCategorie("" + i + "ème catégorie");
+//		}
 		
 		this.toutesLesQuestions = new ArrayList<>();
 		
-		for (int i = 1; i <= 30; i++) {
-			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
-					      "Réponse vraie",
-					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
-					    		        "Réponse fausse 3", "Réponse fausse 4"},
-						  2, "Feedback très court",
-                          i % 2 == 0
-                          ? toutesLesCategories.get(0).getIntitule()
-                          : "2ème catégorie");
-		}
+//		for (int i = 1; i <= 30; i++) {
+//			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
+//					      "Réponse vraie",
+//					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
+//					    		        "Réponse fausse 3", "Réponse fausse 4"},
+//						  2, "Feedback très court",
+//                          i % 2 == 0
+//                          ? toutesLesCategories.get(0).getIntitule()
+//                          : "2ème catégorie");
+//		}
 		
 		// Pseudonyme par défaut
 		this.pseudo = "Utilisateur";
@@ -206,16 +206,17 @@ public class Jeu implements Serializable {
 	 * @param feedback Le feedback.
 	 * @param categorie La catégorie contenant la question.
 	 */
-	public void creerQuestion(String intitule, String reponseJuste,
+	public Question creerQuestion(String intitule, String reponseJuste,
 			                  String[] reponsesFausses, int difficulte,
 			                  String feedback, String intituleCategorie) {
+		
+		Question questionCreee;
 		
 		Categorie categorie = getCategorieParIntitule(intituleCategorie);
 		
 		if (indiceQuestion(intitule, intituleCategorie,
 						      reponseJuste, reponsesFausses) == -1) {
 			
-			Question questionCreee;
 			if (feedback == null || feedback.isEmpty()) {
 				questionCreee = new Question(intitule, reponseJuste,
 						                     reponsesFausses, difficulte, categorie);
@@ -224,11 +225,14 @@ public class Jeu implements Serializable {
 						                     reponsesFausses, difficulte,
 						                     feedback, categorie);
 			}
+			
 			toutesLesQuestions.add(questionCreee);
 			categorie.ajouterQuestion(questionCreee);
 		} else {
 			throw new IllegalArgumentException("Cette question existe déjà.");
 		}
+		
+		return questionCreee;
 	}
 	
 	
@@ -418,8 +422,10 @@ public class Jeu implements Serializable {
 		
 		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
 	
-		Question aComparer = new Question(intituleQuestion,reponseJuste,reponsesFausses,1,
-				new Categorie(intituleCategorie));
+		Question aComparer
+		= new Question(intituleQuestion, reponseJuste, reponsesFausses, 1,
+				       new Categorie(intituleCategorie));
+		
 		for (int i = 0;
 		     i < questionsCategorie.size()
 			 && resultat == -1;
@@ -458,6 +464,7 @@ public class Jeu implements Serializable {
 	/**
 	 * Compare 2 instances de Jeu en profondeur selon la totalité de 
 	 * leurs attributs
+	 * 
 	 * @param aComparer Jeu à comparer
 	 * @return true si les instances de jeu sont les mêmes, false sinon
 	 */
@@ -472,12 +479,5 @@ public class Jeu implements Serializable {
 		Jeu aComparer = (Jeu) obj;
 		return Objects.equals(toutesLesCategories, aComparer.toutesLesCategories)
 				&& Objects.equals(toutesLesQuestions, aComparer.toutesLesQuestions);
-	}
-	
-	
-	/** non javadoc - @see {@link java.util.Objects#toString()}. */
-	@Override
-	public String toString() {
-		return ""; //TODO faire le toString
 	}
 }

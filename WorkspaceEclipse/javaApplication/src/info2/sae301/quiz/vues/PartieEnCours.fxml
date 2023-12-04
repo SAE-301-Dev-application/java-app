@@ -6,8 +6,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.PartieEnCoursControleur">
    <children>
@@ -20,27 +23,48 @@
       </Button>
       <ScrollPane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <content>
-            <VBox fx:id="vBoxQuestionReponses" alignment="TOP_CENTER" prefHeight="357.0" prefWidth="731.0">
+            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="337.0" prefWidth="731.0" spacing="10.0" styleClass="vbox-liste" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="intituleQuestion" alignment="CENTER" styleClass="intituleCategorieQuestion" text="intituleQuestion">
-                     <VBox.margin>
-                        <Insets bottom="60.0" top="15.0" />
-                     </VBox.margin>
-                  </Label>
+                  <HBox alignment="TOP_RIGHT" prefHeight="13.0" prefWidth="717.0">
+                     <children>
+                        <Label fx:id="numQuestion" styleClass="labelNumeroQuestion" text="numQuestion">
+                           <HBox.margin>
+                              <Insets right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Text fx:id="intituleQuestion" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="intituleQuestion" text="intituleQuestion" wrappingWidth="630.0" />
+                  <HBox prefHeight="294.0" prefWidth="727.0" styleClass="centrer">
+                     <children>
+                        <VBox fx:id="vBoxQuestionReponses" prefHeight="259.0" prefWidth="380.0">
+                           <styleClass>
+                              <String fx:value="vbox-liste" />
+                              <String fx:value="centrer-verticale" />
+                           </styleClass>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </VBox>
          </content>
       </ScrollPane>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonValider" styleClass="bouton" text="VALIDER" />
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" styleClass="bouton" text="PRÉCÉDENT" />
-      <Button layoutX="630.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionBoutonAbandonner" prefHeight="51.0" prefWidth="169.0" text="ABANDONNER">
+      <Button fx:id="boutonValider" layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonValider" styleClass="bouton" text="        SUIVANT" />
+      <Button fx:id="boutonPrecedent" layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonPrecedent" styleClass="bouton" text="      PRÉCÉDENT" />
+      <Button layoutX="629.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAbandonner" prefHeight="51.0" prefWidth="166.0" text="         ABANDONNER">
          <styleClass>
             <String fx:value="petit-bouton" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Label fx:id="labelDifficulte" alignment="CENTER" layoutX="76.0" layoutY="109.0" styleClass="labelDifficulte" text="dif Question" />
+      <Label fx:id="labelDifficulte" alignment="CENTER" layoutX="76.0" layoutY="109.0" styleClass="labelDifficulte" text="difficulte" />
+      <SVGPath fx:id="iconeBoutonPrecedent" content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-140.0" layoutY="289.0" onMouseClicked="#actionBoutonPrecedent" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath fx:id="iconeBoutonSuivant" content="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" layoutX="305.0" layoutY="289.0" onMouseClicked="#actionBoutonValider" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z" layoutX="400.0" layoutY="-216.0" onMouseClicked="#actionBoutonAbandonner" scaleX="0.04" scaleY="0.04" styleClass="user-solid" />
    </children>
    <stylesheets>
       <URL value="@application.css" />

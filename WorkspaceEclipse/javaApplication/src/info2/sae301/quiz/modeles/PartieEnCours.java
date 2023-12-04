@@ -5,8 +5,7 @@
 
 package info2.sae301.quiz.modeles;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayList; 
 
 /**
  * Partie de jeu de Quiz en cours contenant les questions posées,
@@ -32,6 +31,9 @@ public class PartieEnCours {
 	/** Indice permettant de savoir l'indice de la question en cours */
 	private int indiceQuestionCourante;
 	
+	/** Indice de la dernière question vue par l'utilisateur dans l'app */
+	private int indiceDerniereQuestionVue;
+	
 	
 	/**
 	 * Initialisation d'une partie de quiz avec ses paramètres, 
@@ -39,12 +41,34 @@ public class PartieEnCours {
 	 */
 	public PartieEnCours() {
 		
-		setQuestionsProposees(new ArrayList<Question>());
+		this.questionsProposees = new ArrayList<Question>();
 		this.reponsesUtilisateur = new ArrayList<String>();
-		setIndiceQuestionCourante(0);
+		this.indiceQuestionCourante = 0;
 	}
 	
 	
+	/** @return	le dernier indice de la question vue par l'utilisateur */
+	public int getIndiceDerniereQuestionVue() {
+		return indiceDerniereQuestionVue;
+	}
+
+	/** 
+	 * @param indiceDerniereQuestionVue nouvelle
+	 * 		  valeur de la dernière question vue 
+	 */
+	public void setIndiceDerniereQuestionVue(int indiceDerniereQuestionVue) {
+		this.indiceDerniereQuestionVue = indiceDerniereQuestionVue;
+	}
+	
+	
+	/**
+	 * Incrémentation de l'indice de la dernière question vue.
+	 */
+	public void incrementerIndiceDerniereQuestionVue() {
+		this.indiceDerniereQuestionVue++;
+	}
+
+
 	/** @return l'ArrayList des questions proposées pour la partie en cours */
 	public ArrayList<Question> getQuestionsProposees() {
 		return questionsProposees;
@@ -90,9 +114,20 @@ public class PartieEnCours {
 	/**
 	 * Ajoute la réponse de l'utilisateur sur la question courante
 	 * à l'ArrayList reponsesUtilisateur
-	 */ 
+	 * 
+	 * @param repAAjouter la réponse à ajouter
+	 */
 	public void ajouterReponseUtilisateur(String repAAjouter) {
 		this.reponsesUtilisateur.add(repAAjouter);
+	}
+	
+	/**
+	 * Modifie la réponse précédemmant saisie par l'utilisateur
+	 * 
+	 * @param repAModifier la nouvelle réponse de l'utilisateur.
+	 */
+	public void modifierReponseUtilisateur(String repAModifier) {
+		reponsesUtilisateur.set(indiceQuestionCourante, repAModifier);
 	}
 	
 	
@@ -102,25 +137,44 @@ public class PartieEnCours {
 	 * Si l'utilisateur passe la question, une String vide sera rajoutée
 	 * dans la liste reponsesUtilisateur
 	 */
-	public void passerQuestionCourante() {
-		this.indiceQuestionCourante +=1;
+	public void passerQuestionSuivante() {
+		this.indiceQuestionCourante++;
 	}
-
+	
 	
 	/**
-	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
-	 * de la question
-	 * @param questionRepondue question répondue par l'utilisateur
-	 * @param reponseUser réponse de l'utilisateur
-	 * @return true si réponseUser == reponseJusteQuestion, false sinon
+	 * Retour à la question précédente en sauvegardant la réponses de 
+	 * l'utilisateur.
+	 * Si l'utilisateur passe la question, une String vide sera rajoutée
+	 * dans la liste reponsesUtilisateur
 	 */
-	public boolean verifierReponse(Question questionRepondue, String reponseUser) {
-		return questionRepondue.getReponseJuste().equals(reponseUser);
+	public void retourQuestionPrecedente() {
+		this.indiceQuestionCourante--;
 	}
 	
+	
+	/**
+	 * Vérifie si un bouton radio est déjà sélectionné
+	 * 
+	 * @param reponse la réponse sélectionnées
+	 * @return true si le bouton était sélectionné, false sinon
+	 */
+	public boolean radioDejaSelectionne(String reponse) {
+		boolean dejaSelectionne = false;
+		
+		if (indiceQuestionCourante < getReponsesUtilisateur().size()) {
+			if (getReponsesUtilisateur().get(indiceQuestionCourante)
+					.equals(reponse)) {
+				
+				dejaSelectionne = true;
+			}
+		}
+		return dejaSelectionne;
+	}
 	
 	/**
 	 * Comptabilise les réponses justes de l'utilisateur
+	 * 
 	 * @return le nombre de réponses justes de l'utilisateur, 0 si tout faux
 	 */
 	public int nbReponsesJustes() {

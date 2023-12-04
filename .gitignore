@@ -13,5 +13,6 @@ build.fxbuild
 # Modelio
 projectInfo.html
 
-# Fichier de sauvegarde (sérialisation)
+# Fichiers de sauvegardes (sérialisation et CSV)
 sauvegardeDonneesQuiz.ser
+donneesImportees.csv

@@ -29,15 +29,17 @@ public class RenommerCategoriesControleur {
 	@FXML
 	private void initialize() {
 		entreeNomCategorie
-		.setText(ChoixRenommerCategorieControleur.getIntituleCategorieSelectionnee());
+		.setText(ChoixRenommerCategorieControleur.
+				 getIntituleCategorieSelectionnee());
 	}
 	
 	/**
-	 * TODO aide
+	 * Redirection vers la pop-up d'aide pour renommer des questions
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, 
+							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
 	/**
@@ -49,13 +51,14 @@ public class RenommerCategoriesControleur {
 	}
 	
 	/**
-	 * Clic sur le bouton renommer, renomme la catégorie et change de vue.
+	 * Clic sur le bouton renommer, renomme la catégorie et 
+	 * change de vue.
 	 */
 	@FXML
 	private void actionBoutonRenommer() {
 		try {
 			ChoixRenommerCategorieControleur
-			.renommerCategorieSelectionnee(entreeNomCategorie.getText());
+			.renommerCategorieSelectionnee(entreeNomCategorie.getText().trim());
 			NavigationControleur.changerVue("AffichageCategories.fxml");
 		} catch (IllegalArgumentException e) {
 			AlerteControleur.autreAlerte(e.getMessage(),

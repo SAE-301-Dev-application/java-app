@@ -59,12 +59,19 @@ public class ChoixEditionQuestionControleur {
 	
 	private Label questionCourante;
 	
+	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des questions et du bouton suivant.
+	 * Initialisation de la vue avec le style CSS correspondant et 
+	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
+		
+		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
+		System.out.println("Choix : " + indiceQuestion);
+		categorieCourante = AffichageQuestionsControleur.categorieCourante;		
+		menuFiltre.setValue(categorieCourante);
+		
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
@@ -74,19 +81,20 @@ public class ChoixEditionQuestionControleur {
 		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
 			menuFiltre.getItems().add(categorieCourante.getIntitule());
 		}
-		// Toutes les catégories par défaut
-		menuFiltre.setValue("Toutes les catégories");
 		
 		afficherQuestions();
 	}
+	
 	
 	/** @return L'intitulé de la question sélectionnée. */
 	public static int getIndiceQuestionSelectionnee() {
 		return indiceQuestionSelectionnee;
 	}
 	
+	
 	/**
-	 * Réaffichage des questions lorsqu'une catégorie est sélectionnée.
+	 * Réaffichage des questions lorsqu'une catégorie est 
+	 * sélectionnée.
 	 */
 	@FXML
 	public void selectionFiltre() {
@@ -98,14 +106,15 @@ public class ChoixEditionQuestionControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
 	 * Affiche 5 questions au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de questions précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de questions
+	 * précédentes et suivantes.
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
-		= jeu.questionsCategorie(menuFiltre.getValue());
+		= jeu.questionsCategorie(categorieCourante);
 		
 	    // Calcul des indices pour l'affichage des questions
 	    int indiceDebut = indiceQuestion;
@@ -142,11 +151,14 @@ public class ChoixEditionQuestionControleur {
 	    		                 && indiceFin < questionsAAfficher.size());
 	}
 	
+	
 	/**
-	 * Changement de vue et modification de l'attribut de la catégorie sélectionnée
-	 * dans la classe de sauvegarde des paramètres, questions et questions.
+	 * Changement de vue et modification de l'attribut de la 
+	 * catégorie sélectionnée dans la classe de sauvegarde des 
+	 * paramètres, questions et questions.
 	 * 
-	 * @param intitule L'intitulé de la catégorie sélectionnée à sauvegarder.
+	 * @param intitule L'intitulé de la catégorie sélectionnée à 
+	 * 				   sauvegarder.
 	 */
 	private void actionEditerQuestion(String intitule, String reponseJuste,
 			                          String[] reponsesFausses, int difficulte,
@@ -159,30 +171,36 @@ public class ChoixEditionQuestionControleur {
 		
 	}
 	
+	
 	/**
-	 * Retrait de 5 questions à l'indice de la première catégorie à afficher
-	 * et affichage des 5 questions précédentes. 
+	 * Retrait de 5 questions à l'indice de la première catégorie à 
+	 * afficher et affichage des 5 questions précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
 		// On recule de 5 questions
 		indiceQuestion -= 5;
 		afficherQuestions();
+		System.out.println("Choix : " + indiceQuestion);
 	}
 	
+	
 	/**
-	 * Ajout de 5 questions à l'indice de la première catégorie à afficher
-	 * et affichage des 5 questions suivantes. 
+	 * Ajout de 5 questions à l'indice de la première catégorie à 
+	 * afficher et affichage des 5 questions suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
 		// On avance de 5 questions
 		indiceQuestion += 5;
 	    afficherQuestions();
+	    System.out.println("Choix : " + indiceQuestion);
 	}
 	
+	
 	/**
-	 * TODO : coder action bouton aide
+	 * Permet d'afficher une pop up d'aide concernant l'édition
+	 * des questions
 	 */
 	@FXML
 	private void actionBoutonAide() {
@@ -190,12 +208,17 @@ public class ChoixEditionQuestionControleur {
 				              AffichageQuestionsControleur.AIDE_TEXTE);
 	}
 	
+	
 	/**
 	 * Redirection vers la vue AffichageQuestions.
 	 */
 	@FXML
 	private void actionBoutonAnnuler() {
+		if (indiceQuestion >= 5 && indiceQuestion %10 != 0) {
+			indiceQuestion -= 5;
+		}
+		AffichageQuestionsControleur.categorieCourante = categorieCourante;
+		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
-	
 }

@@ -6,13 +6,15 @@
 package info2.sae301.quiz.modeles;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects; 
 
 /**
- * Objet Question composé d'un intitulé, de réponses, de feedback et de difficulté
+ * Objet Question composé d'un intitulé, de réponses, de feedback et 
+ * de difficulté
  * directement lié à une catégorie
  * 
  * @author Florian Fabre
@@ -22,8 +24,6 @@ import java.util.Objects;
  * @author Samuel Lacam
  */
 public class Question implements Serializable {
-	
-	/* Constantes utilisées dans la classe */
 	
 	/** Message si erreur sur les tailles de champ */
 	private static final String TAILLE_INVALIDE
@@ -38,23 +38,39 @@ public class Question implements Serializable {
 	= "La difficulté doit être comprise entre 1 et 3 : 1 - Facile, 2 - Moyenne,"
 	  + " 3 - Difficile";
 	
-	/** Message si erreur l'utilisateur n'a pas rentré de réponses fausses */
+	/** 
+	 * Message si erreur l'utilisateur n'a pas rentré 
+	 * de réponses fausses 
+	 */
 	private static final String REPONSE_FAUSSE_1_VIDE
 	= "Vous devez au moins renseigner une réponse fausse, dans le premier "
 	  + "champ obligatoirement.";
 	
-	/** Message si erreur car l'utilisateru n'a pas rempli tous les champs */
+	/** 
+	 * Message si erreur car l'utilisateur n'a pas rempli tous
+	 * les champs 
+	 */
 	private static final String VALEUR_VIDE
 	= "Les champs requis doivent être remplis.";
 	
+	/**
+	 * Message si erreur car l'utilisateur a rempli un champ avec
+	 * des espaces uniquement 
+	 */
 	private static final String VALEUR_INVALIDE
 	= "Un champ rempli d'espaces est invalide.";
 
+	/**
+	 * Message si erreur car l'utilisateur a rempli un champ des 
+	 * reponses avec des réponses non uniques 
+	 */
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
+    
+    private static final String ERREUR_CARACTERE_INTERDIT
+    = "Le caractère %s n'est pas supporté par l'application.";
 	
-	
-	/* Attributs d'une instance de classe de Question */
+    
 	/** L'intitulé de la question (max 300 caractères) */
     private String intitule;
     
@@ -89,13 +105,14 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param categorie La catégorie contenant la question.
-	 * @throws IllegalArgumentException si la question existe déjà.
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, Categorie categorie)
 	                throws IllegalArgumentException {
 		
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
+		
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
 		this.reponsesFausses = reponsesFausses;
@@ -116,13 +133,16 @@ public class Question implements Serializable {
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback à afficher pour corriger la réponse.
 	 * @param categorie La catégorie contenant la question.
+	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, String feedback,
-			        Categorie categorie) {
+			        Categorie categorie) throws IllegalArgumentException {
 
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte,
 				          feedback);
+		assurerCaracteres(feedback);
+		
 		this.intitule = intitule;
 		this.reponseJuste = reponseJuste;
 		this.reponsesFausses = reponsesFausses;
@@ -133,21 +153,25 @@ public class Question implements Serializable {
 	
 
 	/**
-	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * Vérification puis initialisation des attributs pour les deux 
+	 * constructeurs.
 	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
-	 * @throws IllegalArgumentException si les attributs ne respectent pas
-	 *                                  les tailles demandées.
+	 * @throws IllegalArgumentException si les attributs ne 
+	 * respectent pas les tailles demandées ou si la difficulté est invalide.
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
 	throws IllegalArgumentException {
 		
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		assurerCaracteres(intitule);
+		
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
+		assurerCaracteres(reponseJuste);
 		
 		// Vérification de la taille des réponses fausses
 		assurerValiditeReponsesFausses(reponsesFausses);
@@ -161,15 +185,45 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Vérification puis initialisation des attributs pour les deux constructeurs.
+	 * Vérification que les caractères soient chiffrables.
+	 * 
+	 * @param aVerifier Chaîne à vérifier.
+	 * @throws IllegalArgumentException si un caractère est interdit.
+	 */
+	public static void assurerCaracteres(String aVerifier) 
+	throws IllegalArgumentException {
+		
+		String messageErreurCaractereInterdit;
+		
+		for (int i = 0; i < aVerifier.length(); i++) {
+			if (Dictionnaire.getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				messageErreurCaractereInterdit
+				= String.format(ERREUR_CARACTERE_INTERDIT, 
+								aVerifier.charAt(i));
+				
+				System.out.println(messageErreurCaractereInterdit);
+				
+				throw new IllegalArgumentException(
+					messageErreurCaractereInterdit
+				);
+			}
+		}	
+		
+	}
+
+
+	/**
+	 * Vérification puis initialisation des attributs pour 
+	 * les deux constructeurs.
 	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback.
-	 * @throws IllegalArgumentException si les attributs ne respectent pas
-	 *                                  les tailles demandées.
+	 * @throws IllegalArgumentException si les attributs ne respectent 
+	 * pas les tailles demandées.
+	 * @throws UnsupportedEncodingException 
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte,
@@ -178,13 +232,14 @@ public class Question implements Serializable {
 		
 		verifierAttributs(intitule, reponseJuste, reponsesFausses, difficulte);
 		assurerTaille(feedback, "d'un feedback", 1, 500);
+		assurerCaracteres(feedback);
 		
 	}
 	
 
 	/**
-	 * Vérification que la taille d'un élément soit supérieure à tailleMin
-	 * et inférieure à tailleMax.
+	 * Vérification que la taille d'un élément soit supérieure à 
+	 * tailleMin et inférieure à tailleMax.
 	 * 
 	 * @param element Element duquel vérifier la taille.
 	 * @param titre Titre de l'élément vérifié.
@@ -211,12 +266,13 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Ajoute la réponse juste à un tableau contenant également les réponses fausses
-	 * et vérifie l'unicité des réponses du tableau.
+	 * Ajoute la réponse juste à un tableau contenant également les 
+	 * réponses fausses et vérifie l'unicité des réponses du tableau.
 	 * 
 	 * @param reponses La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 * @throws IllegalArgumentException si une des réponses est égale 
+	 * à une autre.
 	 */
 	private static void assurerReponsesUniques(String reponseJuste,
 			                                   String[] reponsesFausses)
@@ -235,7 +291,8 @@ public class Question implements Serializable {
 	 * Vérifie si les réponses en paramètre sont toutes différentes.
 	 * 
 	 * @param reponses Les réponses à vérifier.
-	 * @throws IllegalArgumentException si une des réponses est égale à une autre.
+	 * @throws IllegalArgumentException si une des réponses est égale
+	 * à une autre.
 	 */
 	public static void assurerReponsesUniques(String[] reponses)
 	throws IllegalArgumentException {
@@ -260,8 +317,8 @@ public class Question implements Serializable {
 	 * Les autres peuvent être nulles.
 	 * 
 	 * @param reponsesFausses Les réponses fausses à assurer.
-	 * @throws IllegalArgumentException si la taille de chaque réponse fausse
-	 *                                  est invalide.
+	 * @throws IllegalArgumentException si la taille de chaque 
+	 * réponse fausse est invalide.
 	 */
 	public static void assurerValiditeReponsesFausses(String[] reponsesFausses)
 	throws IllegalArgumentException {
@@ -271,7 +328,11 @@ public class Question implements Serializable {
 		}
 		
 		for (int i = 0; i < reponsesFausses.length; i++) {
+			assurerCaracteres(reponsesFausses[i]);
 			if (i == 0) {
+				if (reponsesFausses[i] == null || reponsesFausses[i].isEmpty()) {
+					throw new IllegalArgumentException(REPONSE_FAUSSE_1_VIDE);
+				}
 				assurerTaille(reponsesFausses[i], "de la 1ère réponse fausse", 1, 200);
 			} else if (reponsesFausses[i] != null && !reponsesFausses[i].isEmpty()) {
 				assurerTaille(reponsesFausses[i],
@@ -320,6 +381,7 @@ public class Question implements Serializable {
 	/** @param intitule the intitule à changer */
 	public void setIntitule(String intitule) {
 		assurerTaille(intitule, "d'un intitulé", 1, 300);
+		assurerCaracteres(intitule);
 		this.intitule = intitule;
 	}
 
@@ -327,6 +389,7 @@ public class Question implements Serializable {
 	/** @param reponseJuste the reponseJuste à changer */
 	public void setReponseJuste(String reponseJuste) {
 		assurerTaille(reponseJuste, "d'une réponse juste", 1, 200);
+		assurerCaracteres(intitule);
 		this.reponseJuste = reponseJuste;			
 	}
 
@@ -334,12 +397,14 @@ public class Question implements Serializable {
 	/** @param reponsesFausses the reponsesFausses à changer */
 	public void setReponsesFausses(String[] reponsesFausses) {
         assurerValiditeReponsesFausses(reponsesFausses);
+        assurerCaracteres(intitule);
 		this.reponsesFausses = reponsesFausses;
 	}
 	
 
 	/** @param difficulte the difficulte à changer */
 	public void setDifficulte(int difficulte) {
+		assurerCaracteres(intitule);
 		if (difficulte < 1 || difficulte > 3) {
 			throw new IllegalArgumentException(DIFFICULTE_INVALIDE);
 		}
@@ -349,6 +414,7 @@ public class Question implements Serializable {
 
 	/** @param feedback the feedback à changer */
 	public void setFeedback(String feedback) {
+		assurerCaracteres(intitule);
 		if (feedback != null && !feedback.isEmpty()) {
 			assurerTaille(feedback, "d'un feedback", 1, 500);			
 		}
@@ -357,16 +423,20 @@ public class Question implements Serializable {
 
 	/** @param categorie the categorie à changer */
 	public void setCategorie(Categorie categorie) {
+		assurerCaracteres(intitule);
 		this.categorie = categorie;
 	}
 	
 
 	/**
-	 * Teste si les réponses fausses sont les mêmes dans les deux listes.
+	 * Teste si les réponses fausses sont les mêmes dans les deux 
+	 * listes.
 	 * 
 	 * @param reponsesFausses1 Les réponses fausses à comparer.
-	 * @param reponsesFausses2 Les secondes réponses fausses à comparer.
-	 * @return true si les liste contiennent les mêmes réponses fausses, false sinon.
+	 * @param reponsesFausses2 Les secondes réponses fausses à 
+	 * comparer.
+	 * @return true si les liste contiennent les mêmes réponses 
+	 * fausses, false sinon.
 	 */
 	public boolean memesReponsesFausses(Question aComparerRepFausses) {
 		boolean resultatFinal = true;
@@ -455,15 +525,99 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
- 	 * méthode est appliquée, ici une instance de Question.
- 	 * Permet une comparaison précise et complète la méthode equals() car si les
- 	 * hashCode générés pour les instances comparées sont les mêmes et que 
- 	 * la méthode equals renvoie true, alors ces instances sont égales.
+	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
+	 * de la question
+	 * 
+	 * @param reponseUser réponse de l'utilisateur
+	 * @return Si la réponse donnée vaut celle correspondant à la 
+	 * 		   question de l'instance
+	 */
+	public boolean verifierReponse(String reponseDonnee) {
+		return this.getReponseJuste().equals(reponseDonnee);
+	}
+	
+	
+	/**
+	 * Formatte les données de la question courante afin de les rassembler
+	 * en une seule chaîne de caractères acceptable pour une ligne de CSV.
+	 * 
+	 * @return les données sous un format dit CSV.
+	 */
+	public String donneesToString() {
+		String resultat;
+		
+		resultat = formatterTexte(this.getCategorie().getIntitule())
+		           + formatterTexte("" + this.getDifficulte())
+		           + formatterTexte(this.getIntitule())
+		           + formatterTexte(this.getReponseJuste());
+				
+		for (int i = 0; i <= 3; i++) {
+			String[] reponses = this.getReponsesFausses();
+			
+			if (i < reponses.length && reponses[i] != null) {
+				resultat += formatterTexte(reponses[i]);
+			} else {
+				resultat += ";";
+			}
+		}
+		
+		if (this.getFeedback() != null && !this.getFeedback().isBlank()) {
+			resultat += formatterTexte(this.getFeedback());
+			resultat = resultat.substring(0, resultat.length() - 1);
+		}
+		
+		return resultat;
+	}
+	
+	
+	/**
+	 * Formatte le texte en paramètre afin de doubler les guillemets si un
+	 * point virgule ou un guillemet est présent.
+	 * 
+	 * @param texte Le texte à vérifier.
+	 * @return le texte formaté.
+	 */
+	public String formatterTexte(String texte) {
+		final String GUILLEMET = "\"";
+		
+		final String POINT_VIRGULE = ";";
+		
+		String texteFormatte;
+		
+		texteFormatte = "";
+		
+		if (texte.contains(GUILLEMET) || texte.contains(POINT_VIRGULE)) {
+			if (texte.contains(GUILLEMET)) {
+				// Si un caractère est un guillemet on le double
+				for (char caractere: texte.toCharArray()) {
+					texteFormatte += "" + caractere
+							+ (caractere == GUILLEMET.charAt(0)
+							? GUILLEMET
+									: "");
+				}
+			} 
+			
+			texteFormatte = GUILLEMET + texteFormatte + GUILLEMET;
+		} else {
+			texteFormatte = texte;
+		}
+		
+		return texteFormatte + POINT_VIRGULE;
+	}
+	
+	
+	/**
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel
+	 * cette méthode est appliquée, ici une instance de Question.
+ 	 * Permet une comparaison précise et complète la méthode equals()
+ 	 * car si les hashCode générés pour les instances comparées sont 
+ 	 * les mêmes et que la méthode equals renvoie true, alors ces 
+ 	 * instances sont égales.
  	 * 
- 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
- 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
- 	 * pour une maintenance future du code plus aisée et pour le respect
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous 
+ 	 * n'utilisons pas de HashSet ou de HashMap, cependant il est 
+ 	 * préférable de l'implémenter pour une maintenance future du 
+ 	 * code plus aisée et pour le respect
  	 * des conventions générales de Java.
  	 * 
  	 * @return un hashCode basé sur les attributs de l'instance passée
@@ -473,14 +627,15 @@ public class Question implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(reponsesFausses);
-		result = prime * result + Objects.hash(categorie, difficulte, feedback, intitule, reponseJuste);
+		result = prime * result + Objects.hash(categorie, difficulte,
+											feedback, intitule, reponseJuste);
 		return result;
 	}
 	
 
 	/**
-	 * Méthode permettant de comparer 2 questions en profondeur en se basant sur 
-	 * leurs critères d'identification:
+	 * Méthode permettant de comparer 2 questions en profondeur 
+	 * en se basant sur leurs critères d'identification:
 	 * - Intitulé question
 	 * - Intitule categorie
 	 * - reponseJuste
@@ -492,11 +647,15 @@ public class Question implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
+		
 		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
 			return false;
+		
 		Question other = (Question) obj;
+		
 		return Objects.equals(categorie.getIntitule(), other.categorie.getIntitule())
 				&& Objects.equals(intitule, other.intitule)
 				&& Objects.equals(reponseJuste, other.reponseJuste)

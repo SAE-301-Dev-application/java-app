@@ -6,28 +6,27 @@
 package info2.sae301.quiz.modeles.tests;
 
 import info2.sae301.quiz.modeles.ParametresPartie;
+import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
+import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests unitaires de la classe {@link info2.sae301.quiz.modeles.ParametresPartie}.
+ * Tests unitaires de la classe 
+ * {@link info2.sae301.quiz.modeles.ParametresPartie}.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -41,16 +40,19 @@ class TestParametresPartie {
 		"catégorie1", "caté2", "caté3", "caté4", "caté5"
 	};
 	
-	private ParametresPartie parametresTest = new ParametresPartie();
+	private ParametresPartie parametresAvecParam;
 	
-	private ArrayList<Categorie> categorie1 = new ArrayList<Categorie>();
+	private ParametresPartie parametresTest;
 	
-	private ArrayList<Categorie> categorie2 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie1;
 	
-	private ArrayList<Categorie> categorie3 = new ArrayList<Categorie>();
+	private ArrayList<Categorie> categorie2;
+	
+	private ArrayList<Categorie> categorie3;
 	
 	@BeforeEach
 	void init() {
+		
 		parametresTest = new ParametresPartie();
 		categorie1 = new ArrayList<Categorie>();
 		categorie2 = new ArrayList<Categorie>();
@@ -346,8 +348,6 @@ class TestParametresPartie {
 		    			     parametresTest.getNombreQuestions(),
 		    			     parametresTest.getCategoriesSelectionnees());
 		});
-		
-		
 	}
 	
 	

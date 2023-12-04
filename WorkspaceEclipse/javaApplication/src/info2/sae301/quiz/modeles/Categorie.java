@@ -5,6 +5,8 @@
 
 package info2.sae301.quiz.modeles;
 
+import static info2.sae301.quiz.modeles.Dictionnaire.getDictionnaireReversed;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects; 
@@ -38,25 +40,6 @@ public class Categorie implements Serializable {
     private ArrayList<Question> listeQuestions;
     
 
-    /**
-     * Nouvelle catégorie de questions identifiée par son intitulé
-     * 
-	 * @param intitule
-	 * @param questions
-	 */
-	public Categorie(String intitule, ArrayList<Question> questions) {
-		if (intitule.length() > 20) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
-		}
-		if (intitule.isBlank() || intitule.isEmpty()) {
-			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
-		}
-		
-		this.intitule = intitule;
-		this.listeQuestions = questions;
-	}
-
-
 	/**
 	 * Nouvelle catégorie de questions identifiée par son intitulé 
 	 * sans liste de questions prédéfinie
@@ -71,9 +54,28 @@ public class Categorie implements Serializable {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
 		}
-		
+		assurerCaracteres(intitule);
 		this.intitule = intitule;
 		this.listeQuestions = new ArrayList<Question>();
+	}
+
+	
+    /**
+     * Nouvelle catégorie de questions identifiée par son intitulé
+     * 
+	 * @param intitule
+	 * @param questions
+	 */
+	public Categorie(String intitule, ArrayList<Question> questions) {
+		if (intitule.length() > 20) {
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MAX));
+		}
+		if (intitule.isBlank() || intitule.isEmpty()) {
+			throw new IllegalArgumentException(String.format(ERR_TAILLE_ARG_MIN));
+		}
+		assurerCaracteres(intitule);
+		this.intitule = intitule;
+		this.listeQuestions = questions;
 	}
 
 
@@ -83,6 +85,21 @@ public class Categorie implements Serializable {
     }
 
 	
+	/**
+	 * Vérification de la validité des caractères
+	 * 
+	 * @param aVerfier
+	 * @throws IllegalArgumentException 
+	 */
+	private static void assurerCaracteres(String aVerifier) 
+			throws IllegalArgumentException {
+		
+		for (int i = 0; i < aVerifier.length(); i++) {
+			if (getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+				throw new IllegalArgumentException("Le caractère n'est pas supporté par l'application");
+			}
+		}	
+	}
     /**
      * Ajoute à listeQuestions la question en paramètre
      * 
@@ -133,7 +150,7 @@ public class Categorie implements Serializable {
 		if (intitule.length() > 20) {
 			throw new IllegalArgumentException(ERR_TAILLE_ARG_MAX);
 		}
-		
+		assurerCaracteres(intitule);
 		if (intitule.length() > 0
 		    && !intitule.isBlank() 
 		    && intitule.length() <= 20) {
@@ -184,7 +201,7 @@ public class Categorie implements Serializable {
  	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(intitule, listeQuestions);
+		return Objects.hash(intitule);
 	}
 	
 

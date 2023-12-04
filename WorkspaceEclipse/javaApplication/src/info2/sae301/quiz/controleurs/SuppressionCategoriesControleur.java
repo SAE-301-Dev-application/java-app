@@ -1,5 +1,5 @@
 /*
- * SuppressionCategoriesControleur.java								 7 nov. 2023
+p * SuppressionCategoriesControleur.java								 7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -7,22 +7,19 @@ package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
 
-
 import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Categorie;
-
+import info2.sae301.quiz.modeles.Jeu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue SuppressionCategories qui affiche la liste des
- * catégories avec des checkbox pour sélectionner celles à supprimer.
+ * Contrôleur FXML de la vue SuppressionCategories qui affiche la 
+ * liste des catégories avec des checkbox pour sélectionner celles
+ * à supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -33,8 +30,10 @@ import javafx.scene.layout.VBox;
 public class SuppressionCategoriesControleur {
 	
 	/**
-	 * Récupération de l'instance du jeu créée dans la classe Quiz.
-	 * Cette instance permet la gestion des questions et catégories.
+	 * Récupération de l'instance du jeu créée dans la 
+	 * classe Quiz.
+	 * Cette instance permet la gestion des questions 
+	 * et catégories.
 	 */
 	private Jeu jeu = Quiz.jeu;
 	
@@ -55,32 +54,53 @@ public class SuppressionCategoriesControleur {
 	/** Toutes les catégories dont la checkbox de sélection a été cochée. */
 	private ArrayList<String> categoriesSelectionnees = new ArrayList<>();
 	
-	private HBox ligneCategorie;
-	
-	private CheckBox checkBoxCategorie;
-	
-	private Label categorieCourante;
-	
 	/** Les checkbox ajoutées devant les catégories. */
-	private ArrayList<CheckBox> toutesLesCheckBox = new ArrayList<>();
+	private ArrayList<CheckBox> toutesLesCheckBoxs = new ArrayList<>();
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et l'affichage
-	 * des catégories et du bouton suivant.
+	 * Initialisation de la vue avec le style css correspondant 
+	 * et l'affichage des catégories et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
+		indiceCategorie = AffichageCategoriesControleur.indiceCategorie;
 		NavigationControleur.getScene().getStylesheets()
 		.add(getClass().getResource("/info2/sae301/quiz/vues/application.css")
 				       .toExternalForm());
-		
+		initialiserToutesLesCheckboxs();
 		afficherCategories();
+	}
+	/**
+	 * Initialisation de toutes les checkboxs représentent
+	 * les catégories.
+	 */
+	private void initialiserToutesLesCheckboxs() {
+		toutesLesCheckBoxs.clear();
+		for (int i = 0; i < toutesLesCategories.size(); i++) {
+			CheckBox checkBoxCategorie = new CheckBox();
+	    	checkBoxCategorie.setId("" + i);
+	    	checkBoxCategorie.setText(toutesLesCategories.get(i).getIntitule());
+	    	checkBoxCategorie.getStyleClass().add("checkbox-margin");
+			checkBoxCategorie.getStyleClass().add("intituleCategorieQuestion");
+			checkBoxCategorie.getStyleClass().add("intitule-padding-left");
+//			checkBoxQuestion.setVisible(false);
+			this.toutesLesCheckBoxs.add(checkBoxCategorie);
+			if (!checkBoxCategorie.getText().equals("Général")) {
+	        	final int INDICE = i;
+				
+	        	checkBoxCategorie.setOnMouseClicked(event -> {
+					selectionnerCategorie(INDICE);
+				});
+			} else {
+				checkBoxCategorie.setDisable(true);
+			}
+		}
 	}
 
 	/**
 	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de catégories précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de catégories 
+	 * précédentes et suivantes.
 	 */
 	private void afficherCategories() {
 	    // Calcul des indices pour l'affichage des catégories
@@ -93,39 +113,8 @@ public class SuppressionCategoriesControleur {
 		
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
-			ligneCategorie = new HBox();
-			
-			String intituleCategorie = toutesLesCategories.get(i).getIntitule();
-			
-			checkBoxCategorie = new CheckBox();
-			checkBoxCategorie.getStyleClass().add("checkbox-margin");
-			checkBoxCategorie.setId("" + i);
-			
-			// Si la checkbox n'a pas déjà été ajoutée
-			if (i >= toutesLesCheckBox.size()) {
-				toutesLesCheckBox.add(checkBoxCategorie);
-			} else {
-				checkBoxCategorie = toutesLesCheckBox.get(i);
-			}
-			
-	        categorieCourante = new Label(intituleCategorie);
-	        categorieCourante.getStyleClass().add("intituleCategorieQuestion");
-	        categorieCourante.getStyleClass().add("intitule-padding-left");
+	        vBoxCategories.getChildren().add(toutesLesCheckBoxs.get(i));
 	        
-	        ligneCategorie.getChildren().add(checkBoxCategorie);
-	        
-	        if (!intituleCategorie.equals("Général")) {
-	        	final int INDICE = i;
-				
-				checkBoxCategorie.setOnMouseClicked(event -> {
-					selectionnerCategorie(INDICE);
-				});
-			} else {
-				checkBoxCategorie.setDisable(true);
-			}
-	        
-			ligneCategorie.getChildren().add(categorieCourante);
-			vBoxCategories.getChildren().add(ligneCategorie);
 	    }
 	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
 	    boutonPrecedent.setVisible(!(indiceCategorie < 10));
@@ -136,8 +125,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Ajout de la catégorie correspondante à l'indiceen paramètre à la liste
-	 * des catégories sélectionnées.
+	 * Ajout de la catégorie correspondante à l'indiceen paramètre 
+	 * à la liste des catégories sélectionnées.
 	 * 
 	 * @param indice Indice de la catégorie cliquée.
 	 */
@@ -145,7 +134,7 @@ public class SuppressionCategoriesControleur {
 		final String INTITULE_CATEGORIE
 		= jeu.getToutesLesCategories().get(indice).getIntitule();
 		
-		if (toutesLesCheckBox.get(indice).isSelected()) {
+		if (toutesLesCheckBoxs.get(indice).isSelected()) {
 			categoriesSelectionnees.add(INTITULE_CATEGORIE);	
 		} else {
 			categoriesSelectionnees.remove(INTITULE_CATEGORIE);	
@@ -160,8 +149,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Retrait de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories précédentes. 
+	 * Retrait de 10 catégories à l'indice de la première catégorie 
+	 * à afficher et affichage des 10 catégories précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -171,8 +160,8 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * Ajout de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories suivantes. 
+	 * Ajout de 10 catégories à l'indice de la première catégorie 
+	 * à afficher et affichage des 10 catégories suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -182,11 +171,12 @@ public class SuppressionCategoriesControleur {
 	}
 	
 	/**
-	 * TODO : coder action bouton aide
+	 * Redirection vers le pop-up pour la suppression des categories
 	 */
 	@FXML
 	private void actionBoutonAide() {
-		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE, AffichageCategoriesControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AffichageCategoriesControleur.AIDE_TITRE,
+							  AffichageCategoriesControleur.AIDE_TEXTE);
 	}
 	
     /**
@@ -194,6 +184,7 @@ public class SuppressionCategoriesControleur {
      */
 	@FXML
 	private void actionBoutonAnnuler() {
+		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
@@ -222,9 +213,21 @@ public class SuppressionCategoriesControleur {
 			
 			if (confirmerSuppression) {
 				jeu.supprimer(jeu.getCategoriesParIntitules(categoriesSelectionnees));
+				indiceCategorieApresSuppression();
 				NavigationControleur.changerVue("AffichageCategories.fxml");
 			}	
 		}
+	}
+	
+	/**
+	 * Adapte indiceCategorie en fonction du nombre de
+	 * suppression de catégorie et de la page courante.
+	 */
+	private void indiceCategorieApresSuppression() {
+		for (;indiceCategorie >= toutesLesCheckBoxs.size()
+				- categoriesSelectionnees.size(); indiceCategorie-=10);
+		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
+		
 	}
 	
 }

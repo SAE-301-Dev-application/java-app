@@ -14,8 +14,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 /**
- * Contrôleur FXML de la vue GestionPseudo qui permet la création d'un pseudo
- * pour l'utilisateur.
+ * Contrôleur FXML de la vue GestionPseudo qui permet la création 
+ * d'un pseudo pour l'utilisateur.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -25,10 +25,13 @@ import javafx.scene.control.TextField;
  */
 public class GestionPseudoControleur {
 	
+	/** Titre d'erreur pour l'alerte du pseudonyme */
 	private static final String TITRE_ALERTE = "Erreur de pseudonyme";
 	
+	/** Nom du pop-up d'aide du pseudonyme */
 	private static final String AIDE_TITRE = "PSEUDONYME";
 	
+	/** Texte de l'aide du pseudonyme */
 	private static final String AIDE_TEXTE
 	= """
 	  Afin de personnaliser l’expérience de l’utilisateur,
@@ -47,6 +50,7 @@ public class GestionPseudoControleur {
 	@FXML
 	private TextField pseudoEntre;
 	
+	
 	/**
 	 * Affichage du pseudo si celui n'est pas celui par défaut.
 	 */
@@ -59,6 +63,7 @@ public class GestionPseudoControleur {
 		}
 	}
 	
+	
 	/**
 	 * Affichage d'une pop-up d'aide concernant les pseudonymes.
 	 */
@@ -67,6 +72,7 @@ public class GestionPseudoControleur {
 		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
+	
 	/**
 	 * Redirection vers la vue MenuPrincipal.fxml
 	 */
@@ -74,6 +80,7 @@ public class GestionPseudoControleur {
 	private void actionBoutonAnnuler() {
 		NavigationControleur.changerVue("MenuPrincipal.fxml");
 	}
+	
 	
 	/**
 	 * Enregistrer le nouveau pseudonyme d'utilisateur.
@@ -88,5 +95,4 @@ public class GestionPseudoControleur {
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}
-	
 }
