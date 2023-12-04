@@ -66,10 +66,6 @@ public class NavigationControleur {
 			System.out.println("Erreur : aucune scène courante !");
 		} else {
 			try {
-				/*
-				System.out.println(NavigationControleur.class.getResource(
-								   RACINE_VUES + routeVueFXML));
-								   */
 				Parent racine;
 				racine = FXMLLoader.load(NavigationControleur.class
 						              .getResource(RACINE_VUES + routeVueFXML));

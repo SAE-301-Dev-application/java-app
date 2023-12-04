@@ -554,7 +554,9 @@ public class Question implements Serializable {
 		for (int i = 0; i <= 3; i++) {
 			String[] reponses = this.getReponsesFausses();
 			
-			if (i < reponses.length && reponses[i] != null) {
+			if (i < reponses.length
+				&& reponses[i] != null
+				&& !reponses[i].isBlank()) {
 				resultat += formatterTexte(reponses[i]);
 			} else {
 				resultat += ";";
@@ -579,30 +581,22 @@ public class Question implements Serializable {
 	 */
 	public String formatterTexte(String texte) {
 		final String GUILLEMET = "\"";
-		
-		final String POINT_VIRGULE = ";";
-		
-		String texteFormatte;
-		
-		texteFormatte = "";
-		
-		if (texte.contains(GUILLEMET) || texte.contains(POINT_VIRGULE)) {
-			if (texte.contains(GUILLEMET)) {
-				// Si un caractère est un guillemet on le double
-				for (char caractere: texte.toCharArray()) {
-					texteFormatte += "" + caractere
-							+ (caractere == GUILLEMET.charAt(0)
-							? GUILLEMET
-									: "");
-				}
-			} 
-			
-			texteFormatte = GUILLEMET + texteFormatte + GUILLEMET;
-		} else {
-			texteFormatte = texte;
-		}
-		
-		return texteFormatte + POINT_VIRGULE;
+	    final String POINT_VIRGULE = ";";
+	    
+	    if (texte.contains(GUILLEMET) || texte.contains(POINT_VIRGULE)) {
+	        StringBuilder texteFormatte = new StringBuilder();
+
+	        for (char caractere : texte.toCharArray()) {
+	            texteFormatte.append(caractere);
+	            if (caractere == GUILLEMET.charAt(0)) {
+	                texteFormatte.append(GUILLEMET);
+	            }
+	        }
+
+	        return GUILLEMET + texteFormatte.toString() + GUILLEMET + POINT_VIRGULE;
+	    } else {
+	        return texte + POINT_VIRGULE;
+	    }
 	}
 	
 	

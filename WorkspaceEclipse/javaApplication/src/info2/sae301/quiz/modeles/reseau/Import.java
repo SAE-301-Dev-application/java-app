@@ -222,17 +222,27 @@ public class Import {
 	 *         sous forme de chaîne de caractères en paramètre.
 	 */
 	public static String[] extraireDonneesQuestion(String donneesQuestion) {
-		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+		final String REGEX_DONNEE_ENTIERE
+		= ";(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+	    
+	    String[] donnees;
+	    
+	    donnees = donneesQuestion.split(REGEX_DONNEE_ENTIERE, -1);
+	    
+	    // Créer un nouveau tableau avec les 9 premiers éléments
+	    String[] nouvellesDonnees = new String[9];
+	    System.arraycopy(donnees, 0, nouvellesDonnees, 0, 9);
+
+	    for (int i = 0; i < nouvellesDonnees.length; i++) {
+	    	// Supprimer les guillemets doubles
+	    	nouvellesDonnees[i] = nouvellesDonnees[i].replaceAll("^\"|\"$", "");
+	    }
 		
-		String[] donnees;
-		
-		donnees = donneesQuestion.split(REGEX_DONNEE_ENTIERE, -1);
-		
-		if (donnees[0] == null || donnees[0].isBlank()) {
-			donnees[0] = "Général";
+		if (nouvellesDonnees[0] == null || nouvellesDonnees[0].isBlank()) {
+			nouvellesDonnees[0] = "Général";
 		}
 		
-		return donnees;
+		return nouvellesDonnees;
 	}
 	
 	
@@ -258,12 +268,11 @@ public class Import {
 		}
 		
 		reponsesFausses = new String[] {
-			donneesQuestion[4].trim(), 
-			donneesQuestion[5].trim(),
-			donneesQuestion[6].trim(), 
-			donneesQuestion[7].trim()
+			donneesQuestion[4] != null ? donneesQuestion[4].trim() : null,
+			donneesQuestion[5] != null ? donneesQuestion[5].trim() : null,
+			donneesQuestion[6] != null ? donneesQuestion[6].trim() : null,
+			donneesQuestion[7] != null ? donneesQuestion[7].trim() : null
 		};
-		
 		
 		return jeu.indiceQuestion(intituleQuestion, intituleCategorie,
 				                  reponseJuste, reponsesFausses) != -1;
