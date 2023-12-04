@@ -115,8 +115,10 @@ public class FeedbackControleur {
 			 conteneurReponseFausse,
 			 conteneurReponseVraie;
 		
-		Label intituleQuestion,
-			  statutQuestion,
+		Text intituleQuestion,
+			 messageFeedback;
+		
+		Label statutQuestion,
 			  reponseFausse,
 			  reponseVraie;
 		
@@ -167,7 +169,8 @@ public class FeedbackControleur {
 						.getResource(CHEMIN_RELATIF_IMAGES 
 								     + NOM_FICHIER_COCHE).toString());
 		
-		intituleQuestion = new Label();
+		intituleQuestion = new Text();
+		intituleQuestion.setWrappingWidth(512.);
 		intituleQuestion.getStyleClass().add("intitule-question");
 		intituleQuestion.getStyleClass().add("longueur-majeure");
 		intituleQuestion.setText(questionCourante.getIntitule());
@@ -181,6 +184,7 @@ public class FeedbackControleur {
 		intituleStatutConteneur = new HBox();
 		intituleStatutConteneur.getStyleClass().add("feedback-conteneur");
 		intituleStatutConteneur.getStyleClass().add("centrer");
+		intituleStatutConteneur.getStyleClass().add("vbox-liste");
 		intituleStatutConteneur.getChildren().add(intituleQuestion);
 		intituleStatutConteneur.getChildren().add(statutQuestion);
 		
@@ -220,7 +224,13 @@ public class FeedbackControleur {
 		conteneurReponseVraie.getChildren().add(iconeReponseVraie);
 		conteneurReponseVraie.getChildren().add(reponseVraie);
 		
+		messageFeedback = new Text();
+		messageFeedback.setWrappingWidth(512.);
+		messageFeedback.getStyleClass().add("message-feedback");
+		messageFeedback.setText(questionCourante.getFeedback());
+		
 		feedbackConteneur.getChildren().add(conteneurReponseVraie);
+		feedbackConteneur.getChildren().add(messageFeedback);
 		
 		this.affichageFeedback.getChildren().add(feedbackConteneur);
 	}
