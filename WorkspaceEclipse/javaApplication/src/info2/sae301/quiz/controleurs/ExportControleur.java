@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -63,6 +61,18 @@ public class ExportControleur {
 	
 	private final static String ERREUR_CLIENT_CONNECTE
 	= "Un client est déjà connecté au serveur.";
+	
+	private final static String AIDE_TITRE = "EXPORTATION DE QUESTIONS";
+	
+	private final static String AIDE_TEXTE
+	= """
+	  Il est possible d’exporter ses questions vers
+	  un ordinateur distant du même réseau.
+	  
+	  Pour cela, sélectionnez des catégories et/ou des questions à exporter.
+	  Exporter une catégorie revient à exporter l'ensemble des questions
+	  contenues dans cette catégorie.
+	  """;
 	
 	/** 
 	 * Titre du message d'erreur de recherche de 
@@ -222,6 +232,15 @@ public class ExportControleur {
 	}
 	
 	
+	/**
+	 * Affichage d'une pop-up d'aide concernant l'export des questions.
+	 */
+	@FXML
+	private void actionBoutonAider() {
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
+	}
+	
+	
 	/** Sélectionner des catégories. */
 	@FXML
 	private void choixSelectionnerCategories() {
@@ -230,7 +249,6 @@ public class ExportControleur {
 		
 		if (this.choixSelection != 'C') {
 			this.choixSelection = 'C';
-			System.out.println("CHARGEMENT DES CATÉGORIES !");
 			this.chargementSelectionCategories();
 		}
 	}
@@ -244,7 +262,6 @@ public class ExportControleur {
 		
 		if (this.choixSelection != 'Q') {
 			this.choixSelection = 'Q';
-			System.out.println("CHARGEMENT DES QUESTIONS !");
 			this.chargementSelectionQuestions();
 		}
 	}

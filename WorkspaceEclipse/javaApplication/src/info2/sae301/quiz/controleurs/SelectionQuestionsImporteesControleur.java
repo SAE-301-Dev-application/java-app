@@ -5,15 +5,18 @@
 
 package info2.sae301.quiz.controleurs;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
-import info2.sae301.quiz.Quiz;
-import info2.sae301.quiz.modeles.Jeu;
-import info2.sae301.quiz.modeles.Question;
+import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
 import info2.sae301.quiz.modeles.reseau.Import;
+import static info2.sae301.quiz.controleurs.AlerteControleur.autreAlerte;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
@@ -31,11 +34,40 @@ import javafx.scene.layout.VBox;
  */
 public class SelectionQuestionsImporteesControleur {
 	
-	/**
-	 * Récupération de l'instance du jeu créée dans la classe Quiz.
-	 * Cette instance permet la gestion des questions et catégories.
-	 */
-	private Jeu jeu = Quiz.jeu;
+	private final static String IMPORTATION_SUCCESS_TITRE
+	= "IMPORTATION TERMINÉE";
+	
+	private final static String IMPORTATION_SUCCESS_MESSAGE
+	= "L'importation de %d question(s) s'est terminée avec succès.";
+	
+	private final static String ERREUR_QUESTIONS_EXISTANTES_TITRE
+	= "AUCUNE QUESTION A IMPORTER";
+	
+	private final static String ERREUR_QUESTIONS_EXISTANTES_MESSAGE
+	= "Toutes les questions importées ont déjà été créées ou importées.";
+	
+	private final static String AIDE_TITRE = "SELECTION DE QUESTIONS";
+	
+	private final static String AIDE_TEXTE
+	= """
+	  Vous devez sélectionner les checkboxs en face des questions
+	  que vous souhaitez importer sur votre jeu.
+	  
+	  Les questions n'étant pas affichées existent déjà dans vos données.
+	  """;
+	
+	/** Toutes les questions dont la checkbox a été sélectionnée. */
+	private ArrayList<String> questionsSelectionnees = new ArrayList<>();
+	
+	/** Indice de la première question affichée sur la "page" courante. */
+	private int indiceQuestion; 
+	
+	/** Association de toutes les questions à leur checkbox */
+	private HashMap<String, CheckBox> toutesLesQuestions = new HashMap<>();
+	
+	private ArrayList<String> listeQuestionsImportees;
+	
+	private int nombreQuestionsDejaExistantes;
 	
 	@FXML
 	private VBox vBoxQuestions;
@@ -47,17 +79,6 @@ public class SelectionQuestionsImporteesControleur {
 	private Button boutonSuivant;
 	
 	
-	/** Toutes les questions dont la checkbox a été sélectionnée. */
-	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
-	
-	/** Indice de la première question affichée sur la "page" courante. */
-	private int indiceQuestion; 
-	
-	/** Association de toutes les questions à leur checkbox */
-	private HashMap<Question, CheckBox> toutesLesQuestions = new HashMap<>();
-	
-	private ArrayList<Question> listeQuestionsImportees;
-	
 	/**
 	 * Initialisation de la vue avec le style css correspondant et 
 	 * l'affichage des questions et du bouton suivant.
@@ -66,36 +87,81 @@ public class SelectionQuestionsImporteesControleur {
 	private void initialize() {
 		listeQuestionsImportees = Import.getQuestionsImportees();
 		
-		indiceQuestion = AffichageQuestionsControleur.indiceQuestion;
-
-		System.out.println(this.listeQuestionsImportees);
+		this.nombreQuestionsDejaExistantes = 0;
 		
-		initialiserToutesLesQuestions();
-		afficherQuestions();
+		indiceQuestion = 0;
+		
+		CompletableFuture.supplyAsync(() -> {
+			initialiserToutesLesQuestions();
+			return "ok";
+        }).thenAccept(result -> {
+        	
+            Platform.runLater(() -> {
+        		if (this.nombreQuestionsDejaExistantes
+    			    == this.listeQuestionsImportees.size()) {
+    				
+    				this.listeQuestionsImportees = null;
+    				
+    				erreurQuestionsDejaExistantes();
+    				
+    				NavigationControleur.changerVue("Import.fxml");
+    				
+    			} else {
+    				afficherQuestions();
+    			}
+            });
+        });
 	}
 	
 	/**
-	 * initialisation de toutes les checkboxs représentent
+	 * Initialisation de toutes les checkboxs représentant
 	 * les questions selon le filtre de catégorie.
 	 */
 	private void initialiserToutesLesQuestions() {
+		String questionCourante,
+		       intituleQuestionC;
+		
+		String[] donneesQuestionCourante;
+		
 		toutesLesQuestions.clear();
 
 		for (int i = 0; i < this.listeQuestionsImportees.size(); i++) {
 			
-			Question questionCourante = this.listeQuestionsImportees.get(i);
-			CheckBox checkBoxQuestion = new CheckBox();
+			questionCourante = this.listeQuestionsImportees.get(i);
 			
-			toutesLesQuestions.put(questionCourante, checkBoxQuestion);
+			// Pour résoudre l'erreur de l'évènement onMouseClicked
+			final String DONNEES_QUESTION = questionCourante;
 			
-	    	checkBoxQuestion.setId("" + i);
-	    	checkBoxQuestion.setText(questionCourante.getIntitule().replaceAll("\n", " "));
-	    	checkBoxQuestion.getStyleClass().add("checkbox-margin");
-			checkBoxQuestion.getStyleClass().add("intituleCategorieQuestion");
-			checkBoxQuestion.getStyleClass().add("intitule-padding-left");
-			checkBoxQuestion.setOnMouseClicked(event -> {
-				selectionnerQuestion(questionCourante, checkBoxQuestion);
-			});
+			donneesQuestionCourante
+			= Import.extraireDonneesQuestion(questionCourante);
+			
+			for (int indiceDonnee = 0;
+				 indiceDonnee < donneesQuestionCourante.length;
+			     indiceDonnee++) {
+				
+				donneesQuestionCourante[indiceDonnee]
+				= Import.retirerGuillemetsInvalides(donneesQuestionCourante[indiceDonnee]);
+			}
+			
+			intituleQuestionC = donneesQuestionCourante[2];
+			
+			if (Import.verificationQuestionExiste(donneesQuestionCourante)) {
+				nombreQuestionsDejaExistantes++;
+			} else {
+				CheckBox checkBoxQuestion = new CheckBox();
+				
+				toutesLesQuestions.put(intituleQuestionC, checkBoxQuestion);
+				
+				checkBoxQuestion.setId("" + i);
+				checkBoxQuestion.setText(intituleQuestionC.replaceAll("\n", " "));
+				checkBoxQuestion.getStyleClass().add("checkbox-margin");
+				checkBoxQuestion.getStyleClass().add("intituleCategorieQuestion");
+				checkBoxQuestion.getStyleClass().add("intitule-padding-left");
+				
+				checkBoxQuestion.setOnMouseClicked(event -> {
+					selectionnerQuestion(DONNEES_QUESTION, checkBoxQuestion);
+				});	
+			}			
 		}
 	}
 	
@@ -117,7 +183,7 @@ public class SelectionQuestionsImporteesControleur {
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	        vBoxQuestions.getChildren().add(
 				toutesLesQuestions.get(
-						this.toutesLesQuestions.keySet().toArray()[i]
+					this.toutesLesQuestions.keySet().toArray()[i]
 				)
 			);
 	    }
@@ -135,19 +201,12 @@ public class SelectionQuestionsImporteesControleur {
 	 * 
 	 * @param indiceQestion Indice de la question sélectionnée.
 	 */
-	private void selectionnerQuestion(Question question, CheckBox checkBox) {
+	private void selectionnerQuestion(String intituleQuestion, CheckBox checkBox) {
 		if (checkBox.isSelected()) {
-			this.questionsSelectionnees.add(question);
+			this.questionsSelectionnees.add(intituleQuestion);
 		} else {
-			this.questionsSelectionnees.remove(question);
+			this.questionsSelectionnees.remove(intituleQuestion);
 		}
-		
-		System.out.println("Questions sélectionnées : ");
-		
-		for (Question qSelectCourante : this.questionsSelectionnees) {
-			System.out.println("- " + qSelectCourante.getIntitule());
-		}
-		System.out.println();
 	}
 	
 	/**
@@ -159,7 +218,6 @@ public class SelectionQuestionsImporteesControleur {
 		// On recule de 10 questions
 		indiceQuestion -= 10;
 	    afficherQuestions();
-	    System.out.println("Suppression : " + indiceQuestion);
 	}
 	
 	/**
@@ -168,19 +226,18 @@ public class SelectionQuestionsImporteesControleur {
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
-		// On avance de 10 catégories
+		// On avance de 10 questions
 		indiceQuestion += 10;
 		afficherQuestions();
-		System.out.println("Suppression : " + indiceQuestion);
 	}
 	
 	/**
-	 * Redirection vers la pop-up de la suppression des questions
+	 * Affichage d'une pop-up d'aide concernant la sélection des questions
+	 * à importer.
 	 */
 	@FXML
 	private void actionBoutonAider() {
-		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
-				              AffichageQuestionsControleur.AIDE_TEXTE);
+		AlerteControleur.aide(AIDE_TITRE, AIDE_TEXTE);
 	}
 	
     /**
@@ -189,16 +246,56 @@ public class SelectionQuestionsImporteesControleur {
 	@FXML
 	private void actionBoutonAnnuler() {
 		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
-		NavigationControleur.changerVue("AffichageQuestions.fxml");
+		NavigationControleur.changerVue("Import.fxml");
 	}
 	
 	@FXML
-	private void actionBoutonEnregistrer() {
-		System.out.println("ENREGISTREMENT...");
+	private void actionBoutonEnregistrer() throws IOException {
+		int nombreQuestionsCrees;
 		
-		for (Question questionCourante: this.questionsSelectionnees) {
-			//
-			// OutilsCSV.ecrireFichierCSV(lignesAjoutees);
+		nombreQuestionsCrees = 0;
+		
+		System.out.println("\nEnregistrement des questions sélectionnées");
+		
+		System.out.println("\nQuestions à créer :");
+		
+		for (String questionCourante: questionsSelectionnees) {
+			Import.creerQuestion(questionCourante);
+			nombreQuestionsCrees++;
 		}
+		
+		OutilsCSV.ecrireFichierCSV(
+			Import.getLignesQuestionsCrees().toArray(new String[0])
+		);
+		
+		indicationStatutImportation(nombreQuestionsCrees);
+		
+		NavigationControleur.changerVue("Import.fxml");
 	}
+	
+	/**
+	 * Indication via une pop-up du nombre de questions importées
+	 * après la réussite de l'import.
+	 */
+	private void indicationStatutImportation(int nombreQuestionsCrees) {
+		String messageImportationSucces;
+		
+		messageImportationSucces 
+		= String.format(IMPORTATION_SUCCESS_MESSAGE, nombreQuestionsCrees);
+
+		autreAlerte(messageImportationSucces, IMPORTATION_SUCCESS_TITRE, 
+					AlertType.INFORMATION);
+	}
+	
+	
+	/**
+	 * Affiche une pop-up d'erreur indiquant que toutes les questions
+	 * importées existent déjà.
+	 */
+	private static void erreurQuestionsDejaExistantes() {
+		AlerteControleur.autreAlerte(ERREUR_QUESTIONS_EXISTANTES_MESSAGE,
+                                     ERREUR_QUESTIONS_EXISTANTES_TITRE,
+                                     AlertType.ERROR);
+	}
+
 }

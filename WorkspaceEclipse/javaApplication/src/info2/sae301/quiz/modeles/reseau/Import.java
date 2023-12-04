@@ -17,10 +17,8 @@ import javafx.stage.FileChooser;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.controleurs.NavigationControleur;
-import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Question;
-import info2.sae301.quiz.modeles.fichiers.OutilsCSV;
 import info2.sae301.quiz.exceptions.FormatCSVInvalideException;
 import info2.sae301.quiz.exceptions.AdresseIPInvalideException;
 
@@ -44,18 +42,17 @@ public class Import {
 	private final static String ERREUR_CHEMIN_INEXISTANT
 	= "Ce chemin n'existe pas ou plus.";
 	
+	private static final String ERREUR_AUCUNE_QUESTION_IMPORTEE
+	= "Aucune question n'a été importée.";
+	
 	/** Instance de jeu courante. */
 	private static Jeu jeu;
 	
-	private static ArrayList<Question> questionsImportees;
+	private static int nombreTotalQuestionsCrees = 0;
 	
-	private int nombreTotalQuestions;
+	private static ArrayList<String> questionsImportees = new ArrayList<>();
 	
-	/**
-	 * Les questions du fichier CSV non ajoutées à la liste
-	 * des questions existantes.
-	 */
-	private ArrayList<String> questionsNonAjoutees;
+	private static ArrayList<String> lignesQuestionsCrees = new ArrayList<>();
 	
 	/** Chemin du fichier sélectionné. */
 	private String cheminFichier;
@@ -66,9 +63,6 @@ public class Import {
 	 */
 	public Import() {
 		jeu = Quiz.jeu;
-		
-		this.nombreTotalQuestions = 0;
-		this.questionsNonAjoutees = new ArrayList<>();
 	}
 	
 	
@@ -136,17 +130,20 @@ public class Import {
 						String.format(ERREUR_LIGNE_INVALIDE, numeroLigneCourante)
 					);
 				} else {
-					lignesCSV.add(ligneCourante);					
+					lignesCSV.add(ligneCourante);
 				}
 			}
 			
-			questionsImportees = instanciationQuestions(lignesCSV.toArray(new String[0]));
-			
-			// OutilsCSV.ecrireFichierCSV(questionsCrees);
+			for (String questionCourante : lignesCSV.toArray(new String[0])) {
+				questionsImportees.add(questionCourante);
+			}
 		}
 		
 		contenuFichier.close();
 		
+		if (questionsImportees.size() <= 0) {
+			throw new IllegalArgumentException(ERREUR_AUCUNE_QUESTION_IMPORTEE);
+		}
 	}
 	
 	
@@ -182,7 +179,7 @@ public class Import {
 	 */
 	public void importerADistance(String adresseServeur)
 	throws SocketTimeoutException, IllegalArgumentException, Exception {
-
+		
 		// Echange réseau avec Diffie Hellman
 		Client client;
 
@@ -199,10 +196,17 @@ public class Import {
 		 */
 
 		try {
-			questionsImportees = instanciationQuestions(client.recevoirQuestions(adresseServeur));
+			for (String questionCourante : client.recevoirQuestions(adresseServeur)) {
+				questionsImportees.add(questionCourante);
+			}
 			
-			NavigationControleur
-			.changerVue("SelectionQuestionsImportees.fxml");
+			if (questionsImportees.size() > 0) {
+				NavigationControleur
+				.changerVue("SelectionQuestionsImportees.fxml");				
+			} else {
+				throw new IllegalArgumentException(ERREUR_AUCUNE_QUESTION_IMPORTEE);
+			}
+			
 		} catch (SocketTimeoutException e) {
 			throw e;
 		} catch (IllegalArgumentException e) {
@@ -214,113 +218,59 @@ public class Import {
 	
 	
 	/**
-	 * Créé et ajoute à la liste des questions en mémoire les questions dont
-	 * les données sont en paramètre sous forme de chaînes de caractères.
+	 * Extrait les données d'une question écrite sous forme de chaîne de
+	 * caractères et les renvoie dans un tableau.
 	 * 
-	 * @param questions Chaînes de caractères contenant
-	 *                  les données des question à créer.
-	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
-	 * @throws IOException si l'écriture du CSV échoue.
+	 * @param donneesQuestion Les données de la question à extraire.
+	 * @return Un tableau contenant les données extraites de la question
+	 *         sous forme de chaîne de caractères en paramètre.
 	 */
-	public ArrayList<Question> instanciationQuestions(String[] questions)
-	throws IllegalArgumentException, IOException {
+	public static String[] extraireDonneesQuestion(String donneesQuestion) {
 		final String REGEX_DONNEE_ENTIERE = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 		
-		Question instanceQuestionCourante;
+		String[] donnees;
 		
-		Categorie categorieQuestionCourante;
+		donnees = donneesQuestion.split(REGEX_DONNEE_ENTIERE, -1);
 		
-		String questionCourante,
-		       intituleCategorie,
-		       intituleQuestion,
-		       reponseJuste,
-		       feedback;
-		
-		String[] donneesQuestionCourante,
-		         reponsesFausses;
-		
-		ArrayList<Question> listeQuestions;
-		
-		int niveauDifficulte;
-		
-		System.out.println("Questions à sélectionner : ");
-		
-		listeQuestions = new ArrayList<Question>();
-		
-		for (int indiceQuestion = 0;
-			 indiceQuestion < questions.length;
-			 indiceQuestion++) {
-			
-			questionCourante = questions[indiceQuestion];
-		
-			donneesQuestionCourante
-			= questionCourante.split(REGEX_DONNEE_ENTIERE, -1);
-			
-			for (int indiceDonnee = 0;
-				 indiceDonnee < donneesQuestionCourante.length;
-				 indiceDonnee++) {
-				
-				donneesQuestionCourante[indiceDonnee]
-				= retirerGuillemetsInvalides(donneesQuestionCourante[indiceDonnee]);
-				
-				//System.out.print(donneesDecoupees[indiceDonnee] + "\t");
-			}
-			
-			intituleCategorie = donneesQuestionCourante[0].trim();
-			
-			try {
-				niveauDifficulte
-				= Integer.parseInt(donneesQuestionCourante[1].trim());
-			} catch (NumberFormatException e) {
-				niveauDifficulte = 1;
-			}
-			
-			System.out.println("TEEEEEEEEEEST :");
-			
-			for (String ligne: donneesQuestionCourante) System.out.println(ligne);
-			
-			intituleQuestion = donneesQuestionCourante[2].trim();
-			reponseJuste = donneesQuestionCourante[3].trim();
-			
-			reponsesFausses = new String[] {
-				donneesQuestionCourante[4].trim(), 
-				donneesQuestionCourante[5].trim(),
-				donneesQuestionCourante[6].trim(), 
-				donneesQuestionCourante[7].trim()
-			};
-			
-			feedback = donneesQuestionCourante[8].trim();
-
-			categorieQuestionCourante = jeu.indiceCategorie(intituleCategorie) == -1
-					                    ? jeu.creerCategorie(intituleCategorie)
-					                    : jeu.getCategorieParIntitule(intituleCategorie);
-			
-			this.nombreTotalQuestions++;
-			
-			if (jeu.indiceQuestion(intituleQuestion, intituleCategorie,
-					               reponseJuste, reponsesFausses) == -1) {
-				
-				System.out.println(intituleQuestion);
-				
-				if (feedback == null || feedback.isEmpty()) {
-					instanceQuestionCourante = new Question(intituleQuestion, reponseJuste,
-					           reponsesFausses, niveauDifficulte, categorieQuestionCourante);
-				} else {
-					instanceQuestionCourante = new Question(intituleQuestion, reponseJuste,
-					           reponsesFausses, niveauDifficulte,
-					           feedback, categorieQuestionCourante);
-				}
-				
-				listeQuestions.add(instanceQuestionCourante);
-				
-			} else {
-				this.questionsNonAjoutees.add(intituleQuestion);
-			}
+		if (donnees[0] == null || donnees[0].isBlank()) {
+			donnees[0] = "Général";
 		}
 		
-		System.out.println();
+		return donnees;
+	}
+	
+	
+	/**
+	 * Vérification de l'existance d'une question en mémoire.
+	 * 
+	 * @param donneesQuestion Les données de la question à vérifier.
+	 * @return true si la question existe en mémoire, false sinon.
+	 */
+	public static boolean verificationQuestionExiste(String[] donneesQuestion) {
+		String intituleQuestion,
+		       intituleCategorie,
+		       reponseJuste;
 		
-		return listeQuestions;
+		String[] reponsesFausses;
+		
+		intituleQuestion = donneesQuestion[2].trim();
+		intituleCategorie = donneesQuestion[0].trim();
+		reponseJuste = donneesQuestion[3].trim();
+		
+		if (jeu.indiceCategorie(intituleCategorie) == -1) {
+			return false;
+		}
+		
+		reponsesFausses = new String[] {
+			donneesQuestion[4].trim(), 
+			donneesQuestion[5].trim(),
+			donneesQuestion[6].trim(), 
+			donneesQuestion[7].trim()
+		};
+		
+		
+		return jeu.indiceQuestion(intituleQuestion, intituleCategorie,
+				                  reponseJuste, reponsesFausses) != -1;
 	}
 	
 	
@@ -328,50 +278,75 @@ public class Import {
 	 * Créé et ajoute à la liste des questions en mémoire la question dont
 	 * les données sont en paramètre sous forme de chaînes de caractères.
 	 * 
-	 * @param question Instance de la question à créer
+	 * @param questions Chaînes de caractères contenant
+	 *                  les données de la question à créer.
 	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
-	 * @throws IOException si l'écriture du CSV échoue.
 	 */
-	public String creerQuestion(Question question)
-	throws IllegalArgumentException, IOException {
+	public static void creerQuestion(String donneesQuestion)
+	throws IllegalArgumentException {
 		String intituleCategorie,
 		       intituleQuestion,
 		       reponseJuste,
 		       feedback;
 		
-		String[] reponsesFausses;
+		String[] donneesQuestionCourante,
+		         reponsesFausses;
+		
+		Question questionCreee;
 		
 		int niveauDifficulte;
+	
+		donneesQuestionCourante
+		= extraireDonneesQuestion(donneesQuestion);
 		
-		intituleQuestion = question.getIntitule();
-		intituleCategorie = question.getCategorie().getIntitule();
-		reponseJuste = question.getReponseJuste();
-		reponsesFausses = question.getReponsesFausses();
-		feedback = question.getFeedback();
-		niveauDifficulte = question.getDifficulte();
-		
-		System.out.println("Question à créer : ");
+		for (int indiceDonnee = 0;
+			 indiceDonnee < donneesQuestionCourante.length;
+			 indiceDonnee++) {
 			
+			donneesQuestionCourante[indiceDonnee]
+			= retirerGuillemetsInvalides(donneesQuestionCourante[indiceDonnee]);
+		}
+		
+		intituleCategorie = donneesQuestionCourante[0].trim();
+		
+		try {
+			niveauDifficulte
+			= Integer.parseInt(donneesQuestionCourante[1].trim());
+		} catch (NumberFormatException e) {
+			niveauDifficulte = 1;
+		}
+		
+		intituleQuestion = donneesQuestionCourante[2].trim();
+		reponseJuste = donneesQuestionCourante[3].trim();
+		
+		reponsesFausses = new String[] {
+			donneesQuestionCourante[4].trim(), 
+			donneesQuestionCourante[5].trim(),
+			donneesQuestionCourante[6].trim(), 
+			donneesQuestionCourante[7].trim()
+		};
+		
+		feedback = donneesQuestionCourante[8].trim();
+		
 		if (jeu.indiceCategorie(intituleCategorie) == -1) {
 			jeu.creerCategorie(intituleCategorie);
 		}
 		
-		this.nombreTotalQuestions++;
-		
 		if (jeu.indiceQuestion(intituleQuestion, intituleCategorie,
 				               reponseJuste, reponsesFausses) == -1) {
 			
-			System.out.println(intituleQuestion);
+			System.out.println("- " + intituleQuestion);
 			
-			jeu.creerQuestion(intituleQuestion, reponseJuste,
-					          reponsesFausses, niveauDifficulte,
-					          feedback, intituleCategorie);
+			questionCreee
+			= jeu.creerQuestion(intituleQuestion, reponseJuste,
+					            reponsesFausses, niveauDifficulte,
+					            feedback, intituleCategorie);
 			
+			nombreTotalQuestionsCrees++;
+			
+			lignesQuestionsCrees.add(questionCreee.donneesToString());
+		
 		}
-		
-		System.out.println();
-		
-		return question.donneesToString();
 	}
 	
 	
@@ -407,21 +382,6 @@ public class Import {
 	}
 	
 	
-	/** @return Nombre total de questions (ajoutées ou non). */
-	public int getNombreTotalQuestions() {
-		return this.nombreTotalQuestions;
-	}
-	
-	
-	/** 
-	 * @return Liste des questions non ajoutées 
-	 * (déjà existante ou autre). 
-	 */
-	public ArrayList<String> getQuestionsNonAjoutees() {
-		return this.questionsNonAjoutees;
-	}
-	
-	
 	/**
 	 * Retrait des guillemets doublés par le formattage CSV d'une phrase
 	 * passée en paramètre.
@@ -429,7 +389,7 @@ public class Import {
 	 * @param phrase Phrase à modifier
 	 * @return La phrase avec des guillemets initiaux
 	 */
-	private static String retirerGuillemetsInvalides(String phrase) {
+	public static String retirerGuillemetsInvalides(String phrase) {
 		final char CARACTERE_QUELCONQUE = 'µ';
 		
 		final char GUILLEMET = '"';
@@ -460,6 +420,12 @@ public class Import {
 		
 		return resultat;
 	}
+	
+	
+	/** @return Nombre total de questions créées. */
+	public static int getNombreTotalQuestionsCrees() {
+		return nombreTotalQuestionsCrees;
+	}
 
 
 	/** @return Chemin du fichier courant. */
@@ -469,8 +435,14 @@ public class Import {
 	
 	
 	/** @return Liste des questions importées */
-	public static ArrayList<Question> getQuestionsImportees() {
+	public static ArrayList<String> getQuestionsImportees() {
 		return questionsImportees;
+	}
+	
+	
+	/** @return Liste lignes des questions créées. */
+	public static ArrayList<String> getLignesQuestionsCrees() {
+		return lignesQuestionsCrees;
 	}
 	
 }
