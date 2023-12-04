@@ -1,5 +1,5 @@
 /*
- * Testjeu.java             									     6 nov. 2023
+ * TestJeu.java             									     6 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -9,6 +9,7 @@ import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Jeu;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +25,11 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests unitaires de la classe {@link info2.sae301.quiz.modeles.Jeu}.
  * 
- * @author FAUGIERES Loïc
- * @author GUIRAUD Simon
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
  */
 class TestJeu {
 	
@@ -43,7 +48,7 @@ class TestJeu {
 	
 	private ArrayList<Question> listeQuestionsTest = new ArrayList<Question>();
 	
-	Categorie Tests = new Categorie("Tests");
+	Categorie tests;
 	
 	@BeforeEach
 	void init() {
@@ -51,7 +56,13 @@ class TestJeu {
 		listeInitiale.add(new Categorie(nomsCategories[0]));
 		for (int i = 0; i < nomsCategories.length; i++) {
 			listeCategoriesTest.add(new Categorie(nomsCategories[i]));
+			if (!nomsCategories[i].equals("Général")) {
+				jeu.creerCategorie(nomsCategories[i].trim());
+			}
 		}
+		
+		listeCategoriesTest.add(new Categorie("Tests"));
+		tests = jeu.creerCategorie("Tests");
 		
 		jeu.supprimerToutesQuestions();
 		for (int i = 0; i <= 10; i++) {
@@ -61,12 +72,21 @@ class TestJeu {
 			    		     new String[] {
 			    		         "Réponse fausse 1", "Réponse fausse 2",
 			    		         "Réponse fausse 3"
-			    		     }, 2, Tests));
+			    		     }, 2, "feedback", tests));
+			jeu.creerQuestion("Intitulé de question " + i,
+	    		     		  "Ceci est la réponse juste",
+				    		  new String[] {
+				    		      "Réponse fausse 1", "Réponse fausse 2",
+				    		      "Réponse fausse 3"
+				    		  }, 2, "feedback", tests.getIntitule());
 		}
 	}
 	
+	
 	/**
-	 * Vérification que les listes en paramètre aient les mêmes catégories.
+	 * Vérification que les listes en paramètre aient les mêmes 
+	 * catégories.
+	 * 
 	 * @param liste1 La première liste à vérifier.
 	 * @param liste2 La seconde liste à vérifier.
 	 * @return true si les listes ont les mêmes catégories, false sinon.
@@ -91,7 +111,9 @@ class TestJeu {
 	}
 	
 	/**
-	 * Vérification que les listes en paramètre aient les mêmes questions.
+	 * Vérification que les listes en paramètre aient les mêmes 
+	 * questions
+	 * .
 	 * @param liste1 La première liste à vérifier.
 	 * @param liste2 La seconde liste à vérifier.
 	 * @return true si les listes ont les mêmes questions, false sinon.
@@ -124,6 +146,8 @@ class TestJeu {
 		ArrayList<Categorie> categories
 		= new ArrayList<Categorie>(listeInitiale);
 		
+		jeu.supprimerToutesCategories();
+		
 		assertTrue(listesMemesCategories(categories,
 				                         jeu.getToutesLesCategories()));
 		
@@ -132,8 +156,7 @@ class TestJeu {
 			categories.add(new Categorie(nomsCategories[i]));
 
 			assertEquals(categories.get(i).getIntitule(),
-					     jeu.getToutesLesCategories()
-					                      .get(i).getIntitule());
+					     jeu.getToutesLesCategories().get(i).getIntitule());
 		}
 	}
 	
@@ -146,17 +169,66 @@ class TestJeu {
 		ArrayList<Question> listeQuestions
 		= new ArrayList<Question>();
 		
+		jeu.supprimerToutesQuestions();
+		
 		assertTrue(listesMemesQuestions(listeQuestions,
 				                        jeu.getToutesLesQuestions()));
 		
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
+			Question question = listeQuestionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+						      question.getReponsesFausses(), question.getDifficulte(),
+						      question.getFeedback(), question.getCategorie().getIntitule());
 			listeQuestions.add(listeQuestionsTest.get(i));
 
 			assertEquals(listeQuestions.get(i).getIntitule(),
-					     jeu.getToutesLesQuestions()
-					                      .get(i).getIntitule());
+					     jeu.getToutesLesQuestions().get(i).getIntitule());
 		}
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#questionsCategorie(String)}.
+	 */
+	@Test
+	public void testQuestionsCategorie() {
+		ArrayList<Question> questions = jeu.questionsCategorie("Tests");
+		for (int i = 0; i < questions.size(); i++) {
+			assertEquals(listeQuestionsTest.get(i).getIntitule(),
+					     questions.get(i).getIntitule());
+		}
+		assertEquals(jeu.getToutesLesQuestions(),
+				     jeu.questionsCategorie("Toutes les catégories"));
+	}
+
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#getCategorieParIntitule(String)}.
+	 */
+	@Test
+	public void testGetCategorieParIntitule() {
+		Categorie categorie = jeu.getToutesLesCategories().get(0);
+		
+		assertEquals(categorie, jeu.getCategorieParIntitule(categorie.getIntitule()));
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#getCategoriesParIntitules(ArrayList)}.
+	 */
+	@Test
+	public void testGetCategoriesParIntitules() {
+		Categorie[] categories
+		= jeu.getToutesLesCategories().toArray(new Categorie[listeCategoriesTest
+		                                                     .size()]);
+		
+		ArrayList<String> intitules = new ArrayList<String>();
+		
+		for (Categorie categorie : jeu.getToutesLesCategories()) {
+			intitules.add(categorie.getIntitule());
+		}
+		
+		assertArrayEquals(categories, jeu.getCategoriesParIntitules(intitules));
 	}
 	
 	/**
@@ -165,6 +237,8 @@ class TestJeu {
 	 */
 	@Test
 	public void testSupprimerToutesCategories() {
+		jeu.supprimerToutesCategories();
+		
 		for (int i = 1; i < nomsCategories.length; i++) {
 			jeu.creerCategorie(nomsCategories[i]);
 		}
@@ -181,8 +255,12 @@ class TestJeu {
 	 */
 	@Test
 	public void testSupprimerToutesQuestions() {
+		jeu.supprimerToutesQuestions();
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
+			Question question = listeQuestionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+				              question.getReponsesFausses(), question.getDifficulte(),
+				              question.getFeedback(), question.getCategorie().getIntitule());
 		}
 		assertFalse(listesMemesQuestions(listeVide,
 					 				     jeu.getToutesLesQuestions()));
@@ -201,46 +279,54 @@ class TestJeu {
 			jeu.creerCategorie("Général");			
 		});
 		
-	    assertThrows(IndexOutOfBoundsException.class, () -> {
-	        jeu.getToutesLesCategories().get(1);
-	    });
-		
 		for (int i = 1; i < nomsCategories.length; i++) {
-			jeu.creerCategorie(nomsCategories[i]);
-			assertEquals(jeu.getToutesLesCategories().get(i).getIntitule(),
-					     listeCategoriesTest.get(i).getIntitule());
+			final int INDICE = i;
+			assertThrows(IllegalArgumentException.class, () -> {
+				jeu.creerCategorie(nomsCategories[INDICE]);			
+			});
 		}
+		jeu.supprimerToutesCategories();
+		
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			jeu.getToutesLesCategories().get(1);			
+		});
 	}
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#ajouterQuestion(Question)}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#creerQuestion(String, String, String[],
+	 *                                                    int, String, Categorie).
 	 */
 	@Test
-	public void testAjouterQuestion() {
-		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
-			assertEquals(jeu.getToutesLesQuestions()
-										 .get(i).getIntitule(),
-					     listeQuestionsTest.get(i).getIntitule());
-		}
-		jeu.ajouterQuestion(listeQuestionsTest.get(2));
-		assertTrue(listesMemesQuestions(listeQuestionsTest,
-									    jeu.getToutesLesQuestions()));
+	public void testCreerQuestion() {
+		// Question non existante sans erreurs d'argument
+		jeu.creerQuestion("Intitulé de la question", "Réponse Juste",
+			   			  new String[] {"réponse fausse 1", "réponse fausse 2"},
+			   			  1, null, "Tests");
+        assertThrows(IllegalArgumentException.class, () -> {
+	        jeu.creerQuestion("Intitulé de la question", "Réponse Juste",
+	       		              new String[] {"réponse fausse 1",
+	       		              		        "réponse fausse 2"},
+	       		              1, null, "Tests");
+	    });
 	}
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#supprimerCategorie(Categorie[])}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#supprimer(Categorie[])}.
 	 */
 	@Test
 	public void testSupprimerCategorie() {
+		jeu.supprimerToutesCategories();
+		
 		// Test de suppression de la catégorie "Général"
-		jeu.supprimerCategorie(listeInitiale.toArray(new Categorie[0]));
+		jeu.supprimer(listeInitiale.toArray(new Categorie[0]));
 		assertTrue(listesMemesCategories(listeInitiale,
 				                         jeu.getToutesLesCategories()));
 		
+		listeCategoriesTest = new ArrayList<Categorie>(Arrays.asList(new Categorie("Général")));
 		for (int i = 1; i < nomsCategories.length; i++) {
+			listeCategoriesTest.add(new Categorie(nomsCategories[i]));
 			jeu.creerCategorie(nomsCategories[i]);
 		}
 		
@@ -250,7 +336,7 @@ class TestJeu {
 			Categorie[] categoriesASupprimer = new Categorie[1];
 			categoriesASupprimer[0] = new Categorie(nomsCategories[i]);
 			
-			jeu.supprimerCategorie(categoriesASupprimer);
+			jeu.supprimer(categoriesASupprimer);
 			listeCategoriesTest.remove(1);
 			
 			assertTrue(listesMemesCategories(listeCategoriesTest,
@@ -264,7 +350,7 @@ class TestJeu {
 			categoriesASupprimer[j] = new Categorie(nomsCategories[i]);
 			listeCategoriesTest.remove(1);
 		}
-		jeu.supprimerCategorie(categoriesASupprimer); 
+		jeu.supprimer(categoriesASupprimer); 
 		
 		assertTrue(listesMemesCategories(listeCategoriesTest,
 				 						 jeu.getToutesLesCategories()));
@@ -272,22 +358,27 @@ class TestJeu {
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#supprimerQuestion(Question[])}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#supprimer(Question[])}.
 	 */
 	@Test
 	public void testSupprimerQuestion() {
 		ArrayList<Question> questionsTest = listeQuestionsTest;
 		
+		jeu.supprimerToutesQuestions();
+		
 		// Ajout à jeu des questions de questionsTest.
 		for (int i = 0; i < questionsTest.size(); i++) {
-			jeu.ajouterQuestion(questionsTest.get(i));
+			Question question = questionsTest.get(i);
+			jeu.creerQuestion(question.getIntitule(), question.getReponseJuste(),
+				      question.getReponsesFausses(), question.getDifficulte(),
+				      question.getFeedback(), question.getCategorie().getIntitule());
 		}
 		
 		// Tests de suppression de 1 question en 1 question
 		for (int i = 0; i < listeQuestionsTest.size() / 2; i++) {
 			Question[] questionsASupprimer = {questionsTest.get(0)};
 			
-			jeu.supprimerQuestion(questionsASupprimer);
+			jeu.supprimer(questionsASupprimer);
 			questionsTest.remove(0);
 			
 			assertTrue(listesMemesQuestions(questionsTest,
@@ -301,40 +392,104 @@ class TestJeu {
 			questionsASupprimer[i] = questionsTest.get(0);
 			questionsTest.remove(0);
 		}
-		jeu.supprimerQuestion(questionsASupprimer); 
+		jeu.supprimer(questionsASupprimer); 
 		
 		assertTrue(listesMemesQuestions(questionsTest,
 				 						jeu.getToutesLesQuestions()));
 	}
+
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#renommerCategorie(String, String)}.
+	 */
+	@Test
+	public void testRenommerCategorie() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			final String INTITULE = jeu.getToutesLesCategories().get(0).getIntitule();
+			jeu.renommerCategorie(INTITULE, "Autre");	
+		});
+		
+		String intituleInitial = jeu.getToutesLesCategories().get(1).getIntitule();
+		
+		jeu.renommerCategorie(intituleInitial, "AutreIntitule");
+		
+		assertNotEquals(intituleInitial,
+						jeu.getToutesLesCategories().get(1).getIntitule());
+		assertEquals("AutreIntitule", jeu.getToutesLesCategories().get(1).getIntitule());
+		
+	}
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#categorieExiste(String)}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#editerQuestion(int, String, String,
+	 *                                                     String[], int, String,
+	 *                                                     String)}.
 	 */
 	@Test
-	public void testCategorieExiste() {
+	public void testEditerQuestion() {
+		Question question = jeu.getToutesLesQuestions().get(0);
+		jeu.editerQuestion(0, "testt", "réponse juste",
+				           question.getReponsesFausses(), 1, "feedbackk",
+				           question.getCategorie().getIntitule());
+		assertEquals("réponse juste", question.getReponseJuste());
+		assertEquals("testt", question.getIntitule());
+		assertEquals(1, question.getDifficulte());
+		assertEquals("feedbackk", question.getFeedback());
+	}
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#indiceCategorie(String)}.
+	 */
+	@Test
+	public void testIndiceCategorie() {
 		for (String nom : nomsCategories) {
 			if (!nom.equals("Général")) {
-				assertEquals(-1, jeu.categorieExiste(nom));
-				jeu.creerCategorie(nom);
+				assertNotEquals(-1, jeu.indiceCategorie(nom));
 			}
-			assertNotEquals(-1, jeu.categorieExiste(nom));
+		}
+		jeu.supprimerToutesCategories();
+		for (String nom : nomsCategories) {
+			if (!nom.equals("Général")) {
+				assertEquals(-1, jeu.indiceCategorie(nom));				
+			}
 		}
 	}
 	
 	/**
 	 * Méthode de test de la méthode
-	 * {@link info2.sae301.quiz.modeles.Jeu#questionExiste(String)}.
+	 * {@link info2.sae301.quiz.modeles.Jeu#indiceQuestion(String)}.
 	 */
 	@Test
-	public void testQuestionExiste() {
+	public void testIndiceQuestion() {
+		jeu.supprimerToutesQuestions();
 		for (int i = 0; i < listeQuestionsTest.size(); i++) {
-			assertEquals(-1, jeu.questionExiste(listeQuestionsTest
-								.get(i).getIntitule()));
-			jeu.ajouterQuestion(listeQuestionsTest.get(i));
-			assertNotEquals(-1, jeu.questionExiste(listeQuestionsTest
-					 			   .get(i).getIntitule()));
+			Question question = listeQuestionsTest.get(i);
+			assertEquals(-1, jeu.indiceQuestion(question.getIntitule(),
+												question.getCategorie().getIntitule(),
+												question.getReponseJuste(),
+												question.getReponsesFausses()));
+			jeu.creerQuestion(question.getIntitule(),
+					          question.getReponseJuste(),
+					          question.getReponsesFausses(),
+					          question.getDifficulte(),
+					          question.getFeedback(),
+					          question.getCategorie().getIntitule());
+			assertNotEquals(-1, jeu.indiceQuestion(question.getIntitule(),
+					   						       question.getCategorie().getIntitule(),
+					   						       question.getReponseJuste(),
+					   						       question.getReponsesFausses()));
 		}
 	}
-
+	
+	/**
+	 * Méthode de test de la méthode
+	 * {@link info2.sae301.quiz.modeles.Jeu#equals(Object)}.
+	 */
+	@Test
+	public void testEquals() {
+		Jeu jeuTest = new Jeu();
+		assertTrue(jeuTest.equals(new Jeu()));
+	}
+	
 }

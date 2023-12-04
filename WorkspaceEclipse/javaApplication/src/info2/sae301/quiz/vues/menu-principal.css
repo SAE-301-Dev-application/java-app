@@ -3,6 +3,7 @@
 .pseudo {
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
+	-fx-font-size: 15px;
 }
 
 .titre {
@@ -16,7 +17,7 @@
 }
 
 .conteneur-boutons {
-	-fx-spacing: 10px;  /* FIXME: faire fonctionner le spacing, qui ne se met que sur SceneBuilder */
+	-fx-spacing: 10px;
 }
 
 .conteneurHbox {

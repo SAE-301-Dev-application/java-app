@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.SuppressionCategoriesControleur">
    <children>
@@ -14,7 +15,10 @@
             <String fx:value="arrondi" />
          </styleClass>
       </Button>
-      <Label graphicTextGap="8.0" layoutX="249.0" layoutY="30.0" prefHeight="70.0" prefWidth="303.0" styleClass="titre" stylesheets="@application.css" text="CATÉGORIES" />
+      <Label graphicTextGap="8.0" layoutX="129.0" layoutY="30.0" prefHeight="70.0" prefWidth="544.0" stylesheets="@application.css" text="SUPPRESION CATÉGORIE">
+         <styleClass>
+            <String fx:value="titre-long" />
+         </styleClass></Label>
       <Pane layoutX="34.0" layoutY="137.0" prefHeight="359.0" prefWidth="733.0" styleClass="rectangle-bleu-clair">
          <children>
             <VBox fx:id="vBoxCategories" layoutX="7.0" layoutY="6.0" prefHeight="298.0" prefWidth="733.0" styleClass="paddingVboxRectangle" />
@@ -35,11 +39,13 @@
             </Button>
          </children>
       </Pane>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="ANNULER" />
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="SUPPRIMER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" prefWidth="225.0" styleClass="bouton" text="      ANNULER" />
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonSupprimer" text="       SUPPRIMER">
          <styleClass>
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass></Button>
+      <SVGPath content="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" layoutX="-125.0" layoutY="289.0" onMouseClicked="#actionBoutonAnnuler" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
+      <SVGPath content="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" layoutX="325.0" layoutY="289.0" onMouseClicked="#actionBoutonSupprimer" scaleX="0.05" scaleY="0.05" styleClass="user-solid" />
    </children>
 </Pane>

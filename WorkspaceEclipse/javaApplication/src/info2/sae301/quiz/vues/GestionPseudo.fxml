@@ -9,36 +9,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.CreationCategoriesControleur">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info2.sae301.quiz.controleurs.GestionPseudoControleur">
    <children>
-      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#boutonAide" stylesheets="@application.css" text="?">
+      <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#actionBoutonAide" stylesheets="@application.css" text="?">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="arrondi" />
          </styleClass>
 	  </Button>
-      <Label layoutX="259.0" layoutY="43.0" styleClass="titre" text="CATÉGORIE">
+      <Label layoutX="270.0" layoutY="65.0" styleClass="titre-long" text="PSEUDONYME">
          <stylesheets>
-            <URL value="@creation-categorie.css" />
             <URL value="@application.css" />
          </stylesheets></Label>
       <VBox layoutX="36.0" layoutY="105.0" prefHeight="394.0" prefWidth="728.0">
          <children>
-            <TextField fx:id="nouveauNomCategorie" prefWidth="655.0" promptText="Nom catégorie (20 caractères max)" stylesheets="@creation-categorie.css" />
+            <TextField fx:id="pseudoEntre" prefWidth="655.0" promptText="Pseudonyme utilisateur (20 caractères max)" stylesheets="@application.css" />
+            <Label styleClass="texte-pseudo" text="Votre nom d’utilisateur sera utilisé par l’application pour personnaliser votre expérience." />
          </children>
          <styleClass>
             <String fx:value="conteneur-boutons" />
             <String fx:value="centrer" />
+            <String fx:value="vbox-categories-questions" />
          </styleClass>
       </VBox>
-      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonAnnuler" stylesheets="@creation-categorie.css" text="ANNULER">
+      <Button layoutX="36.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonAnnuler" stylesheets="@application.css" text="ANNULER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
             <String fx:value="boutonAnnuler" />
          </styleClass>
       </Button>
-      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#boutonEnregistrer" stylesheets="@creation-categorie.css" text="ENREGISTRER">
+      <Button layoutX="459.0" layoutY="515.0" mnemonicParsing="false" onAction="#actionBoutonEnregistrer" stylesheets="@application.css" text="ENREGISTRER">
          <styleClass>
             <String fx:value="boutonArrondi" />
             <String fx:value="bouton" />
@@ -50,5 +51,6 @@
    <stylesheets>
       <URL value="@application.css" />
       <URL value="@menu-principal.css" />
+      <URL value="@gestion-pseudo.css" />
    </stylesheets>
 </Pane>

@@ -1,26 +1,35 @@
+/*
+ * CreationQuestionControleur.java							         9 nov. 2023
+ * IUT de Rodez, pas de copyright, ni de "copyleft".
+ */
+
 package info2.sae301.quiz.controleurs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.modeles.Jeu;
 import info2.sae301.quiz.modeles.Categorie;
-import info2.sae301.quiz.modeles.Question;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
+/**
+ * Contrôleur FXML de la vue CreationQuestion qui permet la création 
+ * d'une nouvelle question.
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 public class CreationQuestionControleur {
 	
-	private static final String TITRE_ALERTE = "Erreur de création";
-
-	private static final String MESSAGE_ERREUR_TROP_DE_CARACTERE =
-			"Vous ne pouvez pas mettre plus de 20 caractères";
+	/** String pour le titre de l'alerte */
+	private static final String TITRE_ALERTE = "Erreur de création de question";
 	
 	/**
 	 * Récupération de l'instance du jeu créée dans la classe Quiz.
@@ -29,83 +38,136 @@ public class CreationQuestionControleur {
 	private Jeu jeu = Quiz.jeu;
 	
 	@FXML
-	private TextField intitule;
+	private TextArea intituleQuestion;
 	
 	@FXML
-	private ChoiceBox nomCategorie;
+	private ChoiceBox<String> intituleCategorie;
 	
 	@FXML
-	private ChoiceBox difficulte;
+	private ChoiceBox<String> difficulte;
 	
 	@FXML
 	private TextArea feedback;
 	
 	@FXML
-	private TextField reponseJuste;
+	private TextArea reponseJuste;
 	
 	@FXML
-	private TextField[] reponsesFausses;
+	private TextArea reponseFausse1;
 	
 	@FXML
-	private void boutonAide() {
-		// ControleurNavigation.changerVue("GestionDesCategories.fxml");  // TODO: implémenter aide
-	}
+	private TextArea reponseFausse2;
 	
 	@FXML
-	private void boutonAnnuler() {
-		ControleurNavigation.changerVue("AffichageQuestions.fxml");
-	}
+	private TextArea reponseFausse3;
 	
 	@FXML
-	private void boutonEnregistrer() {
+	private TextArea reponseFausse4;
+	
+	
+	/**
+	 * Initialisation de la fenêtre de création en ajoutant les 
+	 * catégories et difficultés dans les ChoiceBox.
+	 */
+	@FXML
+	private void initialize() {
+		// Affichage des catégories dans le menu déroulant de filtre
+		for (Categorie categorieCourante : jeu.getToutesLesCategories()) {
+			intituleCategorie.getItems().add(categorieCourante.getIntitule());
+		}
+		// Catégorie général par défaut
+		intituleCategorie.setValue(jeu.getToutesLesCategories().get(0).getIntitule());
 		
-		ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
-				 					 TITRE_ALERTE, AlertType.ERROR);
+		String[] difficultes = {"1 - Facile", "2 - Moyenne",
+				                "3 - Difficile"};
+		
+		// Affichage des difficultés dans le menu déroulant
+		for (String niveau : difficultes) {
+			difficulte.getItems().add(niveau);
+		}
+		// Niveau 0
+		difficulte.setValue(difficultes[0]);
+	}
+	
+	
+	/**
+	 * Redirection vers la page d'aide.
+	 */
+	@FXML
+	private void actionBoutonAide() {
+		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
+							  AffichageQuestionsControleur.AIDE_TEXTE);
+	}
+	
+	
+	/**
+	 * Redirection vers la vue AffichageQuestions.fxml
+	 */
+	@FXML
+	private void actionBoutonAnnuler() {
+		NavigationControleur.changerVue("AffichageQuestions.fxml");
+	}
+	
+	
+	/**
+	 * Récupère chacune des informations entrées par l'utilisateur
+	 * permettant de créer une question et tente de la créer
+	 * Si la question ne peut pas être créée, cette méthode renvoie 
+	 * une erreur sous forme d'alert pour l'utilisateur
+	 */
+	@FXML
+	private void actionBoutonEnregistrer() {
+		
+		final String QUESTION_EXISTANTE
+		= "Une question de la même catégorie avec le même intitulé et les mêmes"
+		  + " réponses existe déjà.";
 		
 		ArrayList<String> reponsesFausses = new ArrayList<String>();
 		
-		String intitule,
-			   nomCategorie,
-			   feedback,
-			   reponseJuste;
+		String intituleQuestionEntre,
+			   feedbackEntre,
+			   reponseJusteEntree;
 		
-		int difficulte,
+		int difficulteEntree,
 		    indiceCategorie;
 		
 		Categorie categorie;
 		
-		nomCategorie = this.nomCategorie.getValue().toString();
+		indiceCategorie = jeu.indiceCategorie(this.intituleCategorie
+										.getValue().toString());
 		
-		indiceCategorie = jeu.categorieExiste(nomCategorie);
-		
-		if (indiceCategorie == -1) {
-			// TODO: implémenter dialogbox avec erreur.
-		}
 		categorie = jeu.getToutesLesCategories().get(indiceCategorie);
 		
+		reponsesFausses.add(reponseFausse1.getText().trim());
+		reponsesFausses.add(reponseFausse2.getText().trim());
+		reponsesFausses.add(reponseFausse3.getText().trim());
+		reponsesFausses.add(reponseFausse4.getText().trim());
+			
+		intituleQuestionEntre = this.intituleQuestion.getText().trim();
+		feedbackEntre = this.feedback.getText().trim();
 		
-		for (TextField reponseFausse: this.reponsesFausses) {
-			reponsesFausses.add(reponseFausse.getText());
-			System.out.println(reponseFausse.getText());
-		}
+		reponseJusteEntree = this.reponseJuste.getText().trim();
 		
-		intitule = this.intitule.getText();
-		feedback = this.feedback.getText();
-		reponseJuste = this.reponseJuste.getText();
-		
-		difficulte = Integer.parseInt(this.difficulte.getValue().toString());
+		difficulteEntree = Integer.parseInt("" + this.difficulte
+										.getValue().charAt(0));
 		
 		try {
-			Question nouvelleQuestion
-			= new Question(intitule, reponseJuste,
-					       reponsesFausses.toArray(new String[reponsesFausses.size()]),
-					       difficulte, categorie);
+			// Impossible de check dans le modèle Question, laisser ici
+			if (jeu.indiceQuestion(intituleQuestionEntre, categorie.getIntitule(),
+					               reponseJusteEntree,
+					               reponsesFausses
+					               .toArray(new String[reponsesFausses.size()]))
+					!= -1) {
+				throw new IllegalArgumentException(QUESTION_EXISTANTE);
+			}
 			
-			jeu.ajouterQuestion(nouvelleQuestion);
+			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
+				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
+				              difficulteEntree, feedbackEntre, categorie.getIntitule());
+			NavigationControleur.changerVue("AffichageQuestions.fxml");
 		} catch (Exception e) {
-			ControleurAlerte.autreAlerte(MESSAGE_ERREUR_TROP_DE_CARACTERE,
+			AlerteControleur.autreAlerte(e.getMessage(),
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}
-	
 }
