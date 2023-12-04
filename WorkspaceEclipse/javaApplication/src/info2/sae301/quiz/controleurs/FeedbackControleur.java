@@ -84,10 +84,10 @@ public class FeedbackControleur {
 	
 	private void genererFeedback(int indiceQuestionCourante) {
 		final String STATUT_QUESTION_REUSSIE
-		= "Réussie";
+		= "Réussite";
 		
 		final String STATUT_QUESTION_RATEE
-		= "Ratée";
+		= "Échec";
 		
 		final String STATUT_QUESTION_REUSSIE_CLASSE
 		= "statut-reussi";
@@ -106,6 +106,9 @@ public class FeedbackControleur {
 		
 		final String REPONSE_UTILISATEUR_VIDE_REMPLACEMENT
 		= "[ Question passée ]";
+		
+		final String DEBUT_MESSAGE_FEEDBACK
+		= "Feedback : ";
 		
 		Question questionCourante;
 		
@@ -224,13 +227,17 @@ public class FeedbackControleur {
 		conteneurReponseVraie.getChildren().add(iconeReponseVraie);
 		conteneurReponseVraie.getChildren().add(reponseVraie);
 		
-		messageFeedback = new Text();
-		messageFeedback.setWrappingWidth(512.);
-		messageFeedback.getStyleClass().add("message-feedback");
-		messageFeedback.setText(questionCourante.getFeedback());
-		
 		feedbackConteneur.getChildren().add(conteneurReponseVraie);
-		feedbackConteneur.getChildren().add(messageFeedback);
+		
+		if (!questionReussie) {
+			messageFeedback = new Text();
+			messageFeedback.setWrappingWidth(512.);
+			messageFeedback.getStyleClass().add("message-feedback");
+			messageFeedback.setText(DEBUT_MESSAGE_FEEDBACK 
+									+ questionCourante.getFeedback());
+			
+			feedbackConteneur.getChildren().add(messageFeedback);
+		}
 		
 		this.affichageFeedback.getChildren().add(feedbackConteneur);
 	}
