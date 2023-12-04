@@ -17,11 +17,11 @@ Puis copiez le fichier `java-app\WorkspaceEclipse\javaApplication\src\info2\sae3
 
 - [Eclipse JEE : Septembre 2023 R](https://ftp.fau.de/eclipse/technology/epp/downloads/release/2023-09/R/eclipse-jee-2023-09-R-win32-x86_64.zip)
 - [JDK : 21](https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.zip)
-- JUnit : 5
+- [JUnit : 5](https://junit.org/junit5/)
 - [JavaFX (SDK) : 21](https://download2.gluonhq.com/openjfx/21/openjfx-21_windows-x64_bin-sdk.zip)
 - [E(fx)clipse : 3.9.0](https://download.eclipse.org/efxclipse/updates-released/3.9.0/site/)
 - [SceneBuilder : 21.0.1](https://gluonhq.com/products/scene-builder/thanks/?dl=https://download2.gluonhq.com/scenebuilder/21.0.0/install/win/SceneBuilder-21.0.0.msi)
-- GanttProject : 3.2
+- [GanttProject : 3.2](https://www.ganttproject.biz/)
 
 Run configuration > Java application > Quiz :
 --module-path "\path\to\JavaFX21\lib" --add-modules javafx.controls,javafx.fxml
