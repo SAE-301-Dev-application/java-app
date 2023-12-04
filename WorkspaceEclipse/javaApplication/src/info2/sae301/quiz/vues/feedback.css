@@ -7,7 +7,7 @@
 }
 
 .intitule-question {
-	-fx-text-fill: white;
+	-fx-fill: white;
 	-fx-font-weight: 700;
 	-fx-font-size: 22px;
 }
@@ -34,4 +34,8 @@
 
 .reponse-vraie {
 	-fx-text-fill: #6AC83E;
+}
+
+.message-feedback {
+	-fx-fill: white;
 }
