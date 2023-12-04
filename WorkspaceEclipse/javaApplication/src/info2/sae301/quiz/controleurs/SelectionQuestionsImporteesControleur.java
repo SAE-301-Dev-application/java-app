@@ -157,17 +157,9 @@ public class SelectionQuestionsImporteesControleur {
 			
 			intituleQuestionC = donneesQuestionCourante[2];
 			
-			System.out.println("---------------------");
-			for (String s : donneesQuestionCourante) {
-				System.out.println(s);
-			}
-			System.out.println("---------------------");
-			
 			if (Import.verificationQuestionExiste(donneesQuestionCourante)) {
-				System.out.println("question existe déjà");
 				nombreQuestionsDejaExistantes++;
 			} else {
-				System.out.println("question n'existe pas encore");
 				CheckBox checkBoxQuestion = new CheckBox();
 				
 				toutesLesQuestions.put(intituleQuestionC, checkBoxQuestion);
@@ -305,14 +297,11 @@ public class SelectionQuestionsImporteesControleur {
 		
 		nombreQuestionsCrees = 0;
 		
-		System.out.println("\nEnregistrement des questions sélectionnées");
-		
-		System.out.println("\nQuestions à créer :");
+		System.out.println("\nEnregistrement des questions sélectionnées"
+				           + "\n\nQuestions à créer :");
 		
 		for (String questionCourante: questionsSelectionnees) {
-			//try {
-				Import.creerQuestion(questionCourante);				
-			//} catch (Exception e) {}
+			Import.creerQuestion(questionCourante);				
 			nombreQuestionsCrees++;
 		}
 		
