@@ -58,7 +58,6 @@ Run configuration > Java application > Quiz :
 | Sprint 2  | Développeur   | SCRUM master  | Développeur   | Product Owner | Développeur   |
 | Sprint 3  | SCRUM Master  | Développeur   | Développeur   | Développeur   | Product Owner |
 | Sprint 4  | Développeur   | Product Owner | SCRUM Master  | Développeur   | Développeur   |
- ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 ## Liens
 
