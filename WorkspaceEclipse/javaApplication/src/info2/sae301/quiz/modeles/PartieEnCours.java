@@ -122,7 +122,7 @@ public class PartieEnCours {
 	}
 	
 	/**
-	 * Modifie la réponse précédemmant saisie par l'utilisateur
+	 * Modifie la réponse précédemment saisie par l'utilisateur
 	 * 
 	 * @param repAModifier la nouvelle réponse de l'utilisateur.
 	 */
@@ -149,14 +149,16 @@ public class PartieEnCours {
 	 * dans la liste reponsesUtilisateur
 	 */
 	public void retourQuestionPrecedente() {
-		this.indiceQuestionCourante--;
+		if (indiceQuestionCourante > 0) {
+			this.indiceQuestionCourante--;
+		}
 	}
 	
 	
 	/**
 	 * Vérifie si un bouton radio est déjà sélectionné
 	 * 
-	 * @param reponse la réponse sélectionnées
+	 * @param reponse la réponse sélectionnée
 	 * @return true si le bouton était sélectionné, false sinon
 	 */
 	public boolean radioDejaSelectionne(String reponse) {
@@ -192,12 +194,9 @@ public class PartieEnCours {
 	@Override
 	public String toString() {
 		String resultat = "";
-		
 		for (Question question : this.questionsProposees) {
 			resultat += question.getIntitule() + " :\n";
-			
 			ArrayList<String> reponses = question.melangerReponses();
-			
 			for (int i = 0; i < reponses.size(); i++) {
 				resultat += "- " + reponses.get(i) + "\n";
 			}

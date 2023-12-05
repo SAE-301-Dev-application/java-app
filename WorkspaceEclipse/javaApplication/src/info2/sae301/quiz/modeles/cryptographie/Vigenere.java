@@ -6,6 +6,9 @@
 package info2.sae301.quiz.modeles.cryptographie;
 
 import static info2.sae301.quiz.modeles.Dictionnaire.*;
+import static info2.sae301.quiz.modeles.cryptographie.Vigenere.chiffrerCle;
+import static info2.sae301.quiz.modeles.cryptographie.Vigenere.setCle;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Random;
 
@@ -193,6 +196,11 @@ public class Vigenere {
 		}
 		
 		return cleDechiffree;
+	}
+	
+	public static void main(String[] args) {
+		setCle("germaine12duRodez#lameilleuremamieEnCostumeDumonde");
+		System.out.println(chiffrerCle(2601));
 	}
 	
 }
