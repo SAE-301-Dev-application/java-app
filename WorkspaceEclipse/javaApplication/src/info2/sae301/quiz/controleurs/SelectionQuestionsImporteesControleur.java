@@ -50,6 +50,13 @@ public class SelectionQuestionsImporteesControleur {
 	private final static String ERREUR_AUCUNE_SELECTION
 	= "Aucune question n'a été importée.";
 	
+	private final static String ERREUR_IMPORT_IMPOSSIBLE_TITRE
+	= "IMPORTATION IMPOSSIBLE";
+	
+	private final static String ERREUR_IMPORT_IMPOSSIBLE_MESSAGE
+	= "L'importation des questions a échoué. Celles-ci ne respectent pas le "
+	  + "format demandé du fichier CSV.";
+	
 	private final static String AIDE_TITRE = "SELECTION DE QUESTIONS";
 	
 	private final static String AIDE_TEXTE
@@ -96,6 +103,10 @@ public class SelectionQuestionsImporteesControleur {
 	private void initialize() {
 		listeQuestionsImportees = Import.getQuestionsImportees();
 		
+		if (listeQuestionsImportees.size() <= 0) {
+			erreurImportationImpossible();
+		}
+		
 		this.nombreQuestionsDejaExistantes = 0;
 		
 		indiceQuestion = 0;
@@ -103,11 +114,20 @@ public class SelectionQuestionsImporteesControleur {
 		donneesToutesQuestions = new ArrayList<String>();
 		
 		CompletableFuture.supplyAsync(() -> {
-			initialiserToutesLesQuestions();
+			try {
+				initialiserToutesLesQuestions();
+			} catch (Exception e) {
+				return e.toString();
+			}
 			return "ok";
         }).thenAccept(result -> {
         	
-    		if (this.nombreQuestionsDejaExistantes
+        	if (!result.equals("ok")) {
+        		Platform.runLater(() -> {
+        			System.out.println("ERREUR GEREE IMPORT :\n" + result);
+        			erreurImportationImpossible();
+				});	
+        	} else if (this.nombreQuestionsDejaExistantes
 			    == this.listeQuestionsImportees.size()) {
 				
 				this.listeQuestionsImportees = null;
@@ -345,6 +365,19 @@ public class SelectionQuestionsImporteesControleur {
 		AlerteControleur.autreAlerte(ERREUR_QUESTIONS_EXISTANTES_MESSAGE,
                                      ERREUR_QUESTIONS_EXISTANTES_TITRE,
                                      AlertType.ERROR);
+	}
+	
+	
+	/**
+	 * Affiche une pop-up d'erreur indiquant que l'import des questions
+	 * n'a pas fonctionné.
+	 */
+	private static void erreurImportationImpossible() {
+		AlerteControleur.autreAlerte(ERREUR_IMPORT_IMPOSSIBLE_MESSAGE,
+				                     ERREUR_IMPORT_IMPOSSIBLE_TITRE,
+                                     AlertType.ERROR);
+		
+		NavigationControleur.changerVue("Import.fxml");
 	}
 
 }

@@ -50,14 +50,12 @@ Run configuration > Java application > Quiz :
 
 ## Répartition des rôles selon les itérations SCRUM : 
 
- ___________________________________________________________________________________________
-| Sprint    | Florian       | Loïc          | Jonathan      | Simon         | Samuel        |
+| Sprints   | Florian       | Loïc          | Jonathan      | Simon         | Samuel        |
 |-----------|---------------|---------------|---------------|---------------|---------------|
 | Sprint 0  | Product Owner | Développeur   | Développeur   | SCRUM master  | Développeur   |
 | Sprint 1  | Développeur   | Développeur   | Product Owner | Développeur   | SCRUM Master  |
 | Sprint 2  | Développeur   | SCRUM master  | Développeur   | Product Owner | Développeur   |
 | Sprint 3  | SCRUM Master  | Développeur   | Développeur   | Développeur   | Product Owner |
-| Sprint 4  | Développeur   | Product Owner | SCRUM Master  | Développeur   | Développeur   |
 
 ## Liens
 
