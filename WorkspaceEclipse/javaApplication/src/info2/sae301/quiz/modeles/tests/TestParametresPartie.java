@@ -6,12 +6,10 @@
 package info2.sae301.quiz.modeles.tests;
 
 import info2.sae301.quiz.modeles.ParametresPartie;
-import info2.sae301.quiz.modeles.PartieEnCours;
 import info2.sae301.quiz.modeles.Question;
 import info2.sae301.quiz.modeles.Categorie;
 import info2.sae301.quiz.exceptions.NbInsuffisantQuestionsException;
 import info2.sae301.quiz.exceptions.NombreQuestionsInvalideException;
-import info2.sae301.quiz.Quiz;
 import info2.sae301.quiz.exceptions.AucuneQuestionCorrespondanteException;
 
 import static org.junit.Assert.assertEquals;
@@ -39,8 +37,6 @@ class TestParametresPartie {
 	private String[] nomsCategories = {
 		"catégorie1", "caté2", "caté3", "caté4", "caté5"
 	};
-	
-	private ParametresPartie parametresAvecParam;
 	
 	private ParametresPartie parametresTest;
 	
