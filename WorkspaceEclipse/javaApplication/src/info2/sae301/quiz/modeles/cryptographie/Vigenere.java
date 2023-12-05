@@ -197,10 +197,4 @@ public class Vigenere {
 		
 		return cleDechiffree;
 	}
-	
-	public static void main(String[] args) {
-		setCle("germaine12duRodez#lameilleuremamieEnCostumeDumonde");
-		System.out.println(chiffrerCle(2601));
-	}
-	
 }

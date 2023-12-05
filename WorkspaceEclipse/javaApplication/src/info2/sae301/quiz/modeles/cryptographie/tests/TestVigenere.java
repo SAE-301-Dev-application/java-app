@@ -38,7 +38,7 @@ class TestVigenere {
 			setCle("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 		});
 		
-		assertThrows(IllegalArgumentException.class, () -> { 
+		assertThrows(IllegalArgumentException.class, () -> {
 			setCle("ert");
 		});
 	}
