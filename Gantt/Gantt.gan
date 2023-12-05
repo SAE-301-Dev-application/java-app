@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-11-20" view-index="0" gantt-divider-location="423" resource-divider-location="334" version="3.2.3247" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="" webLink="http://" view-date="2023-11-29" view-index="0" gantt-divider-location="423" resource-divider-location="334" version="2.8.11" locale="fr">
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="236" order="0"/>
-        <field id="tpd4" name="Date de début" width="88" order="1"/>
-        <field id="tpd5" name="Date de fin" width="83" order="2"/>
-        <option id="filter.completedTasks" value="false"/>
+        <field id="tpd3" name="Nom" width="240" order="0"/>
+        <field id="tpd4" name="Date de début" width="92" order="1"/>
+        <field id="tpd5" name="Date de fin" width="87" order="2"/>
         <option id="color.recent">
-            <![CDATA[#ff0066 #ff0000 #cccccc #99ff99 #9999ff #66ccff #cc66ff #ff99cc #ff0099 #ff9900]]>
+            <![CDATA[#ffccff #009999 #66ffcc #99ff99 #9999ff #99ffff #99ff66 #ff66ff #cccccc #ffcc33]]>
         </option>
     </view>
     <view id="resource-table">
@@ -90,25 +89,32 @@
             <task id="297" name="Interface édition pseudonyme" color="#ffccff" meeting="false" start="2023-11-15" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="93" name="Fin sprint 2" color="#ffffff" meeting="false" start="2023-11-19" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="55" name="Sprint 3" color="#666666" meeting="false" start="2023-11-20" duration="14" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true">
+        <task id="55" name="Sprint 3" color="#666666" meeting="false" start="2023-11-20" duration="14" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="false">
             <task id="96" name="Début sprint 3" color="#ffffff" meeting="false" start="2023-11-20" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
             <task id="354" name="Réunion MOA" color="#ff0066" meeting="false" start="2023-11-20" duration="1" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
-            <task id="342" name="Cryptographie Vigenère" color="#ff9900" meeting="false" start="2023-11-20" duration="5" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
-            <task id="348" name="Résultat de la partie" color="#cccccc" meeting="false" start="2023-11-20" duration="2" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
+            <task id="342" name="Cryptographie Vigenère" color="#ff9900" meeting="false" start="2023-11-20" duration="3" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
+            <task id="348" name="Résultat de la partie" color="#cccccc" meeting="false" start="2023-11-20" duration="3" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
+            <task id="347" name="Cryptographie Diffie Hellman" color="#99ff99" meeting="false" start="2023-11-22" duration="10" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
+            <task id="343" name="Lecture CSV" color="#ff99cc" meeting="false" start="2023-11-22" duration="5" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
             <task id="350" name="Réunion daily" color="#ff0000" meeting="false" start="2023-11-22" duration="1" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
-            <task id="343" name="Lecture CSV" color="#ff99cc" meeting="false" start="2023-11-22" duration="4" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
-            <task id="344" name="Import local (CSV)" color="#cc66ff" meeting="false" start="2023-11-23" duration="4" complete="0" thirdDate="2023-11-22" thirdDate-constraint="0" expand="true"/>
+            <task id="346" name="Import / Export distant" color="#9999ff" meeting="false" start="2023-11-24" duration="8" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
+            <task id="344" name="Import local (CSV)" color="#cc66ff" meeting="false" start="2023-11-24" duration="5" complete="0" thirdDate="2023-11-22" thirdDate-constraint="0" expand="true"/>
             <task id="351" name="Réunion daily" color="#ff0000" meeting="false" start="2023-11-24" duration="1" complete="0" thirdDate="2023-11-22" thirdDate-constraint="0" expand="true"/>
-            <task id="345" name="Ecriture CSV" color="#66ccff" meeting="false" start="2023-11-27" duration="4" complete="0" thirdDate="2023-11-23" thirdDate-constraint="0" expand="true"/>
-            <task id="346" name="Import / Export distant" color="#9999ff" meeting="false" start="2023-11-27" duration="4" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
             <task id="352" name="Réunion daily" color="#ff0000" meeting="false" start="2023-11-27" duration="1" complete="0" thirdDate="2023-11-24" thirdDate-constraint="0" expand="true"/>
+            <task id="345" name="Ecriture CSV" color="#66ccff" meeting="false" start="2023-11-28" duration="2" complete="0" thirdDate="2023-11-23" thirdDate-constraint="0" expand="true"/>
             <task id="353" name="Réunion daily" color="#ff0000" meeting="false" start="2023-12-01" duration="1" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
-            <task id="347" name="Cryptographie Diffie Hellman" color="#99ff99" meeting="false" start="2023-11-30" duration="4" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
-            <task id="349" name="Feedback" color="#cccccc" meeting="false" start="2023-12-02" duration="2" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
+            <task id="349" name="Feedback" color="#cccccc" meeting="false" start="2023-12-03" duration="1" complete="0" thirdDate="2023-11-20" thirdDate-constraint="0" expand="true"/>
             <task id="99" name="Fin sprint 3" color="#ffffff" meeting="false" start="2023-12-03" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="16" name="Préparation livrables" color="#666666" meeting="false" start="2023-12-04" duration="3" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="false">
-            <task id="102" name="Durée" color="#ffffff" meeting="false" start="2023-12-04" duration="3" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+        <task id="16" name="Sprint 4 - Livrables" color="#666666" meeting="false" start="2023-12-04" duration="4" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true">
+            <task id="359" name="Dossier réseau" color="#cccccc" meeting="false" start="2023-12-04" duration="4" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="379" name="Revue du code" color="#66ffcc" meeting="false" start="2023-12-04" duration="4" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="369" name="Dossier technique" color="#99ffff" meeting="false" start="2023-12-04" duration="3" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="356" name="Dossier cryptographie" color="#ffcc33" meeting="false" start="2023-12-04" duration="2" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="366" name="Dossier ergonomie" color="#99ff66" meeting="false" start="2023-12-04" duration="2" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="376" name="Modification affichage feedback" color="#9999ff" meeting="false" start="2023-12-04" duration="1" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="363" name="Fichier exécutable" color="#ff66ff" meeting="false" start="2023-12-06" duration="2" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
+            <task id="383" name="Préparation livrables" color="#ffccff" meeting="false" start="2023-12-06" duration="2" complete="0" thirdDate="2023-10-02" thirdDate-constraint="0" expand="true"/>
         </task>
     </tasks>
     <resources>
