@@ -1,3 +1,8 @@
+/*
+ * TestVigenenre.java									        20 nov. 2023 
+ * IUT de Rodez, no copyright ni "copyleft"
+ */
+
 package info2.sae301.quiz.modeles.cryptographie.tests;
 
 import static info2.sae301.quiz.modeles.cryptographie.Vigenere.*;
@@ -6,6 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+
+/**
+ * Test de la classe implémentant Vigenère
+ * 
+ * @author Florian Fabre
+ * @author Loïc Faugières
+ * @author Jonathan Guil
+ * @author Simon Guiraud
+ * @author Samuel Lacam
+ */
 class TestVigenere {
 	
 	/**

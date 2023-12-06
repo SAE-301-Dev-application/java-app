@@ -70,11 +70,11 @@ class TestSerialisation {
 	}
 
 	
-	@Test
-	void testDeserialiser() {
-		assertEquals(jeuSerialiseModifie,
-				     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE));
-		assertEquals(jeuSerialiseNonModifie,
-				     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE_VIDE));
-	}
+    @Test
+    void testDeserialiser() {
+    	assertEquals(jeuSerialiseModifie,
+    			     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE));
+    	assertEquals(jeuSerialiseNonModifie,
+    			     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE_VIDE));
+    }
 }
