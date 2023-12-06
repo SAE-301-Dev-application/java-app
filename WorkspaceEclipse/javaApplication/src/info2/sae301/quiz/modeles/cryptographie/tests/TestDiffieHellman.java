@@ -6,7 +6,6 @@ package info2.sae301.quiz.modeles.cryptographie.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
@@ -21,12 +20,6 @@ import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
  * @author Samuel Lacam
  */
 class TestDiffieHellman {
-	
-
-	/**
-	 * Test method for {@link info2.sae301.quiz.modeles.cryptographie.DiffieHellman#getModulo()}.
-	 */
-	
 	
 	
 	/**
