@@ -63,7 +63,7 @@ class TestSerialisation {
 		File fichier = new File(cheminFichier);
 		assertTrue(fichier.exists());
 		
-		serialiser(jeuSerialiseNonModifie,CHEMIN_DOSSIER_TEST, FICHIER_SAUVEGARDE_VIDE);
+		serialiser(jeuSerialiseNonModifie, CHEMIN_DOSSIER_TEST, FICHIER_SAUVEGARDE_VIDE);
 		String cheminFichierSansModif = CHEMIN_DOSSIER_TEST + FICHIER_SAUVEGARDE_VIDE;
 		File fichierAucuneModif = new File(cheminFichierSansModif);
 		assertTrue(fichierAucuneModif.exists());

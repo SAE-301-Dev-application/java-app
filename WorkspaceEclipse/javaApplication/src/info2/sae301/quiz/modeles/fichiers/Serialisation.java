@@ -25,8 +25,7 @@ import info2.sae301.quiz.modeles.Jeu;
 public class Serialisation {
 	
 	/** Chemin du dossier pour les sauvegardes */
-    public static final String CHEMIN_DOSSIER
-	= "../javaApplication/src/info2/sae301/quiz/sauvegardes/";
+    public static final String CHEMIN_DOSSIER = "../sauvegardes/";
 	
     
 	/**
