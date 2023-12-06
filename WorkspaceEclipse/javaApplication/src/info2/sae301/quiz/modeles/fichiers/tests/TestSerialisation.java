@@ -56,25 +56,25 @@ class TestSerialisation {
 	}
 
 	
-	@Test
-	void testSerialiser() { 
-		serialiser(jeuSerialiseModifie, CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE);
-		String cheminFichier = CHEMIN_DOSSIER_TEST + FICHIER_SAUVEGARDE;
-		File fichier = new File(cheminFichier);
-		assertTrue(fichier.exists());
-		
-		serialiser(jeuSerialiseNonModifie,CHEMIN_DOSSIER_TEST, FICHIER_SAUVEGARDE_VIDE);
-		String cheminFichierSansModif = CHEMIN_DOSSIER_TEST + FICHIER_SAUVEGARDE_VIDE;
-		File fichierAucuneModif = new File(cheminFichierSansModif);
-		assertTrue(fichierAucuneModif.exists());
-	}
+    @Test
+    void testSerialiser() { 
+    	serialiser(jeuSerialiseModifie, CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE);
+    	String cheminFichier = CHEMIN_DOSSIER_TEST + FICHIER_SAUVEGARDE;
+    	File fichier = new File(cheminFichier);
+    	assertTrue(fichier.exists());
+    	
+    	serialiser(jeuSerialiseNonModifie,CHEMIN_DOSSIER_TEST, FICHIER_SAUVEGARDE_VIDE);
+    	String cheminFichierSansModif = CHEMIN_DOSSIER_TEST + FICHIER_SAUVEGARDE_VIDE;
+    	File fichierAucuneModif = new File(cheminFichierSansModif);
+    	assertTrue(fichierAucuneModif.exists());
+    }
 
 	
-	@Test
-	void testDeserialiser() {
-		assertEquals(jeuSerialiseModifie,
-				     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE));
-		assertEquals(jeuSerialiseNonModifie,
-				     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE_VIDE));
-	}
+    @Test
+    void testDeserialiser() {
+    	assertEquals(jeuSerialiseModifie,
+    			     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE));
+    	assertEquals(jeuSerialiseNonModifie,
+    			     Serialisation.deserialiser(CHEMIN_DOSSIER_TEST,FICHIER_SAUVEGARDE_VIDE));
+    }
 }
