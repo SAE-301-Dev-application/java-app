@@ -51,9 +51,6 @@
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
-            </LINK>
             <COMP relation="Descriptor">
               <OBJECT>
                 <ID name="" mc="Infrastructure.Note" uid="b778a409-0039-43f8-9bdf-b543a7588933"/>
@@ -90,11 +87,7 @@
             <ATT name="Name"><![CDATA[boutonCategories]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
-            </LINK>
-          </DEPENDENCIES>
+          <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="boutonQuestions" mc="Standard.Attribute" uid="cc2f0747-95f0-4b62-9b01-48c34f9ce315"/>
@@ -115,9 +108,6 @@
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
-            </LINK>
             <COMP relation="Descriptor">
               <OBJECT>
                 <ID name="" mc="Infrastructure.Note" uid="11c85d63-c969-4d99-8834-c9f64a04ee86"/>
@@ -154,11 +144,7 @@
             <ATT name="Name"><![CDATA[boutonImporter]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
-            </LINK>
-          </DEPENDENCIES>
+          <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="boutonExporter" mc="Standard.Attribute" uid="74972576-af1b-4a67-be65-9f724dbf8b0a"/>
@@ -178,11 +164,7 @@
             <ATT name="Name"><![CDATA[boutonExporter]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Button" mc="Standard.Class" uid="fa18a336-0b04-40b6-a6c0-fc234692c41c"/>
-            </LINK>
-          </DEPENDENCIES>
+          <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
       </COMP>
       <LINK relation="Extension">
