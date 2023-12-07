@@ -1,14 +1,11 @@
 /*
- * Cryptographie.java									            20 nov. 2023
+ * Cryptographie.java									 20 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
 package info2.sae301.quiz.modeles.cryptographie;
 
 import static info2.sae301.quiz.modeles.Dictionnaire.*;
-import static info2.sae301.quiz.modeles.cryptographie.Vigenere.chiffrerCle;
-import static info2.sae301.quiz.modeles.cryptographie.Vigenere.setCle;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Random;
 
@@ -81,7 +78,7 @@ public class Vigenere {
 
 
 	/**
-	 * Chiffre un message selon la clé en parametre
+	 * Chiffre un message selon la clé en paramètre
 	 * 
 	 * @param message message à crypter
 	 * @return le message crypté
@@ -109,7 +106,7 @@ public class Vigenere {
 	
 	
 	/**
-	 * Chiffre la cle de Vigenere à l'aide d'un entier
+	 * Chiffre la clé de Vigenère à l'aide d'un entier
 	 * Utilisé pour chiffrer la clé de Vigenère avec le nombre de
 	 * Diffie-Hellman lors de l'échange réseau.
 	 * 
@@ -138,7 +135,7 @@ public class Vigenere {
 	
 	
 	/**
-	 * Déchiffre un message selon la clé en parametre
+	 * Déchiffre un message selon la clé en paramètre
 	 * 
 	 * @param message messageC à décrypter
 	 * @return le message décrypté
@@ -168,10 +165,10 @@ public class Vigenere {
 	
 	
 	/**
-	 * Déchiffre une cle chiffrée par Diffie-Hellman
+	 * Déchiffre une clé chiffrée par Diffie-Hellman
 	 * 
 	 * @param entierSecret la clé de déchiffrement
-	 * @return la cle de Vigenère décryptée
+	 * @return la clé de Vigenère décryptée
 	 */
 	public static String dechiffrerCle(int entierSecret) {
 		String cleDechiffree = "";

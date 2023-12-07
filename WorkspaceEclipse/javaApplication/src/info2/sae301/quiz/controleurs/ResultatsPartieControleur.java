@@ -1,5 +1,5 @@
 /*
- * NouvellePartie.java							                    17 nov. 2023
+ * NouvellePartie.java							         17 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -46,40 +46,50 @@ public class ResultatsPartieControleur {
 	  """;
 	
 	
-	/** Message de conclusion affiché si le taux de réussite est 
-	 *  inférieur à 31%. */
+	/** 
+	 * Message de conclusion affiché si le taux de réussite est 
+	 *  inférieur à 31%. 
+	 */
 	private static final String MESSAGE_CONCLUSION_RATE
 	= """
 	  Vous n'avez pas réussi à répondre juste à une des questions posées. Réessayez encore, %s !
 	  """;
 	
 	
-	/** Message de conclusion affiché si le taux de réussite est 
-	 *  inférieur à 31%. */
+	/** 
+	 * Message de conclusion affiché si le taux de réussite est 
+	 * inférieur à 31%. 
+	 */
 	private static final String MESSAGE_CONCLUSION_MAUVAIS
 	= """
 	  Peu de réponses justes... Vous pouvez mieux faire, %s !
 	  """;
 	
 	
-	/** Message de conclusion affiché si le taux de réussite est 
-	 *  compris entre 31% et 60%. */
+	/** 
+	 * Message de conclusion affiché si le taux de réussite est 
+	 * compris entre 31% et 60%. 
+	 */
 	private static final String MESSAGE_CONCLUSION_MOYEN
 	= """
 	  Des résultats moyens, vous pouvez mieux faire, %s !
 	  """;
 	
 	
-	/** Message de conclusion affiché si le taux de réussite est 
-	 *  compris entre 61% et 89%. */
+	/** 
+	 * Message de conclusion affiché si le taux de réussite est 
+	 * compris entre 61% et 89%. 
+	 */
 	private static final String MESSAGE_CONCLUSION_BON
 	= """
 	  De bons résultats malgré quelques erreurs, félicitations, %s !
 	  """;
 	
 	
-	/** Message de conclusion affiché si le taux de réussite est 
-	 *  supérieur à 89%. */
+	/** 
+	 * Message de conclusion affiché si le taux de réussite est 
+	 * supérieur à 89%. 
+	 */
 	private static final String MESSAGE_CONCLUSION_PARFAIT
 	= """
 	  Très bons résultats, félicitations, %s !
@@ -94,9 +104,7 @@ public class ResultatsPartieControleur {
 	private static PartieEnCours partieCourante;
 	
 	
-	/**
-	 * @return Le nombre de questions du quiz courant
-	 */
+	/** @return Le nombre de questions du quiz courant */
 	public static int getNombreQuestions() {
 		return partieCourante.getQuestionsProposees().size();
 	}
@@ -132,16 +140,17 @@ public class ResultatsPartieControleur {
 			
 			if (questionCourante.verifierReponse(reponseDonnee)) {
 				
-				nombreQuestionsReussies++;
-				
-			}
-				
+				nombreQuestionsReussies++;	
+			}	
 		}
-		
 		return nombreQuestionsReussies;
 	}
 	
 	
+	/**
+	 * @return Nombre de questions ratées
+	 * 		   pour la partie courante
+	 */
 	public static int getNombreQuestionsRatees() {
 		return getNombreQuestions() - getNombreQuestionsReussies();
 	}

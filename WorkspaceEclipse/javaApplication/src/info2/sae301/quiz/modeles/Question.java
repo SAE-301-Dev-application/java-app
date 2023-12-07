@@ -29,7 +29,10 @@ public class Question implements Serializable {
 	private static final String TAILLE_INVALIDE
 	= "La taille %s doit être comprise entre %d et %d.";
 	
-	/** Message si erreur sur la taille du tableau de réponse fausses */
+	/** 
+	 * Message si erreur sur la taille du tableau de 
+	 * réponse fausses 
+	 */
 	private static final String NB_REPONSES_FAUSSES_INVALIDE
 	= "Le nombre de réponses fausses rédigées doit être compris entre 1 et 4.";
 	
@@ -62,11 +65,12 @@ public class Question implements Serializable {
 
 	/**
 	 * Message si erreur car l'utilisateur a rempli un champ des 
-	 * reponses avec des réponses non uniques 
+	 * réponses avec des réponses non uniques 
 	 */
     private static final String REPONSES_NON_UNIQUES
     = "Chaque réponse (juste et fausse) doit être unique.";
     
+    /** Texte d'erreur de caractère non supporté */
     private static final String ERREUR_CARACTERE_INTERDIT
     = "Le caractère %s n'est pas supporté par l'application.";
 	
@@ -80,7 +84,10 @@ public class Question implements Serializable {
     /** Les réponses fausses (max 200 caractères) */
     private String[] reponsesFausses = new String[4];
     
-    /** La difficulté de la question (1 : facile, 2 : moyen, 3 : difficile) */
+    /** 
+     * La difficulté de la question 
+     * (1 : facile, 2 : moyen, 3 : difficile)
+     */
     private int difficulte;
     
     /** 
@@ -105,7 +112,8 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param categorie La catégorie contenant la question.
-	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws IllegalArgumentException si un des caractères n'est 
+	 *         pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, Categorie categorie)
@@ -124,16 +132,18 @@ public class Question implements Serializable {
 
 	/**
 	 * Nouvelle question identifiée par son intitulé ayant
-	 * une réponse juste, des réponses fausses, un niveau de difficulté,
-	 * un feedback et une catégorie associée.
+	 * une réponse juste, des réponses fausses, un niveau de 
+	 * difficulté, un feedback et une catégorie associée.
 	 * 
 	 * @param intitule L'intitulé de la question.
 	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
-	 * @param feedback Le feedback à afficher pour corriger la réponse.
+	 * @param feedback Le feedback à afficher pour corriger 
+	 *                 la réponse.
 	 * @param categorie La catégorie contenant la question.
-	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws IllegalArgumentException si un des caractères 
+	 * n'est pas chiffrable.
 	 */
 	public Question(String intitule, String reponseJuste,
 			        String[] reponsesFausses, int difficulte, String feedback,
@@ -161,7 +171,8 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @throws IllegalArgumentException si les attributs ne 
-	 * respectent pas les tailles demandées ou si la difficulté est invalide.
+	 * respectent pas les tailles demandées ou si la difficulté 
+	 * est invalide.
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
 							             String[] reponsesFausses, int difficulte)
@@ -196,7 +207,8 @@ public class Question implements Serializable {
 		String messageErreurCaractereInterdit;
 		
 		for (int i = 0; i < aVerifier.length(); i++) {
-			if (Dictionnaire.getDictionnaireReversed().get(aVerifier.charAt(i)) == null) {
+			if (Dictionnaire.getDictionnaireReversed()
+					        .get(aVerifier.charAt(i)) == null) {
 				messageErreurCaractereInterdit
 				= String.format(ERREUR_CARACTERE_INTERDIT, 
 								aVerifier.charAt(i));
@@ -221,8 +233,8 @@ public class Question implements Serializable {
 	 * @param reponsesFausses Les réponses fausses.
 	 * @param difficulte La difficulté (1, 2 ou 3).
 	 * @param feedback Le feedback.
-	 * @throws IllegalArgumentException si les attributs ne respectent 
-	 * pas les tailles demandées.
+	 * @throws IllegalArgumentException si les attributs ne 
+	 *         respectent pas les tailles demandées.
 	 * @throws UnsupportedEncodingException 
 	 */
 	public static void verifierAttributs(String intitule, String reponseJuste,
@@ -269,7 +281,7 @@ public class Question implements Serializable {
 	 * Ajoute la réponse juste à un tableau contenant également les 
 	 * réponses fausses et vérifie l'unicité des réponses du tableau.
 	 * 
-	 * @param reponses La réponse juste.
+	 * @param reponseJuste La réponse juste.
 	 * @param reponsesFausses Les réponses fausses.
 	 * @throws IllegalArgumentException si une des réponses est égale 
 	 * à une autre.
@@ -432,9 +444,7 @@ public class Question implements Serializable {
 	 * Teste si les réponses fausses sont les mêmes dans les deux 
 	 * listes.
 	 * 
-	 * @param reponsesFausses1 Les réponses fausses à comparer.
-	 * @param reponsesFausses2 Les secondes réponses fausses à 
-	 * comparer.
+	 * @param aComparerRepFausses Les réponses fausses à comparer.
 	 * @return true si les liste contiennent les mêmes réponses 
 	 * fausses, false sinon.
 	 */
@@ -445,7 +455,8 @@ public class Question implements Serializable {
 		}
 		for (int i = 0; i < this.reponsesFausses.length && resultatFinal; i++) {
 			boolean reponseEgaleTrouvee = false;
-			for (int j = 0; j < aComparerRepFausses.reponsesFausses.length && !reponseEgaleTrouvee; j++) {
+			for (int j = 0; j < aComparerRepFausses.reponsesFausses.length 
+					        && !reponseEgaleTrouvee; j++) {
 				reponseEgaleTrouvee
 				= this.reponsesFausses[i].equals(aComparerRepFausses.reponsesFausses[j]);
 			}
@@ -466,7 +477,8 @@ public class Question implements Serializable {
 	 * les réponses mélangées
 	 */
 	public ArrayList<String> melangerReponses() {
-		// Tableau contenant la réponse juste suivie des réponses fausses
+		// Tableau contenant la réponse juste suivie des 
+		// réponses fausses
 		ArrayList<String> toutesLesReponses
 			= concatenationReponses();
         
@@ -489,8 +501,10 @@ public class Question implements Serializable {
 	 * les réponses mélangées
 	 */
 	public ArrayList<String> concatenationReponses() {
-		// Tableau contenant la réponse juste suivie des réponses fausses
-		ArrayList<String> toutesLesReponses = new ArrayList<>(reponsesFausses.length + 1);
+		// Tableau contenant la réponse juste suivie des 
+		// réponses fausses
+		ArrayList<String> toutesLesReponses = new ArrayList<>(reponsesFausses
+				                                             .length + 1);
         toutesLesReponses.add(reponseJuste);
         
         for (int i = 0; i < getReponsesFausses().length; i++) {
@@ -506,7 +520,7 @@ public class Question implements Serializable {
 	 * Sert à tester melangerReponses()
 	 * @param reponses une ArrayList de réponses
 	 * @param reponsesMelangees une ArrayList de réponses
-	 * @return true si les ArrayList contiennent les mêmes reponses
+	 * @return true si les ArrayList contiennent les mêmes réponses
 	 * false sinon
 	 */
 	public boolean memesReponses(ArrayList<String> reponses, ArrayList<String> reponsesMelangees) {
@@ -525,8 +539,8 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Vérifie la réponse de l'utilisateur par rapport à la réponse juste
-	 * de la question
+	 * Vérifie la réponse de l'utilisateur par rapport à la 
+	 * réponse juste de la question
 	 * 
 	 * @param reponseUser réponse de l'utilisateur
 	 * @return Si la réponse donnée vaut celle correspondant à la 
@@ -538,8 +552,9 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Formatte les données de la question courante afin de les rassembler
-	 * en une seule chaîne de caractères acceptable pour une ligne de CSV.
+	 * Formatte les données de la question courante afin de les 
+	 * rassembler en une seule chaîne de caractères acceptable pour
+	 * une ligne de CSV.
 	 * 
 	 * @return les données sous un format dit CSV.
 	 */
@@ -573,8 +588,8 @@ public class Question implements Serializable {
 	
 	
 	/**
-	 * Formatte le texte en paramètre afin de doubler les guillemets si un
-	 * point virgule ou un guillemet est présent.
+	 * Formatte le texte en paramètre afin de doubler les guillemets 
+	 * si un point virgule ou un guillemet est présent.
 	 * 
 	 * @param texte Le texte à vérifier.
 	 * @return le texte formaté.
@@ -650,7 +665,8 @@ public class Question implements Serializable {
 		
 		Question other = (Question) obj;
 		
-		return Objects.equals(categorie.getIntitule(), other.categorie.getIntitule())
+		return Objects.equals(categorie.getIntitule(), other.categorie
+				                                            .getIntitule())
 				&& Objects.equals(intitule, other.intitule)
 				&& Objects.equals(reponseJuste, other.reponseJuste)
 				&& Arrays.equals(reponsesFausses, other.reponsesFausses);

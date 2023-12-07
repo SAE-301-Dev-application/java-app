@@ -1,5 +1,5 @@
 /*
- * OutilsCSV.java									                29 nov. 2023
+ * OutilsCSV.java									     29 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -70,7 +70,6 @@ public class OutilsCSV {
 				ecriture.write("\n" + lignes[indiceLigne]);
 			}			
 		}
-		
 		ecriture.close();
 	}
 }

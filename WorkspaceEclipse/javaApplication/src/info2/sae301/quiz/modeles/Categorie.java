@@ -1,5 +1,5 @@
 /**
- * Categorie.java								      	            10 nov. 2023 
+ * Categorie.java								      	 10 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 
@@ -186,16 +186,17 @@ public class Categorie implements Serializable {
     
 
     /**
-	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
- 	 * méthode est appliquée, ici une instance de Categorie.
- 	 * Permet une comparaison précise et complète la méthode equals() car si les
- 	 * hashCode générés pour les instances comparées sont les mêmes et que 
- 	 * la méthode equals renvoie true, alors ces instances sont égales.
- 	 * 
- 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
- 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
- 	 * pour une maintenance future du code plus aisée et pour le respect
- 	 * des conventions générales de Java.
+	 * Crée un hashCode se basant sur les attributs de l'objet auquel
+	 * cette méthode est appliquée, ici une instance de Categorie.
+ 	 * Permet une comparaison précise et complète la méthode equals()
+ 	 * car si les hashCode générés pour les instances comparées sont 
+ 	 * les mêmes et que la méthode equals renvoie true, alors ces 
+ 	 * instances sont égales.
+ 	 * <p>
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous 
+ 	 * n'utilisons pas de HashSet ou de HashMap, cependant il est 
+ 	 * préférable de l'implémenter pour une maintenance future du code
+ 	 * plus aisée et pour le respect des conventions générales de Java.
  	 * 
  	 * @return un hashCode basé sur les attributs de l'instance passée
  	 */
@@ -206,7 +207,8 @@ public class Categorie implements Serializable {
 	
 
 	/**
-	 * Compare 2 catégories en profondeur sur la totalité de leurs attributs
+	 * Compare 2 catégories en profondeur sur la totalité de 
+	 * leurs attributs
 	 * 
 	 * @param aComparer Categorie a comparer
 	 * @return true si les categories sont égales, false sinon

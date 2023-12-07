@@ -1,5 +1,5 @@
 /*
- * MenuPrincipalControleur.java							            10 nov. 2023
+ * MenuPrincipalControleur.java							 10 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -129,5 +129,4 @@ public class MenuPrincipalControleur {
 	private void actionBoutonExportation() {
 		NavigationControleur.changerVue("Export.fxml");
 	}
-	
 }

@@ -1,5 +1,5 @@
 /*
- * DiffieHellman.java									            22 nov. 2023 
+ * DiffieHellman.java									 22 nov. 2023 
  * IUT de Rodez, no copyright ni "copyleft"
  */
 package info2.sae301.quiz.modeles.cryptographie;
@@ -94,7 +94,7 @@ public class DiffieHellman {
      * Calcule la puissance d'une valeur selon l'exposant en 
      * paramètre, le tout modulo P.
      * 
-     * @param valeur La valeur dont la puissance doit être calculée.
+     * @param valeur   La valeur dont la puissance doit être calculée
      * @param exposant Exposant auquel élever la valeur.
      * @return le résultat de la valeur
      * 		   à la puissance exposant modulo P.
@@ -113,5 +113,4 @@ public class DiffieHellman {
 
         return resultat;
     }
-    
 }

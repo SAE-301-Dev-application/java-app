@@ -1,5 +1,5 @@
 /*
- * NavigationControleur.java 						                10 nov. 2023
+ * NavigationControleur.java 						     10 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -31,7 +31,6 @@ public class NavigationControleur {
 	/**
 	 * Scène courante définie.
 	 * 
-	 * <p>
 	 * La scène par défaut est celle définie directement 
 	 * par le Main.java au lancement de l'application : 
 	 * le menu principal.
@@ -49,7 +48,7 @@ public class NavigationControleur {
 	 * courante. Cette information est utile lors du 
 	 * changement de scène via la méthode de changement
 	 * de vue.
-	 * @param nouvelleScene
+	 * @param nouvelleScene scène à afficher
 	 */
 	public static void setSceneCourante(Scene nouvelleScene) {
 		sceneCourante = nouvelleScene;
@@ -73,7 +72,7 @@ public class NavigationControleur {
 				sceneCourante.setRoot(racine);
 				vueCourante = routeVueFXML;
 			} catch (IOException e) {
-				System.out.println("ERREUR CHARGEMENT VUE : \n" + e.getMessage());
+				System.out.println("ERREUR CHARGEMENT VUE :\n" + e.getMessage());
 			}
 		}
 	}

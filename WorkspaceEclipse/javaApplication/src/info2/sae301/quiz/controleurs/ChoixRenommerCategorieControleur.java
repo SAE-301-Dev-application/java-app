@@ -1,5 +1,5 @@
 /*
- * ChoixRenommerCategorieControleur.java							 7 nov. 2023
+ * ChoixRenommerCategorieControleur.java				  7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -34,7 +34,7 @@ public class ChoixRenommerCategorieControleur {
 	 */
 	private static Jeu jeu = Quiz.jeu;
 	
-	/** Intitulé de la catégorie à renommer qui a été sélectionnée. */
+	/** Intitulé de la catégorie à renommer qui a été sélectionnée.*/
 	private static String intituleCategorieSelectionnee;
 	
 	@FXML
@@ -81,7 +81,7 @@ public class ChoixRenommerCategorieControleur {
 	
 	
 	/**
-	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
+	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
 	 * @throws IllegalArgumentException si la taille est invalide ou
@@ -127,10 +127,12 @@ public class ChoixRenommerCategorieControleur {
 				});	
 	        }
 	    }
-	    // Cacher le bouton "Précédent" s'il n'y a plus de catégories précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus de 
+	    // catégories précédentes
 	    boutonPrecedent.setVisible(!(indiceCategorie < 5));
 	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de catégories suivantes
+	    // Cacher le bouton "Suivant" s'il n'y a plus de 
+	    // catégories suivantes
 	    boutonSuivant.setVisible(toutesLesCategories.size() > 5
 	    		                 && indiceFin < toutesLesCategories.size());
 	}
@@ -196,5 +198,4 @@ public class ChoixRenommerCategorieControleur {
 		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
-	
 }

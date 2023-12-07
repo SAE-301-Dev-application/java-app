@@ -1,5 +1,5 @@
 /*
- * RenommerCategoriesControleur.java                                10 nov. 2023
+ * RenommerCategoriesControleur.java                     10 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -10,8 +10,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 
 /**
- * Contrôleur FXML de la vue RenommerCategories permettant de renommer
- * une catégorie sélectionnée.
+ * Contrôleur FXML de la vue RenommerCategories permettant 
+ * de renommer une catégorie sélectionnée.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
  */
 public class RenommerCategoriesControleur {
 	
+	/** Titre de l'alerte si la categorie ne peut être renommée*/
 	private static final String TITRE_ALERTE = "Erreur de renommage";
 	
 	@FXML
@@ -65,5 +66,4 @@ public class RenommerCategoriesControleur {
 										 TITRE_ALERTE, AlertType.ERROR);
 		}
 	}
-	
 }

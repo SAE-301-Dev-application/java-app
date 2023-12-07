@@ -1,5 +1,5 @@
 /*
-p * SuppressionCategoriesControleur.java								 7 nov. 2023
+ * SuppressionCategoriesControleur.java				     7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Contrôleur FXML de la vue SuppressionCategories qui affiche la 
- * liste des catégories avec des checkbox pour sélectionner celles
+ * liste des catégories avec des CheckBox pour sélectionner celles
  * à supprimer.
  * 
  * @author Florian Fabre
@@ -51,14 +51,14 @@ public class SuppressionCategoriesControleur {
 	
 	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
 	
-	/** Toutes les catégories dont la checkbox de sélection a été cochée. */
+	/** Toutes les catégories dont la CheckBox de sélection a été cochée. */
 	private ArrayList<String> categoriesSelectionnees = new ArrayList<>();
 	
-	/** Les checkbox ajoutées devant les catégories. */
+	/** Les CheckBox ajoutées devant les catégories. */
 	private ArrayList<CheckBox> toutesLesCheckBoxs = new ArrayList<>();
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant 
+	 * Initialisation de la vue avec le style CSS correspondant 
 	 * et l'affichage des catégories et du bouton suivant.
 	 */
 	@FXML
@@ -71,7 +71,7 @@ public class SuppressionCategoriesControleur {
 		afficherCategories();
 	}
 	/**
-	 * Initialisation de toutes les checkboxs représentent
+	 * Initialisation de toutes les CheckBoxs représentent
 	 * les catégories.
 	 */
 	private void initialiserToutesLesCheckboxs() {
@@ -83,7 +83,6 @@ public class SuppressionCategoriesControleur {
 	    	checkBoxCategorie.getStyleClass().add("checkbox-margin");
 			checkBoxCategorie.getStyleClass().add("intituleCategorieQuestion");
 			checkBoxCategorie.getStyleClass().add("intitule-padding-left");
-//			checkBoxQuestion.setVisible(false);
 			this.toutesLesCheckBoxs.add(checkBoxCategorie);
 			if (!checkBoxCategorie.getText().equals("Général")) {
 	        	final int INDICE = i;
@@ -97,6 +96,7 @@ public class SuppressionCategoriesControleur {
 		}
 	}
 
+	
 	/**
 	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
 	 * précédent et suivant en fonction du nombre de catégories 
@@ -188,6 +188,9 @@ public class SuppressionCategoriesControleur {
 		NavigationControleur.changerVue("AffichageCategories.fxml");
 	}
 	
+	/**
+	 * Supprime les catégories sélectionnées
+     */
 	@FXML
 	private void actionBoutonSupprimer() {
 		final String TITRE_SELECTION_VIDE = "Aucune catégorie n'est sélectionnée";
@@ -229,5 +232,4 @@ public class SuppressionCategoriesControleur {
 		AffichageCategoriesControleur.indiceCategorie = indiceCategorie;
 		
 	}
-	
 }

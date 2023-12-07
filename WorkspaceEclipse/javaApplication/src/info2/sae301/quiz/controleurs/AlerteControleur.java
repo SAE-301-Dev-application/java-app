@@ -1,5 +1,5 @@
 /*
- * AlerteControleur.java									        11 nov. 2023
+ * AlerteControleur.java							     11 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -31,7 +31,8 @@ public class AlerteControleur {
 	 * @param titreFenetre Le titre de la fenêtre.
 	 * @return La réponse positive (true) ou négative (false).
 	 */
-	public static boolean alerteConfirmation(String messageAlerte, String titreFenetre) {
+	public static boolean alerteConfirmation(String messageAlerte,
+			                                 String titreFenetre) {
 		Alert boiteDialogue;
 		
 		Optional<ButtonType> option;
@@ -58,7 +59,8 @@ public class AlerteControleur {
 	 * @param titreFenetre Le titre de la fenêtre.
 	 * @param typeAlerte Le type d'alerte.
 	 */
-	public static void autreAlerte(String messageAlerte, String titreFenetre, AlertType typeAlerte) {
+	public static void autreAlerte(String messageAlerte, String titreFenetre,
+			                       AlertType typeAlerte) {
 		Alert boiteDialogue;
 		
 		Stage stage;

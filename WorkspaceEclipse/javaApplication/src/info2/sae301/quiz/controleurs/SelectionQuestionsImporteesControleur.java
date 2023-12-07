@@ -1,5 +1,5 @@
 /*
- * SelectionQuestionsImporteesControleur.java								 1 déc. 2023
+ * SelectionQuestionsImporteesControleur.java			 1 déc. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -61,19 +61,19 @@ public class SelectionQuestionsImporteesControleur {
 	
 	private final static String AIDE_TEXTE
 	= """
-	  Vous devez sélectionner les checkboxs en face des questions
+	  Vous devez sélectionner les CheckBox en face des questions
 	  que vous souhaitez importer sur votre jeu.
 	  
 	  Les questions n'étant pas affichées existent déjà dans vos données.
 	  """;
 	
-	/** Toutes les questions dont la checkbox a été sélectionnée. */
+	/** Toutes les questions dont la CheckBox a été sélectionnée. */
 	private ArrayList<String> questionsSelectionnees = new ArrayList<>();
 	
 	/** Indice de la première question affichée sur la "page" courante. */
 	private int indiceQuestion; 
 	
-	/** Association de toutes les questions à leur checkbox */
+	/** Association de toutes les questions à leur CheckBox */
 	private HashMap<String, CheckBox> toutesLesQuestions = new HashMap<>();
 	
 	private ArrayList<String> listeQuestionsImportees;
@@ -96,7 +96,7 @@ public class SelectionQuestionsImporteesControleur {
 	
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et 
+	 * Initialisation de la vue avec le style CSS correspondant et 
 	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
@@ -146,7 +146,7 @@ public class SelectionQuestionsImporteesControleur {
 	}
 	
 	/**
-	 * Initialisation de toutes les checkboxs représentant
+	 * Initialisation de toutes les CheckBoxs représentant
 	 * les questions selon le filtre de catégorie.
 	 */
 	private void initialiserToutesLesQuestions() {
@@ -172,7 +172,8 @@ public class SelectionQuestionsImporteesControleur {
 			     indiceDonnee++) {
 				
 				donneesQuestionCourante[indiceDonnee]
-				= Import.retirerGuillemetsInvalides(donneesQuestionCourante[indiceDonnee]);
+				= Import.retirerGuillemetsInvalides(
+						               donneesQuestionCourante[indiceDonnee]);
 			}
 			
 			intituleQuestionC = donneesQuestionCourante[2];
@@ -222,18 +223,21 @@ public class SelectionQuestionsImporteesControleur {
 			);
 	    }
 	    
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus 
+	    // de questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 9));
 	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
+	    // Cacher le bouton "Suivant" s'il n'y a plus 
+	    // de questions suivantes
 	    boutonSuivant.setVisible(this.toutesLesQuestions.size() > 9
 	    		                 && indiceFin < this.toutesLesQuestions.size());
 	}
 	
 	/**
-	 * Clic sur la checkbox afin de sélectionner une question.
+	 * Clic sur la CheckBox afin de sélectionner une question.
 	 * 
 	 * @param donneesQuestion Données de la question à sélectionner.
+	 * @param checkBox à cocher
 	 */
 	private void selectionnerQuestion(String donneesQuestion, CheckBox checkBox) {
 		if (checkBox.isSelected()) {
@@ -337,6 +341,8 @@ public class SelectionQuestionsImporteesControleur {
 	/**
 	 * Indication via une pop-up du nombre de questions importées
 	 * après la réussite de l'import.
+	 * 
+	 * @param nombreQuestionsCrees 
 	 */
 	private void indicationStatutImportation(int nombreQuestionsCrees) {
 		String messageImportationSucces;
@@ -379,5 +385,4 @@ public class SelectionQuestionsImporteesControleur {
 		
 		NavigationControleur.changerVue("Import.fxml");
 	}
-
 }

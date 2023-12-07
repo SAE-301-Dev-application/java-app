@@ -1,5 +1,5 @@
 /*
- * GestionPseudoControleur.java			        		            15 nov. 2023
+ * GestionPseudoControleur.java			        		 15 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 

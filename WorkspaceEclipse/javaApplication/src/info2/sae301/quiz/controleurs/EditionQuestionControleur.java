@@ -1,5 +1,5 @@
 /*
- * EditionQuestionControleur.java							         9 nov. 2023
+ * EditionQuestionControleur.java						  9 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -180,9 +180,11 @@ public class EditionQuestionControleur {
 											.getValue().charAt(0));
 		
 		try {
-			jeu.editerQuestion(ChoixEditionQuestionControleur.getIndiceQuestionSelectionnee(),
+			jeu.editerQuestion(ChoixEditionQuestionControleur
+					           .getIndiceQuestionSelectionnee(),
 					           intituleQuestionEntre, reponseJusteEntree,
-					           reponsesFausses.toArray(new String[reponsesFausses.size()]),
+					           reponsesFausses.toArray(new String[reponsesFausses
+					           .size()]),
 					           difficulteEntree, feedbackEntre,
 					           categorie.getIntitule());
 			NavigationControleur.changerVue("AffichageQuestions.fxml");

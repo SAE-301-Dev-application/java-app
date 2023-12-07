@@ -1,5 +1,5 @@
 /*
- * PartieEnCours.java			        		            		22 nov. 2023
+ * PartieEnCours.java			        		         22 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -65,7 +65,8 @@ public class PartieEnCoursControleur {
 	@FXML
 	private Text intituleQuestion;
 	
-	/** Label montrant la difficulté de la question
+	/** 
+	 * Label montrant la difficulté de la question
 	 * - facile
 	 * - moyenne
 	 * - difficile
@@ -73,7 +74,8 @@ public class PartieEnCoursControleur {
 	@FXML
 	private Label labelDifficulte;
 	
-	/** Label montrant le numéro de la question courante
+	/** 
+	 * Label montrant le numéro de la question courante
 	 * sur le nombre de question de la série 
 	 * (exemple : 1/20, 2/20, ... */
 	@FXML
@@ -172,7 +174,7 @@ public class PartieEnCoursControleur {
 	
 	/**
 	 * Permet de revoir la question précédente
-	 * et de mofidier la réponse.
+	 * et de modifier la réponse.
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -199,7 +201,8 @@ public class PartieEnCoursControleur {
 		}
 		
 		
-		//permet de savoir si on ajoute ou modofie une réponse précédemment donné
+		// permet de savoir si on ajoute ou modifie une réponse 
+		// précédemment donné
 		if (this.partieCourante.getIndiceDerniereQuestionVue()
 				== this.partieCourante.getIndiceQuestionCourante()){
 			
@@ -277,7 +280,6 @@ public class PartieEnCoursControleur {
 	private void initQuestionReponse() {
 		intituleQuestion.setText(questionCourante.getIntitule());
 		touteslesRadioReponses = new ArrayList<>();
-//		ToggleGroup radioGroupe = new ToggleGroup();
 		
 		ArrayList<String> reponsesMelange = questionCourante.melangerReponses();
 		for (int i = 0; i < reponsesMelange.size(); i++) {
@@ -288,7 +290,6 @@ public class PartieEnCoursControleur {
 				}
 				afficherReponse.getStyleClass().add("reponse");
 				afficherReponse.setId("" + i);
-//				afficherReponse.setToggleGroup(radioGroupe);
 				afficherReponse.setOnAction(event -> {
 					this.decocherCheckBox(afficherReponse);
 				});
@@ -362,5 +363,4 @@ public class PartieEnCoursControleur {
 		int nbQuestionPartie = partieCourante.getQuestionsProposees().size();
 		numQuestion.setText(numero + "/" + nbQuestionPartie);
 	}
-	
 }

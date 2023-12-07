@@ -1,5 +1,5 @@
 /*
- * ParametresPartie.java             							    14 nov. 2023
+ * ParametresPartie.java             					 14 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -40,7 +40,7 @@ public class ParametresPartie {
 	  """;
 	
 	/**
-	 * Message pour signaler à l'utilisateur qu'il a selectionné
+	 * Message pour signaler à l'utilisateur qu'il a sélectionné
 	 * un nombre de questions invalide
 	 */
 	public static final String NOMBRE_INVALIDE
@@ -92,8 +92,9 @@ public class ParametresPartie {
 	private int nombreQuestions;
 	
 	/**
-	 * Paramètres d'une partie de jeu nouvellement initialisée avec une difficulté
-	 * indifférente et 10 questions affichées dans le jeu par défaut.
+	 * Paramètres d'une partie de jeu nouvellement initialisée avec 
+	 * une difficulté indifférente et 10 questions affichées dans 
+	 * le jeu par défaut.
 	 */
 	public ParametresPartie() {
 		setCategoriesSelectionnees(new ArrayList<Categorie>());
@@ -103,8 +104,9 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Paramètres d'une partie de jeu nouvellement initialisée avec les catégories
-	 * sélectionnées, la difficulté et le nombre de questions en paramètres.
+	 * Paramètres d'une partie de jeu nouvellement initialisée avec 
+	 * les catégories sélectionnées, la difficulté et le nombre de 
+	 * questions en paramètres.
 	 * 
 	 * @param categoriesSelectionnees Les catégories sélectionnées.
 	 * @param difficulteQuestions La difficulté des questions.
@@ -164,15 +166,15 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Vérification du fait qu'il y ait assez de questions dont la difficulté est
-	 * difficulteQuestions dans les catégories sélectionnées afin
-	 * d'afficher nombreQuestions questions.
+	 * Vérification du fait qu'il y ait assez de questions dont la 
+	 * difficulté est difficulteQuestions dans les catégories 
+	 * sélectionnées afin d'afficher nombreQuestions questions.
 	 * 
-	 * 
-	 * @throws AucuneQuestionCorrespondanteException si aucune question
-	 * ne correspond aux critères.
+	 * @throws AucuneQuestionCorrespondanteException si aucune 
+	 *         question ne correspond aux critères.
 	 * @throws NbInsuffisantQuestionsException si moins de questions
-	 * que le nombre de questions souhaitées correspondent aux critères.
+	 * que le nombre de questions souhaitées correspondent 
+	 * aux critères.
 	 */
 	public static void aAssezQuestions(int difficulteQuestions,
 									   int nombreQuestions,
@@ -201,11 +203,13 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Récupère en fonction des paramètres de la partie courante des questions
-	 * à proposer à l'utilisateur parmi les catégories sélectionnées.
+	 * Récupère en fonction des paramètres de la partie courante 
+	 * des questions à proposer à l'utilisateur parmi les 
+	 * catégories sélectionnées.
 	 * 
 	 * @param difficulte La difficulté des questions à récupérer.
-	 * @param categories Les catégories desquelles récupérer les questions.
+	 * @param categories Les catégories desquelles récupérer 
+	 *                   les questions.
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
 	public static ArrayList<Question> recupQuestionsValides(int difficulte,
@@ -230,9 +234,9 @@ public class ParametresPartie {
 	
 	
 	/**
-	 * Mélange la liste des questions correspondantes aux paramètres et 
-	 * ne récupère que le nombre de questions autorisé et choisi par
-	 * l'utilisateur
+	 * Mélange la liste des questions correspondantes aux paramètres 
+	 * et ne récupère que le nombre de questions autorisé et choisi 
+	 * par l'utilisateur
 	 * 
 	 * @return La liste des questions correspondantes aux paramètres.
 	 */
@@ -255,7 +259,10 @@ public class ParametresPartie {
 	}
 
 	
-	/** @param categoriesSelectionnees Les catégories de questions sélectionnées. */
+	/** 
+	 * @param categoriesSelectionnees Les catégories de 
+	 * questions sélectionnées. 
+	 */
 	public void setCategoriesSelectionnees(ArrayList<Categorie> categoriesSelectionnees) {
 		this.categoriesSelectionnees = categoriesSelectionnees;
 	}
@@ -268,8 +275,10 @@ public class ParametresPartie {
 
 	
 	/**
-	 * @param difficulteQuestions La difficulté des questions à proposer.
-	 * @throws DifficulteInvalideException si la difficulté est invalide.
+	 * @param difficulteQuestions La difficulté des questions 
+	 *                            à proposer.
+	 * @throws DifficulteInvalideException si la difficulté 
+	 * est invalide.
 	 */
 	public void setDifficulteQuestions(int difficulteQuestions)
 	throws DifficulteInvalideException {
@@ -288,8 +297,8 @@ public class ParametresPartie {
 	
 	/**
 	 * @param nombreQuestions Le nombre de questions à proposer.
-	 * @throws NombreQuestionsInvalideException si le nombre de questions
-	 * n'est pas 5, 10 ou 20.
+	 * @throws NombreQuestionsInvalideException si le nombre de 
+	 * questions n'est pas 5, 10 ou 20.
 	 */
 	public void setNombreQuestions(int nombreQuestions)
 	throws NombreQuestionsInvalideException {
@@ -300,5 +309,4 @@ public class ParametresPartie {
 		}
 		this.nombreQuestions = nombreQuestions;
 	}
-	
 }

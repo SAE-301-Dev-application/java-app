@@ -1,5 +1,5 @@
 /*
- * CreationQuestionControleur.java							         9 nov. 2023
+ * CreationQuestionControleur.java						  9 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -76,7 +76,8 @@ public class CreationQuestionControleur {
 			intituleCategorie.getItems().add(categorieCourante.getIntitule());
 		}
 		// Catégorie général par défaut
-		intituleCategorie.setValue(jeu.getToutesLesCategories().get(0).getIntitule());
+		intituleCategorie.setValue(jeu.getToutesLesCategories().get(0)
+				                                               .getIntitule());
 		
 		String[] difficultes = {"1 - Facile", "2 - Moyenne",
 				                "3 - Difficile"};
@@ -113,7 +114,7 @@ public class CreationQuestionControleur {
 	 * Récupère chacune des informations entrées par l'utilisateur
 	 * permettant de créer une question et tente de la créer
 	 * Si la question ne peut pas être créée, cette méthode renvoie 
-	 * une erreur sous forme d'alert pour l'utilisateur
+	 * une erreur sous forme d'alerte pour l'utilisateur
 	 */
 	@FXML
 	private void actionBoutonEnregistrer() {
@@ -162,8 +163,10 @@ public class CreationQuestionControleur {
 			}
 			
 			jeu.creerQuestion(intituleQuestionEntre, reponseJusteEntree,
-				              reponsesFausses.toArray(new String[reponsesFausses.size()]),
-				              difficulteEntree, feedbackEntre, categorie.getIntitule());
+				              reponsesFausses.toArray(new String[reponsesFausses
+				                                                .size()]),
+				              difficulteEntree, feedbackEntre, categorie
+				                                                .getIntitule());
 			NavigationControleur.changerVue("AffichageQuestions.fxml");
 		} catch (Exception e) {
 			AlerteControleur.autreAlerte(e.getMessage(),

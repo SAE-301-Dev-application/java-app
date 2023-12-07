@@ -1,5 +1,5 @@
 /*
- * NouvellePartie.java							                    17 nov. 2023
+ * NouvellePartie.java							         17 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -61,7 +61,8 @@ public class NouvellePartieControleur {
 	private static final String ERREUR_DIFFICULTE_TITRE 
 	= "Difficulté invalide";
 	
-	/** Texte indiquant le nombre de questions disponibles dans 
+	/** 
+	 * Texte indiquant le nombre de questions disponibles dans 
 	 * les catégories sélectionnées
 	 */
 	private static final String INDICATION_NB_QUESTIONS
@@ -72,7 +73,7 @@ public class NouvellePartieControleur {
 	private static final String ERREUR_AUCUNE_QUESTION_TITRE
 	= "Aucune question";
 	
-	/** Texte d'erreur pour dire qu'il n'y a pas assez de questions */
+	/** Texte d'erreur pour dire qu'il n'y a pas assez de questions*/
 	private static final String ERREUR_MOINS_QUESTIONS_TITRE
 	= "Pas assez de questions";
 	
@@ -194,7 +195,6 @@ public class NouvellePartieControleur {
 		/*
 		 * Choix du nombre de questions.
 		 */
-		
 		this.checkBox5Questions.setOnAction(event -> {
 			this.choixNombreQuestions(5);
 		});
@@ -210,7 +210,6 @@ public class NouvellePartieControleur {
 		/*
 		 * Choix des difficultés.
 		 */
-		
 		this.checkBoxDifficulteIndifferent.setOnAction(event -> {
 			this.choixDifficulte(0);
 			majNombreQuestionsCategories();
@@ -277,7 +276,7 @@ public class NouvellePartieControleur {
 	/**
 	 * Choix du nombre de questions pour le quiz.
 	 * 
-	 * @param nombre
+	 * @param nombre nombre de questions
 	 */
 	private void choixNombreQuestions(int nombre) {
 		if (nombre != 5 && nombre != 10 && nombre != 20) {
@@ -294,6 +293,7 @@ public class NouvellePartieControleur {
 	
 	/**
 	 * Choix du niveau de difficulté "Indifférent" pour le quiz.
+	 * 
 	 * @param difficulte difficulté choisie
 	 */
 	private void choixDifficulte(int difficulte) {

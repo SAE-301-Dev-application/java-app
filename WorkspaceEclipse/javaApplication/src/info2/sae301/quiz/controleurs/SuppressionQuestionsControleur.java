@@ -1,5 +1,5 @@
 /*
- * SuppressionQuestionsControleur.java								 7 nov. 2023
+ * SuppressionQuestionsControleur.java					 7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Contrôleur FXML de la vue SuppressionQuestions qui affiche 
- * la liste des questions avec des checkbox pour les supprimer.
+ * la liste des questions avec des CheckBox pour les supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -51,7 +51,7 @@ public class SuppressionQuestionsControleur {
 	private Button boutonSuivant;
 	
 	
-	/** Toutes les questions dont la checkbox a été sélectionnée. */
+	/** Toutes les questions dont la CheckBox a été sélectionnée. */
 	private ArrayList<Question> questionsSelectionnees = new ArrayList<>();
 	
 	/** Indice de la première question affichée sur la "page" courante. */
@@ -63,11 +63,11 @@ public class SuppressionQuestionsControleur {
 	/** Les questions de la catégorie courante à afficher */
 	private ArrayList<Question> questionsCategorie = new ArrayList<>();
 	
-	/** Association de toutes les questions à leur checkbox */
+	/** Association de toutes les questions à leur CheckBox */
 	private HashMap<Question, CheckBox> toutesLesQuestions = new HashMap<>();
 	
 	/**
-	 * Initialisation de la vue avec le style css correspondant et 
+	 * Initialisation de la vue avec le style CSS correspondant et 
 	 * l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
@@ -86,10 +86,14 @@ public class SuppressionQuestionsControleur {
 		}
 		
 		initialiserToutesLesQuestions();
-		/* l'apelle à cette méthode apelle
-		implicitement selectionFiltre */
+		
+		/* 
+		 * l'appel à cette méthode appelle implicitement 
+		 * selectionFiltre 
+		 */
 		menuFiltre.setValue(categorieCourante);
 	}
+	
 	
 	/**
 	 * Réaffichage des questions lorsqu'une catégorie est sélectionnée.
@@ -105,8 +109,9 @@ public class SuppressionQuestionsControleur {
 		afficherQuestions();
 	}
 	
+	
 	/**
-	 * initialisation de toutes les checkboxs représentent
+	 * initialisation de toutes les CheckBoxs représentent
 	 * les questions selon le filtre de catégorie.
 	 */
 	private void initialiserToutesLesQuestions() {
@@ -125,6 +130,8 @@ public class SuppressionQuestionsControleur {
 			});
 		}
 	}
+	
+	
 	/**
 	 * Initialisation de questionCategorie en fonction du
 	 * filtre de catégorie actuelle.
@@ -137,6 +144,7 @@ public class SuppressionQuestionsControleur {
 			questionsCategorie = jeu.questionsCategorie(categorieCourante);
 		}
 	}
+	
 	
 	/**
 	 * Affiche 10 questions au maximum et gère l'affichage des boutons
@@ -158,16 +166,18 @@ public class SuppressionQuestionsControleur {
 	        				toutesLesQuestions.get(questionsCategorie.get(i)));
 	    }
 	    
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus 
+	    // de questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
 	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
+	    // Cacher le bouton "Suivant" s'il n'y a plus de 
+	    // questions suivantes
 	    boutonSuivant.setVisible(questionsCategorie.size() > 10
 	    		                 && indiceFin < questionsCategorie.size());
 	}
 	
 	/**
-	 * Clic sur la checkbox afin de sélectionner une question.
+	 * Clic sur la CheckBox afin de sélectionner une question.
 	 * 
 	 * @param indiceQestion Indice de la question sélectionnée.
 	 */
@@ -186,6 +196,7 @@ public class SuppressionQuestionsControleur {
 		System.out.println();
 	}
 	
+	
 	/**
 	 * Retrait de 10 questions à l'indice de la première question 
 	 * à afficher et affichage des 10 questions précédentes.
@@ -197,6 +208,7 @@ public class SuppressionQuestionsControleur {
 	    afficherQuestions();
 	    System.out.println("Suppression : " + indiceQuestion);
 	}
+	
 	
 	/**
 	 * Ajout de 10 questions à l'indice de la première question à 
@@ -210,6 +222,7 @@ public class SuppressionQuestionsControleur {
 		System.out.println("Suppression : " + indiceQuestion);
 	}
 	
+	
 	/**
 	 * Redirection vers la pop-up de la suppression des questions
 	 */
@@ -218,6 +231,7 @@ public class SuppressionQuestionsControleur {
 		AlerteControleur.aide(AffichageQuestionsControleur.AIDE_TITRE,
 				              AffichageQuestionsControleur.AIDE_TEXTE);
 	}
+	
 	
 	/**
 	 * Redirection vers la vue SuppressionQuestions pour sélectionner
@@ -258,6 +272,7 @@ public class SuppressionQuestionsControleur {
 		}
 	}
 	
+	
     /**
 	 * Redirection vers la vue AffichageQuestions.
      */
@@ -267,6 +282,7 @@ public class SuppressionQuestionsControleur {
 		AffichageQuestionsControleur.indiceQuestion = indiceQuestion;
 		NavigationControleur.changerVue("AffichageQuestions.fxml");
 	}
+	
 	
 	/**
 	 * Adapte indiceQuestion en fonction du nombre de

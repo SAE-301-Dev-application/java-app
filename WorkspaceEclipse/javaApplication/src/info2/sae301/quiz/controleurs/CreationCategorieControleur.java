@@ -1,5 +1,5 @@
 /*
- * CreationCategorieControleur.java			        		         9 nov. 2023
+ * CreationCategorieControleur.java			              9 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 

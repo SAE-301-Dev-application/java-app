@@ -1,5 +1,5 @@
 /*
- * AffichageQuestionsControleur.java								 7 nov. 2023
+ * AffichageQuestionsControleur.java				  	  7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -19,8 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue AffichageQuestions qui affiche la liste des
- * questions et propose d'en créer, renommer et supprimer.
+ * Contrôleur FXML de la vue AffichageQuestions qui affiche la liste
+ * des questions et propose d'en créer, renommer et supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -64,16 +64,16 @@ public class AffichageQuestionsControleur {
 	
 	private Label questionCourante;
 	
-	/** Indice de la première question affichée sur la "page" courante. */
+	/** Indice de la première question affichée sur la "page" courante.*/
 	static int indiceQuestion = 0; 
 	
-	/** Nom de la première catégorie affichée sur la "page" courante. */
+	/** Nom de la première catégorie affichée sur la "page" courante.*/
 	static String categorieCourante = "Toutes les catégories";
 	
 	
 	/**
-	 * Initialisation de la vue avec le style CSS correspondant et l'affichage
-	 * des questions et du bouton suivant.
+	 * Initialisation de la vue avec le style CSS correspondant 
+	 * et l'affichage des questions et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -110,8 +110,8 @@ public class AffichageQuestionsControleur {
 	
 	/**
 	 * Affiche 10 questions au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de questions précédentes
-	 * et suivantes.
+	 * précédent et suivant en fonction du nombre de questions 
+	 * précédentes et suivantes.
 	 */
 	private void afficherQuestions() {
 		ArrayList<Question> questionsAAfficher
@@ -127,22 +127,25 @@ public class AffichageQuestionsControleur {
 	    // Afficher les (indiceFin - indiceDebut) catégories
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	    	questionCourante
-	    	= new Label(questionsAAfficher.get(i).getIntitule().replaceAll("\n", " "));
+	    	= new Label(questionsAAfficher.get(i).getIntitule()
+	    			                             .replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleCategorieQuestion");
 	        vBoxQuestions.getChildren().add(questionCourante);
 	    }
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus de 
+	    // questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 10));
 	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
+	    // Cacher le bouton "Suivant" s'il n'y a plus 
+	    // de questions suivantes
 	    boutonSuivant.setVisible(questionsAAfficher.size() > 10
 	    		                 && indiceFin < questionsAAfficher.size());
 	}
 	
 	
 	/**
-	 * Retrait de 10 questions à l'indice de la première question à afficher
-	 * et affichage des 10 questions précédentes.
+	 * Retrait de 10 questions à l'indice de la première question 
+	 * à afficher et affichage des 10 questions précédentes.
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -154,8 +157,8 @@ public class AffichageQuestionsControleur {
 	
 	
 	/**
-	 * Ajout de 10 questions à l'indice de la première question à afficher
-	 * et affichage des 10 questions suivantes. 
+	 * Ajout de 10 questions à l'indice de la première question 
+	 * à afficher et affichage des 10 questions suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -186,8 +189,8 @@ public class AffichageQuestionsControleur {
 	
 	
 	/**
-	 * Redirection vers la vue SuppressionQuestions pour sélectionner la ou les
-	 * question(s) à supprimer.
+	 * Redirection vers la vue SuppressionQuestions pour sélectionner 
+	 * la ou les question(s) à supprimer.
 	 */
 	@FXML
 	private void actionBoutonSupprimer() {
@@ -205,8 +208,8 @@ public class AffichageQuestionsControleur {
 	
 	
     /**
-	 * Redirection vers la vue CreationQuestions pour créer de nouvelles
-	 * questions.
+	 * Redirection vers la vue CreationQuestions pour créer 
+	 * de nouvelles questions.
      */
 	@FXML
 	private void actionBoutonCreer() {

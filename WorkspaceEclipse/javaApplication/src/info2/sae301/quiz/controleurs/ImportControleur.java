@@ -1,5 +1,5 @@
 /*
- * ImportControleur.java							                28 nov. 2023
+ * ImportControleur.java							     28 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -22,8 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * Contrôleur FXML de la vue Import qui permet d'importer depuis un fichier
- * CSV local ou depuis un ordinateur distant des questions et catégories.
+ * Contrôleur FXML de la vue Import qui permet d'importer depuis 
+ * un fichier CSV local ou depuis un ordinateur distant des questions
+ * et catégories.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -122,8 +123,10 @@ public class ImportControleur {
 			try {
 				this.importation.parcourirFichiers();
 				
-				objetCheminCourant = Path.of(this.importation.getCheminFichier());
-				nomFichierSelectionne = objetCheminCourant.getFileName().toString();
+				objetCheminCourant = Path.of(this.importation
+						                         .getCheminFichier());
+				nomFichierSelectionne = objetCheminCourant.getFileName()
+						                                  .toString();
 				
 				this.cheminCourant.setText(nomFichierSelectionne);
 			} catch (FileNotFoundException e) {
@@ -155,8 +158,8 @@ public class ImportControleur {
 	
 	/**
 	 * Action du bouton "Importer".
-	 * Import local si un fichier a été sélectionné ou sinon import distant si
-	 * une adresse ip a été renseignée.
+	 * Import local si un fichier a été sélectionné ou sinon import 
+	 * distant si une adresse IP a été renseignée.
 	 * Sinon une pop-up d'erreur est affichée.
 	 */
 	@FXML
@@ -188,7 +191,7 @@ public class ImportControleur {
 	
 	/**
 	 * Choix d'un import local à partir des données d'un fichier CSV
-	 * qui vont être lues et analysées afin de déterminer les erreurs.
+	 * qui vont être lues et analysées afin de déterminer les erreurs
 	 */
 	private void demarrerImportLocal() {
 		try {
@@ -208,8 +211,8 @@ public class ImportControleur {
 	
 	
 	/**
-	 * Choix d'un import distant à partir des données envoyées par le serveur
-	 * dont l'adresse IPV4 est en paramètre.
+	 * Choix d'un import distant à partir des données envoyées par 
+	 * le serveur dont l'adresse IPV4 est en paramètre.
 	 * 
 	 * @param ipEntree Adresse IPV4 du serveur distant devant envoyer
 	 *                 les questions à importer.
@@ -248,8 +251,8 @@ public class ImportControleur {
 	
 	
 	/**
-	 * Affichage d'une pop-up d'erreur indiquant que le chemin spécifié
-	 * pour accéder au CSV est invalide.
+	 * Affichage d'une pop-up d'erreur indiquant que le chemin 
+	 * spécifié pour accéder au CSV est invalide.
 	 */
 	private static void erreurCheminInexistant() {
 		autreAlerte(ERREUR_CHEMIN_INEXISTANT_MESSAGE,
@@ -265,5 +268,4 @@ public class ImportControleur {
 	private static void redirectionEnregistrementImports() {
 		NavigationControleur.changerVue("SelectionQuestionsImportees.fxml");
 	}
-	
 }

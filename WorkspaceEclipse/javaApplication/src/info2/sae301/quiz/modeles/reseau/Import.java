@@ -1,5 +1,5 @@
 /*
- * Import.java									                    27 nov. 2023
+ * Import.java									         27 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -71,9 +71,11 @@ public class Import {
 	 * et envoyait à la méthode ajoutDonnees() pour que celle-ci
 	 * soient ajouter à l'application.
 	 * 
-	 * @throws FormatCSVInvalideException si le format du CSV à importer
-	 *         ne correspond pas à un fichier contenant des questions de quiz.
-	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws FormatCSVInvalideException si le format du CSV à 
+	 *         importer ne correspond pas à un fichier contenant 
+	 *         des questions de quiz.
+	 * @throws IllegalArgumentException si un des caractères n'est 
+	 *         pas chiffrable.
 	 * @throws Exception si la lecture du CSV échoue.
 	 */
 	public void importerLocalement()
@@ -147,8 +149,8 @@ public class Import {
 	
 	
 	/**
-	 * Vérification que l'addresse IPV4 en paramètre respecte bien le format
-	 * conventionnel d'une IPV4.
+	 * Vérification que l'addresse IPV4 en paramètre respecte bien 
+	 * le format conventionnel d'une IPV4.
 	 * 
 	 * @param adresseIPV4 L'adresse IPV4 à vérifier.
 	 * @throws AdresseIPInvalideException si l'adresse est invalide.
@@ -169,11 +171,14 @@ public class Import {
 	
 	/**
 	 * Créé un client avec l'adresse IP renseignée dans la vue afin
-	 * de se connecter à un serveur et récupérer les questions proposées.
+	 * de se connecter à un serveur et récupérer les 
+	 * questions proposées.
 	 * 
-	 * @param adresseServeur L'adresse du serveur qui envoie les données
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
-	 * @throws IllegalArgumentException si 
+	 * @param adresseServeur L'adresse du serveur qui envoie 
+	 *                       les données
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 *         la connexion.
+	 * @throws IllegalArgumentException si questionsImportees est vide
 	 * @throws Exception si la création de la socket échoue.
 	 */
 	public void importerADistance(String adresseServeur)
@@ -186,7 +191,7 @@ public class Import {
 	
 	    /*
 		 * ___________________________________________________
-		 * Echange réseau sans Diffie Hellman (juste Vigenère)
+		 * Échange réseau sans Diffie Hellman (juste Vigenère)
 		 * ---------------------------------------------------
 		 *
 		 * ClientVigenere client;
@@ -214,12 +219,13 @@ public class Import {
 	
 	
 	/**
-	 * Extrait les données d'une question écrite sous forme de chaîne de
-	 * caractères et les renvoie dans un tableau.
+	 * Extrait les données d'une question écrite sous forme de chaîne 
+	 * de caractères et les renvoie dans un tableau.
 	 * 
 	 * @param donneesQuestion Les données de la question à extraire.
-	 * @return Un tableau contenant les données extraites de la question
-	 *         sous forme de chaîne de caractères en paramètre.
+	 * @return Un tableau contenant les données extraites de la 
+	 *         question sous forme de chaîne de caractères 
+	 *         en paramètre.
 	 */
 	public static String[] extraireDonneesQuestion(String donneesQuestion) {
 		final String REGEX_DONNEE_ENTIERE
@@ -280,12 +286,14 @@ public class Import {
 	
 	
 	/**
-	 * Créé et ajoute à la liste des questions en mémoire la question dont
-	 * les données sont en paramètre sous forme de chaînes de caractères.
+	 * Créé et ajoute à la liste des questions en mémoire la question
+	 * dont les données sont en paramètre sous forme de chaînes 
+	 * de caractères.
 	 * 
 	 * @param questions Chaînes de caractères contenant
 	 *                  les données de la question à créer.
-	 * @throws IllegalArgumentException si un des caractères n'est pas chiffrable.
+	 * @throws IllegalArgumentException si un des caractères n'est 
+	 * pas chiffrable.
 	 */
 	public static void creerQuestion(String donneesQuestion)
 	throws IllegalArgumentException {
@@ -449,5 +457,4 @@ public class Import {
 	public static ArrayList<String> getLignesQuestionsCrees() {
 		return lignesQuestionsCrees;
 	}
-	
 }

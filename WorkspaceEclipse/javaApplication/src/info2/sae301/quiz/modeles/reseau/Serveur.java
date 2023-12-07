@@ -1,5 +1,5 @@
 /*
- * Serveur.java								                        27 nov. 2023
+ * Serveur.java								             27 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -19,8 +19,8 @@ import info2.sae301.quiz.modeles.cryptographie.DiffieHellman;
 import info2.sae301.quiz.modeles.cryptographie.Vigenere;
 
 /**
- * Serveur permettant d'exporter les données des questions et catégories
- * vers un client connecté.
+ * Serveur permettant d'exporter les données des questions et 
+ * catégories vers un client connecté.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -41,11 +41,12 @@ public class Serveur {
 	= "\nRéponse du client : ";
 	
 	/**
-	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
-	 * Le délimiteur contient volontairement le caractère ◄ non chiffrable
-	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
-	 * question contenant ce délimiteur dans un intitulé et qu'un problème
-	 * d'import apparaisse.
+	 * Délimiteur de séparation de toutes les questions dans l'objet 
+	 * envoyé.
+	 * Le délimiteur contient volontairement le caractère ◄ non 
+	 * chiffrable(cf dictionnaire chiffrable) afin d'éviter que 
+	 * l'utilisateur crée une question contenant ce délimiteur dans 
+	 * un intitulé et qu'un problème d'import apparaisse.
 	 */
 	private final static String DELIMITEUR = "/delimiteur◄/";
 	
@@ -100,8 +101,10 @@ public class Serveur {
 	 * Accepte la connexion d'un éventuel client.
 	 * 
 	 * @throws IOException Si la connexion ne peut être établie.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	public void accepterConnexion()
 	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
@@ -124,8 +127,10 @@ public class Serveur {
 	 * envoyés par le client.
 	 * 
 	 * @throws IOException Si la création du flux d'entrée échoue.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	private void creerFluxEntree()
 	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
@@ -149,8 +154,10 @@ public class Serveur {
 	 * au client.
 	 * 
 	 * @throws IOException Si la création du flux de sortie échoue.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	private void creerFluxSortie()
 	throws IOException, SocketTimeoutException, ClientDejaConnecteException {
@@ -159,8 +166,8 @@ public class Serveur {
 	
 	
 	/**
-	 * Fermeture du flux de sortie créé pour envoyer des objets (String)
-	 * au client.
+	 * Fermeture du flux de sortie créé pour envoyer des 
+	 * objets (String) au client.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -173,10 +180,14 @@ public class Serveur {
 	 * Envoi de l'entier du serveur et réception de l'entier du client
 	 * afin de calculer l'entier secret de Diffie Hellman.
 	 * 
-	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws IOException Si l'envoi ou la réception d'un 
+	 * objet échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas 
+	 * un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	private void envoyerRecevoirEntier()
 	throws IOException, ClassNotFoundException, SocketTimeoutException,
@@ -209,12 +220,16 @@ public class Serveur {
 	
 	
 	/**
-	 * Envoie au client la clé gérénée par Vigenère.
+	 * Envoie au client la clé générée par Vigenère.
 	 * 
-	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws IOException Si l'envoi ou la réception d'un objet 
+	 * échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas 
+	 * un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	private void envoyerCleVigenere()
 	throws IOException, ClassNotFoundException, SocketTimeoutException,
@@ -248,13 +263,18 @@ public class Serveur {
 	 * Chiffre via la méthode
 	 * {@link info2.sae301.quiz.modeles.cryptographie.Vigenere#chiffrer(String)}
 	 * les données des questions en paramètre.
-	 * Envoie ensuite via fluxSortie les données cryptées des questions.
+	 * Envoie ensuite via fluxSortie les données cryptées 
+	 * des questions.
 	 * 
 	 * @param questions Les questions à envoyer.
-	 * @throws IOException Si l'envoi ou la réception d'un objet échoue.
-	 * @throws ClassNotFoundException Si l'objet reçu n'est pas un String.
-	 * @throws SocketTimeoutException Si la connexion n'est pas réalisée en 10s.
-	 * @throws ClientDejaConnecteException Si un client est déjà connecté.
+	 * @throws IOException Si l'envoi ou la réception d'un objet
+	 * échoue.
+	 * @throws ClassNotFoundException Si l'objet reçu n'est pas 
+	 * un String.
+	 * @throws SocketTimeoutException Si la connexion n'est pas 
+	 * réalisée en 10s.
+	 * @throws ClientDejaConnecteException Si un client est 
+	 * déjà connecté.
 	 */
 	public void envoyerQuestions(ArrayList<Question> questions)
 	throws IOException, ClassNotFoundException, SocketTimeoutException,
@@ -312,7 +332,7 @@ public class Serveur {
 	/**
 	 * Fermeture des flux et sockets précédemment créées.
 	 * 
-	 * @throws IOException si la fermeture des flux et sockets échoue.
+	 * @throws IOException si la fermeture des flux et sockets échoue
 	 */
 	public void fermerSockets() throws IOException {
 		// Fermeture de la socket du client

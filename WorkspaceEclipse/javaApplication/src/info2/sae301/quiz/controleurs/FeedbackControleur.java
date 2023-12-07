@@ -1,5 +1,5 @@
 /*
- * NouvellePartie.java							                    17 nov. 2023
+ * NouvellePartie.java							         17 nov. 2023
  * IUT de Rodez, pas de copyright, ni de "copyleft".
  */
 
@@ -80,8 +80,8 @@ public class FeedbackControleur {
 	/**
 	 * Génération du feedback d'une question.
 	 * 
-	 * @param indiceQuestionCourante L'indice de la question pour laquelle
-	 * générer le feedback.
+	 * @param indiceQuestionCourante L'indice de la question pour 
+	 * laquelle générer le feedback.
 	 */
 	private void genererFeedback(int indiceQuestionCourante) {
 		final String STATUT_QUESTION_REUSSIE
@@ -264,5 +264,4 @@ public class FeedbackControleur {
 	private void actionBoutonRetour() {
 		NavigationControleur.changerVue("ResultatsPartie.fxml");
 	}
-	
 }

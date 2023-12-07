@@ -1,5 +1,5 @@
 /*
- * ExportControleur.java					                        28 nov. 2023
+ * ExportControleur.java					             28 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -105,7 +105,7 @@ public class ExportControleur {
 	private static final String MODELE_LABEL_IP_PRIVEE
 	= "Mon adresse IP : %s";
 	
-	/** Dernier indice d'une ligne complète de la grille de sélection. */
+	/** Dernier indice d'une ligne complète de la grille de sélection*/
 	private static final int INDICE_MAX_LIGNE_GRILLE = 1;
 	
 	
@@ -124,18 +124,21 @@ public class ExportControleur {
 	
 	
 	/**
-     * Récupération de l'adresse IP locale de la machine en créant un socket UDP
-     * temporaire. Le socket choisit l'interface réseau nécessaire à la la sortie
-     * en se connectant à un serveur DNS externe.
-     * On choisit l'adresse IP 8.8.8.8 de Google afin d'être presque sûr
-     * d'avoir une réponse si l'ordinateur a bien une connexion internet.
-     * Si uine erreur est renvoyée (ex: aucune connexion internet) on tente
-     * d'accéder à l'adresse IP locale avec la méthode ipPrivee().
+     * Récupération de l'adresse IP locale de la machine en créant 
+     * un socket UDP temporaire. Le socket choisit l'interface réseau
+     * nécessaire à la la sortie en se connectant à un serveur DNS 
+     * externe.
+     * On choisit l'adresse IP 8.8.8.8 de Google afin d'être presque 
+     * sûr d'avoir une réponse si l'ordinateur a bien une connexion 
+     * internet.
+     * Si une erreur est renvoyée (ex: aucune connexion internet) 
+     * on tente d'accéder à l'adresse IP locale avec la méthode 
+     * ipPrivee().
      * 
-     * @return Une chaîne de caractères représentant l'adresse IP locale.
+     * @return Une chaîne de caractères représentant l'adresse IP 
+     * locale.
 	 * @throws UnknownHostException 
 	 * @throws SocketException 
-	 * @throws  
      */
     public static String adresseIpLocale()
     throws UnknownHostException, SocketException {
@@ -226,7 +229,7 @@ public class ExportControleur {
 	
 	
 	/**
-	 * Affichage d'une pop-up d'aide concernant l'export des questions.
+	 * Affichage d'une pop-up d'aide concernant l'export des questions
 	 */
 	@FXML
 	private void actionBoutonAider() {
@@ -261,7 +264,8 @@ public class ExportControleur {
 	
 	
 	/** 
-	 * Charge les différentes catégories sélectionnables. 
+	 * Charge les différentes catégories pouvant 
+	 * être sélectionnées. 
 	 * 
 	 * @param listeCategories
 	 */
@@ -296,7 +300,8 @@ public class ExportControleur {
 				}
 			});
 			
-			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, prochainYGrilleSelection);
+			this.grilleSelection.add(choixCourant, prochainXGrilleSelection, 
+					                               prochainYGrilleSelection);
 			
 			if (prochainXGrilleSelection == INDICE_MAX_LIGNE_GRILLE) {
 				prochainYGrilleSelection++;
@@ -309,8 +314,11 @@ public class ExportControleur {
 	
 	
 	/**
+	 * Booléen renvoyant si une catégorie est sélectionnée ou non
+	 * 
 	 * @param categorieCourante
-	 * @return Si la catégorie donnée figure parmi celles sélectionnées
+	 * @return Si la catégorie donnée figure parmi 
+	 * celles sélectionnées
 	 */
 	private boolean categorieEstSelectionnee(Categorie categorieCourante) {
 		return this.selectionCategories.contains(categorieCourante);
@@ -318,7 +326,8 @@ public class ExportControleur {
 	
 	
 	/** 
-	 * Charge les différentes catégories sélectionnables. 
+	 * Charge les différentes catégories pouvant 
+	 * être sélectionnées. 
 	 * 
 	 * @param listeCategories
 	 */
@@ -450,11 +459,12 @@ public class ExportControleur {
 	
 	
 	/**
-	 * Après avoir terminé l'export, le titre est modifié et une pop-up
-	 * de confirmation ou d'erreur est affichée.
-	 * En cas d'erreur le message diffusé est le contenu du paramètre resultat.
+	 * Après avoir terminé l'export, le titre est modifié et une 
+	 * pop-up de confirmation ou d'erreur est affichée.
+	 * En cas d'erreur le message diffusé est le contenu du 
+	 * paramètre resultat.
 	 * 
-	 * @param resultat Le résulat de l'export.
+	 * @param resultat Le résultat de l'export.
 	 * @param nombreQuestions Le nombre de questions exportées.
 	 */
 	private void gestionResultatExport(String resultat, int nombreQuestions) {
@@ -482,8 +492,8 @@ public class ExportControleur {
 	
 	
 	/**
-	 * Affichage d'une pop-up d'erreur indiquant que l'affichage de l'ip locale
-	 * a échoué.
+	 * Affichage d'une pop-up d'erreur indiquant que l'affichage de 
+	 * l'ip locale a échoué.
 	 */
 	private static void erreurAccesIpLocale() {
 		AlerteControleur.autreAlerte(ERREUR_IP_PRIVEE_MESSAGE,

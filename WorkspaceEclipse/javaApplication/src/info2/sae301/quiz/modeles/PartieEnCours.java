@@ -1,5 +1,5 @@
 /*
- * PartieEnCours.java             									14 nov. 2023
+ * PartieEnCours.java             						 14 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 /**
  * Partie de jeu de Quiz en cours contenant les questions posées,
- * les réponses de l'utilisateur, les paramètres ainsi que la question courante.
+ * les réponses de l'utilisateur, les paramètres ainsi que la 
+ * question courante.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -19,19 +20,31 @@ import java.util.ArrayList;
  */
 public class PartieEnCours {
 
-	/** ArrayList de questions proposées pour le quiz de la partie en cours */
+	/** 
+	 * ArrayList de questions proposées pour le quiz de la partie 
+	 * en cours 
+	 */
 	private ArrayList<Question> questionsProposees;
 
 	/** ArrayList de réponses de l'utilisateur sur les questions */
 	private ArrayList<String> reponsesUtilisateur;
 	
-	/** Instance de ParametresPartie précédemment créée dans ParametresPartie*/
+	/** 
+	 * Instance de ParametresPartie précédemment créée 
+	 * dans ParametresPartie
+	 */
 	private ParametresPartie parametresPartie;
 	
-	/** Indice permettant de savoir l'indice de la question en cours */
+	/** 
+	 * Indice permettant de savoir l'indice de la question 
+	 * en cours 
+	 */
 	private int indiceQuestionCourante;
 	
-	/** Indice de la dernière question vue par l'utilisateur dans l'app */
+	/** 
+	 * Indice de la dernière question vue par l'utilisateur 
+	 * dans l'app 
+	 */
 	private int indiceDerniereQuestionVue;
 	
 	
@@ -47,14 +60,17 @@ public class PartieEnCours {
 	}
 	
 	
-	/** @return	le dernier indice de la question vue par l'utilisateur */
+	/**
+	 * @return	le dernier indice de la question vue 
+	 * par l'utilisateur 
+	 */
 	public int getIndiceDerniereQuestionVue() {
 		return indiceDerniereQuestionVue;
 	}
 
 	/** 
-	 * @param indiceDerniereQuestionVue nouvelle
-	 * 		  valeur de la dernière question vue 
+	 * @param indiceDerniereQuestionVue nouvelle valeur de la 
+	 *                                  dernière question vue 
 	 */
 	public void setIndiceDerniereQuestionVue(int indiceDerniereQuestionVue) {
 		this.indiceDerniereQuestionVue = indiceDerniereQuestionVue;
@@ -69,7 +85,10 @@ public class PartieEnCours {
 	}
 
 
-	/** @return l'ArrayList des questions proposées pour la partie en cours */
+	/** 
+	 * @return l'ArrayList des questions proposées pour la 
+	 * partie en cours 
+	 */
 	public ArrayList<Question> getQuestionsProposees() {
 		return questionsProposees;
 	}
@@ -105,7 +124,10 @@ public class PartieEnCours {
 	}
 	
 	
-	/** Remplace l'indice de la question courante par celui en paramètre */
+	/** 
+	 * Remplace l'indice de la question courante par celui 
+	 * en paramètre 
+	 */
 	public void setIndiceQuestionCourante(int indiceQuestionCourante) {
 		this.indiceQuestionCourante = indiceQuestionCourante;
 	}
@@ -134,8 +156,8 @@ public class PartieEnCours {
 	/**
 	 * Passe à la question suivante en sauvegardant la réponses de 
 	 * l'utilisateur.
-	 * Si l'utilisateur passe la question, une String vide sera rajoutée
-	 * dans la liste reponsesUtilisateur
+	 * Si l'utilisateur passe la question, une String vide sera 
+	 * rajoutée dans la liste reponsesUtilisateur
 	 */
 	public void passerQuestionSuivante() {
 		this.indiceQuestionCourante++;
@@ -145,8 +167,8 @@ public class PartieEnCours {
 	/**
 	 * Retour à la question précédente en sauvegardant la réponses de 
 	 * l'utilisateur.
-	 * Si l'utilisateur passe la question, une String vide sera rajoutée
-	 * dans la liste reponsesUtilisateur
+	 * Si l'utilisateur passe la question, une String vide sera 
+	 * rajoutée dans la liste reponsesUtilisateur
 	 */
 	public void retourQuestionPrecedente() {
 		if (indiceQuestionCourante > 0) {
@@ -177,7 +199,8 @@ public class PartieEnCours {
 	/**
 	 * Comptabilise les réponses justes de l'utilisateur
 	 * 
-	 * @return le nombre de réponses justes de l'utilisateur, 0 si tout faux
+	 * @return le nombre de réponses justes de l'utilisateur, 
+	 *         0 si tout faux
 	 */
 	public int nbReponsesJustes() {
 		int nbRepJustes;

@@ -17,8 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue AffichageCategories qui affiche la liste des
- * catégories et propose d'en créer, renommer et supprimer.
+ * Contrôleur FXML de la vue AffichageCategories qui affiche la liste 
+ * des catégories et propose d'en créer, renommer et supprimer.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -56,17 +56,18 @@ public class AffichageCategoriesControleur {
 	@FXML
 	private Button boutonSuivant;
 	
-	/** Indice de la première catégorie affichée sur la "page" courante. */
+	/** Indice de la première catégorie affichée sur la "page" courante.*/
 	static int indiceCategorie = 0; 
 	
 	/** Récupère la liste de toutes les catégories de l'instance jeu */
-	private ArrayList<Categorie> toutesLesCategories = jeu.getToutesLesCategories();
+	private ArrayList<Categorie> toutesLesCategories 
+	= jeu.getToutesLesCategories();
 	
 	private Label categorieCourante;
 	
 	/**
-	 * Initialisation de la vue avec le style CSS correspondant et l'affichage
-	 * des catégories et du bouton suivant.
+	 * Initialisation de la vue avec le style CSS correspondant et 
+	 * l'affichage des catégories et du bouton suivant.
 	 */
 	@FXML
 	private void initialize() {
@@ -79,9 +80,9 @@ public class AffichageCategoriesControleur {
 	
 	
 	/**
-	 * Affiche 10 catégories au maximum et gère l'affichage des boutons
-	 * précédent et suivant en fonction du nombre de catégories précédentes
-	 * et suivantes.
+	 * Affiche 10 catégories au maximum et gère l'affichage 
+	 * des boutons précédents et suivants en fonction du nombre de 
+	 * catégories précédentes et suivantes.
 	 */
 	private void afficherCategories() {
 	    // Calcul des indices pour l'affichage des catégories
@@ -109,8 +110,8 @@ public class AffichageCategoriesControleur {
 	
 
 	/**
-	 * Retrait de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories précédentes. 
+	 * Retrait de 10 catégories à l'indice de la première catégorie à
+	 * afficher et affichage des 10 catégories précédentes. 
 	 */
 	@FXML
 	private void actionBoutonPrecedent() {
@@ -121,8 +122,8 @@ public class AffichageCategoriesControleur {
 	
 	
 	/**
-	 * Ajout de 10 catégories à l'indice de la première catégorie à afficher
-	 * et affichage des 10 catégories suivantes. 
+	 * Ajout de 10 catégories à l'indice de la première catégorie à 
+	 * afficher et affichage des 10 catégories suivantes. 
 	 */
 	@FXML
 	private void actionBoutonSuivant() {
@@ -142,8 +143,8 @@ public class AffichageCategoriesControleur {
 	
 	
 	/**
-	 * Redirection vers la vue ChoixRenommerCategories pour sélectionner la
-	 * catégorie à renommer.
+	 * Redirection vers la vue ChoixRenommerCategories pour 
+	 * sélectionner la catégorie à renommer.
 	 */
 	@FXML
 	private void actionBoutonRenommer() {
@@ -152,8 +153,8 @@ public class AffichageCategoriesControleur {
 	
 	
 	/**
-	 * Redirection vers la vue SuppressionCategories pour sélectionner la ou les
-	 * catégorie(s) à supprimer.
+	 * Redirection vers la vue SuppressionCategories pour 
+	 * sélectionner la ou les catégorie(s) à supprimer.
 	 */
 	@FXML
 	private void actionBoutonSupprimer() {
@@ -171,8 +172,8 @@ public class AffichageCategoriesControleur {
 	
 	
     /**
-	 * Redirection vers la vue CreationCategories pour créer de nouvelles
-	 * catégories.
+	 * Redirection vers la vue CreationCategories pour créer de 
+	 * nouvelles catégories.
      */
 	@FXML
 	private void actionBoutonCreer() {

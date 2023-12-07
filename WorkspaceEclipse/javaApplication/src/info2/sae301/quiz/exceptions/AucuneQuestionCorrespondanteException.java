@@ -1,12 +1,13 @@
 /*
- * AucuneQuestionCorrespondanteException.java						15 nov. 2023
+ * AucuneQuestionCorrespondanteException.java			 15 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 package info2.sae301.quiz.exceptions;
 
 /**
- * Classe d'exception héritée de RuntimeException rapportant l'erreur d'un nombre
- * nul de questions correspondantes à des paramètres.
+ * Classe d'exception héritée de RuntimeException rapportant 
+ * l'erreur d'un nombre nul de questions correspondantes à 
+ * des paramètres.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -22,21 +23,21 @@ public class AucuneQuestionCorrespondanteException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Construit une nouvelle exception d'exécution avec null comme message de
-     * détail.
+     * Construit une nouvelle exception d'exécution avec null comme 
+     * message de détail.
      */
     public AucuneQuestionCorrespondanteException() {
         super();
     }
 
     /**
-     * Construit une nouvelle exception d'exécution avec un message de détail
-     * passé en paramètre.
+     * Construit une nouvelle exception d'exécution avec un message 
+     * de détail passé en paramètre.
      * 
-     * @param message Message de détail donné pour l'exception d'exécution.
+     * @param message Message de détail donné pour l'exception 
+     *                d'exécution.
      */
     public AucuneQuestionCorrespondanteException(String message) {
         super(message);
     }
-
 }

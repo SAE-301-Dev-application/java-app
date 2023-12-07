@@ -1,5 +1,5 @@
 /*
- * Serialisation.java             									19 nov. 2023
+ * Serialisation.java             						 19 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -29,17 +29,21 @@ public class Serialisation {
 	
     
 	/**
-	 * Sérialise les instances de type Jeu et les enregistre dans un fichier
-	 * de sauvegarde
+	 * Sérialise les instances de type Jeu et les enregistre dans un 
+	 * fichier de sauvegarde
+	 * 
 	 * @param aSerialiser instance à sérialiser 
 	 * @param nomFichier nom du fichier dans lequel sera la sauvegarde
 	 */
-	public static void serialiser(Jeu aSerialiser, String chemin, String nomFichier) {
+	public static void serialiser(Jeu aSerialiser, String chemin, 
+			                      String nomFichier) {
 		try {
-			// Déclaration et création du fichier qui recevra les objets
+			// Déclaration et création du fichier qui recevra 
+			// les objets
 			FileOutputStream fileOutputStream = new FileOutputStream(chemin
-					                                                 + nomFichier);
-			ObjectOutputStream fluxEcriture = new ObjectOutputStream(fileOutputStream);
+					                                                + nomFichier);
+			ObjectOutputStream fluxEcriture = new ObjectOutputStream(
+					                                          fileOutputStream);
 
 			fluxEcriture.writeObject(aSerialiser);
 			fluxEcriture.close();
@@ -52,6 +56,7 @@ public class Serialisation {
 	/**
 	 * Restaure l'objet Jeu sérialisé et renvoie l'instance de Jeu
 	 * ainsi récupérée
+	 * 
 	 * @param nomFichier nom de la sauvegarde à restaurer
 	 */
 	public static Jeu deserialiser(String chemin,String nomFichier) {
@@ -74,6 +79,7 @@ public class Serialisation {
 			jeuEnCours = new Jeu();
 		} catch (ClassNotFoundException e) {
 			System.out.println("-- Erreur de désérialisation : ");
+			
 			// exception levée si l'objet lu n'est pas de type Jeu
 			System.out.println("Problème lors de la lecture du fichier "
 				           	   + nomFichier);

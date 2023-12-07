@@ -1,5 +1,5 @@
 /*
- * Jeu.java             									        10 nov. 2023
+ * Jeu.java             							     10 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -27,8 +27,8 @@ public class Jeu implements Serializable {
 	private static final long serialVersionUID = 6013770278342863395L;
 
 	/**
-	 * Toutes les catégories qui ont été créées sur le jeu. La 1ère catégorie
-	 * est par défaut "Général".
+	 * Toutes les catégories qui ont été créées sur le jeu. 
+	 * La 1ère catégorie est par défaut "Général".
 	 */
 	private ArrayList<Categorie> toutesLesCategories;
 	
@@ -46,22 +46,7 @@ public class Jeu implements Serializable {
 		this.toutesLesCategories
 		= new ArrayList<>(Arrays.asList(new Categorie("Général")));
 		
-//		for (int i = 2; i <= 30; i++) {
-//			creerCategorie("" + i + "ème catégorie");
-//		}
-		
 		this.toutesLesQuestions = new ArrayList<>();
-		
-//		for (int i = 1; i <= 30; i++) {
-//			creerQuestion("" + i + (i != 1 ? "ème" : "ère") + " question",
-//					      "Réponse vraie",
-//					      new String[] {"Réponse fausse 1", "Réponse fausse 2",
-//					    		        "Réponse fausse 3", "Réponse fausse 4"},
-//						  2, "Feedback très court",
-//                          i % 2 == 0
-//                          ? toutesLesCategories.get(0).getIntitule()
-//                          : "2ème catégorie");
-//		}
 		
 		// Pseudonyme par défaut
 		this.pseudo = "Utilisateur";
@@ -88,19 +73,21 @@ public class Jeu implements Serializable {
 	
 	/**
 	 * @param nouveauPseudo Le nouveau pseudonyme de l'utilisateur.
-	 * @throws TaillePseudoInvalideException si la taille du pseudo < 1 ou > 20.
+	 * @throws TaillePseudoInvalideException si la taille 
+	 *         du pseudo < 1 ou > 20.
 	 */
 	public void setPseudo(String nouveauPseudo)
 	throws TaillePseudoInvalideException {
 		/**
-	     * Message d'erreur propagé lorsque le pseudonyme est "" ou composé
-	     * seulement d'espaces.
+	     * Message d'erreur propagé lorsque le pseudonyme est "" ou 
+	     * composé seulement d'espaces.
 	     */
 	    final String TAILLE_NULLE
 	    	= "Un pseudonyme doit au moins contenir un caractère alphanumérique.";
 		
 	    /**
-	     * Message d'erreur propagé lorsque le pseudonyme fait plus de 20 caractères.
+	     * Message d'erreur propagé lorsque le pseudonyme fait plus
+	     * de 20 caractères.
 	     */
 	    final String TAILLE_PLUS_20_CARACTERES
 	    	= "Un pseudonyme ne peut contenir plus de 20 caractères.";
@@ -118,17 +105,19 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Accès aux questions d'une catégorie dont l'intitulé est en paramètre.
+	 * Accès aux questions d'une catégorie dont l'intitulé est 
+	 * en paramètre.
 	 * 
 	 * @param intituleCategorie L'intitulé de la catégorie de 
-	 * laquelle retourner les questions.
+	 *                          laquelle retourner les questions.
 	 * @return La liste des questions de la catégorie en paramètre.
 	 */
 	public ArrayList<Question> questionsCategorie(String intituleCategorie) {
 		if (intituleCategorie.equals("Toutes les catégories")) {
 			return toutesLesQuestions;
 		}
-		return toutesLesCategories.get(indiceCategorie(intituleCategorie)).getListeQuestions();
+		return toutesLesCategories.get(indiceCategorie(intituleCategorie))
+				                  .getListeQuestions();
 	}
 	
 	
@@ -146,8 +135,10 @@ public class Jeu implements Serializable {
 	/**
 	 * Récupère une liste de catégories selon leurs intitulés
 	 * 
-	 * @param categories ArrayList des intitulés des catégories à retourner.
-	 * @return la liste des catégories dont l'intitulé est dans la liste en paramètre.
+	 * @param categories ArrayList des intitulés des catégories 
+	 *                  à retourner.
+	 * @return la liste des catégories dont l'intitulé est dans 
+	 *         la liste en paramètre.
 	 */
 	public Categorie[] getCategoriesParIntitules(ArrayList<String> categories) {
 		Categorie[] categoriesARetourner = new Categorie[categories.size()];
@@ -180,7 +171,8 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Crée une nouvelle catégorie et l'ajoute à la liste des catégories.
+	 * Crée une nouvelle catégorie et l'ajoute à la liste 
+	 * des catégories.
 	 * 
 	 * @param intitule L'intitulé de la catégorie à créer.
 	 * @return la catégorie nouvellement créée
@@ -197,7 +189,8 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Crée une nouvelle question et l'ajoute à la liste des questions.
+	 * Crée une nouvelle question et l'ajoute à la liste 
+	 * des questions.
 	 * 
 	 * @param intitule L'intitulé de la question à créer.
 	 * @param reponseJuste La réponse juste.
@@ -237,14 +230,15 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Supprime de la liste des catégories les catégories spécifiées dans la
-	 * liste en paramètre.
+	 * Supprime de la liste des catégories les catégories spécifiées 
+	 * dans la liste en paramètre.
 	 * 
 	 * @param aSupprimer Liste des catégories à supprimer.
 	 */
 	public void supprimer(Categorie[] aSupprimer) {
 		for (Categorie categorieCourante : aSupprimer) {
-			int indiceCategorie = indiceCategorie(categorieCourante.getIntitule());
+			int indiceCategorie = indiceCategorie(categorieCourante
+					                              .getIntitule());
 			if (indiceCategorie != -1
 				&& !categorieCourante.getIntitule().equals("Général")) {
 				toutesLesQuestions.removeAll(toutesLesCategories
@@ -257,8 +251,8 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Supprime de la liste des questions les questions spécifiées dans la
-	 * liste en paramètre.
+	 * Supprime de la liste des questions les questions spécifiées 
+	 * dans la liste en paramètre.
 	 * 
 	 * @param aSupprimer Liste des questions à supprimer.
 	 */
@@ -270,7 +264,8 @@ public class Jeu implements Serializable {
 							 questionCourante.getReponseJuste(),
 							 questionCourante.getReponsesFausses());
 			if (indiceQuestion != -1) {
-				questionCourante.getCategorie().supprimerQuestion(questionCourante);
+				questionCourante.getCategorie()
+				                .supprimerQuestion(questionCourante);
 				toutesLesQuestions.remove(indiceQuestion);
 			}
 		}
@@ -281,8 +276,8 @@ public class Jeu implements Serializable {
 	 * Renomme la catégorie sélectionnée avec l'intitulé en paramètre.
 	 * 
 	 * @param nouveauIntitule Le nouveau intitulé de la catégorie.
-	 * @throws IllegalArgumentException si la taille est invalide ou qu'une catégorie
-	 *                                  du nouveau nom existe déjà.
+	 * @throws IllegalArgumentException si la taille est invalide 
+	 *         ou qu'une catégorie du nouveau nom existe déjà.
 	 */
 	public void renommerCategorie(String ancienIntitule,
 			                      String nouveauIntitule)
@@ -326,8 +321,9 @@ public class Jeu implements Serializable {
 	 * @param difficulte La difficulté.
 	 * @param feedback Le feedback.
 	 * @param categorie La catégorie contenant la question.
-	 * @throws IllegalArgumentException si la taille est invalide ou qu'une question
-	 *         ayant les mêmes paramètres existe déjà dans la même catégorie.
+	 * @throws IllegalArgumentException si la taille est invalide 
+	 *         ou qu'une question ayant les mêmes paramètres existe 
+	 *         déjà dans la même catégorie.
 	 */
 	public void editerQuestion(int indiceQuestion, String nouveauIntitule,
 			                   String reponseJuste, String[] reponsesFausses,
@@ -381,11 +377,13 @@ public class Jeu implements Serializable {
 	
 	
 	/**
-	 * Vérification de l'existence d'une catégorie dans la liste des catégories.
+	 * Vérification de l'existence d'une catégorie dans la liste 
+	 * des catégories.
 	 * 
 	 * @param intitule L'intitulé de la catégorie à chercher.
-	 * @return L'indice dans la liste des catégories de la catégorie ayant pour
-	 *         intitulé celui en paramètre ou -1 si la catégorie n'existe pas.
+	 * @return L'indice dans la liste des catégories de la catégorie
+	 * ayant pour intitulé celui en paramètre ou -1 si la catégorie 
+	 * n'existe pas.
 	 */
  	public int indiceCategorie(String intitule) {
 		int resultat = -1;
@@ -402,15 +400,19 @@ public class Jeu implements Serializable {
  	
  	
 	/**
-	 * Vérification de l'existence d'une question dans la liste des questions d'une
-	 * catégorie dont l'intitulé est en paramètre.
+	 * Vérification de l'existence d'une question dans la liste des 
+	 * questions d'une catégorie dont l'intitulé est en paramètre.
 	 * 
-	 * @param intituleQuestion L'intitulé de la question à chercher.
-	 * @param intituleCategorie L'intitulé de la catégorie contenant la question.
-	 * @param reponseJuste La réponse juste à la question à chercher.
-	 * @param reponsesFausses Les réponses fausses à la question à chercher.
-	 * @return L'indice dans la liste des questions de la question ayant pour
-	 *         intitulé celui en paramètre ou -1 si la question n'existe pas.
+	 * @param intituleQuestion  L'intitulé de la question à chercher.
+	 * @param intituleCategorie L'intitulé de la catégorie contenant
+	 *                          la question.
+	 * @param reponseJuste      La réponse juste à la question 
+	 *                          à chercher.
+	 * @param reponsesFausses   Les réponses fausses à la question
+	 *                          à chercher.
+	 * @return L'indice dans la liste des questions de la question 
+	 * ayant pour intitulé celui en paramètre ou -1 si la question 
+	 * n'existe pas.
 	 */
  	public int indiceQuestion(String intituleQuestion, String intituleCategorie,
  			                  String reponseJuste, String[] reponsesFausses) {
@@ -420,7 +422,8 @@ public class Jeu implements Serializable {
 		int indiceCategorie = indiceCategorie(intituleCategorie);
 		Categorie categorieQuestion = toutesLesCategories.get(indiceCategorie);
 		
-		ArrayList<Question> questionsCategorie = categorieQuestion.getListeQuestions();
+		ArrayList<Question> questionsCategorie = categorieQuestion
+				                                       .getListeQuestions();
 	
 		Question aComparer
 		= new Question(intituleQuestion, reponseJuste, reponsesFausses, 1,
@@ -441,16 +444,18 @@ public class Jeu implements Serializable {
 
  	
  	/**
- 	 * Crée un hashCode se basant sur les attributs de l'objet auquel cette 
- 	 * méthode est appliquée, ici une instance de Jeu.
- 	 * Permet une comparaison précise et complète la méthode equals() car si les
- 	 * hashCode générés pour les instances comparées sont les mêmes et que 
- 	 * la méthode equals renvoie true, alors ces instances sont égales.
+ 	 * Crée un hashCode se basant sur les attributs de l'objet auquel
+ 	 * cette méthode est appliquée, ici une instance de Jeu.
+ 	 * Permet une comparaison précise et complète la méthode equals()
+ 	 * car si les hashCode générés pour les instances comparées sont 
+ 	 * les mêmes et que la méthode equals renvoie true, alors ces 
+ 	 * instances sont égales.
  	 * 
- 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous n'utilisons pas
- 	 * de HashSet ou de HashMap, cependant il est préférable de l'implémenter
- 	 * pour une maintenance future du code plus aisée et pour le respect
- 	 * des conventions générales de Java.
+ 	 * Il n'est pas obligé de l'implémenter dans ce cas car nous 
+ 	 * n'utilisons pas de HashSet ou de HashMap, cependant il est 
+ 	 * préférable de l'implémenter pour une maintenance future du 
+ 	 * code plus aisée et pour le respect des conventions générales
+ 	 * de Java.
  	 * 
  	 * @return un hashCode basé sur les attributs de l'objet Jeu 
  	 * toutesLesCatégories et toutesLesQuestions
@@ -466,7 +471,7 @@ public class Jeu implements Serializable {
 	 * leurs attributs
 	 * 
 	 * @param aComparer Jeu à comparer
-	 * @return true si les instances de jeu sont les mêmes, false sinon
+	 * @return true si les instances de jeu sont pareilles,false sinon
 	 */
 	@Override
 	public boolean equals(Object obj) {

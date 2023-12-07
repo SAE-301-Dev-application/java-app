@@ -1,5 +1,5 @@
 /*
- * Client.java								                        27 nov. 2023
+ * Client.java								             27 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -16,8 +16,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * Client permettant de se connecter à un serveur afin d'importer les données
- * des questions et catégories proposées par le serveur.
+ * Client permettant de se connecter à un serveur afin d'importer 
+ * les données des questions et catégories proposées par le serveur.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -34,11 +34,12 @@ public class Client {
 	private final static int TIMEOUT_CONNEXION = 5000;
 	
 	/**
-	 * Délimiteur de séparation de toutes les questions dans l'objet envoyé.
-	 * Le délimiteur contient volontairement le caractère ◄ non chiffrable
-	 * (cf dictionnaire chiffrable) afin d'éviter que l'utilisateur crée une
-	 * question contenant ce délimiteur dans un intitulé et qu'un problème
-	 * d'import apparaisse.
+	 * Délimiteur de séparation de toutes les questions dans l'objet 
+	 * envoyé.
+	 * Le délimiteur contient volontairement le caractère ◄ non 
+	 * chiffrable (cf dictionnaire chiffrable) afin d'éviter que 
+	 * l'utilisateur crée une question contenant ce délimiteur dans 
+	 * un intitulé et qu'un problème d'import apparaisse.
 	 */
 	private final static String DELIMITEUR = "/delimiteur◄/";
 	
@@ -83,15 +84,20 @@ public class Client {
 	/** Entier secret utilisé pour déchiffrer la clé de vigenère. */
 	private int entierServeur;
 	
-	/** Entier utilisé pour chiffrer et déchiffrer la clé de vigenère. */
+	/** 
+	 * Entier utilisé pour chiffrer et déchiffrer la clé 
+	 * de vigenère. 
+	 */
 	private int entierSecret;
 	
 	/**
-	 * Création d'une socket qui va se connecter à un serveur dont l'adresse IP
-	 * et le port sont spécifiés dans les paramètres d'instanciation.
+	 * Création d'une socket qui va se connecter à un serveur dont 
+	 * l'adresse IP et le port sont spécifiés dans les paramètres 
+	 * d'instanciation.
 	 * 
 	 * @throws IOException si la création de la socket échoue.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	private void creerSocket() throws IOException, SocketTimeoutException {
         this.socket = new Socket();
@@ -112,7 +118,8 @@ public class Client {
 	 * envoyés par le serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	private void creerFluxEntree() throws IOException, SocketTimeoutException {
 		this.fluxEntree = new ObjectInputStream(this.socket.getInputStream());
@@ -131,11 +138,12 @@ public class Client {
 	
 	
 	/**
-	 * Création d'un flux de sortie pour envoyer des objets (String)
+	 * Création d'un flux de sortie pour envoyer des objets(String)
 	 * au serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être créé.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	private void creerFluxSortie() throws IOException, SocketTimeoutException {
 		this.fluxSortie = new ObjectOutputStream(this.socket.getOutputStream());
@@ -143,8 +151,8 @@ public class Client {
 	
 	
 	/**
-	 * Fermeture du flux de sortie créé pour envoyer des objets (String)
-	 * au serveur.
+	 * Fermeture du flux de sortie créé pour envoyer des 
+	 * objets(String) au serveur.
 	 * 
 	 * @throws IOException si le flux ne peut être fermé.
 	 */
@@ -154,12 +162,14 @@ public class Client {
 	
 	
 	/**
-	 * Envoi de l'entier du serveur et réception de l'entier du client
-	 * afin de calculer l'entier secret de Diffie Hellman.
+	 * Envoi de l'entier du serveur et réception de l'entier du 
+	 * client afin de calculer l'entier secret de Diffie Hellman.
 	 * 
 	 * @throws IOException si l'envoi échoue.
-	 * @throws ClassNotFoundException si le cast de la donnée reçue échoue.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws ClassNotFoundException si le cast de la donnée reçue 
+	 * échoue.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	private void recevoirEnvoyerEntier()
 	throws IOException, ClassNotFoundException, SocketTimeoutException {
@@ -196,7 +206,8 @@ public class Client {
 	 * 
 	 * @throws IOException si la lecture ou la réponse échoue.
 	 * @throws ClassNotFoundException si le cast de la clé échoue.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	public void recevoirCleVigenere()
 	throws IOException, ClassNotFoundException, SocketTimeoutException {
@@ -223,13 +234,16 @@ public class Client {
 	
 	
 	/**
-	 * Réception et déchiffrage des questions cryptées envoyées par le serveur.
+	 * Réception et déchiffrage des questions cryptées envoyées par 
+	 * le serveur.
 	 * 
-	 * @param adresseServeur L'adresse IP sur laquelle le serveur est démarré.
+	 * @param adresseServeur L'adresse IP sur laquelle le serveur *
+	 *                       est démarré.
 	 * @return La liste des questions reçues.
 	 * @throws IOException Si la lecture renvoie une erreur.
 	 * @throws ClassNotFoundException si le cast des données échoue.
-	 * @throws SocketTimeoutException si le timeout expire avant la connexion.
+	 * @throws SocketTimeoutException si le timeout expire avant 
+	 * la connexion.
 	 */
 	public String[] recevoirQuestions(String adresseServeur)
 	throws IOException, ClassNotFoundException, SocketTimeoutException {
@@ -261,7 +275,8 @@ public class Client {
 		System.out.println(questionsDecryptees + "\n");
 		
 		// Utilisation du délimiteur pour diviser les questions,
-		// en excluant la dernière entrée qui est vide (cf envoi serveur)
+		// en excluant la dernière entrée qui est 
+		// vide (cf envoi serveur)
 	    donneesQuestions = questionsDecryptees.split(DELIMITEUR);
 	    
 	    this.fluxSortie.writeObject("Questions reçues");
@@ -284,5 +299,4 @@ public class Client {
 	private void fermerSocket() throws IOException {
         this.socket.close();
 	}
-	
 }

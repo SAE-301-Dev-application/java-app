@@ -1,5 +1,5 @@
 /*
- * ChoixEditionQuestionControleur.java							     7 nov. 2023
+ * ChoixEditionQuestionControleur.java					  7 nov. 2023
  * IUT de Rodez, pas de copyright ni de "copyleft".
  */
 
@@ -19,8 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Contrôleur FXML de la vue ChoixEditionQuestion qui affiche la liste des
- * questions sous forme de boutons.
+ * Contrôleur FXML de la vue ChoixEditionQuestion qui affiche la 
+ * liste des uestions sous forme de boutons.
  * 
  * @author Florian Fabre
  * @author Loïc Faugières
@@ -51,10 +51,10 @@ public class ChoixEditionQuestionControleur {
 	@FXML
 	private Button boutonSuivant;
 	
-	/** Indice de la première question affichée sur la "page" courante. */
+	/** Indice de la première question affichée sur la "page" courante.*/
 	private int indiceQuestion = 0;
 	
-	/** Nom de la première catégorie affichée sur la "page" courante. */
+	/** Nom de la première catégorie affichée sur la "page" courante.*/
 	private String categorieCourante = "Toutes les catégories";
 	
 	private Label questionCourante;
@@ -98,7 +98,8 @@ public class ChoixEditionQuestionControleur {
 	 */
 	@FXML
 	public void selectionFiltre() {
-		System.out.println("Nouvelle catégorie sélectionnée : " + menuFiltre.getValue());
+		System.out.println("Nouvelle catégorie sélectionnée : " 
+	                       + menuFiltre.getValue());
 		if (!categorieCourante.equals(menuFiltre.getValue())) {
 			indiceQuestion = 0;
 			categorieCourante = menuFiltre.getValue();
@@ -127,7 +128,8 @@ public class ChoixEditionQuestionControleur {
 	    for (int i = indiceDebut; i < indiceFin; i++) {
 	    	Question question = questionsAAfficher.get(i);
 	    	
-	        questionCourante = new Label(question.getIntitule().replaceAll("\n", " "));
+	        questionCourante = new Label(question.getIntitule()
+	        		                             .replaceAll("\n", " "));
 	        questionCourante.getStyleClass().add("intituleQuestionQuestion");
 	        questionCourante.getStyleClass().add("labelCliquable");
 	        vBoxQuestions.getChildren().add(questionCourante);
@@ -137,16 +139,19 @@ public class ChoixEditionQuestionControleur {
 	        final String[] reponsesFausses = question.getReponsesFausses();
 	        final int difficulte = question.getDifficulte();
 	        final String feedback = question.getFeedback();
-	        final String intituleCategorie = question.getCategorie().getIntitule();
+	        final String intituleCategorie = question.getCategorie()
+	        		                                 .getIntitule();
 			questionCourante.setOnMouseClicked(event -> {
 			    actionEditerQuestion(intitule, reponseJuste, reponsesFausses,
 			    		             difficulte, feedback, intituleCategorie);
 			});
 	    }
-	    // Cacher le bouton "Précédent" s'il n'y a plus de questions précédentes
+	    // Cacher le bouton "Précédent" s'il n'y a plus de 
+	    // questions précédentes
 	    boutonPrecedent.setVisible(!(indiceQuestion < 5));
 	    
-	    // Cacher le bouton "Suivant" s'il n'y a plus de questions suivantes
+	    // Cacher le bouton "Suivant" s'il n'y a plus de 
+	    // questions suivantes
 	    boutonSuivant.setVisible(questionsAAfficher.size() > 5
 	    		                 && indiceFin < questionsAAfficher.size());
 	}
@@ -165,7 +170,8 @@ public class ChoixEditionQuestionControleur {
 			                          String feedback, String categorie) {
 		
 		indiceQuestionSelectionnee = jeu.indiceQuestion(intitule, categorie,
-				                                        reponseJuste, reponsesFausses);
+				                                        reponseJuste, 
+				                                        reponsesFausses);
 		
 		NavigationControleur.changerVue("EditionQuestions.fxml");
 		
