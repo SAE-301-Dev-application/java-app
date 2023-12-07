@@ -2,6 +2,9 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("785500a9-9b73-4d53-8799-f364c59efb85")
 public class Sauvegarde {
+    @objid ("adba1f47-3ca0-41ff-ac67-c722367f0efd")
+    private String cheminFichier;
+
     @objid ("39d3e210-9da4-4a0f-a784-e7c5438a520e")
     public void serialisation() {
     }

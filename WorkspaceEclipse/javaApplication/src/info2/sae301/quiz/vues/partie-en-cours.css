@@ -1,0 +1,44 @@
+.labelDifficulte {
+    -fx-background-radius: 20px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+    -fx-pref-width: 132px;
+    -fx-pref-height: 30px;
+}
+
+.questionDifficile {
+	-fx-background-color: #FF5353;
+}
+
+.questionMoyenne {
+	-fx-background-color: #FF9B53;
+}
+
+.questionFacile {
+	-fx-background-color: #6AC83E;
+}
+
+.questionIndifferente {
+	-fx-background-color: rgb(128, 128, 128);
+}
+
+.intituleQuestion {
+	-fx-text-fill: white;
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+.reponse {
+	-fx-text-fill: white;
+	-fx-font-size: 16px;
+	-fx-font-weight: bold;
+}
+
+.labelNumeroQuestion {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+

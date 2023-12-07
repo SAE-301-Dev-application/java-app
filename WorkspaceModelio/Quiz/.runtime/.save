@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #Thu Dec 07 16:51:40 CET 2023
+=======
+#Tue Nov 21 18:52:44 CET 2023
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
 org.modelio.app.module.propertytab.GPart\ [id\='JavaDesigner',\ version\='5.3.00',\ type\='MODULE',\ definitionScope\='LOCAL',\ state\='MOUNTED']\ runtime\ module_.org.modelio.development.perspective.parentId=app.ui.ext_com.partstack.bottom
 org.modelio.app.module.propertytab.GPart\ [id\='JavaDesigner',\ version\='5.3.00',\ type\='MODULE',\ definitionScope\='LOCAL',\ state\='MOUNTED']\ runtime\ module_.org.modelio.app.ui.model.perspective.parentId=org.modelio.app.bottom.parts
 org.modelio.app.module.propertytab.GPart\ [id\='JavaDesigner',\ version\='5.3.00',\ type\='MODULE',\ definitionScope\='LOCAL',\ state\='MOUNTED']\ runtime\ module_.org.modelio.full.perspective.parentId=app.ui.ext_com.partstack.bottom

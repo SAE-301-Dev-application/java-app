@@ -17,6 +17,23 @@
     <DEPENDENCIES>
       <COMP relation="OwnedOperation">
         <OBJECT>
+<<<<<<< HEAD
+=======
+          <ID name="melangerQuestionsProposees" mc="Standard.Operation" uid="94494bf7-5e97-41a2-a1e3-2104a550d2a2"/>
+          <ATTRIBUTES>
+            <ATT name="Concurrency">false</ATT>
+            <ATT name="Final">false</ATT>
+            <ATT name="Passing">MethodOut</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[melangerQuestionsProposees]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ID name="PartieEnCours" mc="Standard.Operation" uid="ed7938c0-c9b2-483d-ab05-a1a2f18112d0"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
@@ -35,7 +52,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="getIndiceDerniereQuestionVue" mc="Standard.Operation" uid="901e5c4d-9792-4cae-98d2-0433e9ffd262"/>
+=======
+          <ID name="toString" mc="Standard.Operation" uid="153d269a-b702-4ab1-a137-6169ee04bef3"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -43,13 +64,21 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
+<<<<<<< HEAD
             <ATT name="Name"><![CDATA[getIndiceDerniereQuestionVue]]></ATT>
+=======
+            <ATT name="Name"><![CDATA[toString]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <COMP relation="Return">
               <OBJECT>
+<<<<<<< HEAD
                 <ID name="p1" mc="Standard.Parameter" uid="51f78a54-244f-459a-ac7c-b1c060f08c74"/>
+=======
+                <ID name="p1" mc="Standard.Parameter" uid="27f58037-43c2-4171-8f98-d9ef035dcfe9"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -66,6 +95,7 @@
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
+<<<<<<< HEAD
                     <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
@@ -236,6 +266,8 @@
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
+=======
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                     <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
@@ -244,7 +276,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="getParametrePartie" mc="Standard.Operation" uid="56e86371-dcb1-488b-ac25-d8cd0539cdad"/>
+=======
+          <ID name="getQuestionsProposees" mc="Standard.Operation" uid="cc7f2283-9e5a-42c6-9df0-1a46b51ee6bf"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -252,17 +288,29 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
+<<<<<<< HEAD
             <ATT name="Name"><![CDATA[getParametrePartie]]></ATT>
+=======
+            <ATT name="Name"><![CDATA[getQuestionsProposees]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <COMP relation="Return">
               <OBJECT>
+<<<<<<< HEAD
                 <ID name="p1" mc="Standard.Parameter" uid="71ebe76e-4495-4388-9ca2-1f6941a7f5fd"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
                   <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+=======
+                <ID name="p1" mc="Standard.Parameter" uid="62b9eb09-110a-45bb-a9d5-5930f977c8d2"/>
+                <ATTRIBUTES>
+                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[20]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                   <ATT name="TypeConstraint"></ATT>
                   <ATT name="DefaultValue"></ATT>
                   <ATT name="IsOrdered">false</ATT>
@@ -275,7 +323,11 @@
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
+<<<<<<< HEAD
                     <ID name="ParametresPartie" mc="Standard.Class" uid="add3c9b4-0b82-4006-8f19-4ce10dde56b7"/>
+=======
+                    <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -283,6 +335,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="setParametrePartie" mc="Standard.Operation" uid="508cbea5-ca86-4a56-9418-eea975523e0f"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
@@ -323,6 +376,9 @@
         </OBJECT>
         <OBJECT>
           <ID name="getIndiceQuestionCourante" mc="Standard.Operation" uid="76f6ec73-354c-4746-a819-f373c4d8fd85"/>
+=======
+          <ID name="getIndiceQuestionCourante" mc="Standard.Operation" uid="02776012-7f1b-44ec-9d38-895f28342fa2"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -336,7 +392,11 @@
           <DEPENDENCIES>
             <COMP relation="Return">
               <OBJECT>
+<<<<<<< HEAD
                 <ID name="p1" mc="Standard.Parameter" uid="ede7f732-a9ba-47cd-8432-a6bc5d90cca0"/>
+=======
+                <ID name="p1" mc="Standard.Parameter" uid="9b731841-c3d3-449b-8654-8eeb734dfb3b"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -361,7 +421,50 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="setIndiceQuestionCourante" mc="Standard.Operation" uid="9e332fed-6cb4-4cf9-b33b-6bbdb9878263"/>
+=======
+          <ID name="getReponsesUtilisateur" mc="Standard.Operation" uid="4cf8fa8c-d1f9-45de-a9e4-129d814006fe"/>
+          <ATTRIBUTES>
+            <ATT name="Concurrency">false</ATT>
+            <ATT name="Final">false</ATT>
+            <ATT name="Passing">MethodOut</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[getReponsesUtilisateur]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Return">
+              <OBJECT>
+                <ID name="p1" mc="Standard.Parameter" uid="a60eadd6-74fa-4f2c-af00-951948997aa8"/>
+                <ATTRIBUTES>
+                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[20]]></ATT>
+                  <ATT name="TypeConstraint"></ATT>
+                  <ATT name="DefaultValue"></ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="IsException">false</ATT>
+                  <ATT name="IsStream">false</ATT>
+                  <ATT name="Effect">ReadEffect</ATT>
+                  <ATT name="Name"><![CDATA[p1]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Type">
+                    <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="setIndiceQuestionCourante" mc="Standard.Operation" uid="b59d831f-63a9-44a2-b29a-51583c2a9214"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -372,10 +475,31 @@
             <ATT name="Name"><![CDATA[setIndiceQuestionCourante]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
+<<<<<<< HEAD
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
                 <ID name="indiceQuestionCourante" mc="Standard.Parameter" uid="bfb4e482-2081-4b31-8863-f1889c231ff7"/>
+=======
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="getParametresPartie" mc="Standard.Operation" uid="a9d37357-00b0-41f8-9ec0-cd5a07bd17bb"/>
+          <ATTRIBUTES>
+            <ATT name="Concurrency">false</ATT>
+            <ATT name="Final">false</ATT>
+            <ATT name="Passing">MethodOut</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[getParametresPartie]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Return">
+              <OBJECT>
+                <ID name="p1" mc="Standard.Parameter" uid="6256695e-cebc-43de-9dca-d0ccfde08a95"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -387,12 +511,20 @@
                   <ATT name="IsException">false</ATT>
                   <ATT name="IsStream">false</ATT>
                   <ATT name="Effect">ReadEffect</ATT>
+<<<<<<< HEAD
                   <ATT name="Name"><![CDATA[indiceQuestionCourante]]></ATT>
+=======
+                  <ATT name="Name"><![CDATA[p1]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
+<<<<<<< HEAD
                     <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
+=======
+                    <ID name="ParametresPartie" mc="Standard.Class" uid="add3c9b4-0b82-4006-8f19-4ce10dde56b7"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -400,7 +532,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="ajouterReponseUtilisateur" mc="Standard.Operation" uid="45ae5d81-4da5-4eaf-8206-6154bbc6e778"/>
+=======
+          <ID name="ajouterReponseUtilisateur" mc="Standard.Operation" uid="59515e22-8189-450f-8c73-3460a24c5bc1"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -414,7 +550,11 @@
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
+<<<<<<< HEAD
                 <ID name="repAAjouter" mc="Standard.Parameter" uid="931bcf6e-6594-475c-90fc-fd19ca39e20b"/>
+=======
+                <ID name="repAAjouter" mc="Standard.Parameter" uid="b594bc35-4b2d-4b48-a4e1-927b4196c144"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -439,7 +579,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="modifierReponseUtilisateur" mc="Standard.Operation" uid="46ce4598-bfab-4bfb-ba30-088d83fbab64"/>
+=======
+          <ID name="passerQuestionCourante" mc="Standard.Operation" uid="bceea8c8-d539-41e5-b10d-6b831c66006f"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -447,6 +591,7 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
+<<<<<<< HEAD
             <ATT name="Name"><![CDATA[modifierReponseUtilisateur]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -487,10 +632,14 @@
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[passerQuestionSuivante]]></ATT>
+=======
+            <ATT name="Name"><![CDATA[passerQuestionCourante]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
+<<<<<<< HEAD
         <OBJECT>
           <ID name="retourQuestionPrecedente" mc="Standard.Operation" uid="64296684-c9c3-4923-9c86-b0452d77726f"/>
           <ATTRIBUTES>
@@ -646,6 +795,8 @@
             </COMP>
           </DEPENDENCIES>
         </OBJECT>
+=======
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
@@ -713,7 +864,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="indiceDerniereQuestionVue" mc="Standard.Attribute" uid="05e61cd3-32ce-4e89-8ca8-d928c0089a4c"/>
+=======
+          <ID name="reponsesUtilisateur" mc="Standard.Attribute" uid="a04d9242-28a0-4ae8-8600-a072cbcc3ae0"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -723,6 +878,7 @@
             <ATT name="IsOrdered">false</ATT>
             <ATT name="IsUnique">false</ATT>
             <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+<<<<<<< HEAD
             <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
@@ -752,6 +908,13 @@
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[reponseUtilisateur]]></ATT>
+=======
+            <ATT name="MultiplicityMax"><![CDATA[20]]></ATT>
+            <ATT name="Visibility">Private</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[reponsesUtilisateur]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -761,7 +924,11 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
+<<<<<<< HEAD
           <ID name="parametrePartie" mc="Standard.Attribute" uid="ec7c2d53-1e56-4b9e-bacb-fb4a9959688c"/>
+=======
+          <ID name="parametresPartie " mc="Standard.Attribute" uid="41d62b26-c334-4214-ae37-aba2f88a2744"/>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
             <ATT name="Value"></ATT>
@@ -775,13 +942,18 @@
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
+<<<<<<< HEAD
             <ATT name="Name"><![CDATA[parametrePartie]]></ATT>
+=======
+            <ATT name="Name"><![CDATA[parametresPartie ]]></ATT>
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Type">
               <ID name="ParametresPartie" mc="Standard.Class" uid="add3c9b4-0b82-4006-8f19-4ce10dde56b7"/>
             </LINK>
+<<<<<<< HEAD
             <COMP relation="Descriptor">
               <OBJECT>
                 <ID name="" mc="Infrastructure.Note" uid="d0ff9b4d-1718-4847-9eab-540e5c2fc3eb"/>
@@ -798,6 +970,8 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+=======
+>>>>>>> f7b3cbae2e545e6d58d84c92d7193a39eb0881b3
           </DEPENDENCIES>
         </OBJECT>
       </COMP>

@@ -12,3 +12,6 @@ build.fxbuild
 
 # Modelio
 projectInfo.html
+
+# Fichier de sauvegarde (sérialisation)
+sauvegardeDonneesQuiz.ser
