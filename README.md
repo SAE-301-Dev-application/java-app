@@ -44,7 +44,7 @@ Run configuration > Java application > Quiz :
 ## Contributeurs (Nom Prénom / E-Mail / Page GitHub)
 - FABRE Florian / florian.fabre@iut-rodez.fr / [Florian](https://github.com/Odonata971)
 - FAUGIÈRES Loïc / loic.faugieres@iut-rodez.fr / [Loïc](https://github.com/xGk93)
-- GUIL Jonathan / jonathan.guil@iut-rodez.fr / [Jonathan](https://github.com/belicfr)
+- GUIL Jonathan / jonathan.guil@iut-rodez.fr / -
 - GUIRAUD Simon / simon.guiraud@iut-rodez.fr / [Simon](https://github.com/SyberSim)
 - LACAM Samuel / samuel.lacam@iut-rodez.fr / [Samuel](https://github.com/SamuelLacam)
 
